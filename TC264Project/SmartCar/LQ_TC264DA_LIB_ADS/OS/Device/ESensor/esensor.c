@@ -3,7 +3,6 @@
  *
  *  Created on: 2020Äê12ÔÂ6ÈÕ
  *      Author: 936305695
- *      github.com
  */
 #include <esensor.h>
 
