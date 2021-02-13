@@ -1,0 +1,30 @@
+clock_config.pbi: \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Device\board\clock_config.c \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Device\board/clock_config.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device\drivers\MIMXRT1064\fsl_common.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\assert.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\ycheck.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\yvals.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\DLib_Defaults.h \
+  C:\\Applications\\IAR\ 8.4\\arm\\inc\\c\\DLib_Config_Normal.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\DLib_Product.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\stdbool.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\stdint.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\string.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\ysizet.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\DLib_Product_string.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\stdlib.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\DLib_Product_stdlib.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\stddef.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device\fsl_device_registers.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device/MIMXRT1064.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\CMSIS\Include\core_cm7.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\CMSIS\Include/cmsis_version.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\CMSIS\Include/cmsis_compiler.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\CMSIS\Include\cmsis_iccarm.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\iccarm_builtin.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\CMSIS\Include/mpu_armv7.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device/system_MIMXRT1064.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device/MIMXRT1064_features.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device\drivers\MIMXRT1064/fsl_clock.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device\drivers\MIMXRT1064/fsl_common.h

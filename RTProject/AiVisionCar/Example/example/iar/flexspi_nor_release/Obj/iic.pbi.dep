@@ -1,0 +1,12 @@
+iic.pbi: \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Driver\SysDriver\iic.c \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Driver\SysDriver/iic.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device\drivers\LQRT1064\LQ_GPIO.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\stdint.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\ycheck.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\yvals.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\DLib_Defaults.h \
+  C:\\Applications\\IAR\ 8.4\\arm\\inc\\c\\DLib_Config_Normal.h \
+  C:\Applications\IAR\ 8.4\arm\inc\c\DLib_Product.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device\drivers\LQRT1064/LQ_GPIO_Cfg.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Driver\SysDriver/chipdatatype.h
