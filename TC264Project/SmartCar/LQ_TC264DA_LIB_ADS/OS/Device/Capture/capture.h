@@ -12,13 +12,14 @@
 
 typedef enum
 {
-    Capture_Free,Capture_Start,Capture_Busy,Capture_Fin,
+    Capture_Stop,Capture_Start,Capture_Busy,Capture_Fin,
 }cap_state_t;
+
 
 typedef struct
 {
     uint8_t Hight;
-    uint8_t Weight;
+    uint8_t Width;
 
     uint8_t **Array;
 }image_t;
@@ -34,6 +35,8 @@ typedef struct capture
      uint8_t (*__GetState__)(void);
      uint8_t (*__Read__)(void);
 
+     uint32_t Reg;
+
   public
 
      uint8_t (*Init)(struct capture *self,uint8_t fps);
@@ -41,9 +44,11 @@ typedef struct capture
      uint8_t (*Stop)(struct capture *self);
    /*
     * flags == 0 : 阻塞读取，直到图片全部存入ImageCache才结束函数
-    * flags == 1 : 查询读取，该函数仅发送读取命令，不会等待图片读取完成,可以通过GetState查询状态
+    * flags == 1 : 查询读取，该函数仅发送读取命令，不会等待图片读取完成,通过Capture.GetState()查询到状态为Capture_Fin时,表示读取完成。
+       *                          读取完成后，需要调用Capture.ClearFinFlag()清除完成标志，该函数才能继续读取,否则读取无效。
     */
      image_t (*Read)(struct capture *self,uint16_t flags);
+     void (*ClearFinFlag)(struct capture *self);
 
      cap_state_t (*GetState)(struct capture *self);
 

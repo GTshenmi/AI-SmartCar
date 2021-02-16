@@ -32,7 +32,7 @@ capture_t Capture = /*unknow*/
         .ImageCache =
         {
                 .Hight = 120,
-                .Weight = 128,
+                .Width = 188,
                 .Array = (uint8_t **)Image_Data,
         },
 
