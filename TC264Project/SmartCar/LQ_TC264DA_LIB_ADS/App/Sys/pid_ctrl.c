@@ -1,5 +1,6 @@
 #include "pid_ctrl.h"
 #include "math.h"
+#include "sysmath.h"
 
 void PID_CtrlDemo()
 {
@@ -71,36 +72,42 @@ PID_TypeDef PID_SetGain(PID_TypeDef *PID_CtrlStr,pid_gain_t GainValue)
 
 PID_TypeDef *PID_Ctrl(PID_TypeDef *PID_CtrlStr,float TargetValue,float ActualValue)
 {
-		PID_CtrlStr->PID_Error[0] = PID_CtrlStr->PID_Error[1];
-		PID_CtrlStr->PID_Error[1] = PID_CtrlStr->PID_Error[2];
-	    PID_CtrlStr->PID_Error[2] = (TargetValue - ActualValue)* PID_CtrlStr->Gain.Input;
-		
-	
-	    if(fabs(PID_CtrlStr->IntegralValue) > PID_CtrlStr->MaxIntegralValue)
-	        PID_CtrlStr->IntegralValue = 0.0;
+    PID_CtrlStr->PID_Error[0] = PID_CtrlStr->PID_Error[1];
+    PID_CtrlStr->PID_Error[1] = PID_CtrlStr->PID_Error[2];
+    PID_CtrlStr->PID_Error[2] = (TargetValue - ActualValue)* PID_CtrlStr->Gain.Input;
 
-		if (PID_CtrlStr->PID_Type == PositionalPID)
-		{
-			  PID_CtrlStr->IntegralValue += PID_CtrlStr->PID_Error[2];
-			  PID_CtrlStr->Result = PID_CtrlStr->Kp * PID_CtrlStr->PID_Error[2]+\
-													    PID_CtrlStr->Ki * PID_CtrlStr->IntegralValue+\
-															PID_CtrlStr->Kd * (PID_CtrlStr->PID_Error[2] - PID_CtrlStr->PID_Error[1]);
-		}
-		else if(PID_CtrlStr->PID_Type == IncrementalPID)
-	    {
-			 float PID_Inc = 0.0;
-			 PID_Inc = PID_CtrlStr->Kp * (PID_CtrlStr->PID_Error[2] - PID_CtrlStr->PID_Error[1])+\
-								 PID_CtrlStr->Ki * (PID_CtrlStr->PID_Error[2])+\
-								 PID_CtrlStr->Kd * (PID_CtrlStr->PID_Error[2] - 2*PID_CtrlStr->PID_Error[1]+PID_CtrlStr->PID_Error[0]);
-			 PID_CtrlStr->Result += PID_Inc * PID_CtrlStr->Gain.Output;
-		}
-		else
-		{
-			 PID_CtrlStr->Result = 0;
-		}
-		
+    if (PID_CtrlStr->PID_Type == PositionalPID)
+    {
+          float result = 0.0;
 
-	    return PID_CtrlStr;
+          PID_CtrlStr->IntegralValue += PID_CtrlStr->PID_Error[2];
+
+          if(fabs(PID_CtrlStr->IntegralValue) > PID_CtrlStr->MaxIntegralValue)
+              PID_CtrlStr->IntegralValue = PID_CtrlStr->MaxIntegralValue * fsign(PID_CtrlStr->IntegralValue);
+
+          result = PID_CtrlStr->Kp * PID_CtrlStr->PID_Error[2]+\
+                                PID_CtrlStr->Ki * PID_CtrlStr->IntegralValue+\
+                                PID_CtrlStr->Kd * (PID_CtrlStr->PID_Error[2] - PID_CtrlStr->PID_Error[1]);
+
+          PID_CtrlStr->Result = result * PID_CtrlStr->Gain.Output;
+    }
+    else if(PID_CtrlStr->PID_Type == IncrementalPID)
+    {
+         float PID_Inc = 0.0;
+
+         PID_Inc = PID_CtrlStr->Kp * (PID_CtrlStr->PID_Error[2] - PID_CtrlStr->PID_Error[1])+\
+                             PID_CtrlStr->Ki * (PID_CtrlStr->PID_Error[2])+\
+                             PID_CtrlStr->Kd * (PID_CtrlStr->PID_Error[2] - 2*PID_CtrlStr->PID_Error[1]+PID_CtrlStr->PID_Error[0]);
+
+         PID_CtrlStr->Result += PID_Inc * PID_CtrlStr->Gain.Output;
+    }
+    else
+    {
+         PID_CtrlStr->Result = 0;
+    }
+
+
+    return PID_CtrlStr;
 }
 
 
