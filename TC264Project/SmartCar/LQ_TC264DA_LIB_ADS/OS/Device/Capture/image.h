@@ -18,6 +18,12 @@ typedef struct
     uint8_t **Array;
 }image_t;
 
-
+typedef struct
+{
+    int xs;
+    int ys;
+    int xe;
+    int ye;
+}image_range_t;
 
 #endif /* OS_DEVICE_CAPTURE_IMAGE_H_ */

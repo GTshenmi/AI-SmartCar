@@ -20,7 +20,38 @@ void Image_Init(image_t *image,uint8_t **array/*全局定义的数组*/,uint Hight,uint
     image->Width = Width;
 }
 
-void Image_Cut(image_t *imagein,image_t *imageout)
+uint8_t Image_AssertRange(image_t image,image_range_t range)
+{
+    uint8_t res = 0;
+
+    if(range.xs < 0 || range.xe < 0 || range.ys < 0 || range.ye < 0)
+        res += 1;
+
+    if(range.xs > image.Width || range.xe > image.Width || range.ys > image.Hight || range.ye > image.Hight)
+        res += 1;
+
+    if(range.xs > range.xe || range.ys > range.ye)
+        res += 1;
+
+    return res;
+}
+
+void Image_Cut(image_t *imagein,image_t *imageout,image_range_t range)
+{
+    if(Image_AssertRange(*imagein,range) || Image_AssertRange(*imageout,range))
+    {
+        exit(0);
+    }
+    for(int i = range.xs ; i < range.xe ;i++)
+    {
+        for(int j = range.ys ; j < range.ye ;j++)
+        {
+             imageout->Array[i][j] = imagein->Array[i][j];
+        }
+    }
+}
+
+void Image_Zip(image_t *imagein,image_t *imageout)
 {
     unsigned int div_h, div_w;
     unsigned long temp_h = 0;
