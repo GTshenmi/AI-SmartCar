@@ -62,7 +62,7 @@ void Cap_Test(struct capture *self)
 {
     self->Init(self,30);
     self->Read(self,0);
-    self->Report(self);
+    self->Report(self,self->ImageCache);
 }
 
 void Cap_Start(struct capture *self)
@@ -79,32 +79,55 @@ void Cap_Stop(struct capture *self)
     self->State = Capture_Stop;
 }
 
-void Cap_Report(struct capture *self)
+void Cap_Report(struct capture *self,image_t image)
 {
     int j,i;
 
-    UART_PutChar(UART0, 0xfe);  //Ö¡Í·
-    UART_PutChar(UART0, 0xef);  //Ö¡Í·
+    UARTx.WriteByte(self->ReportUartDevice,0xfe,0xffffffff);
+    UARTx.WriteByte(self->ReportUartDevice,0xef,0xffffffff);
 
-    for(i = 0; i < IMAGEH; i++)
+    for(i = 0; i < image.Hight; i++)
     {
-        for(j = 0; j < IMAGEW; j++)
+        for(j = 0; j < image.Width; j++)
         {
-          //  if(Image_Data[i][j] == 0xfe )  //·ÀÖ¹´íÎó·¢ËÍÖ¡Î²
+            if(image.Array[i][j] == 0xfe )  //·ÀÖ¹´íÎó·¢ËÍÖ¡Î²
             {
-          //      Image_Data[i][j] = 0xff;
+                image.Array[i][j] = 0xff;
             }
-         //   UART_PutChar(UART0, Image_Data[i][j]); //·¢ËÍÊý¾Ý
-
+            UARTx.WriteByte(self->ReportUartDevice,image.Array[i][j],0xffffffff);
         }
     }
-    UART_PutChar(UART0, 0xef);  //Ö¡Î²
-    UART_PutChar(UART0, 0xfe);  //Ö¡Î²
+
+    UARTx.WriteByte(self->ReportUartDevice,0xef,0xffffffff);
+    UARTx.WriteByte(self->ReportUartDevice,0xfe,0xffffffff);
 }
 
-void Cap_Show(struct capture *self)
+void Cap_Show(struct capture *self,image_t image,uint8_t flags)
 {
-
+    for(int i = 0; i < image.Hight; i++)
+    {
+        for(int j = 0; j < image.Width; j++)
+        {
+            uint16_t color = 0;
+            switch(flags)
+            {
+                case 0:/*Ô­Í¼Ïñ*/
+                    color = (uint16_t)(image.Array[i][j] >> 3) << 11;
+                    color |= (uint16_t)(image.Array[i][j] >> 2) << 5;
+                    color |= (uint16_t)(image.Array[i][j]) >> 3;
+                    LCD_DrawPoint((uint16_t)j,(uint16_t)i,color);
+                    break;
+                case 1:/*¶þÖµ»¯*/
+                    if(image.Array[i][j] == 1)
+                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0x0000);
+                    else
+                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0xffff);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
 
 uint8_t Cap_Init(struct capture *self,uint8_t fps)

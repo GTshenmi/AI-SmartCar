@@ -27,6 +27,7 @@ typedef struct capture
      uint8_t (*__GetState__)(void);
      uint8_t (*__Read__)(void);
 
+     uartx_t *ReportUartDevice;
      uint32_t Reg;
 
   public
@@ -46,8 +47,8 @@ typedef struct capture
 
      uint8_t (*Filter)(struct capture *self);
 
-     void (*Show)(struct capture *self);
-     void (*Report)(struct capture *self);
+     void (*Show)(struct capture *self,image_t image,uint8_t flags);
+     void (*Report)(struct capture *self,image_t image);
 
      void (*Test)(struct capture *self);
 

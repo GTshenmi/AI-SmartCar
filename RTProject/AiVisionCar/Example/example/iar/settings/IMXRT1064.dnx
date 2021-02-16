@@ -11,16 +11,6 @@
         <LimitSize>0</LimitSize>
         <ByteLimit>50</ByteLimit>
     </Stack>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Count>0</Count>
-    </Breakpoints2>
-    <Aliases>
-        <Count>0</Count>
-        <SuppressDialog>0</SuppressDialog>
-    </Aliases>
     <PlDriver>
         <MemConfigValue>C:\Applications\IAR 8.4\arm\CONFIG\debugger\NXP\MIMXRT1064xxx6A.ddf</MemConfigValue>
     </PlDriver>
@@ -32,4 +22,14 @@
     <ArmDriver>
         <EnableCache>1</EnableCache>
     </ArmDriver>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Count>0</Count>
+    </Breakpoints2>
+    <Aliases>
+        <Count>0</Count>
+        <SuppressDialog>0</SuppressDialog>
+    </Aliases>
 </settings>
