@@ -236,6 +236,10 @@ task.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 task.o :	../Driver/driver.h
 ../Driver/driver.h :
+task.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+task.o :	../Driver/driver.h
+../Driver/driver.h :
 task.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 task.o :	../Driver/driver.h

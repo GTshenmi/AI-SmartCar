@@ -240,6 +240,10 @@ neuralnetwork.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 neuralnetwork.o :	../Driver/driver.h
 ../Driver/driver.h :
+neuralnetwork.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+neuralnetwork.o :	../Driver/driver.h
+../Driver/driver.h :
 neuralnetwork.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 neuralnetwork.o :	../Driver/driver.h

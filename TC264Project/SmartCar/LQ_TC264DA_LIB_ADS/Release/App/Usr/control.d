@@ -240,6 +240,10 @@ control.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 control.o :	../Driver/driver.h
 ../Driver/driver.h :
+control.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+control.o :	../Driver/driver.h
+../Driver/driver.h :
 control.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 control.o :	../Driver/driver.h

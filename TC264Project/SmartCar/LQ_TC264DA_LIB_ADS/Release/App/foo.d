@@ -240,6 +240,10 @@ foo.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 foo.o :	../Driver/driver.h
 ../Driver/driver.h :
+foo.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+foo.o :	../Driver/driver.h
+../Driver/driver.h :
 foo.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 foo.o :	../Driver/driver.h

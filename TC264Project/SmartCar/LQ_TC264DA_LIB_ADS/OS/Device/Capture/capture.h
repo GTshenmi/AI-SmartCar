@@ -9,20 +9,12 @@
 #define OS_DEVICE_CAPTURE_CAPTURE_H_
 
 #include "driver.h"
+#include "image.h"
 
 typedef enum
 {
     Capture_Stop,Capture_Start,Capture_Busy,Capture_Fin,
 }cap_state_t;
-
-
-typedef struct
-{
-    uint8_t Hight;
-    uint8_t Width;
-
-    uint8_t **Array;
-}image_t;
 
 typedef struct capture
 {

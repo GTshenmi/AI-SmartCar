@@ -236,6 +236,10 @@ ui.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 ui.o :	../Driver/driver.h
 ../Driver/driver.h :
+ui.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+ui.o :	../Driver/driver.h
+../Driver/driver.h :
 ui.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 ui.o :	../Driver/driver.h

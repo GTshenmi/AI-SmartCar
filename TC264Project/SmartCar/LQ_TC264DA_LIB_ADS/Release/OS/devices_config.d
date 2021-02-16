@@ -236,6 +236,10 @@ devices_config.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 devices_config.o :	../Driver/driver.h
 ../Driver/driver.h :
+devices_config.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+devices_config.o :	../Driver/driver.h
+../Driver/driver.h :
 devices_config.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 devices_config.o :	../Driver/driver.h

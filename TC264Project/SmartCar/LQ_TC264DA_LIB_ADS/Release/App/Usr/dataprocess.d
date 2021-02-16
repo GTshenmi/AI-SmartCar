@@ -240,6 +240,10 @@ dataprocess.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 dataprocess.o :	../Driver/driver.h
 ../Driver/driver.h :
+dataprocess.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+dataprocess.o :	../Driver/driver.h
+../Driver/driver.h :
 dataprocess.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 dataprocess.o :	../Driver/driver.h

@@ -240,6 +240,10 @@ element.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 element.o :	../Driver/driver.h
 ../Driver/driver.h :
+element.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+element.o :	../Driver/driver.h
+../Driver/driver.h :
 element.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 element.o :	../Driver/driver.h

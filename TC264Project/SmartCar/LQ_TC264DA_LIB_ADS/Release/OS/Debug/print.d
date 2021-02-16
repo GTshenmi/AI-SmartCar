@@ -236,6 +236,10 @@ print.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 print.o :	../Driver/driver.h
 ../Driver/driver.h :
+print.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+print.o :	../Driver/driver.h
+../Driver/driver.h :
 print.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 print.o :	../Driver/driver.h

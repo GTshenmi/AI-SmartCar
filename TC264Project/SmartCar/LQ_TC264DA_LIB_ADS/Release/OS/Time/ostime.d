@@ -236,6 +236,10 @@ ostime.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 ostime.o :	../Driver/driver.h
 ../Driver/driver.h :
+ostime.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+ostime.o :	../Driver/driver.h
+../Driver/driver.h :
 ostime.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 ostime.o :	../Driver/driver.h

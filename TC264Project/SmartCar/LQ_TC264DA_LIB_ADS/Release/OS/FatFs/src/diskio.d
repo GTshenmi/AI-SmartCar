@@ -238,6 +238,10 @@ diskio.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 diskio.o :	../Driver/driver.h
 ../Driver/driver.h :
+diskio.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+diskio.o :	../Driver/driver.h
+../Driver/driver.h :
 diskio.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 diskio.o :	../Driver/driver.h

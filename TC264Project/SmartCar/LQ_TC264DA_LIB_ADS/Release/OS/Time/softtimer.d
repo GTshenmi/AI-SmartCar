@@ -236,6 +236,10 @@ softtimer.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 softtimer.o :	../Driver/driver.h
 ../Driver/driver.h :
+softtimer.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+softtimer.o :	../Driver/driver.h
+../Driver/driver.h :
 softtimer.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 softtimer.o :	../Driver/driver.h

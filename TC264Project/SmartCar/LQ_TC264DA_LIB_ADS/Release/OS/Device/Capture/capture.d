@@ -202,3 +202,7 @@ capture.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 capture.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+capture.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+capture.o :	../Driver/driver.h
+../Driver/driver.h :

@@ -238,6 +238,10 @@ ctrlsys.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 ctrlsys.o :	../Driver/driver.h
 ../Driver/driver.h :
+ctrlsys.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+ctrlsys.o :	../Driver/driver.h
+../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 ctrlsys.o :	../Driver/driver.h

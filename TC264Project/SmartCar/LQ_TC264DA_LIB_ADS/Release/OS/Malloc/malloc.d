@@ -236,6 +236,10 @@ malloc.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 malloc.o :	../Driver/driver.h
 ../Driver/driver.h :
+malloc.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+malloc.o :	../Driver/driver.h
+../Driver/driver.h :
 malloc.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 malloc.o :	../Driver/driver.h

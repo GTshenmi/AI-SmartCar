@@ -238,6 +238,10 @@ sysmath.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 sysmath.o :	../Driver/driver.h
 ../Driver/driver.h :
+sysmath.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+sysmath.o :	../Driver/driver.h
+../Driver/driver.h :
 sysmath.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 sysmath.o :	../Driver/driver.h

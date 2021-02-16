@@ -238,6 +238,10 @@ Cpu0_Main.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 Cpu0_Main.o :	../Driver/driver.h
 ../Driver/driver.h :
+Cpu0_Main.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+Cpu0_Main.o :	../Driver/driver.h
+../Driver/driver.h :
 Cpu0_Main.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 Cpu0_Main.o :	../Driver/driver.h

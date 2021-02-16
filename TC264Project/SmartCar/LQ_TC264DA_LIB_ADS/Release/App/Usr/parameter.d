@@ -240,6 +240,10 @@ parameter.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 parameter.o :	../Driver/driver.h
 ../Driver/driver.h :
+parameter.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+parameter.o :	../Driver/driver.h
+../Driver/driver.h :
 parameter.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 parameter.o :	../Driver/driver.h

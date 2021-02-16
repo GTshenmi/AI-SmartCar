@@ -242,6 +242,10 @@ file.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 file.o :	../Driver/driver.h
 ../Driver/driver.h :
+file.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+file.o :	../Driver/driver.h
+../Driver/driver.h :
 file.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 file.o :	../Driver/driver.h

@@ -236,6 +236,10 @@ console.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
 console.o :	../Driver/driver.h
 ../Driver/driver.h :
+console.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
+console.o :	../Driver/driver.h
+../Driver/driver.h :
 console.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
 console.o :	../Driver/driver.h

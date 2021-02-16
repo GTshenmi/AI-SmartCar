@@ -4,16 +4,20 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../OS/Device/Capture/capture.c 
+../OS/Device/Capture/capture.c \
+../OS/Device/Capture/image.c 
 
 OBJS += \
-./OS/Device/Capture/capture.o 
+./OS/Device/Capture/capture.o \
+./OS/Device/Capture/image.o 
 
 COMPILED_SRCS += \
-./OS/Device/Capture/capture.src 
+./OS/Device/Capture/capture.src \
+./OS/Device/Capture/image.src 
 
 C_DEPS += \
-./OS/Device/Capture/capture.d 
+./OS/Device/Capture/capture.d \
+./OS/Device/Capture/image.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
