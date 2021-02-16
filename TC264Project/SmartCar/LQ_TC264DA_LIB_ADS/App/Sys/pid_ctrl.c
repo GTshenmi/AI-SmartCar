@@ -103,7 +103,7 @@ PID_TypeDef *PID_Ctrl(PID_TypeDef *PID_CtrlStr,float TargetValue,float ActualVal
     }
     else
     {
-         PID_CtrlStr->Result = 0;
+         PID_CtrlStr->Result = 0.0;
     }
 
 
