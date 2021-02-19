@@ -2986,6 +2986,12 @@
                 <file>
                     <name>$PROJ_DIR$\..\..\..\OS\Device\Capture\capture.h</name>
                 </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\OS\Device\Capture\image.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\OS\Device\Capture\image.h</name>
+                </file>
             </group>
             <group>
                 <name>Communicate</name>

@@ -40,7 +40,7 @@ uint16_t ElementModelRun(void *input)
 {
     float P[3] = {0.0};
 
-    float *Output = NULL;
+   // float *Output = NULL;
 
     //int16_t output[3] = {0};
 
@@ -48,7 +48,7 @@ uint16_t ElementModelRun(void *input)
 
     for(int i = 0; i < 3 ;i++)
     {
-        P[i] = *(Output+i);
+        //P[i] = *(Output+i);
 
         //P[i] = output[i] * 1.0;
     }
