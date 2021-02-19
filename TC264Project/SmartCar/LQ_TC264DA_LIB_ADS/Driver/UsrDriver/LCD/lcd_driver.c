@@ -4,6 +4,7 @@
  *
  *  Created on: 2020Äê12ÔÂ6ÈÕ
  *      Author: GT_shenmi
+ *      LCD HardWare Problem.
  */
 #if 1
 #include <lcd_driver.h>
