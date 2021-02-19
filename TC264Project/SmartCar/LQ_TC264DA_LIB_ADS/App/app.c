@@ -38,24 +38,22 @@ void Sensor_InterruptRun()
 void Core0_Main()
 {
     GLED.ON(GLED.Self);
-
-    float input140_0[13] = {13.83,1.65,2.60,17.2,94.0,2.45,2.99,0.22,2.29,5.600000,1.24,3.37,1265.0}; //output = 0
-//    float input141_0[13] = {13.05,1.65,2.55,18.0,98.0,2.45 ,2.43,0.29,1.44,4.250000,1.12,2.51,1105.0};//output = 0
-//    float input142_1[13] = {12.43,1.53,2.29,21.5,86.0,2.74,3.15,0.39,1.77,3.940000,0.69,2.84,352.0};  //output = 1
-
-    sint16_t output = 0;
-
-
+    LCD_Init(&LCD_Type);
 
     while(1)
     {
-        GLED.Toggle(GLED.Self);
+        for(uint8_t i = 0 ; i < 50 ;i++)
+            _LCD_DrawPoint(i,i,0x0000);
+    }
+}
 
-        output = TrackingModelRun(input140_0);
 
-        CUART.WriteLine(CUART.Self,0,"output = %d",output);
-
-        os.time.delayms(500);
+void Key_PressedCallBack(struct key *self,void *argv,uint16_t argc)
+{
+    for(int i = 0;i<4;i++)
+    {
+        if(self == KEY[i].Self)
+            CUART.WriteLine(CUART.Self,0,"KEY[%d] Pressed",i);
     }
 }
 /*
@@ -64,11 +62,34 @@ void Core0_Main()
  * */
 void Core1_Main()
 {
-    BLED.ON(BLED.Self);
+
+//    BLED.ON(BLED.Self);
+//
+//    char input[8] = {0};
+//
+//    for(int i = 0 ; i < 8 ;i++)
+//    {
+//        input[i] = (char)(8 - i);
+//    }
+//
+//    int16_t angle;
+//
+//    model_info_struct Model_Info_Model1;
+//    Model_GetInfo(model1, &Model_Info_Model1);
+//    Model_Run(model1,input,&angle);
+//
+//    BLED.OFF(BLED.Self);
+//
+//    CUART.WriteLine(CUART.Self,0,"angle = %d",angle);
+
+
+    KEY[0].PressedCallBack = Key_PressedCallBack;
+    KEY[1].PressedCallBack = Key_PressedCallBack;
+    KEY[2].PressedCallBack = Key_PressedCallBack;
+    KEY[3].PressedCallBack = Key_PressedCallBack;
+
     while(1)
     {
-        BLED.Toggle(BLED.Self);
-        //NeuralNetworkReasoning(&Data[data_pointer]);
 
         os.task.KeyScan(NULL,0);
 

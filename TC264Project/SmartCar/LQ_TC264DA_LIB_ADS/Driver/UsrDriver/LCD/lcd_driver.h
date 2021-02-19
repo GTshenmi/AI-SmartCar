@@ -68,7 +68,7 @@ void LCD_HardWareWriteCmd(uint8_t cmd);
 #endif
 void LCD_AddrReset(void);
 void LCD_DrawPoint(uint16_t xs,uint16_t ys,uint16_t color);
-
+void _LCD_DrawPoint(uint8_t xs,uint8_t ys,uint16_t color);
 /*                                                                                              ×ÖÌå¿â                                                                                                 */
 extern uint8_t Font_code8[][6];
 /*                                                                                              ×ÖÌå¿â                                                                                                 */

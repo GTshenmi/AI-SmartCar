@@ -21,7 +21,7 @@ void UI_Update(void *argv,uint16_t argc)
     ui_data_pkg_t *usrdata = (ui_data_pkg_t *)argv;
 
     for(uint16_t i = 0 ; i < 5 ; i++ )
-        Screen.WriteXLine(Screen.Self,i,"LADC[%d] = %u",i,usrdata->LADC_Value[i]);
+        Screen.WriteXLine(Screen.Self,i,"LADC[%d] = %u",i,usrdata->LADC[i]);
 }
 
 ui_t UI = {

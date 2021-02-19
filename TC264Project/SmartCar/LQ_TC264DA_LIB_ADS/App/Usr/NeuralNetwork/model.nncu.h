@@ -16,5 +16,6 @@
 
 extern const unsigned char tracking_model[] __ALIGNED(16);
 extern const unsigned char element_model[] __ALIGNED(16);
+extern const unsigned char model1[] __ALIGNED(16);
 
 #endif /* APP_USR_NEURALNETWORK_MODEL_NNCU_H_ */

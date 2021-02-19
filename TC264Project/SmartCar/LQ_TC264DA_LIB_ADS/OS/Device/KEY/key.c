@@ -91,7 +91,7 @@ uint8_t KEY_Scan(struct key *self)
                 break;
         }
 
-        if(self->Event == KEY_UP && (self->PressedCallBack != NULL))
+        if(self->Event == KEY_DOWN && (self->PressedCallBack != NULL))
              self->PressedCallBack(self,self->Argv,self->Argc);
         else if(self->Event == KEY_LONG && (self->LongPressedCallBack != NULL))
               self->LongPressedCallBack(self,self->Argv,self->Argc);
