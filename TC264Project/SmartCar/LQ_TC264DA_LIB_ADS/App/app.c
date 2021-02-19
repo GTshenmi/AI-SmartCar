@@ -45,6 +45,8 @@ void Core0_Main()
 
     sint16_t output = 0;
 
+
+
     while(1)
     {
         GLED.Toggle(GLED.Self);
@@ -67,7 +69,10 @@ void Core1_Main()
     {
         BLED.Toggle(BLED.Self);
         //NeuralNetworkReasoning(&Data[data_pointer]);
-        os.time.delayms(500);
+
+        os.task.KeyScan(NULL,0);
+
+        os.time.delayms(20);
     }
 }
 /*

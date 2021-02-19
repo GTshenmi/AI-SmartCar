@@ -23,13 +23,13 @@
 /*                      !SPI Control!                           */
 #if !USING_HARDWARE_CONTROLER
 
-#define LCD_WriteByte       LCD_SoftWareWriteByte //send byte function interface->LCD_SoftWareWriteByte
-#define LCD_WriteWord       LCD_SoftWareWriteWord //send word function interface->LCD_SoftWareWriteWord
+#define LCD_WriteByte   LCD_SoftWareWriteByte //send byte function interface->LCD_SoftWareWriteByte
+#define LCD_WriteWord   LCD_SoftWareWriteWord //send word function interface->LCD_SoftWareWriteWord
 #define LCD_WriteCmd    LCD_SoftWareWriteCmd    //send command function interface->LCD_SoftWareWriteCmd
 #define _GPIO_WritePin  GPIOx.Write
 
-#define LCD_DC_GPIO     &GPIO_Resources[0].GPION  //E11->GPIO_B0_15
-#define LCD_RST_GPIO    &GPIO_Resources[1].GPION    //B13->GPIO_B1_10
+#define LCD_DC_GPIO     &GPIO_Resources[0].GPION
+#define LCD_RST_GPIO    &GPIO_Resources[1].GPION
 #define LCD_SDA_GPIO    &GPIO_Resources[2].GPION
 #define LCD_SCL_GPIO    &GPIO_Resources[3].GPION
 #define LCD_CS_GPIO     &GPIO_Resources[4].GPION
