@@ -11,8 +11,16 @@
 *************************************************************************/
 int core0_main (void)
 {
-    SCore0.Init();
-    SCore0.Run();
+    os.core[0].HardWareInit = Core0_HardWareInit;
+    os.core[0].Run = Core0_Main;
+    os.core[0].SoftWareInit = Core0_SoftWareInit;
+
+    os.init(0);
+
+    os.core[0].Run();
+
+    while(1);
+
     return 0;
 }
 

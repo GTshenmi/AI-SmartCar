@@ -220,7 +220,7 @@ uint32 Ifx_Crc_reflect(uint32 crc, sint32 bitnum)
     return crcout;
 }
 
-
+#pragma warning 588
 uint32 Ifx_Crc_tableFast(Ifc_Crc *driver, uint8 *p, uint32 len)
 {
     // fast lookup table algorithm without augmented zero bytes, e.g. used in pkzip.
@@ -302,8 +302,10 @@ uint32 Ifx_Crc_tableFast(Ifc_Crc *driver, uint8 *p, uint32 len)
 
     return crc;
 }
+#pragma warning default
 
 
+#pragma warning 529
 uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
 {
     // normal lookup table algorithm with augmented zero bytes.
@@ -430,7 +432,7 @@ uint32 Ifx_Crc_table(Ifc_Crc *driver, uint8 *p, uint32 len)
 
     return crc;
 }
-
+#pragma warning default
 
 uint32 Ifx_Crc_bitByBit(Ifc_Crc *driver, uint8 *p, uint32 len)
 {

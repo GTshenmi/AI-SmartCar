@@ -10,16 +10,18 @@
 void ServoCtrlSysInit()
 {
     ServoSys.Init(ServoSys.Self);
-    SSensorUnit.Start(SSensorUnit.Self);
-    SDecisionUnit.Start(SDecisionUnit.Self);
-    SExecutionUnit.Start(SExecutionUnit.Self);
+
+    SSU.Start(SSU.Self);
+    SDU.Start(SDU.Self);
+    SEU.Start(SEU.Self);
 }
 void MotorCtrlSysInit()
 {
     MotorSys.Init(MotorSys.Self);
-    MSensorUnit.Start(MSensorUnit.Self);
-    MDecisionUnit.Start(MDecisionUnit.Self);
-    MExecutionUnit.Start(MExecutionUnit.Self);
+
+    MSU.Start(MSU.Self);
+    MDU.Start(MDU.Self);
+    MEU.Start(MEU.Self);
 }
 
 void Unit_Init(struct unit *self);

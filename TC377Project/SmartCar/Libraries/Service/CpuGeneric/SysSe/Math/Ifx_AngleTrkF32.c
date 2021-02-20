@@ -156,7 +156,7 @@ void Ifx_AngleTrkF32_setUserSampling(Ifx_AngleTrkF32 *aObsv, float32 Ts)
     aObsv->halfTs  = aObsv->base.Ts / 2.0F;
 }
 
-
+#pragma warning 549
 /** \brief Initialize the Angle Tracking object
  * \param aObsv Pointer to the Ifx_AngleTrkF32 object
  * \param config Pointer to the configuration data
@@ -207,7 +207,7 @@ void Ifx_AngleTrkF32_init(Ifx_AngleTrkF32 *aObsv, const Ifx_AngleTrkF32_Config *
 #endif
     }
 }
-
+#pragma warning default
 
 /** \brief Step function of Ifx_AngleTrkF32 should be called at every sampling period provided
  * during initialisation (call to Ifx_AngleTrkF32_init()).

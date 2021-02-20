@@ -5,6 +5,24 @@
  *      Author: 936305695
  */
 #include <ctrlsys.h>
+#include "os.h"
+
+void ServoCtrlSysInit()
+{
+    ServoSys.Init(ServoSys.Self);
+
+    SSU.Start(SSU.Self);
+    SDU.Start(SDU.Self);
+    SEU.Start(SEU.Self);
+}
+void MotorCtrlSysInit()
+{
+    MotorSys.Init(MotorSys.Self);
+
+    MSU.Start(MSU.Self);
+    MDU.Start(MDU.Self);
+    MEU.Start(MEU.Self);
+}
 
 void Unit_Init(struct unit *self);
 void Unit_WakeUpCallBack(void *argv,uint16_t argc);
@@ -15,10 +33,9 @@ void CtrlSysInit(struct ctrlsys *self)
     Unit_Init(&self->DecisionUnit);
     Unit_Init(&self->ExecutionUnit);
     Unit_Init(&self->SensorUnit);
-    self->UsrData = NULL;
 }
 
-void Unit_DefaultRun(struct unit *self,void *data)
+void Unit_DefaultRun(struct unit *self,void *argv,uint16_t argc)
 {
 /*
  * @Example In MotorUnit:
@@ -93,14 +110,12 @@ ctrlsys_t ServoSys =
 {
         .Init = CtrlSysInit,
         .Self = &ServoSys,
-        .UsrData = NULL,
 };
 
 ctrlsys_t MotorSys =
 {
         .Init = CtrlSysInit,
         .Self = &MotorSys,
-        .UsrData = NULL,
 };
 
 

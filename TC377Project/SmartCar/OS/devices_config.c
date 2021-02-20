@@ -6,139 +6,134 @@
  */
 #include "devices_config.h"
 
-beep_t BEEP =
+beep_t BEEP = /*unknow*/
 {
         .Init = BEEP_Init,
         .Self = &BEEP,
-        .GPIODevice = &GPIO_Devices.BEEP_GPIO,
+        .GPIODevice = &GPIO_Resources[11].GPION,
 };
 
-bluetooth_t Bluetooth =
+bluetooth_t Bluetooth = /*unknow*/
 {
         .Init = Bluetooth_Init,
         .Self = &Bluetooth,
 };
 
-capture_t Capture =
+capture_t Capture = /*unknow*/
 {
-        .HardWareInit = Camera_Init,
-        .Init = CAP_Init,
-        .IMG_Hight = 120,
-        .IMG_Weight = 128,
-//        .IMG_Data = &Image_Data,
+        .__Init__ = CameraInit,
+        .__InitConfig__ = &fps,
+        .__Start__ = CameraStart,
+        .__Stop__ = CameraStop,
+        .__GetState__ = CameraGetState,
+        .__Read__ = CameraRead,
+        .Init = Cap_Init,
+
+        .ImageCache =
+        {
+                .Hight = 120,
+                .Width = 188,
+                //.Array = (uint8_t **)Image_Data,
+        },
+
 };
 
-communicate_t CUART =
+communicate_t CUART = /*ok*/
 {
         .Init = CommInit,
         .Self = &CUART,
         .CommunicationType = C_UART,
-        .CommunicationDevice = (void *)&UART_Devices.uart_1,
-};
-communicate_t CSPI =
-{
-        .Init = CommInit,
-        .Self = &CSPI,
-        .CommunicationType = C_SPI,
-        .CommunicationDevice = (void *)&SPI_Devices.spi_1,
+        .CommunicationDevice = (void *)&UART_Resources[0].UARTN,
 };
 
-esensor_t LESensor[5] =
+esensor_t LESensor[5] =/*ok*/
 {
     [0] = {
             .Init = ESensorInit,
             .Self = &LESensor[0],
-            .ADCDevice = &ADC_Devices.ADC[5],//AD9
+            .ADCDevice = &ADC_Resources[7].ADCN,//AD9
     },
     [1] = {
             .Init = ESensorInit,
             .Self = &LESensor[1],
-            .ADCDevice = &ADC_Devices.ADC[7],//AD10
+            .ADCDevice = &ADC_Resources[8].ADCN,//AD10
     },
     [2] = {
             .Init = ESensorInit,
             .Self = &LESensor[2],
-            .ADCDevice = &ADC_Devices.ADC[2],//AD11
+            .ADCDevice = &ADC_Resources[9].ADCN,//AD11
     },
     [3] = {
             .Init = ESensorInit,
             .Self = &LESensor[3],
-            .ADCDevice = &ADC_Devices.ADC[4],//AD12
+            .ADCDevice = &ADC_Resources[10].ADCN,//AD12
     },
     [4] = {
             .Init = ESensorInit,
             .Self = &LESensor[4],
-            .ADCDevice = &ADC_Devices.ADC[0],//AD13
+            .ADCDevice = &ADC_Resources[11].ADCN,//AD13
     },
 };
-esensor_t SESensor[7] =
+esensor_t SESensor[7] = /*ok*/
 {
     [0] = {
             .Init = ESensorInit,
             .Self = &SESensor[0],
-            .ADCDevice = &ADC_Devices.ADC[13],//AD1
+            .ADCDevice = &ADC_Resources[0].ADCN,//AD1
     },
     [1] = {
             .Init = ESensorInit,
             .Self = &SESensor[1],
-            .ADCDevice = &ADC_Devices.ADC[12],//AD2
+            .ADCDevice = &ADC_Resources[1].ADCN,//AD2
     },
     [2] = {
             .Init = ESensorInit,
             .Self = &SESensor[2],
-            .ADCDevice = &ADC_Devices.ADC[21],//AD3
+            .ADCDevice = &ADC_Resources[2].ADCN,//AD3
     },
     [3] = {
             .Init = ESensorInit,
             .Self = &SESensor[3],
-            .ADCDevice = &ADC_Devices.ADC[10],//AD4
+            .ADCDevice = &ADC_Resources[3].ADCN,//AD4
     },
     [4] = {
             .Init = ESensorInit,
             .Self = &SESensor[4],
-            .ADCDevice = &ADC_Devices.ADC[11],//AD5
+            .ADCDevice = &ADC_Resources[4].ADCN,//AD5
     },
     [5] = {
             .Init = ESensorInit,
-            .Self = &SESensor[3],
-            .ADCDevice = &ADC_Devices.ADC[6],//AD6
+            .Self = &SESensor[5],
+            .ADCDevice = &ADC_Resources[5].ADCN,//AD6
     },
     [6] = {
             .Init = ESensorInit,
-            .Self = &SESensor[4],
-            .ADCDevice = &ADC_Devices.ADC[3],//AD7
+            .Self = &SESensor[6],
+            .ADCDevice = &ADC_Resources[6].ADCN,//AD7
     },
 };
 
-key_t KEY[4] = /*ok*/
+key_t KEY[6] = /*ok*/
 {
         [0] = {
                 .Init = KEY_Init,
-                .KeyShield = 0,
-                .DownLevel = 0,
                 .Self = &KEY[0],
-                .GPIODevice = &GPIO_Devices.KEY1_GPIO,
+                .GPIODevice = &GPIO_Resources[12].GPION,
         },
         [1] = {
                 .Init = KEY_Init,
-                .KeyShield = 0,
-                .DownLevel = 0,
                 .Self = &KEY[1],
-                .GPIODevice = &GPIO_Devices.KEY2_GPIO,
+                .GPIODevice = &GPIO_Resources[13].GPION,
         },
         [2] = {
                 .Init = KEY_Init,
-                .KeyShield = 0,
-                .DownLevel = 0,
                 .Self = &KEY[2],
-                .GPIODevice = &GPIO_Devices.KEY3_GPIO,
+                .GPIODevice = &GPIO_Resources[14].GPION,
         },
         [3] = {
                 .Init = KEY_Init,
-                .KeyShield = 0,
-                .DownLevel = 0,
                 .Self = &KEY[3],
-                .GPIODevice = &GPIO_Devices.KEY4_GPIO,
+                .GPIODevice = &GPIO_Resources[15].GPION,
         },
 
 };
@@ -148,25 +143,24 @@ led_t GLED = /*ok*/
 {
         .Init = LED_Init,
         .Self = &GLED,
-        .GPIODevice = &GPIO_Devices.GLED_GPIO,
+        .GPIODevice = &GPIO_Resources[9].GPION,
 };
 led_t BLED =  /*ok*/
 {
         .Init = LED_Init,
         .Self = &BLED,
-        .GPIODevice = &GPIO_Devices.BLED_GPIO,
+        .GPIODevice = &GPIO_Resources[10].GPION,
 };
 
 motor_ctrl_t Motor =/*ok*/
 {
         .Init = MotorInit,
         .Self = &Motor,
-        .UsrData = NULL,
-        .PwmDevice = {&PWM_Devices.ATOMPwm[8],&PWM_Devices.ATOMPwm[7]},
-        .EncDevice = &ENC_Devices.ENC[6],
+        .PwmDevice = {&PWM_Resources[0].PWMN,&PWM_Resources[1].PWMN},
+        .EncDevice = &ENC_Resources[0].ENCN,
 };
 
-screen_t Screen =
+screen_t Screen = /*ok*/
 {
         .Hight = 158,
         .Width = 128,
@@ -178,72 +172,72 @@ screen_t Screen =
                 .Backcolor = WHITE,
         },
 
-        .HardWareDeInit = LCD_DeInit,
-        .HardWareInit = LCD_Init,
-        .AddrReset = LCD_AddrReset,
-        .SetPixel =LCD_DrawPoint,
+        .__DeInit__ = LCD_DeInit,
+        .__Init__ = LCD_Init,
+        .__InitConfig__ = &LCD_Type,
+        .__AddrReset__ = LCD_AddrReset,
+        .__SetPixel__ =LCD_DrawPoint,
 
         .Init = Screen_Init,
         .Self = &Screen,
 };
 
-sdcard_t SDCard =
+sdcard_t SDCard = /*待定*/
 {
         .Init = SDCard_Init,
-        //.HardWareInit = NULL,
-        //.ReadSector =
-        //.WriteSector =
+
+        .__Init__ = SD_Initialize,
+        .__InitConfig__ = NULL,
+        .__ReadSector__ = SD_ReadSector,
+        .__WriteSector__ = SD_WriteSector,
+        .__GetSectorNum__ = SD_GetSectorCount,
+
         .Self = &SDCard,
-        .CardSectorSize = 512,
-        .CardBlockSize = 1024,
-        .CardCapacity = 2048,
 };
 
 servo_ctrl_t Servo =/*ok*/
 {
-        .PwmDevice = &PWM_Devices.ATOMPwm[3],
+        .PwmDevice = &PWM_Resources[2].PWMN,
         .Init = ServoInit,
         .Self = &Servo,
 };
 
-switch_t Switch[4] =
+switch_t Switch[4] = /*ok*/
 {
     [0] = {
             .DownLevel = 0,
-            .GPIODevice =  NULL,
+            .GPIODevice =  &GPIO_Resources[5].GPION,
             .Init = Switch_Init,
             .Self = &Switch[0],
     },
     [1] = {
             .DownLevel = 0,
-            .GPIODevice =  NULL,
+            .GPIODevice =  &GPIO_Resources[6].GPION,
             .Init = Switch_Init,
             .Self = &Switch[1],
     },
     [2] = {
             .DownLevel = 0,
-            .GPIODevice =  NULL,
+            .GPIODevice =  &GPIO_Resources[7].GPION,
             .Init = Switch_Init,
             .Self = &Switch[2],
     },
     [3] = {
             .DownLevel = 0,
-            .GPIODevice =  NULL,
+            .GPIODevice =  &GPIO_Resources[8].GPION,
             .Init = Switch_Init,
             .Self = &Switch[3],
     },
 };
 
-dip_switch_t DIPSwitch =
+dip_switch_t DIPSwitch = /*ok*/
 {
-       .Bits = 0,
-       .SwitchNum = 4,
        .Init = DIPSwitch_Init,
        .Self = &DIPSwitch,
        .Switch = Switch,
 };
 
-wireless_serial_t WirelessSerial =
+wireless_serial_t WirelessSerial = /*与CUART相同*/
 {
         .Init = WirelessSerial_Init,
         .Self = &WirelessSerial

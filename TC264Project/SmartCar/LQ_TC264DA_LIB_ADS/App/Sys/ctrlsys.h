@@ -10,6 +10,22 @@
 
 #include "chipdatatype.h"
 
+#define MSU MSUnit
+#define MDU MDUnit
+#define MEU MEUnit
+
+#define SSU SSUnit
+#define SDU SDUnit
+#define SEU SEUnit
+
+#define MSUnit MSensorUnit
+#define MDUnit MDecisionUnit
+#define MEUnit MExecutionUnit
+
+#define SSUnit SSensorUnit
+#define SDUnit SDecisionUnit
+#define SEUnit SExecutionUnit
+
 #define MSensorUnit     MotorSys.SensorUnit
 #define MDecisionUnit   MotorSys.DecisionUnit
 #define MExecutionUnit  MotorSys.ExecutionUnit

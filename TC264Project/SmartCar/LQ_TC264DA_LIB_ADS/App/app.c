@@ -14,21 +14,21 @@
  * */
 void Ctrl_InterruptRun()
 {
-    MDecisionUnit.Run(MDecisionUnit.Self,&Data[data_pointer],sizeof(data_t));
-    SDecisionUnit.Run(SDecisionUnit.Self,&Data[data_pointer],sizeof(data_t));
+    MDU.Run(MDU.Self,&Data[data_pointer],sizeof(data_t));
+    SDU.Run(SDU.Self,&Data[data_pointer],sizeof(data_t));
 
     SpecialElementCorrection(&Data[data_pointer]);
 
-    MExecutionUnit.Run(MExecutionUnit.Self,&Data[data_pointer],sizeof(data_t));
-    SExecutionUnit.Run(SExecutionUnit.Self,&Data[data_pointer],sizeof(data_t));
+    MEU.Run(MEU.Self,&Data[data_pointer],sizeof(data_t));
+    SEU.Run(SEU.Self,&Data[data_pointer],sizeof(data_t));
 }
 /*
  * @Brief:loop in the interrupt
  * */
 void Sensor_InterruptRun()
 {
-    MSensorUnit.Run(MSensorUnit.Self,&Data[data_pointer],sizeof(data_t));
-    SSensorUnit.Run(SSensorUnit.Self,&Data[data_pointer],sizeof(data_t));
+    MSU.Run(MSU.Self,&Data[data_pointer],sizeof(data_t));
+    SSU.Run(SSU.Self,&Data[data_pointer],sizeof(data_t));
 }
 
 /*
