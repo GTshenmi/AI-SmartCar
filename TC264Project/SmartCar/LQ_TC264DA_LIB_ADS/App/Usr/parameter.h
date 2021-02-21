@@ -49,7 +49,7 @@ typedef struct
 
       uint AI_State;
 
-      uint16_t CarState;
+      uint CarState;
 
       const uint CarMode;
 }data_t;
