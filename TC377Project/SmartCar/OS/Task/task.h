@@ -19,5 +19,8 @@ typedef struct
 }task_t;
 
 void Task_KeyScan(void *argv,uint16_t argc);
+void Task_UiUpdate(void *argv,uint16_t argc);
+void Task_DebugConsole(void *argv,uint16_t argc);
+void Task_SoftTimerUpdate(void *argv,uint16_t argc);
 
 #endif /* OS_TASK_TASK_H_ */

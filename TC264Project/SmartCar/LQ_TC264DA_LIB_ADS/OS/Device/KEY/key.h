@@ -32,7 +32,7 @@ typedef struct key
 {
     private
 
-        gpiox_t *GPIODevice;
+        gpiox_t *GPIOn;
 
         uint8_t KeyShield;                //按键屏蔽1:屏蔽，0:不屏蔽
         uint8_t Count;                    //按键长按计数

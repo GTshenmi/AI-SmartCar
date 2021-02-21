@@ -155,12 +155,12 @@ void ServoSetState(struct servo_ctrl *self,servo_state_t state)
 void ServoDriver(struct servo_ctrl *self,uint16_t value)
 {
     self->PwmValue = value;
-    PWMx.Write(self->PwmDevice,self->PwmValue);
+    PWMx.Write(self->Pwmn,self->PwmValue);
 }
 
 uint8_t ServoInit(struct servo_ctrl *self)
 {
-    PWMx.Init(self->PwmDevice);
+    PWMx.Init(self->Pwmn);
 
     self->Argv = NULL;
     self->Argc = 0;
@@ -168,7 +168,7 @@ uint8_t ServoInit(struct servo_ctrl *self)
     self->AngleCache = 0.0;
     self->MaxAngle = 90;
     self->MinAngle = -90;
-    self->MPUDevice = NULL;
+    self->MPUn = NULL;
     self->PwmCentValue = 0;
     self->PwmValue = 0;
 

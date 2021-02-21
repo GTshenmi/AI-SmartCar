@@ -53,6 +53,8 @@ void SoftTimerStop(uint16_t id);
 uint8_t SoftTimerGetStates(uint16_t id);
 uint8_t SoftTimerUpdate(uint16_t id);
 uint16_t SoftTimerFindFreeTimer();
-void Task_SoftTimerUpdate(void *argv,uint16_t argc);
+
+extern const uint32_t softTimerNum;
+
 
 #endif /* OS_DEVICE_TIMER_SOFTTIMER_H_ */

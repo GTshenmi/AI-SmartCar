@@ -56,7 +56,7 @@ uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
 
 sint16_t MotorGetSpeed(struct motor_ctrl *self)
 {
-    uint16_t speed = ENCx.Read(self->EncDevice);
+    uint16_t speed = ENCx.Read(self->Encn);
 
     if(speed > self->MaxSpeed)
       speed = self->MaxSpeed;
@@ -165,23 +165,45 @@ void MotorDriver(struct motor_ctrl *self,sint16_t value)
 {
     self->PwmValue = (uint16_t)abs(value);
 
+#if defined(DriverChip)
+    #if DriverChip == Drv8701
     if(value > 0)
     {
-        PWMx.Write(self->PwmDevice[0],self->PwmValue);
-        PWMx.Write(self->PwmDevice[1],0);
+        PWMx.Write(self->Pwmn[0],self->PwmValue);
+        PWMx.Write(self->Pwmn[1],PWMx.MinPwmDuty);
     }
     else
     {
-        PWMx.Write(self->PwmDevice[0],0);
-        PWMx.Write(self->PwmDevice[1],self->PwmValue);
+        PWMx.Write(self->Pwmn[0],self->PwmValue);
+        PWMx.Write(self->Pwmn[1],PWMx.MaxPwmDuty);
     }
+    #elif (DriverChip == IR7843) || (DriverChip ==BTN7971)
+    if(value > 0)
+    {
+        PWMx.Write(self->Pwmn[0],self->PwmValue);
+        PWMx.Write(self->Pwmn[1],PWMx.MinPwmDuty);
+    }
+    else
+    {
+        //PWMx.Write(self->Pwmn[0],self->Pwmn[0]->Freq + value);
+        PWMx.Write(self->Pwmn[0],PWMx.MaxPwmDuty + value);
+        PWMx.Write(self->Pwmn[1],PWMx.MaxPwmDuty);
+    }
+    #else
+
+        #error Unknow DriverChip.Please Write Driver Function in motor.c.
+
+    #endif
+#else
+    #error Undefined DriverChip.Please Check The Definition in motor.h.
+#endif
 }
 
 uint8_t MotorInit(struct motor_ctrl *self)
 {
-    PWMx.Init(self->PwmDevice[0]);
-    PWMx.Init(self->PwmDevice[1]);
-    ENCx.Init(self->EncDevice);
+    PWMx.Init(self->Pwmn[0]);
+    PWMx.Init(self->Pwmn[1]);
+    ENCx.Init(self->Encn);
 
     self->Argv = NULL;
     self->Argc = 0;

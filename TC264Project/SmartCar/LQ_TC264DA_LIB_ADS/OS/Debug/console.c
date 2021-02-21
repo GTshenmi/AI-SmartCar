@@ -6,7 +6,7 @@
  */
 #include "console.h"
 
-void Task_DebugConsole(void *argv,uint16_t argc)
+void DebugConsole(void *argv,uint16_t argc)
 {
 
 }

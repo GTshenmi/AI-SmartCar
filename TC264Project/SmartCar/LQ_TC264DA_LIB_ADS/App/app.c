@@ -102,17 +102,15 @@ void Core1_Main()
  * */
 void Core2_Main()
 {
-    data_t *pdata = &Data[data_pointer];
-    uint16_t size = sizeof(Data[data_pointer]);
     while(1)
     {
-        os.task.SoftTimerUpdate(pdata,size);
+        os.task.SoftTimerUpdate(NULL,0);
 
-        os.task.KeyScan(pdata,size);
+        os.task.KeyScan(NULL,0);
 
-        os.task.UiUpdate(pdata,size);
+        os.task.UiUpdate(&UIData,sizeof(UIData));
 
-        os.task.DebugConsole(pdata,size);
+        os.task.DebugConsole(NULL,0);
     }
 }
 

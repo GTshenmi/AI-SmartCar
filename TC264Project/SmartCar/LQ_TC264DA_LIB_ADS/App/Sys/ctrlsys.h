@@ -57,7 +57,6 @@ typedef struct ctrlsys
         unit_t SensorUnit;
         unit_t DecisionUnit;
         unit_t ExecutionUnit;
-        //void *UsrData;
         struct ctrlsys *Self;
 }ctrlsys_t;
 

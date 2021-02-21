@@ -33,7 +33,7 @@ typedef struct esensor
 {
     private
 
-        adcx_t *ADCDevice;
+        adcx_t *ADCn;
         uint16_t FilterBuf[10];
         uint16_t FilterBufLen;
 

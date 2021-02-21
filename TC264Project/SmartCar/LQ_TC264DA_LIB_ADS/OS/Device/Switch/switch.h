@@ -20,7 +20,7 @@ typedef struct switchx
     private
 
         switch_state_t State;                    //按键状态
-        gpiox_t *GPIODevice;
+        gpiox_t *GPIOn;
         uint8_t Level;                           //虚拟当前IO电平，按下1，抬起0
         uint8_t DownLevel;                       //按下时IO实际的电平
         uint8_t (*ReadIOLevel)(struct switchx *self);

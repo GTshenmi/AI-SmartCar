@@ -14,6 +14,7 @@ void Core0_SoftWareInit_AIMode(void);
 void Core0_SoftWareInit_AutoBootMode(void);
 void Core0_SoftWareInit_ManualBootMode(void);
 void Core0_SoftWareInit_DebugMode(void);
+void UIParameterInit(void);
 
 void BEEP_OFF_TMR_CALLBACK(void *argc,unsigned short argv)
 {
@@ -73,10 +74,10 @@ void Core0_SoftWareInit()
     Motor.CtrlStrategy = MotorCtrlStrategy;
     Servo.CtrlStrategy = ServoCtrlStrategy;
 
-    MExecutionUnit.Run = Motor_ExecutionUnitRun;
-    SExecutionUnit.Run = Servo_ExecutionUnitRun;
-    MSensorUnit.Run = Motor_SensorUnitRun;
-    SSensorUnit.Run = Servo_SensorUnitRun;
+    MEU.Run = Motor_ExecutionUnitRun;
+    SEU.Run = Servo_ExecutionUnitRun;
+    MSU.Run = Motor_SensorUnitRun;
+    SSU.Run = Servo_SensorUnitRun;
 
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
@@ -101,6 +102,8 @@ void Core0_SoftWareInit()
         default:
             break;
     }
+
+    UIParameterInit();
 }
 
 /*
@@ -182,4 +185,58 @@ void Core0_SoftWareInit_DebugMode(void)
     PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
 }
 
+void UIParameterInit(void)
+{
+#if EnableUiDataLink
+
+    UIData.Actual_Speed = &Data[data_pointer].Actual_Speed;;
+    UIData.Angle =        &Data[data_pointer].Angle;
+    UIData.Bias =         &Data[data_pointer].Bias;
+    UIData.MPID_Kd =      &Data[data_pointer].M_PID.Kd;
+    UIData.MPID_Ki =      &Data[data_pointer].M_PID.Ki;
+    UIData.MPID_Kp =      &Data[data_pointer].M_PID.Kp;
+    UIData.MPID_Result =  &Data[data_pointer].M_PID.Result;
+    UIData.M_PwmDuty =    &Motor.PwmValue;
+    UIData.SPID_Kd =      &Data[data_pointer].S_PID.Kd;
+    UIData.SPID_Ki =      &Data[data_pointer].S_PID.Ki;
+    UIData.SPID_Kp =      &Data[data_pointer].S_PID.Kp;
+    UIData.SPID_Result =  &Data[data_pointer].S_PID.Result;
+    UIData.S_PwmDuty =    &Servo.PwmValue;
+    UIData.Speed =        &Data[data_pointer].Speed;
+
+    UIData.SADC =          Data[data_pointer].SADC_Value;
+    UIData.LADC =          Data[data_pointer].LADC_Value;
+    UIData.NLADC  =        Data[data_pointer].N_LADC;
+    UIData.NSADC =         Data[data_pointer].N_SADC;
+
+    //UIData.NActual_Speed = &Data[data_pointer].Actual_Speed;
+    //UIData.NAngle = NULL;
+    //UIData.NSpeed = &Data[data_pointer].Speed;
+
+#else
+
+    UIData.Actual_Speed = NULL;
+    UIData.Angle = NULL;
+    UIData.Bias = NULL;
+    UIData.LADC = NULL;
+    UIData.MPID_Kd = NULL;
+    UIData.MPID_Ki = NULL;
+    UIData.MPID_Kp = NULL;
+    UIData.MPID_Result = NULL;
+    UIData.M_PwmDuty = NULL;
+    UIData.NActual_Speed = NULL;
+    UIData.NAngle = NULL;
+    UIData.NLADC  = NULL;
+    UIData.NSADC = NULL;
+    UIData.NSpeed = NULL;
+    UIData.SADC = NULL;
+    UIData.SPID_Kd = NULL;
+    UIData.SPID_Ki = NULL;
+    UIData.SPID_Kp = NULL;
+    UIData.SPID_Result = NULL;
+    UIData.S_PwmDuty = NULL;
+    UIData.Speed = NULL;
+
+#endif
+}
 

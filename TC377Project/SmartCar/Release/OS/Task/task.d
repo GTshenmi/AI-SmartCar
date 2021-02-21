@@ -224,3 +224,5 @@ task.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 task.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
+task.o :	../OS/UI/ui.h
+../OS/UI/ui.h :

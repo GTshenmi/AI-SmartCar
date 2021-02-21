@@ -14,7 +14,7 @@ typedef struct beep
 {
     private
 
-    gpiox_t *GPIODevice;
+    gpiox_t *GPIOn;
     uint8_t ONLevel;
 
     public

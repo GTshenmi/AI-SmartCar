@@ -6,6 +6,25 @@
  */
 #include "task.h"
 #include "softtimer.h"
+#include "ui.h"
+
+void Task_SoftTimerUpdate(void *argv,uint16_t argc)
+{
+    for(uint16_t i = 0;i< softTimerNum;i++)
+    {
+        SoftTimerUpdate((uint16_t)i);
+    }
+}
+
+void Task_DebugConsole(void *argv,uint16_t argc)
+{
+
+}
+
+void Task_UiUpdate(void *argv,uint16_t argc)
+{
+    UI_Update(argv,argc);
+}
 
 void Task_KeyScan(void *argv,uint16_t argc)
 {

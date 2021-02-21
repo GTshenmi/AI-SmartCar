@@ -18,11 +18,11 @@
  * */
 void Motor_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
-        usrdata->Actual_Speed = Motor.GetSpeed(Motor.Self);
+        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
     }
 }
 /*
@@ -31,23 +31,23 @@ void Motor_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
  * */
 void Servo_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
     if(self->State == CtrlSys_Running)
     {
         for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
-            usrdata->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
+            data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
         for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
-            usrdata->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
+            data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
 
         /*归一化*/
         for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
-            usrdata->N_LADC[i] = 100.0 * NormalizeFloat(usrdata->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+            data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
         for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
-            usrdata->N_SADC[i] = 100.0 * NormalizeFloat(usrdata->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+            data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
 
         /*通知神经网络开始解算*/
-        if(usrdata->AI_State == AI_Free)
-            usrdata->AI_State = AI_Start;
+        if(data->AI_State == AI_Free)
+            data->AI_State = AI_Start;
     }
 }
 
@@ -66,11 +66,11 @@ void Servo_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
  * */
 void Motor_DecisionUnitRun_AIMode(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
-        usrdata->Speed = 2000;
+        data->Speed = 2000;
     }
 }
 /*
@@ -80,7 +80,7 @@ void Motor_DecisionUnitRun_AIMode(struct unit *self,void *argv,uint16_t argc)
  * */
 void Servo_DecisionUnitRun_AIMode(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
@@ -92,28 +92,28 @@ void Servo_DecisionUnitRun_AIMode(struct unit *self,void *argv,uint16_t argc)
         uint32_t dt = 0;
 
         /*等待神经网络解算完成*/
-        while(usrdata->AI_State != AI_Fin)
+        while(data->AI_State != AI_Fin)
         {
             dt = os.time.get_timems() - systimenow;
             if(dt > 2)
                 break;
         }
 
-        if(usrdata->AI_State == AI_Fin)
+        if(data->AI_State == AI_Fin)
         {
             /*中线偏差大于20.0时(弯道)使用动态PID*/
-            if(fabs(usrdata->Bias) >= 20.0)
-                usrdata->S_PID.Kp += usrdata->Bias * usrdata->Bias * 0.000332;
+            if(fabs(data->Bias) >= 20.0)
+                data->S_PID.Kp += data->Bias * data->Bias * 0.000332;
             /*动态PID限幅*/
-            if(usrdata->S_PID.Kp > 0.8)
-                usrdata->S_PID.Kp = 0.8;
+            if(data->S_PID.Kp > 0.8)
+                data->S_PID.Kp = 0.8;
 
-            PID_Ctrl(&usrdata->S_PID,0,usrdata->Bias);
+            PID_Ctrl(&data->S_PID,0,data->Bias);
 
-            usrdata->Angle = (uint16_t)(FIR_Filter(Ka,angle,usrdata->S_PID.Result,5));
+            data->Angle = (uint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
             /*神经网络重新解算*/
-            usrdata->AI_State = AI_Free;
+            data->AI_State = AI_Free;
 
         }
     }
@@ -137,11 +137,11 @@ void Servo_DecisionUnitRun_AIMode(struct unit *self,void *argv,uint16_t argc)
  * */
 void Motor_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
-        usrdata->Speed = 2000;
+        data->Speed = 2000;
     }
 }
 /*
@@ -151,7 +151,7 @@ void Motor_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
  * */
 void Servo_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
@@ -177,18 +177,18 @@ void Servo_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
 //        };
         static float angle[5] = {0.0};
 
-        usrdata->Bias = (sint16_t)FIR_Filter(Kb,dis,100.0 * CalculateDistanceDifDivSum(usrdata->N_LADC[0],usrdata->N_LADC[4]),33);
+        data->Bias = FIR_Filter(Kb,dis,100.0 * CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[4]),33);
 
         /*中线偏差大于20.0时(弯道)使用动态PID*/
         if(fabs(dis[4]) >= 20.0)
-            usrdata->S_PID.Kp += usrdata->Bias * usrdata->Bias * 0.000332;
+            data->S_PID.Kp += data->Bias * data->Bias * 0.000332;
         /*动态PID限幅*/
-        if(usrdata->S_PID.Kp > 0.8)
-            usrdata->S_PID.Kp = 0.8;
+        if(data->S_PID.Kp > 0.8)
+            data->S_PID.Kp = 0.8;
 
-        PID_Ctrl(&usrdata->S_PID,0,usrdata->Bias);
+        PID_Ctrl(&data->S_PID,0,data->Bias);
 
-        usrdata->Angle = (uint16_t)(FIR_Filter(Ka,angle,usrdata->S_PID.Result,5));
+        data->Angle = (uint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
         SaveAutoBootModeData(argv);
     }
@@ -214,11 +214,11 @@ void Servo_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
  * */
 void Motor_DecisionUnitRun_ManualBootMode(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
-        usrdata->Speed = 2000;
+        data->Speed = 2000;
     }
 }
 /*
@@ -228,18 +228,18 @@ void Motor_DecisionUnitRun_ManualBootMode(struct unit *self,void *argv,uint16_t 
  * */
 void Servo_DecisionUnitRun_ManualBootMode(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata = (data_t *)argv;
+    data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
         float dis = 0.0;
 
         /*ADC Value -> dis*/
-        usrdata->S_PID.Kp += dis * dis * 0.1;
+        data->S_PID.Kp += dis * dis * 0.1;
 
-        PID_Ctrl(&usrdata->S_PID,0,usrdata->Bias);
+        PID_Ctrl(&data->S_PID,0,data->Bias);
 
-        usrdata->Angle = (uint16_t)usrdata->S_PID.Result;
+        data->Angle = (uint16_t)data->S_PID.Result;
     }
 }
 
@@ -262,7 +262,7 @@ void Servo_DecisionUnitRun_ManualBootMode(struct unit *self,void *argv,uint16_t 
  * */
 void Motor_DecisionUnitRun_DebugMode(struct unit *self,void *argv,uint16_t argc)
 {
-   // data_t *usrdata = (data_t *)argv;
+   // data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {
@@ -276,7 +276,7 @@ void Motor_DecisionUnitRun_DebugMode(struct unit *self,void *argv,uint16_t argc)
  * */
 void Servo_DecisionUnitRun_DebugMode(struct unit *self,void *argv,uint16_t argc)
 {
- //   data_t *usrdata = (data_t *)argv;
+ //   data_t *data = (data_t *)argv;
 
     if(self->State == CtrlSys_Running)
     {

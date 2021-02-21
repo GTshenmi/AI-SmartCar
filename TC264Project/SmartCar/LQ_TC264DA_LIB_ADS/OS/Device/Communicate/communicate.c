@@ -12,13 +12,13 @@ uint8_t CommTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t
     {
         if(time_out == 0)
             time_out = SPIx.Time_Infinite;
-        return SPIx.ReadWriteBytes((spix_t *)self->CommunicationDevice,str,NULL,len,time_out);
+        return SPIx.ReadWriteBytes((spix_t *)self->Communicatorn,str,NULL,len,time_out);
     }
     else if(self->CommunicationType == C_UART)
     {
         if(time_out == 0)
             time_out = UARTx.Time_Infinite;
-        return UARTx.WriteBytes((uartx_t *)self->CommunicationDevice,str,len,time_out);
+        return UARTx.WriteBytes((uartx_t *)self->Communicatorn,str,len,time_out);
     }
     return 0;
 }
@@ -28,13 +28,13 @@ uint8_t CommReceive(struct communicate *self,uint8_t *str,uint32_t len,sint64_t 
     {
         if(time_out == 0)
             time_out = SPIx.Time_Infinite;
-        return SPIx.ReadWriteBytes((spix_t *)self->CommunicationDevice,NULL,str,len,time_out);
+        return SPIx.ReadWriteBytes((spix_t *)self->Communicatorn,NULL,str,len,time_out);
     }
     else if(self->CommunicationType == C_UART)
     {
         if(time_out == 0)
             time_out = UARTx.Time_Infinite;
-        return UARTx.ReadBytes((uartx_t *)self->CommunicationDevice,str,len,time_out);
+        return UARTx.ReadBytes((uartx_t *)self->Communicatorn,str,len,time_out);
     }
     return 0;
 }
@@ -139,11 +139,11 @@ uint8_t CommInit(struct communicate *self)
 
     if(self->CommunicationType == C_SPI)
     {
-        res = SPIx.Init((spix_t *)self->CommunicationDevice);
+        res = SPIx.Init((spix_t *)self->Communicatorn);
     }
     else if(self->CommunicationType == C_UART)
     {
-        res = UARTx.Init((uartx_t *)self->CommunicationDevice);
+        res = UARTx.Init((uartx_t *)self->Communicatorn);
     }
 
     return res;

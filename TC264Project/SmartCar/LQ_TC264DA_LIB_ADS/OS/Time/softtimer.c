@@ -7,19 +7,8 @@
 #include <softtimer.h>
 
 static uint32_t softTimerBase;
-const static uint32_t softTimerNum = 11;
+const uint32_t softTimerNum = 11;
 static softtimer_t softTimer[11];
-
-void Task_SoftTimerUpdate(void *argv,uint16_t argc)
-{
-    for(uint16_t i = 0;i< softTimerNum;i++)
-    {
-        if(softTimer[i].State != SoftTimer_Stopped)
-        {
-            SoftTimerUpdate((uint16_t)i);
-        }
-    }
-}
 
 void OSTimeCallBack()
 {

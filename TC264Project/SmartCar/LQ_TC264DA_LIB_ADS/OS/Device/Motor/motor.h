@@ -10,6 +10,13 @@
 
 #include "driver.h"
 
+#define Drv8701 0
+#define IR7843  1
+#define BTN7971 2
+#define OtherDriverChip   3
+
+#define DriverChip Drv8701
+
 typedef enum
 {
     Motor_Running,Motor_Sleeping,Motor_Stopped,Motor_Stalling,Motor_Normal_Stopping,Motor_Force_Stopping,
@@ -44,10 +51,10 @@ typedef struct motor_ctrl
  * */
     private
 
-        pwmx_t *PwmDevice[2];
-        encx_t *EncDevice;
+        pwmx_t *Pwmn[2];
+        encx_t *Encn;
 
-        uint16_t PwmValue;
+        uint16_t PwmValue;/*Õ¼¿Õ±È*/
 
         motor_state_t State;
 

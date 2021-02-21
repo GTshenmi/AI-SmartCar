@@ -30,60 +30,61 @@ extern print_var_t var;
 
 #define typecmp(x,y) (!strcmp((getTypeName(x)),y))
 
-#define printb(var)\
+#define printbool(var)\
 {                                           \
     printf("%s = %s\n",(#var),(var?"true":"false"));\
 }
 
-#define printc(var)\
+#define printchar(var)\
 {                                           \
     printf("%s = %c\n",(#var),(var));\
 }
 
-#define prints(var)\
+#define printstring(var)\
 {                                           \
     printf("%s = %s\n",(#var),(var));\
 }
 
-#define printi(var)                   \
+#define printint(var)                   \
 {                                           \
     printf("%s = %d\n",(#var),(var));\
 }
 
-#define printu(var)\
+#define printunsigned(var)\
 {                                           \
     printf("%s = %u\n",(#var),(var));\
 }
 
-#define printd(var)\
+#define printdouble(var)\
 {                                           \
     printf("%s = %f\n",(#var),(var));\
 }
 
 #define _print(var,type)\
 {\
+    char vartype = type;\
     switch(type)\
     {\
        case 'd':\
-           printi(var);\
+           printint(var);\
            break;\
        case 's':\
-           prints(var);\
+           printstring(var);\
            break;\
        case 'u':\
-           printu(var);\
+           printunsigned(var);\
            break;\
        case 'b':\
-           printb(var);\
+           printbool(var);\
            break;\
        case 'c':\
-           printc(var);\
+           printchar(var);\
            break;\
        case 'f':\
-           printd(var);\
+           printdouble(var);\
            break;\
        default:\
-           printd(var * 1.0);\
+           printdouble(var * 1.0);\
            break;\
     }\
 }

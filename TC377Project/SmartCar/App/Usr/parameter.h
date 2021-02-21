@@ -32,7 +32,7 @@ typedef struct
       PID_TypeDef M_PID;     /*电机速度的PID控制器*/
       PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
 
-      sint16_t Bias;     /*实际中线偏差*/
+      float Bias;            /*实际中线偏差*/
 
       sint16_t Actual_Speed; /*实际速度*/
 

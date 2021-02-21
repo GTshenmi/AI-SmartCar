@@ -21,7 +21,7 @@ typedef struct communicate
 {
      private
 
-        void *CommunicationDevice;
+        void *Communicatorn;
         uint32_t CommunicationType;
 
      public

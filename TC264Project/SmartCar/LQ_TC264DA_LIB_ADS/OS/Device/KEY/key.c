@@ -148,7 +148,7 @@ void KEY_DefaultCallBack(struct key *self,void *argv,uint16_t argc)
 
 uint8_t KEY_ReadIOLevel(struct key *self)
 {
-    return GPIOx.Read(self->GPIODevice);
+    return GPIOx.Read(self->GPIOn);
 }
 
 
@@ -183,6 +183,6 @@ uint8_t KEY_Init(struct key *self)
     self->SetDownLevel(self,0);
     self->SetShield(self,false);
 
-    return GPIOx.Init(self->GPIODevice);
+    return GPIOx.Init(self->GPIOn);
 }
 

@@ -111,13 +111,13 @@ void ESensorBindUsrData(struct esensor *self,void *argv,uint16_t argc)
 #if ESENSOR_FAST_READ_LEVEL == ESENSOR_FAST_READ_LEVEL_0
 uint16_t ESensor_ReadADC(struct esensor *self)
 {
-    return ADCx.Read(self->ADCDevice);
+    return ADCx.Read(self->ADCn);
 }
 #endif
 
 uint16_t ESensorInit(struct esensor *self)
 {
-    ADCx.Init(self->ADCDevice);
+    ADCx.Init(self->ADCn);
 
     self->Argv = NULL;
     self->Argc = 0;

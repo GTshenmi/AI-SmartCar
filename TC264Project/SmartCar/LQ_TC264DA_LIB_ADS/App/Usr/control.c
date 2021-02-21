@@ -16,11 +16,11 @@
  * */
 void Motor_ExecutionUnitRun(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata =(data_t *) argv;
+    data_t *data =(data_t *) argv;
 
     if(self->State == CtrlSys_Running)
     {
-        Motor.SetSpeed(Motor.Self,usrdata->Speed);
+        Motor.SetSpeed(Motor.Self,data->Speed);
     }
 }
 /*
@@ -29,11 +29,11 @@ void Motor_ExecutionUnitRun(struct unit *self,void *argv,uint16_t argc)
  * */
 void Servo_ExecutionUnitRun(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *usrdata =(data_t *) argv;
+    data_t *data =(data_t *) argv;
 
     if(self->State == CtrlSys_Running)
     {
-        Servo.SetAngle(Servo.Self,usrdata->Angle);
+        Servo.SetAngle(Servo.Self,data->Angle);
     }
 }
 
@@ -55,7 +55,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,signed short target_speed,sig
 
     if(fabs(data->M_PID.PID_Error[2]) > 20.0)
     {
-        PwmValue = (sint16_t)(PWMx.MaxPwm * fsign(data->M_PID.PID_Error[2]) * 0.8);
+        PwmValue = (sint16_t)(PWMx.MaxPwmDuty * fsign(data->M_PID.PID_Error[2]) * 0.8);
     }
     else
     {

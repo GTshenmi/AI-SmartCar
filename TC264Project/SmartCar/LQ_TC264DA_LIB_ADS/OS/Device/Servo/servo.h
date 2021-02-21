@@ -49,14 +49,14 @@ typedef struct servo_ctrl
  * */
     private
 
-        pwmx_t *PwmDevice;
-        mpu_t *MPUDevice;
+        pwmx_t *Pwmn;
+        mpu_t *MPUn;
 
         sint16_t MaxAngle;
         sint16_t MinAngle;
 
-        uint16_t PwmValue;
-        uint16_t PwmCentValue;
+        uint16_t PwmValue;     /*占空比*/
+        uint16_t PwmCentValue; /*舵机中心值*/
 
         uint32_t StallingTime;
 
