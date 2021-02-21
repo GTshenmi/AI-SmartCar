@@ -39,7 +39,7 @@ typedef struct
 
       sint16_t Speed;        /*速度*/
       sint16_t Angle;        /*角度*/
-      uint16_t ElementType;  /*赛道元素类型*/
+      uint ElementType;  /*赛道元素类型*/
 
       uint16_t LADC_Value[5]; /*ADC值*/
       uint16_t SADC_Value[7]; /*ADC值*/
@@ -47,9 +47,11 @@ typedef struct
       float N_LADC[5];/*归一化后的长前瞻参数*/
       float N_SADC[7];/*归一化后的短前瞻参数*/
 
-      ai_state_t AI_State;
+      uint AI_State;
 
-      const car_mode_t CarMode;
+      uint16_t CarState;
+
+      const uint CarMode;
 }data_t;
 
 typedef struct

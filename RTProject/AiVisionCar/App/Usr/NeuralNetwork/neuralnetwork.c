@@ -40,18 +40,18 @@ uint16_t ElementModelRun(void *input)
 {
     float P[3] = {0.0};
 
-   // float *Output = NULL;
-
-    //int16_t output[3] = {0};
-
-    //Output = (float *)Model_Run(element_model,input,output);
-
-    for(int i = 0; i < 3 ;i++)
-    {
-        //P[i] = *(Output+i);
-
-        //P[i] = output[i] * 1.0;
-    }
+//    float *Output = NULL;
+//
+//    int16_t output[3] = {0};
+//
+//    Output = (float *)Model_Run(element_model,input,output);
+//
+//    for(int i = 0; i < 3 ;i++)
+//    {
+//        P[i] = *(Output+i);
+//
+//        //P[i] = output[i] * 1.0;
+//    }
 
     return FindMaxIndex(P,3);
 }

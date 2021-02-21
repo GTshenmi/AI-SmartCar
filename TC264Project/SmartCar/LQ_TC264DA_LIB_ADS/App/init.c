@@ -209,6 +209,19 @@ void UIParameterInit(void)
     UIData.NLADC  =        Data[data_pointer].N_LADC;
     UIData.NSADC =         Data[data_pointer].N_SADC;
 
+    UIData.CarState =    (uint *)&Data[data_pointer].CarState;
+    UIData.CarMode =     (uint *)&Data[data_pointer].CarMode;
+    UIData.AI_State =    (uint *)&Data[data_pointer].AI_State;
+    UIData.ElementType = (uint *)&Data[data_pointer].ElementType;
+
+    UIData.MotorSysState[0] = (uint *)&MSU.State;
+    UIData.MotorSysState[1] = (uint *)&MDU.State;
+    UIData.MotorSysState[2] = (uint *)&MEU.State;
+    UIData.ServoSysState[0] = (uint *)&SSU.State;
+    UIData.ServoSysState[1] = (uint *)&SDU.State;
+    UIData.ServoSysState[2] = (uint *)&SEU.State;
+
+
     //UIData.NActual_Speed = &Data[data_pointer].Actual_Speed;
     //UIData.NAngle = NULL;
     //UIData.NSpeed = &Data[data_pointer].Speed;
@@ -236,6 +249,16 @@ void UIParameterInit(void)
     UIData.SPID_Result = NULL;
     UIData.S_PwmDuty = NULL;
     UIData.Speed = NULL;
+
+    UIData.CarState =    NULL;
+    UIData.CarMode =     NULL;
+    UIData.AI_State = NULL;
+    UIData.MotorSysState[0] = NULL;
+    UIData.MotorSysState[1] = NULL;
+    UIData.MotorSysState[2] = NULL;
+    UIData.ServoSysState[0] = NULL;
+    UIData.ServoSysState[1] = NULL;
+    UIData.ServoSysState[2] = NULL;
 
 #endif
 }
