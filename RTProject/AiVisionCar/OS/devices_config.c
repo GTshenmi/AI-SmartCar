@@ -33,7 +33,9 @@ capture_t Capture = /*unknow*/
         {
                 .Hight = 120,
                 .Width = 188,
-                //.Array = (uint8_t **)Image_Data,
+#if ((defined(Chip)) && ((Chip == TC264) || (Chip == TC377)))
+                .Array = (uint8_t **)Image_Data,
+#endif
         },
 
 };

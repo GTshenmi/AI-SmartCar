@@ -278,3 +278,5 @@ task.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 task.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+task.o :	../OS/Debug/console.h
+../OS/Debug/console.h :

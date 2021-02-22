@@ -88,14 +88,14 @@ void Servo_DecisionUnitRun_AIMode(struct unit *self,void *argv,uint16_t argc)
 
         static float angle[5] = {0.0};
 
-        uint32_t systimenow = os.time.get_timems();
-        uint32_t dt = 0;
+        float systimenow = os.time.getTime(ms);
+        float dt = 0.0;
 
         /*等待神经网络解算完成*/
         while(data->AI_State != AI_Fin)
         {
-            dt = os.time.get_timems() - systimenow;
-            if(dt > 2)
+            dt = os.time.getTime(ms) - systimenow;
+            if(dt > 2.0)
                 break;
         }
 

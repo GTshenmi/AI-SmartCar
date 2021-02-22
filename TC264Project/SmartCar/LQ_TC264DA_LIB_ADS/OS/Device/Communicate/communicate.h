@@ -1,5 +1,5 @@
 /*
- * transmitter.h
+ * communicate.h
  *
  *  Created on: 2020Äê12ÔÂ13ÈÕ
  *      Author: 936305695

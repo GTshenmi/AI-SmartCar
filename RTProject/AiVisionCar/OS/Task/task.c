@@ -7,6 +7,7 @@
 #include "task.h"
 #include "softtimer.h"
 #include "ui.h"
+#include "console.h"
 
 void Task_SoftTimerUpdate(void *argv,uint16_t argc)
 {
@@ -18,7 +19,7 @@ void Task_SoftTimerUpdate(void *argv,uint16_t argc)
 
 void Task_DebugConsole(void *argv,uint16_t argc)
 {
-
+    Console.Update(argv,argc);
 }
 
 void Task_UiUpdate(void *argv,uint16_t argc)

@@ -10,6 +10,21 @@
 
 #include "device.h"
 
-void DebugConsole(void *argv,uint16_t argc);
+#define CONSOLE_MAX_FMT_LEN 128
+
+typedef struct
+{
+    void     (*Init)(void);
+    uint32_t (*Write)(const char *fmt,...);
+    uint32_t (*WriteLine)(const char *fmt,...);
+    uint32_t (*Read)(const char *fmt,...);
+    uint32_t (*ReadLine)(const char *fmt,...);
+
+    int32_t  (*ReadKey)(void);/*不要在OS文件内使用*/
+
+    void     (*Update)(void *argv,uint16_t argc);
+}console_t;
+
+extern console_t Console;
 
 #endif /* OS_DEBUG_CONSOLE_H_ */

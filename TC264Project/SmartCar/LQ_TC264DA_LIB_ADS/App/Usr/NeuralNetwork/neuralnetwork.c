@@ -64,3 +64,13 @@ sint16_t TrackingModelRun(void *input)
     return angle;
 }
 
+#if defined(Chip) && Chip == RT1064
+void get_model_info(const void *in_buf, model_info_struct *inf)
+{
+
+}
+void* run_model(const void *model_buf, const void *in_buf, signed short int *out1_buf)
+{
+    return NULL;
+}
+#endif

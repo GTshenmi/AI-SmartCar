@@ -55,7 +55,7 @@ extern print_var_t var;
     printf("%s = %u\n",(#var),(var));\
 }
 
-#define printdouble(var)\
+#define printfloat(var)\
 {                                           \
     printf("%s = %f\n",(#var),(var));\
 }
@@ -81,10 +81,10 @@ extern print_var_t var;
            printchar(var);\
            break;\
        case 'f':\
-           printdouble(var);\
+           printfloat(var);\
            break;\
        default:\
-           printdouble(var * 1.0);\
+           printfloat(var * 1.0);\
            break;\
     }\
 }

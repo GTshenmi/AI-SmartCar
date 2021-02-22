@@ -16,7 +16,7 @@ void Core0_SoftWareInit_ManualBootMode(void);
 void Core0_SoftWareInit_DebugMode(void);
 void UIParameterInit(void);
 
-void BEEP_OFF_TMR_CALLBACK(void *argc,unsigned short argv)
+void BeepOffTimerCallBack(void *argc,unsigned short argv)
 {
     BEEP.OFF(BEEP.Self);
 }
@@ -46,7 +46,11 @@ void Core0_HardWareInit()
     for(int i = 0;i<CData.MaxKEYDeviceNum;i++)
         KEY[i].Init(KEY[i].Self);
 
+#if 1
     CUART.Init(CUART.Self);
+#else
+    Console.Init();
+#endif
 
 //    DIPSwitch.Init(DIPSwitch.Self);
 
@@ -55,8 +59,9 @@ void Core0_HardWareInit()
 /*System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
 /*Set BEEP OFF 1 sec later*/
-    os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BEEP_OFF_TMR_CALLBACK,NULL,0);
+    os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
 
+    Console.WriteLine("HardWare System Init Finished.");
 }
 /*
  * @Brief:  核心0软件初始化(参数/函数指针初始化)
@@ -104,6 +109,9 @@ void Core0_SoftWareInit()
     }
 
     UIParameterInit();
+
+    Console.WriteLine("SoftWare System Init Finished.");
+    Console.WriteLine("Wait For Core Sync...");
 }
 
 /*
