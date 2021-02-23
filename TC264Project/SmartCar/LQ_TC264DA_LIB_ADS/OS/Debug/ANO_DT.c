@@ -59,22 +59,22 @@ void ANO_Send8Bit(void *data)
     char *arg = data;
 
     unsigned char  _cnt=0;
-	unsigned char  sum = 0, i = 0;
+    unsigned char  sum = 0, i = 0;
     data_to_send[_cnt++] = 0xAA;      //匿名协议帧头  0xAAAA
-	data_to_send[_cnt++] = 0xAA;
-	data_to_send[_cnt++] = 0xF1;      //使用用户协议帧0xF1
+    data_to_send[_cnt++] = 0xAA;
+    data_to_send[_cnt++] = 0xF1;      //使用用户协议帧0xF1
     data_to_send[_cnt++] = 1;
 
-	data_to_send[_cnt++]=BYTE0(*arg);
+    data_to_send[_cnt++]=BYTE0(*arg);
 
     sum = 0;
 
-	for(i=0;i<_cnt;i++)
-		sum += data_to_send[i];
+    for(i=0;i<_cnt;i++)
+        sum += data_to_send[i];
 
-	data_to_send[_cnt++]=sum;
+    data_to_send[_cnt++]=sum;
 
-	ANO_SendData(data_to_send, _cnt);
+    ANO_SendData(data_to_send, _cnt);
 }
 
 void ANO_Send16Bit(void *data)
