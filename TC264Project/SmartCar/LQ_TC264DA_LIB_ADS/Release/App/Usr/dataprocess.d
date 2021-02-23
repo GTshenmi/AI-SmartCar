@@ -294,10 +294,14 @@ dataprocess.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 dataprocess.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+dataprocess.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 dataprocess.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 dataprocess.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+dataprocess.o :	../OS/Debug/ANO_DT.h
+../OS/Debug/ANO_DT.h :
 dataprocess.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 dataprocess.o :	../App/Sys/ctrlsys.h

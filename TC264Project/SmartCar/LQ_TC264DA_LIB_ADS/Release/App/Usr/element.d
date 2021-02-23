@@ -294,10 +294,14 @@ element.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 element.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+element.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 element.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 element.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+element.o :	../OS/Debug/ANO_DT.h
+../OS/Debug/ANO_DT.h :
 element.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 element.o :	../App/Sys/ctrlsys.h

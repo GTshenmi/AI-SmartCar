@@ -15,8 +15,7 @@
 #include "softtimer.h"
 #include "ostime.h"
 
-#include "print.h"
-#include "console.h"
+#include "debug.h"
 #include "ui.h"
 
 typedef struct

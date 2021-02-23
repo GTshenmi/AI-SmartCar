@@ -40,6 +40,12 @@ typedef struct
 
 }file_t;
 
+int f_scanf (
+    FIL* fp,            /* Pointer to the file object */
+    const TCHAR* fmt,   /* Pointer to the format string */
+    ...                 /* Optional arguments... */
+);
+
 uint8_t FileSys_Init(void);
 uint FileSys_PathIsExists(sint8_t *path);
 

@@ -62,6 +62,11 @@ typedef struct
 
 }constdata_t;
 
+char *GetCarState(uint index);
+char *GetCarMode(uint index);
+char *GetAIState(uint index);
+char *GetElementType(uint index);
+
 extern constdata_t CData;
 
 extern data_t Data[MAX_DATA_LEN];

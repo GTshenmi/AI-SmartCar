@@ -290,9 +290,13 @@ os.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 os.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+os.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 os.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 os.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+os.o :	../OS/Debug/ANO_DT.h
+../OS/Debug/ANO_DT.h :
 os.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :

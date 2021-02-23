@@ -294,10 +294,14 @@ app.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 app.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+app.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 app.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 app.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+app.o :	../OS/Debug/ANO_DT.h
+../OS/Debug/ANO_DT.h :
 app.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 app.o :	../App/Sys/sys.h

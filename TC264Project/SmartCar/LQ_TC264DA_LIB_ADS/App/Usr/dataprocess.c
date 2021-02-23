@@ -190,7 +190,7 @@ void Servo_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
 
         data->Angle = (uint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
-        SaveAutoBootModeData(argv);
+        SaveAutoBootModeDataToExcel(argv);
     }
 }
 

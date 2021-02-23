@@ -292,9 +292,13 @@ ctrlsys.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 ctrlsys.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+ctrlsys.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 ctrlsys.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 ctrlsys.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+ctrlsys.o :	../OS/Debug/ANO_DT.h
+../OS/Debug/ANO_DT.h :
 ctrlsys.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :

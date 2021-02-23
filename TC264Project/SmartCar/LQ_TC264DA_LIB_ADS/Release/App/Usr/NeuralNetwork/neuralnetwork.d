@@ -294,10 +294,14 @@ neuralnetwork.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 neuralnetwork.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+neuralnetwork.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 neuralnetwork.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 neuralnetwork.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+neuralnetwork.o :	../OS/Debug/ANO_DT.h
+../OS/Debug/ANO_DT.h :
 neuralnetwork.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 neuralnetwork.o :	../App/Sys/ctrlsys.h

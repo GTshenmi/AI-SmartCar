@@ -294,10 +294,14 @@ parameter.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 parameter.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+parameter.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 parameter.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 parameter.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+parameter.o :	../OS/Debug/ANO_DT.h
+../OS/Debug/ANO_DT.h :
 parameter.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 parameter.o :	../App/Sys/ctrlsys.h

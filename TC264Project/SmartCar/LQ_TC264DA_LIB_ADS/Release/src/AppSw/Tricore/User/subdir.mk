@@ -4,28 +4,24 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/AppSw/Tricore/User/ANO_DT.c \
 ../src/AppSw/Tricore/User/LQ_ImageProcess.c \
 ../src/AppSw/Tricore/User/LQ_Inductor.c \
 ../src/AppSw/Tricore/User/LQ_MotorServo.c \
 ../src/AppSw/Tricore/User/LQ_PID.c 
 
 OBJS += \
-./src/AppSw/Tricore/User/ANO_DT.o \
 ./src/AppSw/Tricore/User/LQ_ImageProcess.o \
 ./src/AppSw/Tricore/User/LQ_Inductor.o \
 ./src/AppSw/Tricore/User/LQ_MotorServo.o \
 ./src/AppSw/Tricore/User/LQ_PID.o 
 
 COMPILED_SRCS += \
-./src/AppSw/Tricore/User/ANO_DT.src \
 ./src/AppSw/Tricore/User/LQ_ImageProcess.src \
 ./src/AppSw/Tricore/User/LQ_Inductor.src \
 ./src/AppSw/Tricore/User/LQ_MotorServo.src \
 ./src/AppSw/Tricore/User/LQ_PID.src 
 
 C_DEPS += \
-./src/AppSw/Tricore/User/ANO_DT.d \
 ./src/AppSw/Tricore/User/LQ_ImageProcess.d \
 ./src/AppSw/Tricore/User/LQ_Inductor.d \
 ./src/AppSw/Tricore/User/LQ_MotorServo.d \
