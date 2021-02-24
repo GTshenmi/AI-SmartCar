@@ -36,7 +36,7 @@ typedef struct ano_debug
  *       int32_t  y = 0;
  *       float32_t z = 0.0;
  *       SendUint32s(3,&x,&y,&z); or SendInt32s(3,&x,&y,&z); or SendFloats(3,&x,&y,&z);
- * */
+ */
     void (*SendBool)(void *data);
 
     void (*SendUint8)(void *data);
