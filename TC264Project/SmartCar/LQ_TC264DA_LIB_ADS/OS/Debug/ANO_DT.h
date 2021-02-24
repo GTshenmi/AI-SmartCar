@@ -90,7 +90,7 @@ typedef struct ano_debug
  *0x0
  *0x0
  *0xc
- * */
+ */
     void (*Test)(void);
 
 }ano_debug_t;
