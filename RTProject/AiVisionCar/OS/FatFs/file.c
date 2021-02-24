@@ -8,6 +8,14 @@
 
 //static FATFS fs[2];
 
+int f_scanf (
+    FIL* fp,            /* Pointer to the file object */
+    const TCHAR* fmt,   /* Pointer to the format string */
+    ...                 /* Optional arguments... */
+){
+    return 0;
+}
+
 uint8_t FileSys_Init()
 {
     uint8_t res = 0;

@@ -11,7 +11,7 @@
             <name>C-SPY</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>32</version>
+                <version>31</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -88,7 +88,7 @@
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
-                    <state>8.40.2.22864</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
@@ -217,10 +217,6 @@
                 <option>
                     <name>OCMulticoreSessionFile</name>
                     <state></state>
-                </option>
-                <option>
-                    <name>OCTpiuBaseOption</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1122,8 +1118,8 @@
                 </option>
                 <option>
                     <name>CCSTLinkProbeList</name>
-                    <version>1</version>
-                    <state>2</state>
+                    <version>0</version>
+                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1496,7 +1492,7 @@
             <name>C-SPY</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>32</version>
+                <version>31</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -1702,10 +1698,6 @@
                 <option>
                     <name>OCMulticoreSessionFile</name>
                     <state></state>
-                </option>
-                <option>
-                    <name>OCTpiuBaseOption</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -2607,8 +2599,8 @@
                 </option>
                 <option>
                     <name>CCSTLinkProbeList</name>
-                    <version>1</version>
-                    <state>2</state>
+                    <version>0</version>
+                    <state>1</state>
                 </option>
             </data>
         </settings>

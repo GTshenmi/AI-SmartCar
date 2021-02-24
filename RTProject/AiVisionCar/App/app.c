@@ -53,7 +53,7 @@ void Key_PressedCallBack(struct key *self,void *argv,uint16_t argc)
     for(int i = 0;i<4;i++)
     {
         if(self == KEY[i].Self)
-            CUART.WriteLine(CUART.Self,0,"KEY[%d] Pressed",i);
+            Console.WriteLine("KEY[%d] Pressed",i);
     }
 }
 /*

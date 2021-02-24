@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.40.2.22864</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -361,7 +361,6 @@
                     <state>$PROJ_DIR$\..\..\..\CMSIS\Include</state>
                     <state>$PROJ_DIR$\..\..\..\Device\board</state>
                     <state>$PROJ_DIR$\..\..\..\Device</state>
-                    <state>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064</state>
                     <state>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera</state>
                     <state>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064</state>
                     <state>$PROJ_DIR$\..\..\..\Device\startup\iar</state>
@@ -371,39 +370,38 @@
                     <state>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\fsl_sd_disk</state>
                     <state>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc</state>
                     <state>$PROJ_DIR$\..\sd</state>
-                    <state>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\test</state>
-                    <state>$PROJ_DIR$\..\..\..\App</state>
                     <state>$PROJ_DIR$\..\..\..\Driver</state>
-                    <state>$PROJ_DIR$\..\..\..\OS</state>
                     <state>$PROJ_DIR$\..\..\..\Driver\SysDriver</state>
+                    <state>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ</state>
                     <state>$PROJ_DIR$\..\..\..\Driver\UsrDriver</state>
                     <state>$PROJ_DIR$\..\..\..\Driver\UsrDriver\LCD</state>
-                    <state>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera</state>
                     <state>$PROJ_DIR$\..\..\..\Driver\UsrDriver\SD</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Malloc</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Task</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\UI</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Time</state>
+                    <state>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera</state>
+                    <state>$PROJ_DIR$\..\..\..\OS</state>
                     <state>$PROJ_DIR$\..\..\..\OS\Debug</state>
                     <state>$PROJ_DIR$\..\..\..\OS\Device</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\Servo</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\Capture</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\Screen</state>
                     <state>$PROJ_DIR$\..\..\..\OS\Device\BEEP</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\KEY</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\Motor</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\Communicate</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\ESensor</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\LED</state>
-                    <state>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\Switch</state>
-                    <state>$PROJ_DIR$\..\..\..\App\Usr</state>
-                    <state>$PROJ_DIR$\..\..\..\App\Sys</state>
-                    <state>$PROJ_DIR$\..\..\..\OS\Device\SDCard</state>
                     <state>$PROJ_DIR$\..\..\..\OS\Device\BLE</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\Capture</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\Communicate</state>
                     <state>$PROJ_DIR$\..\..\..\OS\Device\Demo</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\ESensor</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\KEY</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\LED</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\Motor</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\Screen</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\SDCard</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\Servo</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Device\Switch</state>
                     <state>$PROJ_DIR$\..\..\..\OS\Device\WirelessSerial</state>
                     <state>$PROJ_DIR$\..\..\..\OS\Fatfs</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Malloc</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Task</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\Time</state>
+                    <state>$PROJ_DIR$\..\..\..\OS\UI</state>
+                    <state>$PROJ_DIR$\..\..\..\App</state>
+                    <state>$PROJ_DIR$\..\..\..\App\Sys</state>
+                    <state>$PROJ_DIR$\..\..\..\App\Usr</state>
                     <state>$PROJ_DIR$\..\..\..\App\Usr\NeuralNetwork</state>
                 </option>
                 <option>
@@ -704,7 +702,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>IMXRT1064.srec</state>
+                    <state>IMXRT.srec</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -1172,7 +1170,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.40.2.22864</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -2308,28 +2306,7 @@
         </file>
     </group>
     <group>
-        <name>board</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\board\board.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\board\board.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\board\clock_config.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\board\clock_config.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\board\pin_mux.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\board\pin_mux.h</name>
-        </file>
-    </group>
-    <group>
-        <name>doc</name>
+        <name>Doc</name>
         <file>
             <name>$PROJ_DIR$\..\readme.txt</name>
         </file>
@@ -2414,91 +2391,94 @@
         <group>
             <name>SysDriverLQ</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_ADC.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_ADC.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_ADC.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_ADC.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_DMA.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_DMA.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_DMA.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_DMA.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_Encoder.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_Encoder.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_Encoder.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_Encoder.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_GPIO.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_GPIO.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_GPIO.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_GPIO.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_GPIO_Cfg.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_GPIO_Cfg.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_GPT.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_GPT.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_GPT.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_GPT.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_IIC.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_IIC.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_IIC.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_IIC.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_PIT.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_PIT.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_PIT.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_PIT.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_PWM.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_PWM.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_PWM.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_PWM.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_QTMR.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_QTMR.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_QTMR.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_QTMR.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_SOFTIIC.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_SOFTIIC.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_SOFTIIC.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_SOFTIIC.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_SPI.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_SPI.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_SPI.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_SPI.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_SYSTICK.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_SYSTICK.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_SYSTICK.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_SYSTICK.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_UART.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_UART.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_UART.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_UART.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_UART_DMA.c</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_UART_DMA.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Device\drivers\LQRT1064\LQ_UART_DMA.h</name>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\LQ_UART_DMA.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\picture.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\Driver\SysDriverLQ\sys_driverlq.h</name>
@@ -2513,18 +2493,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\camera.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.h</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_MT9V034M.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_MT9V034M.h</name>
                 </file>
             </group>
             <group>
@@ -2554,212 +2522,338 @@
         </file>
     </group>
     <group>
-        <name>Library</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_adc.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_adc.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_cache.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_cache.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_camera.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_camera_device.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_camera_receiver.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_clock.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_clock.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_common.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_common.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_csi.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_csi.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_csi_camera_adapter.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_csi_camera_adapter.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_dmamux.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_dmamux.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_edma.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_edma.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_enc.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_enc.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexcan.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexcan.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera_edma.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera_edma.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexspi.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexspi.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpio.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpio.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpt.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpt.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_iomuxc.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpi2c.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpi2c.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpspi.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpspi.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart_edma.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart_edma.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pit.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pit.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pwm.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pwm.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_qtmr.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_qtmr.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_rtwdog.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_rtwdog.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_sccb.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_sccb.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_tempmon.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_tempmon.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_trng.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_trng.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_usdhc.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_usdhc.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_video_common.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_wdog.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_wdog.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_xbara.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_xbara.h</name>
-        </file>
+        <name>Hal</name>
+        <group>
+            <name>board</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\board\board.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\board\board.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\board\clock_config.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\board\clock_config.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\board\pin_mux.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\board\pin_mux.h</name>
+            </file>
+        </group>
+        <group>
+            <name>fsl</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_adc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_adc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_cache.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_cache.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_camera.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_camera_device.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_camera_receiver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_clock.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_clock.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_common.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_csi.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_csi.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_csi_camera_adapter.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_csi_camera_adapter.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_dmamux.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_dmamux.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_edma.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_edma.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_enc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_enc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexcan.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexcan.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera_edma.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexio_camera_edma.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexspi.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_flexspi.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpio.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpio.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_gpt.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_iomuxc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpi2c.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpi2c.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpspi.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpspi.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart_edma.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_lpuart_edma.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pit.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pit.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pwm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_pwm.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_qtmr.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_qtmr.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_rtwdog.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_rtwdog.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_sccb.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_sccb.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_tempmon.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_tempmon.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_trng.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_trng.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_usdhc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_usdhc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\camera\fsl_video_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_wdog.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_wdog.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_xbara.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\drivers\MIMXRT1064\fsl_xbara.h</name>
+            </file>
+        </group>
+        <group>
+            <name>sdmmc</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\src\fsl_sd.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sd.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\src\fsl_sdmmc_common.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sdmmc_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\sd\fsl_sdmmc_event.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\sd\fsl_sdmmc_event.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\sd\fsl_sdmmc_host.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sdmmc_host.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sdmmc_spec.h</name>
+            </file>
+        </group>
+        <group>
+            <name>startup</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\startup\iar\startup_MIMXRT1064.s</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\system_MIMXRT1064.c</name>
+            </file>
+        </group>
+        <group>
+            <name>utilities</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_assert.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_debug_console.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_debug_console.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_debug_console_conf.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_io.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_io.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_log.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_log.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_str.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_str.h</name>
+            </file>
+        </group>
+        <group>
+            <name>xip</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_flexspi_nor_config.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_flexspi_nor_config.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_sdram_ini_dcd.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_sdram_ini_dcd.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\xip\fsl_flexspi_nor_boot.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Device\xip\fsl_flexspi_nor_boot.h</name>
+            </file>
+        </group>
     </group>
     <group>
         <name>OS</name>
         <group>
             <name>Debug</name>
             <file>
+                <name>$PROJ_DIR$\..\..\..\OS\Debug\ano_dt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\OS\Debug\ano_dt.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\OS\Debug\console.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\OS\Debug\console.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\OS\Debug\debug.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\OS\Debug\print.c</name>
@@ -2810,6 +2904,15 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\OS\Device\Communicate\communicate.h</name>
+                </file>
+            </group>
+            <group>
+                <name>Demo</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\OS\Device\Demo\demo.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\OS\Device\Demo\demo.h</name>
                 </file>
             </group>
             <group>
@@ -2905,38 +3008,44 @@
         </group>
         <group>
             <name>Fatfs</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\diskio.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\diskio.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ff.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ff.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ffsystem.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ffunicode.c</name>
-            </file>
+            <group>
+                <name>fatfs</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\diskio.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\diskio.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ff.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ff.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\sd\ffconf.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ffsystem.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\ffunicode.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\fsl_sd_disk\fsl_sd_disk.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\fsl_sd_disk\fsl_sd_disk.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\integer.h</name>
+                </file>
+            </group>
             <file>
                 <name>$PROJ_DIR$\..\..\..\OS\FatFs\file.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\OS\FatFs\file.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\fsl_sd_disk\fsl_sd_disk.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\fsl_sd_disk\fsl_sd_disk.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\Device\fatfs\fatfs\source\integer.h</name>
             </file>
         </group>
         <group>
@@ -3001,108 +3110,12 @@
         </file>
     </group>
     <group>
-        <name>sdmmc</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\src\fsl_sd.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sd.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\src\fsl_sdmmc_common.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sdmmc_common.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\sd\fsl_sdmmc_event.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\sd\fsl_sdmmc_event.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\sd\fsl_sdmmc_host.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sdmmc_host.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\fatfs\sdmmc\inc\fsl_sdmmc_spec.h</name>
-        </file>
-    </group>
-    <group>
-        <name>source</name>
-        <file>
-            <name>$PROJ_DIR$\..\sd\ffconf.h</name>
-        </file>
+        <name>User</name>
         <file>
             <name>$PROJ_DIR$\..\irq.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\main.c</name>
-        </file>
-    </group>
-    <group>
-        <name>startup</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\startup\iar\startup_MIMXRT1064.s</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\system_MIMXRT1064.c</name>
-        </file>
-    </group>
-    <group>
-        <name>utilities</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_assert.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_debug_console.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_debug_console.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_debug_console_conf.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_io.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_io.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_log.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_log.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_str.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\utilities\fsl_str.h</name>
-        </file>
-    </group>
-    <group>
-        <name>xip</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_flexspi_nor_config.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_flexspi_nor_config.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_sdram_ini_dcd.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\xip\evkmimxrt1064_sdram_ini_dcd.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\xip\fsl_flexspi_nor_boot.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Device\xip\fsl_flexspi_nor_boot.h</name>
         </file>
     </group>
 </project>
