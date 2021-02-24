@@ -300,8 +300,8 @@ element.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 element.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-element.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+element.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 element.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 element.o :	../App/Sys/ctrlsys.h

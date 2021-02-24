@@ -300,8 +300,8 @@ parameter.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 parameter.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-parameter.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+parameter.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 parameter.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 parameter.o :	../App/Sys/ctrlsys.h

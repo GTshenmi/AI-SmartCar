@@ -11,7 +11,7 @@
 
 #include "print.h"
 #include "console.h"
-#include "ANO_DT.h"
+#include "ano_dt.h"
 
 
 #endif /* OS_DEBUG_DEBUG_H_ */

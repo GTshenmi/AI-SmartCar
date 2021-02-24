@@ -300,8 +300,8 @@ init.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 init.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-init.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+init.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 init.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 init.o :	../App/Sys/sys.h

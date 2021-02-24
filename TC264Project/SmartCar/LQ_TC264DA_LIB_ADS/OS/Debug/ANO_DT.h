@@ -1,3 +1,10 @@
+/*
+ * ano_dt.h
+ *
+ *  Created on: 2021年2月24日
+ *      Author: 936305695
+ */
+
 #ifndef OS_DEBUG_ANO_DT_H_
 #define OS_DEBUG_ANO_DT_H_
 
@@ -6,16 +13,16 @@
 typedef struct ano_debug
 {
 /*
-  * 以下函数仅用于匿名上位机查看波形。
-  * 如果需要输出其他调试信息请用Console.WriteLine();
-  * 禁止传递数值和表达式
-  * 不正确的调用：
+ *@ 以下函数仅用于匿名上位机查看波形。
+ *@ 如果需要输出其他调试信息请用Console.WriteLine();
+ *@ 禁止传递数值和表达式
+ *@ 不正确的调用:
  *     1.SendUint16(0xaa);        //0xaa被认为是地址，该函数会从地址0xaa处取值，其结果并不一定是0xaa。
  *     2.uint16_t x = 0；
  *       SendUint16(&(x + 1));    //需要运算的,请调用函数前完成,调用时只允许传变量地址。
  *     3.SendUint16(function(a)); //原因同1
  *       uint16_t function(uint16_t a);
-  * 正确的调用：
+ *@ 正确的调用:
  *     1.
  *       uint16_t x = 0;
  *       int16_t y = 0;
@@ -95,5 +102,6 @@ void ANO_Send8Bit(void *data);
 void ANO_Send16Bit(void *data);
 
 void ANO_Send32Bit(void *data);
+
 
 #endif /* OS_DEBUG_ANO_DT_H_ */

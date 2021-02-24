@@ -298,8 +298,8 @@ interrupt.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 interrupt.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-interrupt.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+interrupt.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 interrupt.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 interrupt.o :	../App/Sys/sys.h

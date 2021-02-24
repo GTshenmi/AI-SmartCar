@@ -300,8 +300,8 @@ foo.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 foo.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-foo.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+foo.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 foo.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 foo.o :	../App/Sys/sys.h

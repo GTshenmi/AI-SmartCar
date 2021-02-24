@@ -298,8 +298,8 @@ Cpu0_Main.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 Cpu0_Main.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-Cpu0_Main.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+Cpu0_Main.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 Cpu0_Main.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 Cpu0_Main.o :	../App/Sys/sys.h

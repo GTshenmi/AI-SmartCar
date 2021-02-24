@@ -1,4 +1,10 @@
-#include "ANO_DT.h"
+/*
+ * ano_dt.c
+ *
+ *  Created on: 2021Äê2ÔÂ24ÈÕ
+ *      Author: 936305695
+ */
+#include "ano_dt.h"
 
 #define ANO_DT_AscLin UART_Resources[0].UARTN
 
@@ -20,36 +26,36 @@
 #define ANO_SendInt32s  ANO_Send32Bits
 #define ANO_SendFloats  ANO_Send32Bits
 
-//ä½¿ç”¨åŒ¿å4.3ä¸Šä½æœºåè®®
+//Ê¹ÓÃÄäÃû4.3ÉÏÎ»»úĞ­Òé
 /////////////////////////////////////////////////////////////////////////////////////
-//æ•°æ®æ‹†åˆ†å®å®šä¹‰ï¼Œåœ¨å‘é€å¤§äº1å­—èŠ‚çš„æ•°æ®ç±»å‹æ—¶ï¼Œæ¯”å¦‚int16ã€floatç­‰ï¼Œéœ€è¦æŠŠæ•°æ®æ‹†åˆ†æˆå•ç‹¬å­—èŠ‚è¿›è¡Œå‘é€
-#define BYTE0(dwTemp)       ( *( (char *)(&dwTemp)    ) )     /*!< uint32_t æ•°æ®æ‹†åˆ† byte0  */
-#define BYTE1(dwTemp)       ( *( (char *)(&dwTemp) + 1) )     /*!< uint32_t æ•°æ®æ‹†åˆ† byte1  */
-#define BYTE2(dwTemp)       ( *( (char *)(&dwTemp) + 2) )     /*!< uint32_t æ•°æ®æ‹†åˆ† byte2  */
-#define BYTE3(dwTemp)       ( *( (char *)(&dwTemp) + 3) )     /*!< uint32_t æ•°æ®æ‹†åˆ† byte3  */
+//Êı¾İ²ğ·Öºê¶¨Òå£¬ÔÚ·¢ËÍ´óÓÚ1×Ö½ÚµÄÊı¾İÀàĞÍÊ±£¬±ÈÈçint16¡¢floatµÈ£¬ĞèÒª°ÑÊı¾İ²ğ·Ö³Éµ¥¶À×Ö½Ú½øĞĞ·¢ËÍ
+#define BYTE0(dwTemp)       ( *( (char *)(&dwTemp)    ) )     /*!< uint32_t Êı¾İ²ğ·Ö byte0  */
+#define BYTE1(dwTemp)       ( *( (char *)(&dwTemp) + 1) )     /*!< uint32_t Êı¾İ²ğ·Ö byte1  */
+#define BYTE2(dwTemp)       ( *( (char *)(&dwTemp) + 2) )     /*!< uint32_t Êı¾İ²ğ·Ö byte2  */
+#define BYTE3(dwTemp)       ( *( (char *)(&dwTemp) + 3) )     /*!< uint32_t Êı¾İ²ğ·Ö byte3  */
 
-/**  å‘é€æ•°æ®ç¼“å­˜ */
+/**  ·¢ËÍÊı¾İ»º´æ */
 unsigned char data_to_send[50];
 
 /*!
-  * @brief    Send_Dataå‡½æ•°æ˜¯åè®®ä¸­æ‰€æœ‰å‘é€æ•°æ®åŠŸèƒ½ä½¿ç”¨åˆ°çš„å‘é€å‡½æ•°
+  * @brief    Send_Dataº¯ÊıÊÇĞ­ÒéÖĞËùÓĞ·¢ËÍÊı¾İ¹¦ÄÜÊ¹ÓÃµ½µÄ·¢ËÍº¯Êı
   *
-  * @param    dataToSend   :   è¦å‘é€çš„æ•°æ®é¦–åœ°å€
-  * @param    length       :   è¦å‘é€çš„æ•°æ®é•¿åº¦
+  * @param    dataToSend   :   Òª·¢ËÍµÄÊı¾İÊ×µØÖ·
+  * @param    length       :   Òª·¢ËÍµÄÊı¾İ³¤¶È
   *
-  * @return   æ— 
+  * @return   ÎŞ
   *
-  * @note     ç§»æ¤æ—¶ï¼Œç”¨æˆ·åº”æ ¹æ®è‡ªèº«åº”ç”¨çš„æƒ…å†µï¼Œæ ¹æ®ä½¿ç”¨çš„é€šä¿¡æ–¹å¼ï¼Œå®ç°æ­¤å‡½æ•°
+  * @note     ÒÆÖ²Ê±£¬ÓÃ»§Ó¦¸ù¾İ×ÔÉíÓ¦ÓÃµÄÇé¿ö£¬¸ù¾İÊ¹ÓÃµÄÍ¨ĞÅ·½Ê½£¬ÊµÏÖ´Ëº¯Êı
   *
-  * @see      å†…éƒ¨è°ƒç”¨
+  * @see      ÄÚ²¿µ÷ÓÃ
   *
-  * @date     2019/5/28 æ˜ŸæœŸäºŒ
+  * @date     2019/5/28 ĞÇÆÚ¶ş
   */
 void ANO_SendData(unsigned char *dataToSend , unsigned short length)
 {
 
-    /**ä½¿ç”¨ä¸²å£æ­£å¸¸å‘é€æ•°æ®ï¼Œå¤§æ¦‚éœ€è¦1.5ms*/
-	UARTx.WriteBytes(&ANO_DT_AscLin,dataToSend,length,UARTx.Time_Infinite);
+    /**Ê¹ÓÃ´®¿ÚÕı³£·¢ËÍÊı¾İ£¬´ó¸ÅĞèÒª1.5ms*/
+    UARTx.WriteBytes(&ANO_DT_AscLin,dataToSend,length,UARTx.Time_Infinite);
 
 }
 
@@ -58,7 +64,7 @@ void ANO_SendData(unsigned char *dataToSend , unsigned short length)
 
 
 /*!
- * @brief    å‘ä¸Šä½æœºå‘é€å‘é€8ä½æ•°æ®
+ * @brief    ÏòÉÏÎ»»ú·¢ËÍ·¢ËÍ8Î»Êı¾İ
  */
 void ANO_Send8Bit(void *data)
 {
@@ -66,9 +72,9 @@ void ANO_Send8Bit(void *data)
 
     unsigned char  _cnt=0;
     unsigned char  sum = 0, i = 0;
-    data_to_send[_cnt++] = 0xAA;      //åŒ¿ååè®®å¸§å¤´  0xAAAA
+    data_to_send[_cnt++] = 0xAA;      //ÄäÃûĞ­ÒéÖ¡Í·  0xAAAA
     data_to_send[_cnt++] = 0xAA;
-    data_to_send[_cnt++] = 0xF1;      //ä½¿ç”¨ç”¨æˆ·åè®®å¸§0xF1
+    data_to_send[_cnt++] = 0xF1;      //Ê¹ÓÃÓÃ»§Ğ­ÒéÖ¡0xF1
     data_to_send[_cnt++] = 1;
 
     data_to_send[_cnt++]=BYTE0(*arg);
@@ -84,16 +90,16 @@ void ANO_Send8Bit(void *data)
 }
 
 /*!
- * @brief    å‘ä¸Šä½æœºå‘é€å‘é€numä¸ª8ä½æ•°æ®
-  *                    ä¸€æ¬¡æœ€å¤šå‘é€(50 - 5)/1 ä¸ª
+ * @brief    ÏòÉÏÎ»»ú·¢ËÍ·¢ËÍnum¸ö8Î»Êı¾İ
+  *                    Ò»´Î×î¶à·¢ËÍ(50 - 5)/1 ¸ö
  */
 void ANO_Send8Bits(uint8_t num,...)
 {
     unsigned char  _cnt=0;
     unsigned char  sum = 0, i = 0;
-    data_to_send[_cnt++] = 0xAA;      //åŒ¿ååè®®å¸§å¤´  0xAAAA
+    data_to_send[_cnt++] = 0xAA;      //ÄäÃûĞ­ÒéÖ¡Í·  0xAAAA
     data_to_send[_cnt++] = 0xAA;
-    data_to_send[_cnt++] = 0xF1;      //ä½¿ç”¨ç”¨æˆ·åè®®å¸§0xF1
+    data_to_send[_cnt++] = 0xF1;      //Ê¹ÓÃÓÃ»§Ğ­ÒéÖ¡0xF1
     data_to_send[_cnt++] = num;
 
     char *data = NULL;
@@ -129,9 +135,9 @@ void ANO_Send16Bit(void *data)
     char *arg = data;
     unsigned char  _cnt=0;
     unsigned char  sum = 0, i = 0;
-    data_to_send[_cnt++] = 0xAA;      //åŒ¿ååè®®å¸§å¤´  0xAAAA
+    data_to_send[_cnt++] = 0xAA;      //ÄäÃûĞ­ÒéÖ¡Í·  0xAAAA
     data_to_send[_cnt++] = 0xAA;
-    data_to_send[_cnt++] = 0xF1;      //ä½¿ç”¨ç”¨æˆ·åè®®å¸§0xF1
+    data_to_send[_cnt++] = 0xF1;      //Ê¹ÓÃÓÃ»§Ğ­ÒéÖ¡0xF1
     data_to_send[_cnt++] = 2;
 
     data_to_send[_cnt++]=BYTE1(*arg);
@@ -149,9 +155,9 @@ void ANO_Send16Bits(uint8_t num,...)
 {
     unsigned char  _cnt=0;
     unsigned char  sum = 0, i = 0;
-    data_to_send[_cnt++] = 0xAA;      //åŒ¿ååè®®å¸§å¤´  0xAAAA
+    data_to_send[_cnt++] = 0xAA;      //ÄäÃûĞ­ÒéÖ¡Í·  0xAAAA
     data_to_send[_cnt++] = 0xAA;
-    data_to_send[_cnt++] = 0xF1;      //ä½¿ç”¨ç”¨æˆ·åè®®å¸§0xF1
+    data_to_send[_cnt++] = 0xF1;      //Ê¹ÓÃÓÃ»§Ğ­ÒéÖ¡0xF1
     data_to_send[_cnt++] = 2 * num;
 
     char *data = NULL;
@@ -189,9 +195,9 @@ void ANO_Send32Bit(void *data)
     unsigned char  _cnt=0;
     unsigned char  sum = 0, i = 0;
 
-    data_to_send[_cnt++] = 0xAA;      //åŒ¿ååè®®å¸§å¤´  0xAAAA
+    data_to_send[_cnt++] = 0xAA;      //ÄäÃûĞ­ÒéÖ¡Í·  0xAAAA
     data_to_send[_cnt++] = 0xAA;
-    data_to_send[_cnt++] = 0xF1;      //ä½¿ç”¨ç”¨æˆ·åè®®å¸§0xF1
+    data_to_send[_cnt++] = 0xF1;      //Ê¹ÓÃÓÃ»§Ğ­ÒéÖ¡0xF1
     data_to_send[_cnt++] = 4;
 
     data_to_send[_cnt++]=BYTE3(*arg);
@@ -211,9 +217,9 @@ void ANO_Send32Bits(uint8_t num,...)
 {
     unsigned char  _cnt=0;
     unsigned char  sum = 0, i = 0;
-    data_to_send[_cnt++] = 0xAA;      //åŒ¿ååè®®å¸§å¤´  0xAAAA
+    data_to_send[_cnt++] = 0xAA;      //ÄäÃûĞ­ÒéÖ¡Í·  0xAAAA
     data_to_send[_cnt++] = 0xAA;
-    data_to_send[_cnt++] = 0xF1;      //ä½¿ç”¨ç”¨æˆ·åè®®å¸§0xF1
+    data_to_send[_cnt++] = 0xF1;      //Ê¹ÓÃÓÃ»§Ğ­ÒéÖ¡0xF1
     data_to_send[_cnt++] = 4 * num;
 
     char *data = NULL;
@@ -287,3 +293,7 @@ ano_debug_t ANO =
 
     .Test = ANO_Test,
 };
+
+
+
+

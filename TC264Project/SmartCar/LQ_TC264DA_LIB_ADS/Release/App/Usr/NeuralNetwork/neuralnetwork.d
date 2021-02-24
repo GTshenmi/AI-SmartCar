@@ -300,8 +300,8 @@ neuralnetwork.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 neuralnetwork.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-neuralnetwork.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+neuralnetwork.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 neuralnetwork.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 neuralnetwork.o :	../App/Sys/ctrlsys.h

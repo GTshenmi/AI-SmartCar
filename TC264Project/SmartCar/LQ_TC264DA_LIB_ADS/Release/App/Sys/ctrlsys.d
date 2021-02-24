@@ -298,7 +298,7 @@ ctrlsys.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 ctrlsys.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-ctrlsys.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+ctrlsys.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 ctrlsys.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :

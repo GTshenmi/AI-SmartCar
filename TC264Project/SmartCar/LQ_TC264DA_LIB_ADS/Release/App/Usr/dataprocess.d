@@ -300,8 +300,8 @@ dataprocess.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 dataprocess.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-dataprocess.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+dataprocess.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 dataprocess.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 dataprocess.o :	../App/Sys/ctrlsys.h

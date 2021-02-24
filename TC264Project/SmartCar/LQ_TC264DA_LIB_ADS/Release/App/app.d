@@ -300,8 +300,8 @@ app.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 app.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
-app.o :	../OS/Debug/ANO_DT.h
-../OS/Debug/ANO_DT.h :
+app.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 app.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 app.o :	../App/Sys/sys.h
