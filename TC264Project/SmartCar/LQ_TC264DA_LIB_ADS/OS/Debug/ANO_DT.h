@@ -63,7 +63,7 @@ typedef struct ano_debug
 
     void (*SendFloats)(uint8_t num,...);
 /*
-  *调用Test后，串口出现下列数据，表示功能正常(可能没有换行)
+ *@调用Test后，串口出现下列数据，表示功能正常(可能没有换行)
  *0xaa
  *0xaa
  *0xf1
