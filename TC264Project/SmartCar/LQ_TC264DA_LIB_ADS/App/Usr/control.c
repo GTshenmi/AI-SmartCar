@@ -63,6 +63,11 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,signed short target_speed,sig
         PwmValue = (sint16_t)data->M_PID.Result;
     }
 
+    if(data->ReportMotorData)
+    {
+        ANO.Send("%s%s16%s16",&target_speed,&actual_speed,&PwmValue);
+    }
+
     return PwmValue;
 }
 /*
@@ -72,6 +77,14 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,signed short target_speed,sig
  * */
 unsigned short ServoCtrlStrategy(struct servo_ctrl *self,signed short target_angle,float actual_angle,void *argv,uint16_t argc)
 {
+    data_t *data =(data_t *) argv;
+
+    if(data->ReportServoData)
+    {
+        uint16_t PwmValue = - target_angle + self->PwmCentValue;
+
+        ANO.Send("%f%f%f%s16%u16",&data->_Bias,&data->Bias,&data->S_PID.Result,&target_angle,&PwmValue);
+    }
 
     return - target_angle + self->PwmCentValue;
 

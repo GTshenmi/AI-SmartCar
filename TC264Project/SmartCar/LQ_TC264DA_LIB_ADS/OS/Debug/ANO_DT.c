@@ -295,7 +295,9 @@ void ANO_Send(char *fmt,...)
                 break;
 
             case 'u':case 's':
+
                 p++;
+
                 switch(*p)
                 {
                     case '3':
@@ -341,6 +343,7 @@ void ANO_Send(char *fmt,...)
                         break;
 
                 }
+
                 break;
 
             default:

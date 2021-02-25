@@ -10,7 +10,7 @@
 
 #include "sys.h"
 
-#define MAX_DATA_LEN 4
+#define MAX_DATA_LEN 5
 
 typedef enum
 {
@@ -32,6 +32,7 @@ typedef struct
       PID_TypeDef M_PID;     /*电机速度的PID控制器*/
       PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
 
+      float _Bias;
       float Bias;            /*实际中线偏差*/
 
       sint16_t Actual_Speed; /*实际速度*/
@@ -52,6 +53,12 @@ typedef struct
       uint CarState;
 
       const uint CarMode;
+
+      uint8_t ReportSensorData;
+
+      uint8_t ReportMotorData;
+
+      uint8_t ReportServoData;
 }data_t;
 
 typedef struct

@@ -18,6 +18,10 @@
 #include "debug.h"
 #include "ui.h"
 
+#define Version "V1.1.0"
+#define Author  "GT_shenmi"
+#define Date    "2021-02-25"
+
 typedef struct
 {
         void (*Init)(void);

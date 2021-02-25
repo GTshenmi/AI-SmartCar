@@ -48,6 +48,24 @@ void Servo_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
         /*通知神经网络开始解算*/
         if(data->AI_State == AI_Free)
             data->AI_State = AI_Start;
+
+        switch(data->ReportSensorData)
+        {
+            case 1:
+                ANO.SendFloats(7,&data->N_SADC[0],&data->N_SADC[1],&data->N_SADC[2],&data->N_SADC[3],&data->N_SADC[4],&data->N_SADC[5],&data->N_SADC[6]);
+                break;
+            case 2:
+                ANO.SendFloats(5,&data->N_LADC[0],&data->N_LADC[1],&data->N_LADC[2],&data->N_LADC[3],&data->N_LADC[4]);
+                break;
+            case 3:
+                ANO.SendUint16s(7,&data->SADC_Value[0],&data->SADC_Value[1],&data->SADC_Value[2],&data->SADC_Value[3],&data->SADC_Value[4],&data->SADC_Value[5],&data->SADC_Value[6]);
+                break;
+            case 4:
+                ANO.SendUint16s(5,&data->LADC_Value[0],&data->LADC_Value[1],&data->LADC_Value[2],&data->LADC_Value[3],&data->LADC_Value[4]);
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -177,7 +195,9 @@ void Servo_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
 //        };
         static float angle[5] = {0.0};
 
-        data->Bias = FIR_Filter(Kb,dis,100.0 * CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[4]),33);
+        data->_Bias = 100.0 * CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[4]);
+
+        data->Bias = FIR_Filter(Kb,dis,data->_Bias,33);
 
         /*中线偏差大于20.0时(弯道)使用动态PID*/
         if(fabs(dis[4]) >= 20.0)

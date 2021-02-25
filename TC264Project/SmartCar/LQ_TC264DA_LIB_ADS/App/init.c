@@ -87,6 +87,7 @@ void Core0_SoftWareInit()
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
 
+
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
     PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,1.0));
 
@@ -267,6 +268,43 @@ void UIParameterInit(void)
     UIData.ServoSysState[0] = NULL;
     UIData.ServoSysState[1] = NULL;
     UIData.ServoSysState[2] = NULL;
+
+    UIData.Actual_Speed = &Data[4].Actual_Speed;
+    UIData.Angle =        &Data[4].Angle;
+    UIData.Bias =         &Data[4].Bias;
+    UIData.MPID_Kd =      &Data[4].M_PID.Kd;
+    UIData.MPID_Ki =      &Data[4].M_PID.Ki;
+    UIData.MPID_Kp =      &Data[4].M_PID.Kp;
+    UIData.MPID_Result =  &Data[4].M_PID.Result;
+    UIData.M_PwmDuty =    &Data[4].Speed;
+    UIData.SPID_Kd =      &Data[4].S_PID.Kd;
+    UIData.SPID_Ki =      &Data[4].S_PID.Ki;
+    UIData.SPID_Kp =      &Data[4].S_PID.Kp;
+    UIData.SPID_Result =  &Data[4].S_PID.Result;
+    UIData.S_PwmDuty =    &Data[4].Angle;
+    UIData.Speed =        &Data[4].Speed;
+
+    UIData.SADC =          Data[4].SADC_Value;
+    UIData.LADC =          Data[4].LADC_Value;
+    UIData.NLADC  =        Data[4].N_LADC;
+    UIData.NSADC =         Data[4].N_SADC;
+
+    UIData.CarState =    (uint *)&Data[4].CarState;
+    UIData.CarMode =     (uint *)&Data[4].CarMode;
+    UIData.AI_State =    (uint *)&Data[4].AI_State;
+    UIData.ElementType = (uint *)&Data[4].ElementType;
+
+    UIData.MotorSysState[0] = (uint *)&Data[4].CarState;
+    UIData.MotorSysState[1] = (uint *)&Data[4].CarState;
+    UIData.MotorSysState[2] = (uint *)&Data[4].CarState;
+    UIData.ServoSysState[0] = (uint *)&Data[4].CarState;
+    UIData.ServoSysState[1] = (uint *)&Data[4].CarState;
+    UIData.ServoSysState[2] = (uint *)&Data[4].CarState;
+
+
+    //UIData.NActual_Speed = &Data[data_pointer].Actual_Speed;
+    //UIData.NAngle = NULL;
+    //UIData.NSpeed = &Data[data_pointer].Speed;
 
 #endif
 }
