@@ -15,7 +15,7 @@ extern beep_t BEEP;
 extern bluetooth_t Bluetooth;
 
 extern communicate_t CUART;
-extern communicate_t DebugUart;
+extern communicate_t DebugCom;
 
 extern esensor_t LESensor[5];
 extern esensor_t SESensor[7];

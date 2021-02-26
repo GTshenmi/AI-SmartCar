@@ -49,10 +49,10 @@ communicate_t CUART = /*ok*/
         .Communicatorn = (void *)&UART_Resources[0].UARTN,
 };
 
-communicate_t DebugUart = /*ok*/
+communicate_t DebugCom = /*ok*/
 {
         .Init = CommInit,
-        .Self = &CUART,
+        .Self = &DebugCom,
         .CommunicationType = C_UART,
         .Communicatorn = (void *)&UART_Resources[0].UARTN,
 };

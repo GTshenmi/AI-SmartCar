@@ -106,11 +106,4 @@ typedef struct ano_debug
 
 extern ano_debug_t ANO;
 
-void ANO_Send8Bit(void *data);
-
-void ANO_Send16Bit(void *data);
-
-void ANO_Send32Bit(void *data);
-
-
 #endif /* OS_DEBUG_ANO_DT_H_ */

@@ -8,7 +8,7 @@
 
 void Console_Init(void)
 {
-    DebugUart.Init(DebugUart.Self);
+    DebugCom.Init(DebugCom.Self);
 }
 
 void Console_Update(void *argv,uint16_t argc)
@@ -142,7 +142,7 @@ int fputc(int ch, FILE *f)
 {
     uint8_t c = (uint8_t)ch;
 
-    DebugUart.Transmit(DebugUart.Self,&c,1,0);
+    DebugCom.Transmit(DebugCom.Self,&c,1,0);
 
     return c;
 }
@@ -151,7 +151,7 @@ int fgetc(FILE *f)
 {
     uint8_t ch = 0;
 
-    DebugUart.Receive(DebugUart.Self,&ch,1,0);
+    DebugCom.Receive(DebugCom.Self,&ch,1,0);
 
     return ch;
 }
