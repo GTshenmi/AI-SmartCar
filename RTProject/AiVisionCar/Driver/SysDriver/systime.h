@@ -10,7 +10,7 @@
 
 #include "LQ_SYSTICK.h"
 #include "stdlib.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef struct
 {

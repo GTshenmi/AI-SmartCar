@@ -8,8 +8,6 @@
 #ifndef DRIVER_USRDRIVER_GPIO_H_
 #define DRIVER_USRDRIVER_GPIO_H_
 
-#include "stdbool.h"
-
 #include "LQ_GPIO.h"
 #include "platform.h"
 

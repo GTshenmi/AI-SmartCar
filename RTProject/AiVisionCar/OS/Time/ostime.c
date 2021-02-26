@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "ostime.h"
+#include "systime.h"
 
 void OSTime_Init()
 {

@@ -8,13 +8,13 @@
 #ifndef OS_DEVICE_BEEP_BEEP_H_
 #define OS_DEVICE_BEEP_BEEP_H_
 
-#include "driver.h"
+#include "platform.h"
 
 typedef struct beep
 {
     private
 
-    gpiox_t *GPIOn;
+    void *GPIOn;
     uint8_t ONLevel;
 
     public

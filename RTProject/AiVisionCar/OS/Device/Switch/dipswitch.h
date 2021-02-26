@@ -8,14 +8,13 @@
 #ifndef OS_DEVICE_SWITCH_DIPSWITCH_H_
 #define OS_DEVICE_SWITCH_DIPSWITCH_H_
 
-#include "driver.h"
-#include "switch.h"
+#include "platform.h"
 
 typedef struct dip_switch
 {
     private
 
-    switch_t *Switch;
+    void *Switch;
     uint8_t SwitchNum;
     uint32_t Bits;
 

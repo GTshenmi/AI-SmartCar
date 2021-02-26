@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "communicate.h"
+#include "driver.h"
 
 uint8_t CommTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
 {

@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include <motor.h>
+#include "driver.h"
 
 uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
 {

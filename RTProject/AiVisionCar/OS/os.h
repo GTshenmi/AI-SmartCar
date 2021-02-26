@@ -8,6 +8,7 @@
 #ifndef OS_OS_H_
 #define OS_OS_H_
 
+#include "driver.h"
 #include "device.h"
 #include "malloc.h"
 #include "task.h"

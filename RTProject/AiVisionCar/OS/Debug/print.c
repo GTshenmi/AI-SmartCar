@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "print.h"
+
 print_var_t var =
 {
     .b = 1000,

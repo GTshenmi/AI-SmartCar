@@ -8,8 +8,6 @@
 #ifndef DRIVER_SYSDRIVER_TIM_H_
 #define DRIVER_SYSDRIVER_TIM_H_
 
-#include "stdbool.h"
-
 #include "LQ_CCU6.h"
 #include "LQ_STM.h"
 #include "platform.h"

@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "capture.h"
+#include "driver.h"
 
 /*
  *                                                  Capture.Stop()

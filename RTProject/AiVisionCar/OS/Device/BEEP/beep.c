@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "beep.h"
+#include "driver.h"
 
 void BEEP_ON(struct beep *self)
 {

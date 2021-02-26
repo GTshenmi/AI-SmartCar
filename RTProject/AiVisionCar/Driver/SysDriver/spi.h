@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_SPI_H_
 
 #include "LQ_SPI.h"
-#include "chipdatatype.h"
+#include "platform.h"
 #include "systime.h"
 
 #define SPIx_MAX_TIME_OUT 0x7FFFFFFFFFFFFFFFLL

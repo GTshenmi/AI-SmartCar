@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "sdcard.h"
+#include "driver.h"
 
 uint8_t SDCard_ReadSector(struct sdcard *self,uint32_t sector,uint8_t *buf)
 {

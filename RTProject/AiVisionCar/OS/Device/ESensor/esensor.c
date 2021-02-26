@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include <esensor.h>
+#include "driver.h"
 
 uint16_t ESensorRead(struct esensor *self)
 {

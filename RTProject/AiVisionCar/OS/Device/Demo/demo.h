@@ -9,7 +9,7 @@
 #define OS_DEVICE_DEMO_DEMO_H_
 
 
-#include "driver.h"
+#include "platform.h"
 
 
 #endif /* OS_DEVICE_DEMO_DEMO_H_ */

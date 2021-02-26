@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_DMA_H_
 
 #include "LQ_DMA.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef struct
 {

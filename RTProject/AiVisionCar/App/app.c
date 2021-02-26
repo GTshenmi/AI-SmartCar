@@ -40,6 +40,22 @@ void Core0_Main()
     GLED.ON(GLED.Self);
     LCD_Init(&LCD_Type);
 
+    uint8_t input[7];
+
+    for(uint8_t i = 0 ; i < 8 ; i++)
+    {
+        input[i] = 7 * i;
+    }
+
+    model_info_struct Model1;
+    Model_GetInfo(model1, &Model1);
+
+    sint16_t angle = 0;
+
+    Model_Run(model1,input,&angle);
+
+
+
     while(1)
     {
         for(uint8_t i = 0 ; i < 50 ;i++)
@@ -53,7 +69,7 @@ void Key_PressedCallBack(struct key *self,void *argv,uint16_t argc)
     for(int i = 0;i<4;i++)
     {
         if(self == KEY[i].Self)
-            Console.WriteLine("KEY[%d] Pressed",i);
+            CUART.WriteLine(CUART.Self,0,"KEY[%d] Pressed",i);
     }
 }
 /*

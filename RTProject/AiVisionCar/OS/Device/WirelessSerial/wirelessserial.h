@@ -8,7 +8,7 @@
 #ifndef OS_DEVICE_WIRELESSSERIAL_WIRELESSSERIAL_H_
 #define OS_DEVICE_WIRELESSSERIAL_WIRELESSSERIAL_H_
 
-#include "driver.h"
+#include "platform.h"
 
 typedef struct wireless_serial
 {

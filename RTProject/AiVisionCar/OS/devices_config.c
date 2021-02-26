@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "devices_config.h"
+#include "driver.h"
 
 beep_t BEEP = /*unknow*/
 {
@@ -40,6 +41,7 @@ capture_t Capture = /*unknow*/
 
 };
 
+communicate_t DebugCom;
 communicate_t CUART = /*ok*/
 {
         .Init = CommInit,

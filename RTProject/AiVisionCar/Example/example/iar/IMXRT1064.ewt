@@ -2512,9 +2512,6 @@
                 <name>$PROJ_DIR$\..\..\..\Driver\SysDriver\adc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\Driver\SysDriver\chipdatatype.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\..\..\Driver\SysDriver\dma.c</name>
             </file>
             <file>
@@ -2543,6 +2540,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\Driver\SysDriver\iic.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\Driver\SysDriver\platform.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\Driver\SysDriver\pwm.c</name>

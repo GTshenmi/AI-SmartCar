@@ -9,8 +9,7 @@
 #define DRIVER_USRDRIVER_GPIO_H_
 
 #include "LQ_GPIO.h"
-#include "stdbool.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef enum
 {

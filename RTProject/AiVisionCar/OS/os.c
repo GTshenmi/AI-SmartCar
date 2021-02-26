@@ -5,13 +5,7 @@
  *      Author: 936305695
  */
 #include "os.h"
-
-#define SysRandADC NULL
-
-uint16_t GetRandNumberFromADC()
-{
-    return ADCx.Read(SysRandADC);
-}
+#include "henv.h"
 
 void OS_Init(uint core)
 {

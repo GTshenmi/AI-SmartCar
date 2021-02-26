@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "key.h"
+#include "driver.h"
 
 uint8_t KEY_Read(struct key *self)
 {

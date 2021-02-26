@@ -8,7 +8,6 @@
 #ifndef DRIVER_SYSDRIVER_UART_H_
 #define DRIVER_SYSDRIVER_UART_H_
 
-#include "stdbool.h"
 #include "LQ_UART.h"
 #include "platform.h"
 

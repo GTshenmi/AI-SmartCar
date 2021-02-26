@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVERLQ_ENC_H_
 
 #include "LQ_Encoder.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef struct
 {

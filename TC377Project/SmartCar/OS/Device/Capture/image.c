@@ -6,8 +6,6 @@
  *      Brief: 图像处理基础库函数
  */
 #include "image.h"
-#include "math.h"
-#include "stdlib.h"
 
 /*!
   * @example :

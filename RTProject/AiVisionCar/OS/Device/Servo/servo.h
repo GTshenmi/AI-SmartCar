@@ -10,7 +10,7 @@
 
 #define AngleToPwm(self,angle) (((self)->PwmCentValue) - (angle))
 
-#include "driver.h"
+#include "platform.h"
 
 typedef struct
 {
@@ -49,8 +49,8 @@ typedef struct servo_ctrl
  * */
     private
 
-        pwmx_t *Pwmn;
-        mpu_t *MPUn;
+        void *Pwmn;
+        void *MPUn;
 
         sint16_t MaxAngle;
         sint16_t MinAngle;

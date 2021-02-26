@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_UART_H_
 
 #include "LQ_UART.h"
-#include "chipdatatype.h"
+#include "platform.h"
 #include "stdbool.h"
 
 #define UARTx_MAX_TIME_OUT 0x7FFFFFFFFFFFFFFFLL

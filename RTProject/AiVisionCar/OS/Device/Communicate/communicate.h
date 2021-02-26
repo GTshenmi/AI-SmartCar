@@ -8,8 +8,7 @@
 #ifndef OS_DEVICE_COMMUNICATE_COMMUNICATE_H_
 #define OS_DEVICE_COMMUNICATE_COMMUNICATE_H_
 
-
-#include "driver.h"
+#include "platform.h"
 
 #define COMM_MAX_BUF_LEN 256
 

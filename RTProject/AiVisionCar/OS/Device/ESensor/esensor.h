@@ -8,7 +8,7 @@
 #ifndef OS_DEVICE_ESENSOR_ESENSOR_H_
 #define OS_DEVICE_ESENSOR_ESENSOR_H_
 
-#include "driver.h"
+#include "platform.h"
 
 #define ESENSOR_BITS_FILTER_ENABLE_MASK 0x00000001
 #define ESENSOR_BITS_GAIN_ENABLE_MASK   0x00000002
@@ -33,7 +33,7 @@ typedef struct esensor
 {
     private
 
-        adcx_t *ADCn;
+        void *ADCn;
         uint16_t FilterBuf[10];
         uint16_t FilterBufLen;
 

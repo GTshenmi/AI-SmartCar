@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_PWM_H_
 
 #include "LQ_PWM.h" 
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef struct
 {

@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "led.h"
+#include "driver.h"
 
 void LED_ON(struct led *self)
 {

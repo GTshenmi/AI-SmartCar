@@ -8,7 +8,7 @@
 #ifndef APP_SYS_CTRLSYS_H_
 #define APP_SYS_CTRLSYS_H_
 
-#include "chipdatatype.h"
+#include "platform.h"
 
 #define MSU MSUnit
 #define MDU MDUnit

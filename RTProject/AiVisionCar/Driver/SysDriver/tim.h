@@ -12,7 +12,7 @@
 #include "LQ_GPT.h"
 #include "LQ_PIT.h"
 #include "LQ_QTMR.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef enum
 {

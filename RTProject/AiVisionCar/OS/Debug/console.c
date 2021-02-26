@@ -6,14 +6,12 @@
  */
 #include "console.h"
 
-#define ConsoleAscLin UART_Resources[0].UARTN
-
 void Console_Init(void)
 {
-    UARTx.Init(&ConsoleAscLin);
+    DebugCom.Init(DebugCom.Self);
 }
 
-void Console_Updata(void *argv,uint16_t argc)
+void Console_Update(void *argv,uint16_t argc)
 {
 
 }
@@ -142,16 +140,18 @@ int32_t Console_ReadKey(void)
 
 int fputc(int ch, FILE *f)
 {
-    UARTx.WriteByte(&ConsoleAscLin,(uint8_t)ch,UARTx.Time_Infinite);
+    uint8_t c = (uint8_t)ch;
 
-    return ch;
+    DebugCom.Transmit(DebugCom.Self,&c,1,0);
+
+    return c;
 }
 
 int fgetc(FILE *f)
 {
-    int ch = 0;
+    uint8_t ch = 0;
 
-    ch = UARTx.ReadByte(&ConsoleAscLin,UARTx.Time_Infinite);
+    DebugCom.Receive(DebugCom.Self,&ch,1,0);
 
     return ch;
 }
@@ -163,6 +163,6 @@ console_t Console =
         .WriteLine = Console_WriteLine,
         .Read = Console_Read,
         .ReadLine = Console_ReadLine,
-        .Update = Console_Updata,
+        .Update = Console_Update,
         .ReadKey = Console_ReadKey,
 };
