@@ -8,7 +8,7 @@
 #ifndef APP_SYS_CTRLSYS_H_
 #define APP_SYS_CTRLSYS_H_
 
-#include "chipdatatype.h"
+#include "platform.h"
 
 #define MSU MSUnit
 #define MDU MDUnit
@@ -36,7 +36,7 @@
 
 typedef enum
 {
-    CtrlSys_Running,CtrlSys_Stopped,CtrlSys_Sleeping,
+    CtrlSys_Stopped,CtrlSys_Running,CtrlSys_Sleeping,
 }sys_state_t;
 
 typedef struct unit
@@ -47,7 +47,7 @@ typedef struct unit
         void (*Stop)(struct unit *self);
         void (*Sleep)(struct unit *self,uint32_t time);
         void (*WakeUp)(struct unit *self);
-        sys_state_t State;
+        uint State;
         struct unit *Self;
 }unit_t;
 
@@ -57,7 +57,6 @@ typedef struct ctrlsys
         unit_t SensorUnit;
         unit_t DecisionUnit;
         unit_t ExecutionUnit;
-
         struct ctrlsys *Self;
 }ctrlsys_t;
 

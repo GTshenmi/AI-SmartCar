@@ -144,5 +144,4 @@ OS/Task \
 OS/Time \
 OS/UI \
 OS \
-src/AppSw/Tricore/User \
 

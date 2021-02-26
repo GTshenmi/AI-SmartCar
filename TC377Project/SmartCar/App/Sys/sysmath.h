@@ -8,7 +8,7 @@
 #ifndef APP_SYS_SYSMATH_H_
 #define APP_SYS_SYSMATH_H_
 
-#include "chipdatatype.h"
+#include "platform.h"
 
 #define fsign(x) ((x) > 0.0 ?  1.0 : -1.0 )
 

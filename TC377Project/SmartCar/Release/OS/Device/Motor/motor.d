@@ -2,6 +2,8 @@ motor.o :	../OS/Device/Motor/motor.c
 ../OS/Device/Motor/motor.c :
 motor.o :	../OS/Device/Motor/motor.h
 ../OS/Device/Motor/motor.h :
+motor.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 motor.o :	../Driver/driver.h
 ../Driver/driver.h :
 motor.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ motor.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 motor.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-motor.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 motor.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 motor.o :	../Driver/SysDriverLQ/LQ_ADC.h

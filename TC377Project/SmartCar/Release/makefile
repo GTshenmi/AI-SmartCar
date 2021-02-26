@@ -8,7 +8,6 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include src/AppSw/Tricore/User/subdir.mk
 -include OS/UI/subdir.mk
 -include OS/Time/subdir.mk
 -include OS/Task/subdir.mk

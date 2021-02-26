@@ -5,23 +5,24 @@
  *      Author: 936305695
  */
 #include "led.h"
+#include "driver.h"
 
 void LED_ON(struct led *self)
 {
-    GPIOx.Write(self->GPIODevice,self->ONLevel);
+    GPIOx.Write(self->GPIOn,self->ONLevel);
 }
 void LED_OFF(struct led *self)
 {
-    GPIOx.Write(self->GPIODevice,!self->ONLevel);
+    GPIOx.Write(self->GPIOn,!self->ONLevel);
 }
 void LED_Toggle(struct led *self)
 {
-    GPIOx.Reverse(self->GPIODevice);
+    GPIOx.Reverse(self->GPIOn);
 }
 
 void LED_Init(struct led *self)
 {
-    GPIOx.Init(self->GPIODevice);
+    GPIOx.Init(self->GPIOn);
     self->ONLevel = 0;
     self->OFF = LED_OFF;
     self->ON = LED_ON;

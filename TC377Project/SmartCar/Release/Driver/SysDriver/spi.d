@@ -18,8 +18,8 @@ spi.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
 spi.o :	../Driver/SysDriverLQ/LQ_SPI.h
 ../Driver/SysDriverLQ/LQ_SPI.h :
-spi.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+spi.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 spi.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
 spi.o :	../Driver/SysDriverLQ/LQ_STM.h

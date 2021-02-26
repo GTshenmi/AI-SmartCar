@@ -2,6 +2,8 @@ beep.o :	../OS/Device/BEEP/beep.c
 ../OS/Device/BEEP/beep.c :
 beep.o :	../OS/Device/BEEP/beep.h
 ../OS/Device/BEEP/beep.h :
+beep.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 beep.o :	../Driver/driver.h
 ../Driver/driver.h :
 beep.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ beep.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 beep.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-beep.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 beep.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 beep.o :	../Driver/SysDriverLQ/LQ_ADC.h

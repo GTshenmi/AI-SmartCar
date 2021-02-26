@@ -6,8 +6,6 @@ dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 dataprocess.o :	../OS/os.h
 ../OS/os.h :
-dataprocess.o :	../OS/Device/device.h
-../OS/Device/device.h :
 dataprocess.o :	../Driver/driver.h
 ../Driver/driver.h :
 dataprocess.o :	../Driver/SysDriver/sys_driver.h
@@ -92,8 +90,8 @@ dataprocess.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 dataprocess.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-dataprocess.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+dataprocess.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 dataprocess.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 dataprocess.o :	../Driver/SysDriverLQ/LQ_ADC.h
@@ -156,72 +154,40 @@ dataprocess.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 dataprocess.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+dataprocess.o :	../OS/Device/device.h
+../OS/Device/device.h :
 dataprocess.o :	../OS/Device/ESensor/esensor.h
 ../OS/Device/ESensor/esensor.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Motor/motor.h
 ../OS/Device/Motor/motor.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Screen/screen.h
 ../OS/Device/Screen/screen.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Servo/servo.h
 ../OS/Device/Servo/servo.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/LED/led.h
 ../OS/Device/LED/led.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/BEEP/beep.h
 ../OS/Device/BEEP/beep.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/KEY/key.h
 ../OS/Device/KEY/key.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
-dataprocess.o :	../OS/Device/Switch/switch.h
-../OS/Device/Switch/switch.h :
 dataprocess.o :	../OS/Device/SDCard/sdcard.h
 ../OS/Device/SDCard/sdcard.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
-dataprocess.o :	../Driver/driver.h
-../Driver/driver.h :
 dataprocess.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 dataprocess.o :	../OS/Device/device.h
@@ -242,10 +208,14 @@ dataprocess.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 dataprocess.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+dataprocess.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 dataprocess.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 dataprocess.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+dataprocess.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 dataprocess.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 dataprocess.o :	../App/Sys/ctrlsys.h

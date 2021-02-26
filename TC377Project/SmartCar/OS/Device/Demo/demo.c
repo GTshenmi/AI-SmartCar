@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "demo.h"
+#include "driver.h"
 
 void DeviceDemo(void)
 {

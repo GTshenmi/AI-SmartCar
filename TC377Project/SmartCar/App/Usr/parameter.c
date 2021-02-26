@@ -13,6 +13,53 @@
 uint16_t CarMode = AutoBoot_Mode;/*运行模式*/
 uint16_t data_pointer = 0;
 
+char *CarStateDictionary[] = {\
+                          "Stop",\
+                          "Running"};
+
+char *CarModeDictionary[] = { \
+                          "AI",\
+                          "Auto Boot",\
+                          "Manual Boot",\
+                          "Debug"\
+};
+
+char *AIStateDictionary[] =\
+{
+    "Free",\
+    "Start",\
+    "Busy",\
+    "Fin"\
+};
+
+char *ElementTypeDictionary[] =\
+{
+    "NULL",\
+    "NULL",\
+    "NULL",\
+    "NULL"\
+};
+
+char *GetCarState(uint index)
+{
+    return CarStateDictionary[index];
+}
+
+char *GetCarMode(uint index)
+{
+    return CarModeDictionary[index];
+}
+
+char *GetAIState(uint index)
+{
+    return AIStateDictionary[index];
+}
+
+char *GetElementType(uint index)
+{
+    return ElementTypeDictionary[index];
+}
+
 data_t Data[MAX_DATA_LEN] =
 {
         [0] = {

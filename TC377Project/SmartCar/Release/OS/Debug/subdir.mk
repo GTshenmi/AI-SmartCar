@@ -4,18 +4,22 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../OS/Debug/ano_dt.c \
 ../OS/Debug/console.c \
 ../OS/Debug/print.c 
 
 OBJS += \
+./OS/Debug/ano_dt.o \
 ./OS/Debug/console.o \
 ./OS/Debug/print.o 
 
 COMPILED_SRCS += \
+./OS/Debug/ano_dt.src \
 ./OS/Debug/console.src \
 ./OS/Debug/print.src 
 
 C_DEPS += \
+./OS/Debug/ano_dt.d \
 ./OS/Debug/console.d \
 ./OS/Debug/print.d 
 

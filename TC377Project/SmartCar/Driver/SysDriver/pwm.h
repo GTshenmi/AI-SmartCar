@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_PWM_H_
 
 #include "LQ_GTM.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef enum
 {
@@ -42,8 +42,8 @@ typedef struct
 {
         uint8_t (*Init)(pwmx_t *);
         uint8_t (*Write)(pwmx_t *,uint32_t duty);
-        uint32_t MaxPwm;
-        uint32_t MinPwm;
+        uint32_t MaxPwmDuty;
+        uint32_t MinPwmDuty;
 }spwm_m;
 
 extern spwm_m PWMx;

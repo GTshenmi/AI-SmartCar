@@ -84,8 +84,8 @@ resource_config.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 resource_config.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-resource_config.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+resource_config.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 resource_config.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 resource_config.o :	../Driver/SysDriverLQ/LQ_ADC.h

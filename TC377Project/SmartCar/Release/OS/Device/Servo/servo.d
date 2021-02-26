@@ -2,6 +2,8 @@ servo.o :	../OS/Device/Servo/servo.c
 ../OS/Device/Servo/servo.c :
 servo.o :	../OS/Device/Servo/servo.h
 ../OS/Device/Servo/servo.h :
+servo.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 servo.o :	../Driver/driver.h
 ../Driver/driver.h :
 servo.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ servo.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 servo.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-servo.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 servo.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 servo.o :	../Driver/SysDriverLQ/LQ_ADC.h

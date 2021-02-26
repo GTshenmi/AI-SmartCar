@@ -24,5 +24,5 @@ tim.o :	../Driver/SysDriverLQ/LQ_STM.h
 ../Driver/SysDriverLQ/LQ_STM.h :
 tim.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-tim.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+tim.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :

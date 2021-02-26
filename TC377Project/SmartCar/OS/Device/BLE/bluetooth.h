@@ -8,7 +8,7 @@
 #ifndef OS_DEVICE_BLE_BLUETOOTH_H_
 #define OS_DEVICE_BLE_BLUETOOTH_H_
 
-#include "driver.h"
+#include "platform.h"
 
 typedef struct bluetooth
 {

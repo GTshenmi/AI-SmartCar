@@ -8,9 +8,9 @@
 #ifndef DRIVER_SYSDRIVER_UART_H_
 #define DRIVER_SYSDRIVER_UART_H_
 
-#include "chipdatatype.h"
 #include "stdbool.h"
 #include "LQ_UART.h"
+#include "platform.h"
 
 #define UARTx_MAX_TIME_OUT TIME_INFINITE
 

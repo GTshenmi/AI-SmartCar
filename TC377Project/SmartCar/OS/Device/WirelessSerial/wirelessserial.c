@@ -5,7 +5,7 @@
  *      Author: 936305695
  */
 #include "wirelessserial.h"
-
+#include "driver.h"
 
 void WirelessSerial_Init(struct wireless_serial *self)
 {

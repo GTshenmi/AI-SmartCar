@@ -8,6 +8,7 @@
 #ifndef OS_OS_H_
 #define OS_OS_H_
 
+#include "driver.h"
 #include "device.h"
 #include "malloc.h"
 #include "task.h"
@@ -15,9 +16,12 @@
 #include "softtimer.h"
 #include "ostime.h"
 
-#include "print.h"
-#include "console.h"
+#include "debug.h"
 #include "ui.h"
+
+#define Version "V1.1.0"
+#define Author  "GT_shenmi"
+#define Date    "2021-02-25"
 
 typedef struct
 {

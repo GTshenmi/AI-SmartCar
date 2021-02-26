@@ -5,11 +5,11 @@
  *      Author: 936305695
  */
 #include "switch.h"
-
+#include "driver.h"
 
 uint8_t Switch_ReadIOLevel(struct switchx *self)
 {
-    return GPIOx.Read(self->GPIODevice);
+    return GPIOx.Read(self->GPIOn);
 }
 
 switch_state_t Switch_Read(struct switchx *self)
@@ -24,7 +24,7 @@ void Switch_SetDownLevel(struct switchx *self,uint8_t downlevel)
 
 void Switch_Init(struct switchx *self)
 {
-    GPIOx.Init(self->GPIODevice);
+    GPIOx.Init(self->GPIOn);
     self->Level = 0;
     self->DownLevel = 0;
     self->ReadIOLevel = Switch_ReadIOLevel;

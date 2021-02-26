@@ -5,25 +5,26 @@
  *      Author: 936305695
  */
 #include "beep.h"
+#include "driver.h"
 
 void BEEP_ON(struct beep *self)
 {
-    GPIOx.Write(self->GPIODevice,self->ONLevel);
+    GPIOx.Write(self->GPIOn,self->ONLevel);
 }
 
 void BEEP_OFF(struct beep *self)
 {
-    GPIOx.Write(self->GPIODevice,!self->ONLevel);
+    GPIOx.Write(self->GPIOn,!self->ONLevel);
 }
 
 void BEEP_Toggle(struct beep *self)
 {
-    GPIOx.Reverse(self->GPIODevice);
+    GPIOx.Reverse(self->GPIOn);
 }
 
 void BEEP_Init(struct beep *self)
 {
-    GPIOx.Init(self->GPIODevice);
+    GPIOx.Init(self->GPIOn);
 
     self->ONLevel = 0;
 

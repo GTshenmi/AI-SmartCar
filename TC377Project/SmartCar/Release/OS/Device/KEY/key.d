@@ -2,6 +2,8 @@ key.o :	../OS/Device/KEY/key.c
 ../OS/Device/KEY/key.c :
 key.o :	../OS/Device/KEY/key.h
 ../OS/Device/KEY/key.h :
+key.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 key.o :	../Driver/driver.h
 ../Driver/driver.h :
 key.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ key.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 key.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-key.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 key.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 key.o :	../Driver/SysDriverLQ/LQ_ADC.h

@@ -2,6 +2,10 @@ capture.o :	../OS/Device/Capture/capture.c
 ../OS/Device/Capture/capture.c :
 capture.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
+capture.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
+capture.o :	../OS/Device/Capture/image.h
+../OS/Device/Capture/image.h :
 capture.o :	../Driver/driver.h
 ../Driver/driver.h :
 capture.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +90,6 @@ capture.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 capture.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-capture.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 capture.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 capture.o :	../Driver/SysDriverLQ/LQ_ADC.h
@@ -150,7 +152,3 @@ capture.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 capture.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-capture.o :	../OS/Device/Capture/image.h
-../OS/Device/Capture/image.h :
-capture.o :	../Driver/driver.h
-../Driver/driver.h :

@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include "capture.h"
+#include "driver.h"
 
 /*
  *                                                  Capture.Stop()
@@ -83,8 +84,8 @@ void Cap_Report(struct capture *self,image_t image)
 {
     int j,i;
 
-    UARTx.WriteByte(self->ReportUartDevice,0xfe,0xffffffff);
-    UARTx.WriteByte(self->ReportUartDevice,0xef,0xffffffff);
+    UARTx.WriteByte(self->ReportUartn,0xfe,0xffffffff);
+    UARTx.WriteByte(self->ReportUartn,0xef,0xffffffff);
 
     for(i = 0; i < image.Hight; i++)
     {
@@ -94,12 +95,12 @@ void Cap_Report(struct capture *self,image_t image)
             {
                 image.Array[i][j] = 0xff;
             }
-            UARTx.WriteByte(self->ReportUartDevice,image.Array[i][j],0xffffffff);
+            UARTx.WriteByte(self->ReportUartn,image.Array[i][j],0xffffffff);
         }
     }
 
-    UARTx.WriteByte(self->ReportUartDevice,0xef,0xffffffff);
-    UARTx.WriteByte(self->ReportUartDevice,0xfe,0xffffffff);
+    UARTx.WriteByte(self->ReportUartn,0xef,0xffffffff);
+    UARTx.WriteByte(self->ReportUartn,0xfe,0xffffffff);
 }
 
 void Cap_Show(struct capture *self,image_t image,uint8_t flags)

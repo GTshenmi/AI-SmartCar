@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_ADC_H_
 
 #include "LQ_ADC.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef struct
 {

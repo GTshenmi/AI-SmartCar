@@ -25,10 +25,10 @@ uint8_t PWMx_Init(pwmx_t *pwm)
 }
 uint8_t PWMx_Write(pwmx_t *pwm,unsigned long duty)
 {
-    if(duty > PWMx.MaxPwm)
-        duty = PWMx.MaxPwm;
-    else if(duty < PWMx.MinPwm)
-        duty = PWMx.MinPwm;
+    if(duty > PWMx.MaxPwmDuty)
+        duty = PWMx.MaxPwmDuty;
+    else if(duty < PWMx.MinPwmDuty)
+        duty = PWMx.MinPwmDuty;
 
     pwm->Duty = duty;
 
@@ -51,8 +51,8 @@ spwm_m PWMx =
 {
         .Init = PWMx_Init,
         .Write = PWMx_Write,
-        .MaxPwm = 10000,
-        .MinPwm = 0,
+        .MaxPwmDuty = 10000,
+        .MinPwmDuty = 0,
 };
 
 

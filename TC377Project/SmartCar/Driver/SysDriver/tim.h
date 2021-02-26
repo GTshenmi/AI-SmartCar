@@ -12,7 +12,7 @@
 
 #include "LQ_CCU6.h"
 #include "LQ_STM.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef enum
 {

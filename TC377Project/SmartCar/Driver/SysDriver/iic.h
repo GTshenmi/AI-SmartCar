@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_IIC_H_
 
 #include "LQ_GPIO.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 enum
 {

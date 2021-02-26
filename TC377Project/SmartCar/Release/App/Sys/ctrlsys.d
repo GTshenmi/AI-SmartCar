@@ -2,12 +2,10 @@ ctrlsys.o :	../App/Sys/ctrlsys.c
 ../App/Sys/ctrlsys.c :
 ctrlsys.o :	../App/Sys/ctrlsys.h
 ../App/Sys/ctrlsys.h :
-ctrlsys.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+ctrlsys.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 ctrlsys.o :	../OS/os.h
 ../OS/os.h :
-ctrlsys.o :	../OS/Device/device.h
-../OS/Device/device.h :
 ctrlsys.o :	../Driver/driver.h
 ../Driver/driver.h :
 ctrlsys.o :	../Driver/SysDriver/sys_driver.h
@@ -154,72 +152,40 @@ ctrlsys.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 ctrlsys.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+ctrlsys.o :	../OS/Device/device.h
+../OS/Device/device.h :
 ctrlsys.o :	../OS/Device/ESensor/esensor.h
 ../OS/Device/ESensor/esensor.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Motor/motor.h
 ../OS/Device/Motor/motor.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Screen/screen.h
 ../OS/Device/Screen/screen.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Servo/servo.h
 ../OS/Device/Servo/servo.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/LED/led.h
 ../OS/Device/LED/led.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/BEEP/beep.h
 ../OS/Device/BEEP/beep.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/KEY/key.h
 ../OS/Device/KEY/key.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
-ctrlsys.o :	../OS/Device/Switch/switch.h
-../OS/Device/Switch/switch.h :
 ctrlsys.o :	../OS/Device/SDCard/sdcard.h
 ../OS/Device/SDCard/sdcard.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
-ctrlsys.o :	../Driver/driver.h
-../Driver/driver.h :
 ctrlsys.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 ctrlsys.o :	../OS/Device/device.h
@@ -240,9 +206,13 @@ ctrlsys.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 ctrlsys.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+ctrlsys.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 ctrlsys.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 ctrlsys.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+ctrlsys.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 ctrlsys.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :

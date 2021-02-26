@@ -9,7 +9,7 @@
 #define OS_DEVICE_KEY_KEY_H_
 
 
-#include "driver.h"
+#include "platform.h"
 
 #define KEY_LONG_DOWN_DELAY (uint8_t)10
 
@@ -32,7 +32,7 @@ typedef struct key
 {
     private
 
-        gpiox_t *GPIODevice;
+        void *GPIOn;
 
         uint8_t KeyShield;                //按键屏蔽1:屏蔽，0:不屏蔽
         uint8_t Count;                    //按键长按计数

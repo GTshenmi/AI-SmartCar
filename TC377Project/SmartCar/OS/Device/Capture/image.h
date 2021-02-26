@@ -8,7 +8,7 @@
 #ifndef OS_DEVICE_CAPTURE_IMAGE_H_
 #define OS_DEVICE_CAPTURE_IMAGE_H_
 
-#include "driver.h"
+#include "platform.h"
 
 typedef struct
 {

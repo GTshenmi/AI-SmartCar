@@ -163,7 +163,7 @@ uart_resource_t UART_Resources[2] =
 {
         [0] = {
                .UARTN = {UART1,UART1_RX_P11_10,UART1_TX_P11_12,115200},
-               .Description = "CUART"
+               .Description = "CUART And Console."
         },
 };
 spi_resource_t SPI_Resources[2] =

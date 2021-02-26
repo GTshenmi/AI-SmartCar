@@ -40,6 +40,22 @@ void Core0_Main()
     GLED.ON(GLED.Self);
     LCD_Init(&LCD_Type);
 
+    uint8_t input[7];
+
+    for(uint8_t i = 0 ; i < 8 ; i++)
+    {
+        input[i] = 7 * i;
+    }
+
+    model_info_struct Model1;
+    Model_GetInfo(model1, &Model1);
+
+    sint16_t angle = 0;
+
+    Model_Run(model1,input,&angle);
+
+
+
     while(1)
     {
         for(uint8_t i = 0 ; i < 50 ;i++)
@@ -102,17 +118,15 @@ void Core1_Main()
  * */
 void Core2_Main()
 {
-    data_t *pdata = &Data[data_pointer];
-    uint16_t size = sizeof(Data[data_pointer]);
     while(1)
     {
-        os.task.SoftTimerUpdate(pdata,size);
+        os.task.SoftTimerUpdate(NULL,0);
 
-        os.task.KeyScan(pdata,size);
+        os.task.KeyScan(NULL,0);
 
-        os.task.UiUpdate(pdata,size);
+        os.task.UiUpdate(&UIData,sizeof(UIData));
 
-        os.task.DebugConsole(pdata,size);
+        os.task.DebugConsole(NULL,0);
     }
 }
 

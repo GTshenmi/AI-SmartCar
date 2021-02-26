@@ -2,6 +2,8 @@ sdcard.o :	../OS/Device/SDCard/sdcard.c
 ../OS/Device/SDCard/sdcard.c :
 sdcard.o :	../OS/Device/SDCard/sdcard.h
 ../OS/Device/SDCard/sdcard.h :
+sdcard.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 sdcard.o :	../Driver/driver.h
 ../Driver/driver.h :
 sdcard.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ sdcard.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 sdcard.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-sdcard.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 sdcard.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 sdcard.o :	../Driver/SysDriverLQ/LQ_ADC.h

@@ -2,6 +2,8 @@ demo.o :	../OS/Device/Demo/demo.c
 ../OS/Device/Demo/demo.c :
 demo.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+demo.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 demo.o :	../Driver/driver.h
 ../Driver/driver.h :
 demo.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ demo.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 demo.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-demo.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 demo.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 demo.o :	../Driver/SysDriverLQ/LQ_ADC.h

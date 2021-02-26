@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include <softtimer.h>
+#include "systime.h"
 
 static uint32_t softTimerBase;
 const uint32_t softTimerNum = 11;

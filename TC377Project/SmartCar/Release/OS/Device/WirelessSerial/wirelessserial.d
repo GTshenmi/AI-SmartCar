@@ -2,6 +2,8 @@ wirelessserial.o :	../OS/Device/WirelessSerial/wirelessserial.c
 ../OS/Device/WirelessSerial/wirelessserial.c :
 wirelessserial.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+wirelessserial.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 wirelessserial.o :	../Driver/driver.h
 ../Driver/driver.h :
 wirelessserial.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ wirelessserial.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 wirelessserial.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-wirelessserial.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 wirelessserial.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 wirelessserial.o :	../Driver/SysDriverLQ/LQ_ADC.h

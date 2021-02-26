@@ -8,7 +8,7 @@
 #ifndef OS_DEVICE_SDCARD_SDCARD_H_
 #define OS_DEVICE_SDCARD_SDCARD_H_
 
-#include "driver.h"
+#include "platform.h"
 
 typedef struct sdcard
 {

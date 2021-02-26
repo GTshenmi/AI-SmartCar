@@ -8,7 +8,8 @@
 #ifndef OS_DEVICE_DEVICE_H_
 #define OS_DEVICE_DEVICE_H_
 
-#include "driver.h"
+//#include "driver.h"
+#include "platform.h"
 #include "esensor.h"
 #include "motor.h"
 #include "screen.h"

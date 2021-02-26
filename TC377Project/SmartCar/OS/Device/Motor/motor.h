@@ -8,7 +8,14 @@
 #ifndef OS_DEVICE_MOTOR_MOTOR_H_
 #define OS_DEVICE_MOTOR_MOTOR_H_
 
-#include "driver.h"
+#include "platform.h"
+
+#define Drv8701 0
+#define IR7843  1
+#define BTN7971 2
+#define OtherDriverChip   3
+
+#define DriverChip Drv8701
 
 typedef enum
 {
@@ -44,10 +51,10 @@ typedef struct motor_ctrl
  * */
     private
 
-        pwmx_t *PwmDevice[2];
-        encx_t *EncDevice;
+        void *Pwmn[2];
+        void *Encn;
 
-        uint16_t PwmValue;
+        uint16_t PwmValue;/*Õ¼¿Õ±È*/
 
         motor_state_t State;
 

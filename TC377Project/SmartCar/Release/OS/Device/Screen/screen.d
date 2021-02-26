@@ -2,6 +2,8 @@ screen.o :	../OS/Device/Screen/screen.c
 ../OS/Device/Screen/screen.c :
 screen.o :	../OS/Device/Screen/screen.h
 ../OS/Device/Screen/screen.h :
+screen.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 screen.o :	../Driver/driver.h
 ../Driver/driver.h :
 screen.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ screen.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 screen.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-screen.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 screen.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 screen.o :	../Driver/SysDriverLQ/LQ_ADC.h

@@ -2,6 +2,8 @@ esensor.o :	../OS/Device/ESensor/esensor.c
 ../OS/Device/ESensor/esensor.c :
 esensor.o :	../OS/Device/ESensor/esensor.h
 ../OS/Device/ESensor/esensor.h :
+esensor.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 esensor.o :	../Driver/driver.h
 ../Driver/driver.h :
 esensor.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ esensor.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 esensor.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-esensor.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 esensor.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 esensor.o :	../Driver/SysDriverLQ/LQ_ADC.h

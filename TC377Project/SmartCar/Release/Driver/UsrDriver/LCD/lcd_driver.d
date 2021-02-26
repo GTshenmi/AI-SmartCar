@@ -84,8 +84,8 @@ lcd_driver.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 lcd_driver.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-lcd_driver.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+lcd_driver.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 lcd_driver.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 lcd_driver.o :	../Driver/SysDriverLQ/LQ_ADC.h

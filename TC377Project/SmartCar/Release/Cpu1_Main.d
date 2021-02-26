@@ -4,8 +4,6 @@ Cpu1_Main.o :	../App/include.h
 ../App/include.h :
 Cpu1_Main.o :	../OS/os.h
 ../OS/os.h :
-Cpu1_Main.o :	../OS/Device/device.h
-../OS/Device/device.h :
 Cpu1_Main.o :	../Driver/driver.h
 ../Driver/driver.h :
 Cpu1_Main.o :	../Driver/SysDriver/sys_driver.h
@@ -90,8 +88,8 @@ Cpu1_Main.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 Cpu1_Main.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-Cpu1_Main.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+Cpu1_Main.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 Cpu1_Main.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 Cpu1_Main.o :	../Driver/SysDriverLQ/LQ_ADC.h
@@ -154,72 +152,40 @@ Cpu1_Main.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 Cpu1_Main.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+Cpu1_Main.o :	../OS/Device/device.h
+../OS/Device/device.h :
 Cpu1_Main.o :	../OS/Device/ESensor/esensor.h
 ../OS/Device/ESensor/esensor.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Motor/motor.h
 ../OS/Device/Motor/motor.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Screen/screen.h
 ../OS/Device/Screen/screen.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Servo/servo.h
 ../OS/Device/Servo/servo.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/LED/led.h
 ../OS/Device/LED/led.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/BEEP/beep.h
 ../OS/Device/BEEP/beep.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/KEY/key.h
 ../OS/Device/KEY/key.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
-Cpu1_Main.o :	../OS/Device/Switch/switch.h
-../OS/Device/Switch/switch.h :
 Cpu1_Main.o :	../OS/Device/SDCard/sdcard.h
 ../OS/Device/SDCard/sdcard.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
-Cpu1_Main.o :	../Driver/driver.h
-../Driver/driver.h :
 Cpu1_Main.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 Cpu1_Main.o :	../OS/Device/device.h
@@ -240,10 +206,14 @@ Cpu1_Main.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 Cpu1_Main.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+Cpu1_Main.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 Cpu1_Main.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 Cpu1_Main.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+Cpu1_Main.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 Cpu1_Main.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 Cpu1_Main.o :	../App/Sys/sys.h

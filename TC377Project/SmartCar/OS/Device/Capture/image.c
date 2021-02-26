@@ -6,6 +6,8 @@
  *      Brief: 图像处理基础库函数
  */
 #include "image.h"
+#include "math.h"
+#include "stdlib.h"
 
 /*!
   * @example :
@@ -62,7 +64,9 @@ void Image_Zip(image_t *imagein,image_t *imageout)
     div_h = imagein->Hight/imageout->Hight;
     div_w = imagein->Width/imageout->Width;
 
+#if ((defined(Chip)) && ((Chip == TC264) || (Chip == TC377)))
 #pragma warning 549         // 屏蔽警告
+#endif
     /* 从中心取图像 */
     if(imageout->Hight * div_h != imagein->Hight)
     {
@@ -83,7 +87,9 @@ void Image_Zip(image_t *imagein,image_t *imageout)
         }
         temp_h += div_h;
     }
+#if ((defined(Chip)) && ((Chip == TC264) || (Chip == TC377)))
 #pragma warning 549         // 打开警告
+#endif
 }
 
 int Imagee_GetAverageThreshold(image_t *imagein,int base)/*平均阈值*/

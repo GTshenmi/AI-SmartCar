@@ -11,7 +11,7 @@
 #include "stdbool.h"
 
 #include "LQ_GPIO.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef enum
 {

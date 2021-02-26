@@ -4,8 +4,6 @@ interrupt.o :	../App/include.h
 ../App/include.h :
 interrupt.o :	../OS/os.h
 ../OS/os.h :
-interrupt.o :	../OS/Device/device.h
-../OS/Device/device.h :
 interrupt.o :	../Driver/driver.h
 ../Driver/driver.h :
 interrupt.o :	../Driver/SysDriver/sys_driver.h
@@ -90,8 +88,8 @@ interrupt.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 interrupt.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-interrupt.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+interrupt.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 interrupt.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 interrupt.o :	../Driver/SysDriverLQ/LQ_ADC.h
@@ -154,72 +152,40 @@ interrupt.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 interrupt.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+interrupt.o :	../OS/Device/device.h
+../OS/Device/device.h :
 interrupt.o :	../OS/Device/ESensor/esensor.h
 ../OS/Device/ESensor/esensor.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Motor/motor.h
 ../OS/Device/Motor/motor.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Screen/screen.h
 ../OS/Device/Screen/screen.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Servo/servo.h
 ../OS/Device/Servo/servo.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/LED/led.h
 ../OS/Device/LED/led.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/BEEP/beep.h
 ../OS/Device/BEEP/beep.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/KEY/key.h
 ../OS/Device/KEY/key.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
-interrupt.o :	../OS/Device/Switch/switch.h
-../OS/Device/Switch/switch.h :
 interrupt.o :	../OS/Device/SDCard/sdcard.h
 ../OS/Device/SDCard/sdcard.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
-interrupt.o :	../Driver/driver.h
-../Driver/driver.h :
 interrupt.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 interrupt.o :	../OS/Device/device.h
@@ -240,10 +206,14 @@ interrupt.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 interrupt.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+interrupt.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 interrupt.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 interrupt.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+interrupt.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 interrupt.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 interrupt.o :	../App/Sys/sys.h

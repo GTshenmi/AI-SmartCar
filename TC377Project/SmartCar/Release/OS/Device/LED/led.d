@@ -2,6 +2,8 @@ led.o :	../OS/Device/LED/led.c
 ../OS/Device/LED/led.c :
 led.o :	../OS/Device/LED/led.h
 ../OS/Device/LED/led.h :
+led.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 led.o :	../Driver/driver.h
 ../Driver/driver.h :
 led.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ led.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 led.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-led.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 led.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 led.o :	../Driver/SysDriverLQ/LQ_ADC.h

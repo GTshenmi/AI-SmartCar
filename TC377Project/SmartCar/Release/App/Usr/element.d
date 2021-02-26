@@ -6,8 +6,6 @@ element.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 element.o :	../OS/os.h
 ../OS/os.h :
-element.o :	../OS/Device/device.h
-../OS/Device/device.h :
 element.o :	../Driver/driver.h
 ../Driver/driver.h :
 element.o :	../Driver/SysDriver/sys_driver.h
@@ -92,8 +90,8 @@ element.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 element.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-element.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+element.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 element.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 element.o :	../Driver/SysDriverLQ/LQ_ADC.h
@@ -156,72 +154,40 @@ element.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 element.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+element.o :	../OS/Device/device.h
+../OS/Device/device.h :
 element.o :	../OS/Device/ESensor/esensor.h
 ../OS/Device/ESensor/esensor.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Motor/motor.h
 ../OS/Device/Motor/motor.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Screen/screen.h
 ../OS/Device/Screen/screen.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Servo/servo.h
 ../OS/Device/Servo/servo.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/LED/led.h
 ../OS/Device/LED/led.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/BEEP/beep.h
 ../OS/Device/BEEP/beep.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/KEY/key.h
 ../OS/Device/KEY/key.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Capture/capture.h
 ../OS/Device/Capture/capture.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
-element.o :	../OS/Device/Switch/switch.h
-../OS/Device/Switch/switch.h :
 element.o :	../OS/Device/SDCard/sdcard.h
 ../OS/Device/SDCard/sdcard.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
-element.o :	../Driver/driver.h
-../Driver/driver.h :
 element.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 element.o :	../OS/Device/device.h
@@ -242,10 +208,14 @@ element.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 element.o :	../OS/Time/ostime.h
 ../OS/Time/ostime.h :
+element.o :	../OS/Debug/debug.h
+../OS/Debug/debug.h :
 element.o :	../OS/Debug/print.h
 ../OS/Debug/print.h :
 element.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
+element.o :	../OS/Debug/ano_dt.h
+../OS/Debug/ano_dt.h :
 element.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 element.o :	../App/Sys/ctrlsys.h

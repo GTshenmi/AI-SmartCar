@@ -2,6 +2,8 @@ bluetooth.o :	../OS/Device/BLE/bluetooth.c
 ../OS/Device/BLE/bluetooth.c :
 bluetooth.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
+bluetooth.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 bluetooth.o :	../Driver/driver.h
 ../Driver/driver.h :
 bluetooth.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ bluetooth.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 bluetooth.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-bluetooth.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 bluetooth.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 bluetooth.o :	../Driver/SysDriverLQ/LQ_ADC.h

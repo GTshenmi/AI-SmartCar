@@ -1,5 +1,5 @@
 /*
- * transmitter.h
+ * communicate.h
  *
  *  Created on: 2020Äê12ÔÂ13ÈÕ
  *      Author: 936305695
@@ -8,8 +8,7 @@
 #ifndef OS_DEVICE_COMMUNICATE_COMMUNICATE_H_
 #define OS_DEVICE_COMMUNICATE_COMMUNICATE_H_
 
-
-#include "driver.h"
+#include "platform.h"
 
 #define COMM_MAX_BUF_LEN 256
 
@@ -21,7 +20,7 @@ typedef struct communicate
 {
      private
 
-        void *CommunicationDevice;
+        void *Communicatorn;
         uint32_t CommunicationType;
 
      public

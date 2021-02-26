@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVERLQ_ENC_H_
 
 #include "LQ_GPT12_ENC.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef struct
 {

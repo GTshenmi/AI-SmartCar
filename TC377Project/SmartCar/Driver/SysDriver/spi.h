@@ -10,7 +10,7 @@
 
 #include "LQ_QSPI.h"
 #include "LQ_SPI.h"
-#include "chipdatatype.h"
+#include "platform.h"
 #include "systime.h"
 
 #define SPIx_MAX_TIME_OUT TIME_INFINITE

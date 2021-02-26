@@ -84,8 +84,8 @@ sd.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 sd.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-sd.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
+sd.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 sd.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 sd.o :	../Driver/SysDriverLQ/LQ_ADC.h

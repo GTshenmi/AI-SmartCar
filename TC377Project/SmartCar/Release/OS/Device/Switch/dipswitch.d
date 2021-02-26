@@ -2,6 +2,8 @@ dipswitch.o :	../OS/Device/Switch/dipswitch.c
 ../OS/Device/Switch/dipswitch.c :
 dipswitch.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
+dipswitch.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 dipswitch.o :	../Driver/driver.h
 ../Driver/driver.h :
 dipswitch.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ dipswitch.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 dipswitch.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-dipswitch.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 dipswitch.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 dipswitch.o :	../Driver/SysDriverLQ/LQ_ADC.h
@@ -152,5 +152,3 @@ dipswitch.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 dipswitch.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
-dipswitch.o :	../Driver/driver.h
-../Driver/driver.h :

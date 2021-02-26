@@ -9,7 +9,7 @@
 #define DRIVER_SYSDRIVER_SYSTIME_H_
 
 #include "LQ_STM.h"
-#include "chipdatatype.h"
+#include "platform.h"
 
 typedef struct
 {

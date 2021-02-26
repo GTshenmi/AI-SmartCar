@@ -2,6 +2,8 @@ switch.o :	../OS/Device/Switch/switch.c
 ../OS/Device/Switch/switch.c :
 switch.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
+switch.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 switch.o :	../Driver/driver.h
 ../Driver/driver.h :
 switch.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ switch.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 switch.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-switch.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 switch.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 switch.o :	../Driver/SysDriverLQ/LQ_ADC.h

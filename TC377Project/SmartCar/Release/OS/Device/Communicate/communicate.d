@@ -2,6 +2,8 @@ communicate.o :	../OS/Device/Communicate/communicate.c
 ../OS/Device/Communicate/communicate.c :
 communicate.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+communicate.o :	../Driver/SysDriver/platform.h
+../Driver/SysDriver/platform.h :
 communicate.o :	../Driver/driver.h
 ../Driver/driver.h :
 communicate.o :	../Driver/SysDriver/sys_driver.h
@@ -86,8 +88,6 @@ communicate.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 communicate.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-communicate.o :	../Driver/SysDriver/chipdatatype.h
-../Driver/SysDriver/chipdatatype.h :
 communicate.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
 communicate.o :	../Driver/SysDriverLQ/LQ_ADC.h

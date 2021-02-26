@@ -8,7 +8,7 @@
 #ifndef OS_DEVICE_CAPTURE_CAPTURE_H_
 #define OS_DEVICE_CAPTURE_CAPTURE_H_
 
-#include "driver.h"
+#include "platform.h"
 #include "image.h"
 
 typedef enum
@@ -27,7 +27,7 @@ typedef struct capture
      uint8_t (*__GetState__)(void);
      uint8_t (*__Read__)(void);
 
-     uartx_t *ReportUartDevice;
+     void *ReportUartn;
      uint32_t Reg;
 
   public

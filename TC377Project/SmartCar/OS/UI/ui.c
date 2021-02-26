@@ -7,6 +7,9 @@
 #include "ui.h"
 
 ui_data_pkg_t UIData;
+void ShowADCData(float *data,uint16_t len);
+
+
 /*
  * App Layer ´«²Î:
  * argv: ui_data_pkg_t *
@@ -16,11 +19,17 @@ ui_data_pkg_t UIData;
 void UI_Update(void *argv,uint16_t argc)
 {
     ui_data_pkg_t *data = (ui_data_pkg_t *)argv;
-
-    for(uint16_t i = 0 ; i < 5 ; i++ )
-        Screen.WriteXLine(Screen.Self,i,"LADC[%d] = %u",i,data->LADC[i]);
+    ShowADCData(data->NSADC,5);
 }
 
-
+/*
+  *  Ê¾Àý:
+ *
+ * */
+void ShowADCData(float *data,uint16_t len)
+{
+    for(uint16_t i = 0 ; i < len ; i++ )
+        Screen.WriteXLine(Screen.Self,i,"SADC[%d] = %.3f",i,data[i]);
+}
 
 
