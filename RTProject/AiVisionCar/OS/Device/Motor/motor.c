@@ -57,7 +57,7 @@ uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
 
 sint16_t MotorGetSpeed(struct motor_ctrl *self)
 {
-    uint16_t speed = ENCx.Read(self->Encn);
+    sint16_t speed = ENCx.Read(self->Encn);
 
     if(speed > self->MaxSpeed)
       speed = self->MaxSpeed;
@@ -143,7 +143,7 @@ void MotorDefaultProtect(struct motor_ctrl *self,sint16_t speed,void *argv,uint1
 
     if(self->StallingTime >= 0xffffffff)
     {
-        self->State = Motor_Stalling;
+        //self->State = Motor_Stalling;
     }
 }
 

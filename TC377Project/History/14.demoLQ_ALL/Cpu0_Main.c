@@ -186,6 +186,6 @@ int core0_main (void)
     while (1)	//主循环
     {
         LED_Ctrl(LED0, RVS);     // LED闪烁 指示程序运行状态
-        delayms(20);
+        delayms(500);
     }
 }

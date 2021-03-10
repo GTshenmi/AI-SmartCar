@@ -29,7 +29,7 @@ void Task_UiUpdate(void *argv,uint16_t argc)
 
 void Task_KeyScan(void *argv,uint16_t argc)
 {
-    for(int i = 0 ; i < 4 ;i++)
+    for(int i = 0 ; i < 6 ;i++)
     {
         KEY[i].Scan(KEY[i].Self);
     }

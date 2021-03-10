@@ -100,7 +100,9 @@ void MT9V034_SetAutoExposure(char enable);
 #define MTV_DEVICE_WRITE_ADDRESS    0xB8
 #define MTV_DEVICE_READ_ADDRESS     0xB9
 
-#define MT9V034_I2C_ADDR	            0xB8 //(0xB8 >> 1)=0x5C
+#define MT9V034_I2C_ADDR	    0xB8            
+
+//0xB8 //(0xB8 >> 1)=0x5C
 #define MT9V034_PIXEL_ARRAY_HEIGHT	            492
 #define MT9V034_PIXEL_ARRAY_WIDTH	            782
 #define MT9V034_CHIP_VERSION			    0x00

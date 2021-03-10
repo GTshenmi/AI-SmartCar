@@ -10,10 +10,6 @@
 #include "init.h"
 #include "include.h"
 
-void Core0_SoftWareInit_AIMode(void);
-void Core0_SoftWareInit_AutoBootMode(void);
-void Core0_SoftWareInit_ManualBootMode(void);
-void Core0_SoftWareInit_DebugMode(void);
 void UIParameterInit(void);
 
 void BeepOffTimerCallBack(void *argc,unsigned short argv)
@@ -28,23 +24,28 @@ void BeepOffTimerCallBack(void *argc,unsigned short argv)
 void Core0_HardWareInit()
 {
     Motor.Init(Motor.Self);
-    Servo.Init(Servo.Self);
+
+
+
+    //Servo.Init(Servo.Self);
+    //Servo.SetPwmCentValue(Servo.Self,850);
+    //Servo.Start(Servo.Self);
 
     for(int i = 0;i<CData.MaxLADCDeviceNum;i++)
     {
         LESensor[i].Init(LESensor[i].Self);
+        LESensor[i].EnableFilter(LESensor[i].Self,false);
     }
     for(int i = 0;i<CData.MaxSADCDeviceNum;i++)
     {
         SESensor[i].Init(SESensor[i].Self);
+        SESensor[i].EnableFilter(SESensor[i].Self,false);
     }
 
     GLED.Init(GLED.Self);
+    BLED.Init(BLED.Self);
 
     BEEP.Init(BEEP.Self);
-
-    for(int i = 0;i<CData.MaxKEYDeviceNum;i++)
-        KEY[i].Init(KEY[i].Self);
 
 #if 1
     CUART.Init(CUART.Self);
@@ -52,17 +53,16 @@ void Core0_HardWareInit()
     Console.Init();
 #endif
 
-//    DIPSwitch.Init(DIPSwitch.Self);
-
-//    Screen.Init(Screen.Self);
+    UI_Init();
 
 /*System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
 /*Set BEEP OFF 1 sec later*/
     os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
 
-    Console.WriteLine("HardWare System Init Finished.");
+    //Console.WriteLine("HardWare System Init Finished.");
 }
+
 /*
  * @Brief:  核心0软件初始化(参数/函数指针初始化)
  * */
@@ -73,11 +73,11 @@ void Core0_SoftWareInit()
     ServoCtrlSysInit();
     MotorCtrlSysInit();
 
-    Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
-    Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
+//    Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
+//    Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
     /*其他单元不需要划分，可以共用同一个函数，如果需要划分可以仿照DecisionUnit更改*/
-    Motor.CtrlStrategy = MotorCtrlStrategy;
-    Servo.CtrlStrategy = ServoCtrlStrategy;
+//    Motor.CtrlStrategy = MotorCtrlStrategy;
+//    Servo.CtrlStrategy = ServoCtrlStrategy;
 
     MEU.Run = Motor_ExecutionUnitRun;
     SEU.Run = Servo_ExecutionUnitRun;
@@ -91,28 +91,17 @@ void Core0_SoftWareInit()
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
     PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,1.0));
 
-    switch(Data[data_pointer].CarMode)
-    {
-        case AI_Mode:
-            Core0_SoftWareInit_AIMode();
-            break;
-        case AutoBoot_Mode:
-            Core0_SoftWareInit_AutoBootMode();
-            break;
-        case ManualBoot_Mode:
-            Core0_SoftWareInit_ManualBootMode();
-            break;
-        case DebugMode:
-            Core0_SoftWareInit_DebugMode();
-            break;
-        default:
-            break;
-    }
+    MDecisionUnit.Run = Motor_DecisionUnitRun_AIMode;
+    SDecisionUnit.Run = Servo_DecisionUnitRun_AIMode;
+    Data[data_pointer].AI_State = AI_Free;
+
+    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.1,0.0,0.0));
+    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
 
     UIParameterInit();
 
-    Console.WriteLine("SoftWare System Init Finished.");
-    Console.WriteLine("Wait For Core Sync...");
+    //Console.WriteLine("SoftWare System Init Finished.");
+    //Console.WriteLine("Wait For Core Sync...");
 }
 
 /*
@@ -121,7 +110,7 @@ void Core0_SoftWareInit()
  * */
 void Core1_HardWareInit()
 {
-    BLED.Init(BLED.Self);
+
 }
 /*
  * @Brief:  核心1软件初始化(参数/函数指针初始化)
@@ -151,61 +140,18 @@ void Core2_SoftWareInit()
 
 }
 
-
-
-
-
-void Core0_SoftWareInit_AIMode(void)
-{
-    MDecisionUnit.Run = Motor_DecisionUnitRun_AIMode;
-    SDecisionUnit.Run = Servo_DecisionUnitRun_AIMode;
-    Data[data_pointer].AI_State = AI_Free;
-    NeuralNetworkInit();
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.1,0.0,0.0));
-    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
-}
-void Core0_SoftWareInit_AutoBootMode(void)
-{
-    MDecisionUnit.Run = Motor_DecisionUnitRun_AutoBootMode;
-
-    SDecisionUnit.Run = Servo_DecisionUnitRun_AutoBootMode;
-
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.1,0.0,0.0));
-    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
-}
-void Core0_SoftWareInit_ManualBootMode(void)
-{
-    MDecisionUnit.Run = Motor_DecisionUnitRun_ManualBootMode;
-
-    SDecisionUnit.Run = Servo_DecisionUnitRun_ManualBootMode;
-
-    MExecutionUnit.Sleep(MExecutionUnit.Self,0);
-    SExecutionUnit.Sleep(SExecutionUnit.Self,0);
-
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.1,0.0,0.0));
-    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
-}
-void Core0_SoftWareInit_DebugMode(void)
-{
-    MDecisionUnit.Run = Motor_DecisionUnitRun_DebugMode;
-    SDecisionUnit.Run = Servo_DecisionUnitRun_DebugMode;
-
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.1,0.0,0.0));
-    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
-}
-
 void UIParameterInit(void)
 {
 #if EnableUiDataLink
 
-    UIData.Actual_Speed = &Data[data_pointer].Actual_Speed;;
+    UIData.Actual_Speed = &Data[data_pointer].Actual_Speed;
     UIData.Angle =        &Data[data_pointer].Angle;
     UIData.Bias =         &Data[data_pointer].Bias;
     UIData.MPID_Kd =      &Data[data_pointer].M_PID.Kd;
     UIData.MPID_Ki =      &Data[data_pointer].M_PID.Ki;
     UIData.MPID_Kp =      &Data[data_pointer].M_PID.Kp;
     UIData.MPID_Result =  &Data[data_pointer].M_PID.Result;
-    UIData.M_PwmDuty =    &Motor.PwmValue;
+    UIData.M_PwmDuty =    (uint16_t *)&Motor.PwmValue;
     UIData.SPID_Kd =      &Data[data_pointer].S_PID.Kd;
     UIData.SPID_Ki =      &Data[data_pointer].S_PID.Ki;
     UIData.SPID_Kp =      &Data[data_pointer].S_PID.Kp;

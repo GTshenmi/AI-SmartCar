@@ -6,48 +6,48 @@
  */
 #include "resource_config.h"
 
-adc_resource_t ADC_Resources[12] =
+adc_resource_t ADC_Resources[20] =
 {
         [0] = {
-               .ADCN = {ADC13,10000},
+               .ADCN = {ADC6,10000},
                .Description = "Short ESensor[0]->AD1"
         },
         [1] = {
-               .ADCN = {ADC12,10000},
+               .ADCN = {ADC11,10000},
                .Description = "Short ESensor[1]->AD2"
         },
         [2] = {
-               .ADCN = {ADC20,10000},
+               .ADCN = {ADC10,10000},
                .Description = "Short ESensor[2]->AD3 Problem"
         },
         [3] = {
-               .ADCN = {ADC10,10000},
+               .ADCN = {ADC21,10000},
                .Description = "Short ESensor[3]->AD4"
         },
         [4] = {
-               .ADCN = {ADC11,10000},
+               .ADCN = {ADC12,10000},
                .Description = "Short ESensor[4]->AD5"
         },
         [5] = {
-               .ADCN = {ADC6,10000},
+               .ADCN = {ADC21,10000},
                .Description = "Short ESensor[5]->AD6"
         },
         [6] = {
-               .ADCN = {ADC3,10000},
+               .ADCN = {ADC24,10000},
                .Description = "Short ESensor[6]->AD7"
         },
 
 
         [7] = {
-               .ADCN = {ADC5,10000},
+               .ADCN = {ADC27,10000},
                .Description = "Long ESensor[0]->AD9"
         },
         [8] = {
-               .ADCN = {ADC7,10000},
+               .ADCN = {ADC1,10000},
                .Description = "Long ESensor[1]->AD10"
         },
         [9] = {
-               .ADCN = {ADC2,10000},
+               .ADCN = {ADC0,10000},
                .Description = "Long ESensor[2]->AD11"
         },
         [10] = {
@@ -55,31 +55,44 @@ adc_resource_t ADC_Resources[12] =
                .Description = "Long ESensor[3]->AD12"
         },
         [11] = {
-               .ADCN = {ADC0,10000},
+               .ADCN = {ADC2,10000},
                .Description = "Long ESensor[4]->AD13"
         },
+        [12] = {
+               .ADCN = {ADC7,10000},
+        },
+        [13] = {
+               .ADCN = {ADC5,10000},
+        },
+        [14] = {
+               .ADCN = {ADC8,10000},
+        },
+        [15] = {
+               .ADCN = {ADC3,10000},
+        },
+
 };
 
 gpio_resource_t GPIO_Resources[20] =
 {
         [0] = {
-               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P15_3, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_DC"
         },
         [1] = {
-               .GPION = {P15_4, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P15_1, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_RST"
         },
         [2] = {
-               .GPION = {P15_5, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P15_7, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_SDA"
         },
         [3] = {
-               .GPION = {P15_3, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_SCL"
         },
         [4] = {
-               .GPION = {P15_2, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P15_2, PIN_MODE_OUTPUT,0,false,false},
                .Description = "LCD_CS"
         },
         [5] = {
@@ -111,35 +124,43 @@ gpio_resource_t GPIO_Resources[20] =
                .Description = "BEEP"
         },
         [12] = {
-               .GPION = {P00_9, PIN_MODE_INPUT,1,false,false},
-               .Description = "KEY Up"
+               .GPION = {P33_7, PIN_MODE_INPUT,1,false,false},//该按键硬件GPIO有问题
+               .Description = "KEY 0"
         },
         [13] = {
-               .GPION = {P00_6, PIN_MODE_INPUT,1,false,false},
-               .Description = "KEY Down"
+               .GPION = {P33_9, PIN_MODE_INPUT,1,false,false},
+               .Description = "KEY 1"
         },
         [14] = {
-               .GPION = {P00_8, PIN_MODE_INPUT,1,false,false},
-               .Description = "Key Exit"
+               .GPION = {P33_10, PIN_MODE_INPUT,1,false,false},
+               .Description = "Key 2"
         },
         [15] = {
-               .GPION = {P00_5, PIN_MODE_INPUT,1,false,false},
-               .Description = "Key Confirm"
+               .GPION = {P33_11, PIN_MODE_INPUT,1,false,false},
+               .Description = "Key 3"
+        },
+        [16] = {
+               .GPION = {P33_13, PIN_MODE_INPUT,1,false,false},
+               .Description = "Key 4"
+        },
+        [17] = {
+               .GPION = {P32_4, PIN_MODE_INPUT,1,false,false},
+               .Description = "Key 5"
         },
 };
 
 pwm_resource_t PWM_Resources[3] =
 {
         [0] = {
-               .PWMN = {(void *)&IfxGtm_ATOM2_0_TOUT32_P33_10_OUT,13000,0,ATOM},
+               .PWMN = {(void *)&IfxGtm_ATOM0_1_TOUT54_P21_3_OUT,13000,0,ATOM},
                .Description = "Motor PH"
         },
         [1] = {
-               .PWMN = {(void *)&IfxGtm_ATOM2_5_TOUT35_P33_13_OUT,13000,0,ATOM},
+               .PWMN = {(void *)&IfxGtm_ATOM0_2_TOUT55_P21_4_OUT,13000,0,ATOM},
                .Description = "Motor EN"
         },
         [2] = {
-               .PWMN = {(void *)&IfxGtm_ATOM0_7_TOUT64_P20_8_OUT,13000,0,ATOM},
+               .PWMN = {(void *)&IfxGtm_ATOM0_3_TOUT56_P21_5_OUT,50,0,ATOM},
                .Description = "Servo"
         },
 };
@@ -147,7 +168,7 @@ pwm_resource_t PWM_Resources[3] =
 enc_resource_t ENC_Resources[2] =
 {
         [0] = {
-               .ENCN = {ENC6_InPut_P20_3/*ENC6_InPut_P10_2*/, ENC6_Dir_P20_0},
+               .ENCN = {ENC3_InPut_P02_6/*ENC6_InPut_P10_2*/, ENC3_Dir_P02_7},
                .Description = "Motor Encoder"
         },
 };

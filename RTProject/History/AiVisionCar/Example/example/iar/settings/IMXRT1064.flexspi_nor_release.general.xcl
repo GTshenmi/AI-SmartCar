@@ -1,0 +1,17 @@
+"C:\Applications\IAR8.4RT\arm\bin\armproc.dll" 
+
+"C:\Applications\IAR8.4RT\arm\bin\armjlink2.dll" 
+
+"D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\flexspi_nor_release\Exe\IMXRT1064.out" 
+
+--plugin="C:\Applications\IAR8.4RT\arm\bin\armbat.dll" 
+
+--device_macro="C:\Applications\IAR8.4RT\arm\config\debugger\NXP\iMXRT.dmac" 
+
+--device_macro="C:\Applications\IAR8.4RT\arm\config\debugger\NXP\iMXRT_Trace.dmac" 
+
+--flash_loader="C:\Applications\IAR8.4RT\arm\config\flashloader\NXP\FlashIMXRT1064_SIP.board" 
+
+
+
+

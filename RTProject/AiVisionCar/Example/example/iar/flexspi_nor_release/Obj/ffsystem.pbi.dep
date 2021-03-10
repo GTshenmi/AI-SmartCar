@@ -1,0 +1,5 @@
+ffsystem.pbi: \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Device\fatfs\fatfs\source\ffsystem.c \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Device\fatfs\fatfs\source/ff.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Device\fatfs\fatfs\source/integer.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\sd\ffconf.h

@@ -40,7 +40,6 @@
 #define LCD_SCL(x)  ((x==1)?_GPIO_WritePin(LCD_SCL_GPIO,1):_GPIO_WritePin(LCD_SCL_GPIO,0))
 #define LCD_CS(x)   ((x==1)?_GPIO_WritePin(LCD_CS_GPIO,1):_GPIO_WritePin(LCD_CS_GPIO,0))
 
-
 #else
 
 #define LCD_SPI         &SPI_Resources[0].SPIN
@@ -68,7 +67,7 @@ void LCD_HardWareWriteCmd(uint8_t cmd);
 #endif
 void LCD_AddrReset(void);
 void LCD_DrawPoint(uint16_t xs,uint16_t ys,uint16_t color);
-void _LCD_DrawPoint(uint8_t xs,uint8_t ys,uint16_t color);
+
 /*                                                                                              ×ÖÌå¿â                                                                                                 */
 extern uint8_t Font_code8[][6];
 /*                                                                                              ×ÖÌå¿â                                                                                                 */

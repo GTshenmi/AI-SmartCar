@@ -66,4 +66,6 @@ extern ui_data_pkg_t UIData;
 
 void UI_Update(void *argv,uint16_t argc);
 
+void UI_Init(void);
+
 #endif /* OS_UI_UI_H_ */

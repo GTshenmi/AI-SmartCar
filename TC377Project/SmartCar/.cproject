@@ -392,6 +392,16 @@
                                     <listOptionValue builtIn="false" value="../src/AppSw/Tricore/User"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Driver/SysDriver"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/include"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/include/libc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/libcpu/tricore"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/src"/>
                                     								
                                 </option>
                                 								
@@ -480,10 +490,6 @@
                             <tool id="com.infineon.aurix.buildsystem.managed.tool.c.compiler.tasking.release.1139718523" name="TASKING C/C++ Compiler" superClass="com.infineon.aurix.buildsystem.managed.tool.c.compiler.tasking.release">
                                 								
                                 <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.infineon.aurix.buildsystem.managed.c.compiler.tasking.include.196920109" name="Include paths" superClass="com.infineon.aurix.buildsystem.managed.c.compiler.tasking.include" useByScannerDiscovery="false" valueType="includePath">
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/AppSw/Tricore/User&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/AppSw&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Libraries/iLLD/TC37A/Tricore/Gtm/Tom/PwmHl&quot;"/>
                                     									
@@ -806,6 +812,14 @@
                                     <listOptionValue builtIn="false" value="../OS/FatFs"/>
                                     									
                                     <listOptionValue builtIn="false" value="../OS/Device/Capture"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/include"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/include/libc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/RT-Thread/libcpu/tricore"/>
                                     									
                                     <listOptionValue builtIn="false" value="../OS/Device/Screen"/>
                                     									

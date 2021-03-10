@@ -16,49 +16,12 @@
 --------------------------------------------------------*/
 
 #include "include.h"
-
-/**
-  * @brief    不精确延时
-  *
-  * @param    无
-  *
-  * @return   无
-  *
-  * @note     无
-  *
-  * @example  delayms(100);
-  *
-  * @date     2019/4/22 星期一
-*/
-void delayms(uint16_t ms)
-{
-	volatile uint32_t i = 0;
-	while(ms--)
-	{
-		for (i = 0; i < 30000; ++i)
-		{
-			__asm("NOP"); /* delay */
-		}
-	}	
-}
  
-
 /*!
  * @brief Main function 
  */
 int main(void)
 {  
-    Start0:
-      
-    os.core[0].HardWareInit = Core0_HardWareInit;
-    os.core[0].Run = Core0_Main;
-    os.core[0].SoftWareInit = Core0_SoftWareInit;
-
-    os.init(0);
-
-    os.core[0].Run();
-
-    goto Start0;
-
- //   return 0;
+    Core0_Init();
+    Core0_Main();
 }

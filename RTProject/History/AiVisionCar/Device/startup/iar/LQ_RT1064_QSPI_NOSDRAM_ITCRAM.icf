@@ -1,0 +1,144 @@
+/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+【平    台】龙邱i.MX RT1064核心板-智能车板
+【编    写】CHIUSIR
+【E-mail  】chiusir@163.com
+【软件版本】V1.0，龙邱开源代码，仅供参考，后果自负
+【最后更新】2019年7月5日
+【相关信息参考下列地址】
+【网    站】http://www.lqist.cn
+【淘宝店铺】http://shop36265907.taobao.com
+------------------------------------------------
+【dev.env.】IAR8.20.1及以上版本
+【Target 】 i.MX RT1052
+【Crystal】 24.000Mhz
+【ARM PLL】 1200MHz
+【SYS PLL】 528MHz
+【USB PLL】 480MHz
+================================================
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+/* FLASH配置和ivt等信息 */
+define exported symbol m_boot_hdr_conf_start = 0x70000000;
+define symbol m_boot_hdr_ivt_start           = 0x70001000;
+define symbol m_boot_hdr_boot_data_start     = 0x70001020;
+define symbol m_boot_hdr_dcd_data_start      = 0x70001030;
+
+/* 中断向量表 */
+define symbol m_interrupts_start       = 0x70002000;
+define symbol m_interrupts_end         = 0x700023FF;
+
+// RAM 中断向量表
+define symbol ram_interrupts_start     = 0x00000000;
+define symbol ram_interrupts_end       = 0x000003FF;
+
+
+// 代码存放位置 
+define symbol m_text_start             = 0x70002400;
+define symbol m_text_end               = 0x703FFFFF;
+
+// DTCRAM 256K
+define symbol dtcram_start             = 0x20000000;
+define symbol dtcram_end               = 0x2003FFFF;
+
+// OCRAM 640K
+define symbol ocram_start              = 0x20200000;
+define symbol ocram_end                = 0x2029FFFF;
+
+// itcram 
+define symbol itcram_start             = 0x00000400;
+define symbol itcram_end               = 0x0001FFFF;
+
+
+
+// 栈大小 局部变量
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x4000;
+}
+
+// 堆大小 动态分配malloc分配的空间
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x8000;
+}
+
+// RAM中的中断向量表 
+define exported symbol __VECTOR_TABLE  = m_interrupts_start;
+define exported symbol __VECTOR_RAM    = ram_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x400;
+
+define memory mem with size = 4G;
+
+// 定义存储地址区域（region）
+define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
+                          | mem:[from m_text_start to m_text_end];
+
+define region DTCRAM_region = mem:[from dtcram_start to dtcram_end - __size_cstack__];
+define region ITCRAM_region = mem:[from itcram_start to itcram_end];
+define region OCRAM_region  = mem:[from ocram_start  to ocram_end];
+
+// 栈段 栈最好分配在DTCRAM中 
+define region CSTACK_region = mem:[from dtcram_end - __size_cstack__+1 to dtcram_end];
+
+
+
+// 定义地址块 
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block RW        { first readwrite, section m_usb_dma_init_data };
+define block ZI         with alignment = 32  { first zi, section m_usb_dma_noninit_data };
+define block NCACHE_VAR with alignment = 8{ section NonCacheable , section NonCacheable.init };
+define block ITCRAM    with alignment = 8{ section ITCRAMAccess};
+define block DTCRAM    with alignment = 8{ section DTCRAMAccess};
+define block OCRAM     with alignment = 8{ section OCRAMAccess};
+
+
+// 初始化sections 
+initialize by copy { section ITCRAMAccess, section DTCRAMAccess, section OCRAMAccess};
+initialize by copy { readwrite, readonly, section .textrw, section NonCacheable.init}
+	 except{    //排除不希望从RAM运行的代码和数据
+
+                section .intvec,       /* Don’t copy interrupt table */
+		
+				section .init_array,      /* Don’t copy C++ init table */
+				
+                readonly section .boot_hdr.conf, //防止XIP启动配置也被放在RAM区域
+
+                readonly section .boot_hdr.ivt,
+
+                readonly section .boot_hdr.boot_data,
+
+                readonly section .boot_hdr.dcd_data,
+
+            };
+
+do not initialize  { section .noinit };
+
+
+place at address mem: m_interrupts_start    { readonly section .intvec };
+place at address mem: ram_interrupts_start  { section .intvec_RAM };
+place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
+place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+
+keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
+
+// 把一系列sections和blocks放置在某个region中。sections和blocks将按任意顺序放置。
+place in TEXT_region          { readonly };  //程序和const变量 储存位置
+place in ITCRAM_region        { block RW };  //程序函数存储位置 
+place in DTCRAM_region        { section .data };//已初始化全局变量和static变量（非零） 存放区域
+place in ITCRAM_region        { section .textrw };//__ramfunc 修饰的函数存放区域
+place in DTCRAM_region        { block ZI };  //未初始化全局变量和static变量或初始化为零的 存放区域
+place in OCRAM_region         { last block HEAP };//堆区域 malloc申请内存时使用
+place in CSTACK_region        { block CSTACK };//栈区域 
+place in DTCRAM_region        { block NCACHE_VAR };//NCACHE 区域
+
+place in ITCRAM_region        { block ITCRAM }; //ITCRAM区域
+place in DTCRAM_region        { block DTCRAM }; //DTCRAM区域
+place in OCRAM_region         { block OCRAM };  //OCRAM区域
+
+
+
+

@@ -62,6 +62,7 @@ typedef struct servo_ctrl
 
         servo_state_t State;
 
+        float TargetAngle;
         float AngleCache;
 
         void *Argv;
@@ -77,6 +78,7 @@ typedef struct servo_ctrl
 
         uint8_t (*Init)(struct servo_ctrl *self);
 
+        uint16_t (*Update)(struct servo_ctrl *self);
         uint16_t (*CtrlStrategy)(struct servo_ctrl *self,sint16_t target_angle,float actual_angle,void *argv,uint16_t argc);/*Servo Close Loop Control Function,It Can Re-Definition,Keep It NULL if  MPU6050 or other Angle Sensor not exist.*/
 
         void (*Protect)(struct servo_ctrl *self,sint16_t angle,void *argv,uint16_t argc);/*Servo Protect,It Can Re-Definition*/

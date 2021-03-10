@@ -1,0 +1,9 @@
+evkmimxrt1064_sdram_ini_dcd.pbi: \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Device\xip\evkmimxrt1064_sdram_ini_dcd.c \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Device\xip/evkmimxrt1064_sdram_ini_dcd.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\stdint.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\ycheck.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\yvals.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\DLib_Defaults.h \
+  C:\\Applications\\IAR8.4RT\\arm\\inc\\c\\DLib_Config_Normal.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\DLib_Product.h

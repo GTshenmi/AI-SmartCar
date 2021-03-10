@@ -54,11 +54,13 @@ typedef struct motor_ctrl
         void *Pwmn[2];
         void *Encn;
 
-        uint16_t PwmValue;/*占空比*/
+        sint16_t PwmValue;/*占空比*/
 
         motor_state_t State;
 
-        uint16_t SpeedCache;
+        sint16_t TargetSpeed;
+
+        sint16_t SpeedCache;
 
         uint32_t StallingTime;
 
@@ -75,6 +77,8 @@ typedef struct motor_ctrl
     public
 
         uint8_t (*Init)(struct motor_ctrl *self);
+
+        sint16_t (*Update)(struct motor_ctrl *self);
 
         sint16_t (*CtrlStrategy)(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc);/*Motor Close Loop Control Function,Can Re-Definition*/
 

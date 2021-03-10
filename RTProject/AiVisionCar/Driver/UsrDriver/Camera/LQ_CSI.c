@@ -134,17 +134,17 @@ camera_config_t cameraConfig = {
 void CSI_CameraInit(void)  
 {
     /* 手动产生一个IIC停止信号，防止IIC卡死 */
-    //PIN_InitConfig(J11, PIN_MODE_OUTPUT, 1);
-    //PIN_InitConfig(K11, PIN_MODE_OUTPUT, 1);
-    GPIOx.Init(CSI_IIC_SDA_GPIO);
-    GPIOx.Init(CSI_IIC_SCL_GPIO);
+    PIN_InitConfig(J11, PIN_MODE_OUTPUT, 1);
+    PIN_InitConfig(K11, PIN_MODE_OUTPUT, 1);
+    //GPIOx.Init(CSI_IIC_SDA_GPIO);
+    //GPIOx.Init(CSI_IIC_SCL_GPIO);
     
-    //PIN_Write(K11, 0);
-    GPIOx.Write(CSI_IIC_SDA_GPIO,0);
+    PIN_Write(K11, 0);
+    //GPIOx.Write(CSI_IIC_SCL_GPIO,0);
     Systime.Delayms(5);
     
-    GPIOx.Write(CSI_IIC_SDA_GPIO,1);
-    //PIN_Write(K11, 1);
+    //GPIOx.Write(CSI_IIC_SCL_GPIO,1);
+    PIN_Write(K11, 1);
     Systime.Delayms(5);
     
     IIC_InitConfig(LPI2C1, 50000);

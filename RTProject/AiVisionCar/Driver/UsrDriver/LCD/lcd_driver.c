@@ -323,7 +323,21 @@ void _LCD_DrawPoint(uint8_t xs,uint8_t ys,uint16_t color)
 
 void LCD_DrawPoint(uint16_t xs,uint16_t ys,uint16_t color)
 {
-    _LCD_DrawPoint((uint8_t)xs,(uint8_t)ys,color);
+    uint8_t x = (uint8_t)xs ;
+    uint8_t y = (uint8_t)ys ;
+
+    LCD_WriteCmd(0x2A);         //Colulm addRSTs set
+    LCD_WriteByte(0x00);        //行起始坐标高8位，始终为零
+    LCD_WriteByte(x);          //行起始坐标低8位
+    LCD_WriteByte(0x00);        //行终止坐标高8位，始终为零
+    LCD_WriteByte(x+1);            //行终止坐标低8位
+    LCD_WriteCmd(0x2B);         //Colulm addRSTs set
+    LCD_WriteByte(0x00);        //列起始坐标高8位，始终为零
+    LCD_WriteByte(y);          //列起始坐标低8位
+    LCD_WriteByte(0x00);        //列终止坐标高8位，始终为零
+    LCD_WriteByte(y);          //列终止坐标低8位
+    LCD_WriteCmd(0x2C);         //GRAM接收MCU数据或命令
+    LCD_WriteWord(color);
 }
 
 /*                  ASCII字符编码                       */

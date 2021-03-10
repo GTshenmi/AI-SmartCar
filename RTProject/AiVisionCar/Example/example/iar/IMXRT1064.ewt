@@ -2684,6 +2684,18 @@
                 <file>
                     <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\camera.h</name>
                 </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_MT9V034M.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_MT9V034M.h</name>
+                </file>
             </group>
             <group>
                 <name>LCD</name>

@@ -7,18 +7,12 @@
 #include <motor.h>
 #include "driver.h"
 
-uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
+sint16_t MotorUpdate(struct motor_ctrl *self)
 {
-    /*传参检查*/
-    if(speed > self->MaxSpeed)
-        speed = self->MaxSpeed;
-    else if(speed < self->MinSpeed)
-        speed = self->MinSpeed;
-
     /*读取反馈值*/
     sint16_t actual_speed = self->SpeedCache;
 
-    self->Protect(self,speed,self->Argv,self->Argc);
+    self->Protect(self,self->TargetSpeed,self->Argv,self->Argc);
 
     /*计算PWM Duty*/
     sint16_t PwmValue = 0;
@@ -26,9 +20,10 @@ uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
     switch(self->State)
     {
         case Motor_Running:
-            PwmValue = self->CtrlStrategy(self,speed,actual_speed,self->Argv,self->Argc);
+            PwmValue = self->CtrlStrategy(self,self->TargetSpeed,actual_speed,self->Argv,self->Argc);
             break;
         case Motor_Sleeping:
+            PwmValue = self->PwmValue;
             break;
 
         case Motor_Normal_Stopping:
@@ -55,9 +50,22 @@ uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
     return self->PwmValue;
 }
 
+uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
+{
+    /*传参检查*/
+    if(speed > self->MaxSpeed)
+        speed = self->MaxSpeed;
+    else if(speed < self->MinSpeed)
+        speed = self->MinSpeed;
+
+    self->TargetSpeed = speed;
+
+    return self->TargetSpeed;
+}
+
 sint16_t MotorGetSpeed(struct motor_ctrl *self)
 {
-    uint16_t speed = ENCx.Read(self->Encn);
+    sint16_t speed = ENCx.Read(self->Encn);
 
     if(speed > self->MaxSpeed)
       speed = self->MaxSpeed;
@@ -136,15 +144,15 @@ uint16_t MotorGetPwmValue(struct motor_ctrl *self)
 
 void MotorDefaultProtect(struct motor_ctrl *self,sint16_t speed,void *argv,uint16_t argc)
 {
-    if(self->SpeedCache < 5 && speed != 0)
-        self->StallingTime ++;
-    else
-        self->StallingTime --;
-
-    if(self->StallingTime >= 0xffffffff)
-    {
-        self->State = Motor_Stalling;
-    }
+//    if(self->SpeedCache < 5 && speed != 0)
+//        self->StallingTime ++;
+//    else
+//        self->StallingTime --;
+//
+//    if(self->StallingTime >= 0xffffffff)
+//    {
+//        self->State = Motor_Stalling;
+//    }
 }
 
 sint16_t MotorDefaultCtrlStrategy(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc)
@@ -164,18 +172,18 @@ void MotorSetState(struct motor_ctrl *self,motor_state_t state)
 
 void MotorDriver(struct motor_ctrl *self,sint16_t value)
 {
-    self->PwmValue = (uint16_t)abs(value);
+    self->PwmValue = value;
 
 #if defined(DriverChip)
     #if DriverChip == Drv8701
     if(value > 0)
     {
-        PWMx.Write(self->Pwmn[0],self->PwmValue);
+        PWMx.Write(self->Pwmn[0],value);
         PWMx.Write(self->Pwmn[1],PWMx.MinPwmDuty);
     }
     else
     {
-        PWMx.Write(self->Pwmn[0],self->PwmValue);
+        PWMx.Write(self->Pwmn[0],-value);
         PWMx.Write(self->Pwmn[1],PWMx.MaxPwmDuty);
     }
     #elif (DriverChip == IR7843) || (DriverChip ==BTN7971)
@@ -236,6 +244,8 @@ uint8_t MotorInit(struct motor_ctrl *self)
     self->SetPwmValue = MotorSetPwmValue;
     self->SetState = MotorSetState;
     self->Driver = MotorDriver;
+    self->Update = MotorUpdate;
+    self->TargetSpeed = 0;
 
     return 0;
 }

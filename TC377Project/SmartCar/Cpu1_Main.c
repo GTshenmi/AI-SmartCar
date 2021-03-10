@@ -11,7 +11,8 @@ int core1_main (void)
 
     os.core[1].Run();
 
-    while(1);
-
-    return 0;
+    while(1)
+    {
+       ;
+    }
 }

@@ -58,7 +58,7 @@ typedef struct motor_ctrl
 
         motor_state_t State;
 
-        uint16_t SpeedCache;
+        sint16_t SpeedCache;
 
         uint32_t StallingTime;
 

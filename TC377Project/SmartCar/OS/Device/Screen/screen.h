@@ -10,6 +10,10 @@
 
 #include "platform.h"
 
+#define Screen_AcquireMutex(lock) IfxCpu_acquireMutex(lock)
+#define Screen_ReleaseMutex(lock) IfxCpu_releaseMutex(lock)
+#define Screen_LockMutex(lock)    IfxCpu_setSpinLock((lock),10)
+
 #define SCREEN_MAX_BUF_LEN 32
 
 volatile typedef enum
@@ -44,6 +48,9 @@ typedef struct
 
 typedef struct screen
 {
+        /*
+         * This module is thread-safe.
+         * */
     private
 
         uint16_t Hight;
@@ -60,27 +67,31 @@ typedef struct screen
         void (*__AddrReset__)(void);
         void (*__SetPixel__)(uint16_t x,uint16_t y,uint16_t color);
 
+        uint Is_Busy;
+
     public
 
         void (*SetPixel)(struct screen *self,uint16_t x,uint16_t y,uint16_t color);
+
         uint8_t (*Init)(struct screen *self);
         void (*DeInit)(struct screen *self);
         void (*Clear)(struct screen *self,uint16_t color);
-        void (*ShowChar)(struct screen *self,uint16_t row,uint16_t col,uint8_t ch,uint16_t color);
-        void (*ShowNum)(struct screen *self,uint16_t row,uint16_t col,sint32_t num,uint16_t color);
-        void (*ShowString)(struct screen *self,uint16_t row,uint16_t col,uint8_t *str,uint32_t len,uint16_t color);
-        void (*ShowChinese)(void);
-        void (*ShowStr)(struct screen *self,uint16_t row,uint16_t col,uint8_t *str,uint16_t color);
-
+        void (*Fill)(struct screen *self,uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
         void (*DrawHline)(struct screen *self,uint16_t xs,uint16_t ys,uint16_t len,uint16_t width,uint16_t color);
         void (*DrawVline)(struct screen *self,uint16_t xs,uint16_t ys,uint16_t len,uint16_t width,uint16_t color);
         void (*DrawLine)(struct screen *self,uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
         void (*DrawSqr)(struct screen *self,uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
         void (*DrawCircle)(struct screen *self,uint16_t x,uint16_t y,uint16_t r,uint16_t color);
 
-        void (*WriteHalfLine)(struct screen *self,const sint8_t *format,...);
-        void (*WriteLine)(struct screen *self,const sint8_t *format,...);
-        void (*WriteXLine)(struct screen *self,uint16_t row,const sint8_t *format,...);
+        void (*ShowChar)(struct screen *self,uint16_t x,uint16_t y,uint8_t ch,uint16_t color);//ok
+        void (*ShowNum)(struct screen *self,uint16_t x,uint16_t y,sint32_t num,uint16_t color);//ok
+        void (*ShowChinese)(struct screen *self,uint16_t x,uint16_t y,uint16_t Chinese,uint16_t color);//ok
+        void (*ShowStr)(struct screen *self,uint16_t x,uint16_t y,uint8_t *str,uint32_t len,uint16_t color);//ok
+        void (*ShowString)(struct screen *self,uint16_t x,uint16_t y,uint8_t *string,uint16_t color);//ok
+
+        void (*Write)(struct screen *self,uint16_t x,uint16_t y,const sint8_t *format,...);
+        void (*WriteLine)(struct screen *self,const sint8_t *format,...);//
+        void (*WriteXLine)(struct screen *self,uint16_t row,const sint8_t *format,...);//
 
         void (*SetCursor)(struct screen *self,uint16_t x,uint16_t y);
         void (*SetFontSize)(struct screen *self,uint16_t width,uint16_t hight);

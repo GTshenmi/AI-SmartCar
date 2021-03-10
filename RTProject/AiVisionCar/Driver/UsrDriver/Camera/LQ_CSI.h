@@ -4,8 +4,8 @@
 #include "sys_driver.h"
 #include "LQ_MT9V034M.h"
 
-#define CSI_IIC_SDA_GPIO NULL//Camera_IIC_SDA_GPIO
-#define CSI_IIC_SCL_GPIO NULL//Camera_IIC_SCL_GPIO
+#define CSI_IIC_SDA_GPIO &GPIO_Resources[12].GPION//Camera_IIC_SDA_GPIO
+#define CSI_IIC_SCL_GPIO &GPIO_Resources[13].GPION//Camera_IIC_SCL_GPIO
 #define CSI_IIC_SDA(x) ((x)?GPIOx.Write(CSI_IIC_SDA_GPIO,1):GPIOx.Write(CSI_IIC_SDA_GPIO,0))
 #define CSI_IIC_SCL(x) ((x)?GPIOx.Write(CSI_IIC_SCL_GPIO,1):GPIOx.Write(CSI_IIC_SCL_GPIO,0))
 

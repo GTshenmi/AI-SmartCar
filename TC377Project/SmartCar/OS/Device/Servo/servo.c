@@ -7,25 +7,21 @@
 #include <servo.h>
 #include "driver.h"
 
-uint16_t ServoSetAngle(struct servo_ctrl *self,sint16_t angle)
+uint16_t ServoUpdate(struct servo_ctrl *self)
 {
-    if(angle > self->MaxAngle)
-        angle = self->MaxAngle;
-    else if(angle < self->MinAngle)
-        angle = self->MinAngle;
-
     float actual_angle = self->AngleCache;
 
-    self->Protect(self,angle,self->Argv,self->Argc);
+    self->Protect(self,self->TargetAngle,self->Argv,self->Argc);
 
     uint16_t PwmValue = 0;
 
     switch(self->State)
     {
         case Servo_Running:
-            PwmValue = self->CtrlStrategy(self,angle,actual_angle,self->Argv,self->Argc);
+            PwmValue = self->CtrlStrategy(self,self->TargetAngle,actual_angle,self->Argv,self->Argc);
             break;
         case Servo_Sleeping:
+            PwmValue = self->PwmValue;
             break;
 
         case Servo_Normal_Stopping:
@@ -49,6 +45,16 @@ uint16_t ServoSetAngle(struct servo_ctrl *self,sint16_t angle)
     self->Driver(self,PwmValue);
 
     return self->PwmValue;
+}
+
+uint16_t ServoSetAngle(struct servo_ctrl *self,sint16_t angle)
+{
+    if(angle > self->MaxAngle)
+        angle = self->MaxAngle;
+    else if(angle < self->MinAngle)
+        angle = self->MinAngle;
+
+    return self->TargetAngle = angle;
 }
 
 float ServoGetAngle(struct servo_ctrl *self)
@@ -102,18 +108,18 @@ void ServoBindUsrData(struct servo_ctrl *self,void *argv,uint16_t argc)
     self->Argc = argc;
 }
 
-void ServoSetSpeedLimit(struct servo_ctrl *self,sint16_t MaxAngle,sint16_t MinAngle)
+void ServoSetAngleLimit(struct servo_ctrl *self,sint16_t MaxAngle,sint16_t MinAngle)
 {
     self->MaxAngle = MaxAngle;
     self->MinAngle = MinAngle;
 }
 
-sint16_t ServoGetMaxSpeed(struct servo_ctrl *self)
+sint16_t ServoGetMaxAngle(struct servo_ctrl *self)
 {
     return self->MaxAngle;
 }
 
-sint16_t ServoGetMinSpeed(struct servo_ctrl *self)
+sint16_t ServoGetMinAngle(struct servo_ctrl *self)
 {
     return self->MinAngle;
 }
@@ -141,7 +147,7 @@ void ServoDefaultProtect(struct servo_ctrl *self,sint16_t angle,void *argv,uint1
 
 uint16_t ServoDefaultCtrlStrategy(struct servo_ctrl *self,sint16_t target_angle,float actual_angle,void *argv,uint16_t argc)
 {
-    return target_angle + self->PwmCentValue;
+    return -target_angle + self->PwmCentValue;
 }
 
 void ServoSetPwmValue(struct servo_ctrl *self,uint16_t value)
@@ -186,9 +192,9 @@ uint8_t ServoInit(struct servo_ctrl *self)
     self->Break = ServoBreak;
 
     self->BindUsrData = ServoBindUsrData;
-    self->SetAngleLimit = ServoSetSpeedLimit;
-    self->GetMaxAngle = ServoGetMaxSpeed;
-    self->GetMinAngle = ServoGetMinSpeed;
+    self->SetAngleLimit = ServoSetAngleLimit;
+    self->GetMaxAngle = ServoGetMaxAngle;
+    self->GetMinAngle = ServoGetMinAngle;
     self->GetPwmValue = ServoGetPwmValue;
     self->GetPwmCentValue = ServoGetPwmCentValue;
     self->SetPwmCentValue = ServoSetPwmCentValue;
@@ -197,8 +203,10 @@ uint8_t ServoInit(struct servo_ctrl *self)
     self->SetState = ServoSetState;
     self->Driver = ServoDriver;
 
-    self->GetState = GetServoState;
+    self->Update = ServoUpdate;
+    self->TargetAngle = 0;
 
+    self->GetState = GetServoState;
 
     return 0;
 }

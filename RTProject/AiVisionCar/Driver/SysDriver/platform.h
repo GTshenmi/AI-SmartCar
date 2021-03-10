@@ -38,7 +38,7 @@
 #endif
 
 #ifndef uint32_t
-#define uint32_t unsigned long
+#define uint32_t unsigned int
 #endif
 
 #ifndef uint64_t
@@ -54,7 +54,7 @@
 #endif
 
 #ifndef sint32_t
-#define sint32_t long
+#define sint32_t int
 #endif
 
 #ifndef sint64_t

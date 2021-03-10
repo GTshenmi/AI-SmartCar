@@ -10,32 +10,22 @@
 
 #include "device.h"
 
-extern beep_t BEEP;
-
-extern bluetooth_t Bluetooth;
-
+extern capture_t Capture;
 extern communicate_t CUART;
 extern communicate_t DebugCom;
 
-extern esensor_t LESensor[5];
-extern esensor_t SESensor[7];
-
 extern key_t KEY[6];
 
-extern led_t GLED;
-extern led_t BLED;
+extern led_t RLED;
 
-extern motor_ctrl_t Motor;
+extern motor_ctrl_t LMotor;
+extern motor_ctrl_t RMotor;
 
 extern screen_t Screen;
 
 extern sdcard_t SDCard;
 
-extern servo_ctrl_t Servo;
-
-extern switch_t Switch[4];
-extern dip_switch_t DIPSwitch;
-
-extern wireless_serial_t WirelessSerial;
+extern servo_ctrl_t Servo1;
+extern servo_ctrl_t Servo2;
 
 #endif /* OS_DEVICES_CONFIG_H_ */

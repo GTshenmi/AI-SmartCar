@@ -9,27 +9,8 @@
  */
 #include <app.h>
 #include "include.h"
-/*
- * @Brief:loop in the interrupt
- * */
-void Ctrl_InterruptRun()
-{
-    MDU.Run(MDU.Self,&Data[data_pointer],sizeof(data_t));
-    SDU.Run(SDU.Self,&Data[data_pointer],sizeof(data_t));
 
-    SpecialElementCorrection(&Data[data_pointer]);
-
-    MEU.Run(MEU.Self,&Data[data_pointer],sizeof(data_t));
-    SEU.Run(SEU.Self,&Data[data_pointer],sizeof(data_t));
-}
-/*
- * @Brief:loop in the interrupt
- * */
-void Sensor_InterruptRun()
-{
-    MSU.Run(MSU.Self,&Data[data_pointer],sizeof(data_t));
-    SSU.Run(SSU.Self,&Data[data_pointer],sizeof(data_t));
-}
+sint16_t speed = 0;
 
 /*
  * @Brief:CPU0 Main Func
@@ -38,95 +19,78 @@ void Sensor_InterruptRun()
 void Core0_Main()
 {
     GLED.ON(GLED.Self);
-    LCD_Init(&LCD_Type);
 
-    uint8_t input[7];
+    Screen.WriteXLine(Screen.Self,1,"Core0");
 
-    for(uint8_t i = 0 ; i < 8 ; i++)
-    {
-        input[i] = 7 * i;
-    }
+    //Servo.SetPwmValue(Servo.Self,850);
+    //Servo.SetPwmCentValue(Servo.Self,1750);
+    //Servo.SetAngle(Servo.Self,0);
 
-    model_info_struct Model1;
-    Model_GetInfo(model1, &Model1);
+    //Servo.SetPwmValue(Servo.Self,700);
 
-    sint16_t angle = 0;
-
-    Model_Run(model1,input,&angle);
+    //Motor.SetPwmValue(Motor.Self,2000);
 
 
+    Screen.WriteXLine(Screen.Self,1,"Core0 Begin While");
 
     while(1)
     {
-        for(uint8_t i = 0 ; i < 50 ;i++)
-            _LCD_DrawPoint(i,i,0x0000);
+        for(int i = 0 ; i < CData.MaxLADCDeviceNum;i++)
+        {
+            Data[data_pointer].LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
+        }
+        for(int i = 0 ; i < CData.MaxSADCDeviceNum;i++)
+        {
+            Data[data_pointer].SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
+        }
+
+        Screen.Clear(Screen.Self,WHITE);
+
+        os.task.UiUpdate(&UIData,sizeof(UIData));
+
+        os.time.delayms(200);
     }
 }
 
-
-void Key_PressedCallBack(struct key *self,void *argv,uint16_t argc)
-{
-    for(int i = 0;i<4;i++)
-    {
-        if(self == KEY[i].Self)
-            CUART.WriteLine(CUART.Self,0,"KEY[%d] Pressed",i);
-    }
-}
 /*
  * @Brief:CPU1 Main Func
  *  This Core is for Nerual Network.
  * */
 void Core1_Main()
 {
+    Screen.WriteXLine(Screen.Self,2,"Core1");
 
-//    BLED.ON(BLED.Self);
-//
-//    char input[8] = {0};
-//
-//    for(int i = 0 ; i < 8 ;i++)
-//    {
-//        input[i] = (char)(8 - i);
-//    }
-//
-//    int16_t angle;
-//
-//    model_info_struct Model_Info_Model1;
-//    Model_GetInfo(model1, &Model_Info_Model1);
-//    Model_Run(model1,input,&angle);
-//
-//    BLED.OFF(BLED.Self);
-//
-//    CUART.WriteLine(CUART.Self,0,"angle = %d",angle);
+    KEY[0].SetShield(KEY[0].Self,true);
+    BLED.ON(BLED.Self);
 
-
-    KEY[0].PressedCallBack = Key_PressedCallBack;
-    KEY[1].PressedCallBack = Key_PressedCallBack;
-    KEY[2].PressedCallBack = Key_PressedCallBack;
-    KEY[3].PressedCallBack = Key_PressedCallBack;
+    Screen.WriteXLine(Screen.Self,2,"Core1 Begin While");
 
     while(1)
     {
-
         os.task.KeyScan(NULL,0);
-
+        BLED.Toggle(BLED.Self);
         os.time.delayms(20);
     }
 }
+
 /*
- * @Brief:CPU2 Main Func
+ * @Brief:CPU2 Main Func 暂时不用 可能会供电不足
  *  This Core is for Debug.
  * */
 void Core2_Main()
 {
+    Screen.WriteXLine(Screen.Self,3,"Core2");
+
     while(1)
     {
         os.task.SoftTimerUpdate(NULL,0);
 
-        os.task.KeyScan(NULL,0);
-
-        os.task.UiUpdate(&UIData,sizeof(UIData));
+       // os.task.KeyScan(NULL,0);
 
         os.task.DebugConsole(NULL,0);
+
+        os.time.delayms(20);
+
     }
 }
 

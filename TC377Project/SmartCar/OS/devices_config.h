@@ -20,7 +20,7 @@ extern communicate_t DebugCom;
 extern esensor_t LESensor[5];
 extern esensor_t SESensor[7];
 
-extern key_t KEY[6];
+extern key_t KEY[7];
 
 extern led_t GLED;
 extern led_t BLED;

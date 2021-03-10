@@ -10,6 +10,7 @@
 
 #include "platform.h"
 #include "image.h"
+#include "camera.h"
 
 typedef enum
 {
@@ -53,8 +54,12 @@ typedef struct capture
      void (*Test)(struct capture *self);
 
      image_t ImageCache;
+     
+     pixel_t ***PixelCache;
 
      cap_state_t State;
+     
+     struct capture *Self;
 
 }capture_t;
 

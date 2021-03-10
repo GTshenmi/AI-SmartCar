@@ -84,5 +84,5 @@ constdata_t CData =
 {
         .MaxLADCDeviceNum = 5,
         .MaxSADCDeviceNum = 7,
-        .MaxKEYDeviceNum = 4,
+        .MaxKEYDeviceNum = 6,
 };

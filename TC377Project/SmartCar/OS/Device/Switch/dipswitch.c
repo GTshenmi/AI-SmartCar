@@ -12,7 +12,7 @@ uint32_t DIPSwitch_Read(struct dip_switch *self)
 {
     uint32_t Bits = 0;
 
-    switch_t *Switch = self->Switch;
+    switch_t *Switch = (switch_t *)self->Switch;
 
     if(self->SwitchNum >= 32)
         return 0xFFFFFFFF;
@@ -36,13 +36,13 @@ void DISSwitch_SetSwitchNum(struct dip_switch *self,uint8_t num)
 
 void DIPSwitch_Init(struct dip_switch *self)
 {
-    switch_t *Switch = self->Switch;
-
-    for(uint8_t i = 0;i<self->SwitchNum;i++)
-        Switch[i].Init(Switch[i].Self);
+    switch_t *Switch = (switch_t *)self->Switch;
 
     self->Bits = 0;
     self->SwitchNum = 4;
+
+    for(uint8_t i = 0; i < self->SwitchNum;i++)
+        Switch[i].Init(Switch[i].Self);
 
     self->Read = DIPSwitch_Read;
     self->SetSwitchNum = DISSwitch_SetSwitchNum;

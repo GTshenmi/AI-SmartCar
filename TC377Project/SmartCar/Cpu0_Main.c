@@ -1,6 +1,8 @@
 #include "include.h"
 
+IfxCpu_mutexLock mutexCpu0InitIsOk = 1;   // CPU0 初始化完成标志位
 
+IFX_ALIGN(4) IfxCpu_syncEvent g_cpuSyncEvent = 0;//事件同步变量
 /*************************************************************************
 *  函数名称：int core0_main (void)
 *  功能说明：CPU0主函数
@@ -17,15 +19,53 @@ int core0_main (void)
 
     os.init(0);
 
+    //Console.WriteLine("Sync Finished.");
+
     os.core[0].Run();
 
-    while(1);
-
-    return 0;
+    while(1)
+    {
+        ;
+    }
 }
 
-
-
+//static rt_uint8_t led_thread_stack[2048];
+//struct rt_thread led_thread_thread;
+//void led_thread_entry(void *parameter)
+//{
+//    GLED.Init(GLED.Self);
+//
+//    while(1)
+//    {
+//        GLED.Toggle(GLED.Self);
+//        rt_thread_mdelay(1000);
+//    }
+//}
+//
+//int main()
+//{
+//    rt_thread_t tid;
+//    rt_err_t result = 0;
+//
+//    rt_uint32_t count = 0;
+//
+//    tid = &led_thread_thread;
+//
+//    result = rt_thread_init(tid, "led", led_thread_entry, RT_NULL,
+//                led_thread_stack, sizeof(led_thread_stack), 10, 20);
+//
+//    RT_ASSERT(result == RT_EOK);
+//
+//    rt_thread_startup(tid);
+//
+//    while(1)
+//    {
+//        rt_thread_mdelay(1000);
+//        rt_kprintf("hello rt-thread! %d\n",count++);
+//    }
+//
+//    return 0;
+//}
 
 /*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 【平    台】北京龙邱智能科技TC2/3xx核心板

@@ -32,8 +32,8 @@ capture_t Capture = /*unknow*/
 
         .ImageCache =
         {
-                .Hight = 120,
-                .Width = 188,
+                .Hight = 188,
+                .Width = 120,
 #if ((defined(Chip)) && ((Chip == TC264) || (Chip == TC377)))
                 //.Array = (uint8_t **)Image_Data,
 #endif
@@ -57,35 +57,35 @@ communicate_t DebugCom = /*ok*/
         .Communicatorn = (void *)&UART_Resources[0].UARTN,
 };
 
-esensor_t LESensor[5] =/*ok*/
+esensor_t LESensor[5] =/*ok*/ /*9 - 16 Left*/
 {
     [0] = {
             .Init = ESensorInit,
             .Self = &LESensor[0],
-            .ADCn = &ADC_Resources[7].ADCN,//AD9
+            .ADCn = &ADC_Resources[8].ADCN,//AD9
     },
     [1] = {
             .Init = ESensorInit,
             .Self = &LESensor[1],
-            .ADCn = &ADC_Resources[8].ADCN,//AD10
+            .ADCn = &ADC_Resources[9].ADCN,//AD10
     },
     [2] = {
             .Init = ESensorInit,
             .Self = &LESensor[2],
-            .ADCn = &ADC_Resources[9].ADCN,//AD11
+            .ADCn = &ADC_Resources[10].ADCN,//AD11
     },
     [3] = {
             .Init = ESensorInit,
             .Self = &LESensor[3],
-            .ADCn = &ADC_Resources[10].ADCN,//AD12
+            .ADCn = &ADC_Resources[11].ADCN,//AD12
     },
     [4] = {
             .Init = ESensorInit,
             .Self = &LESensor[4],
-            .ADCn = &ADC_Resources[11].ADCN,//AD13
+            .ADCn = &ADC_Resources[12].ADCN,//AD13
     },
 };
-esensor_t SESensor[7] = /*ok*/
+esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/
 {
     [0] = {
             .Init = ESensorInit,
@@ -115,7 +115,7 @@ esensor_t SESensor[7] = /*ok*/
     [5] = {
             .Init = ESensorInit,
             .Self = &SESensor[5],
-            .ADCn = &ADC_Resources[5].ADCN,//AD6
+            .ADCn = &ADC_Resources[7].ADCN,//AD6
     },
     [6] = {
             .Init = ESensorInit,
@@ -124,7 +124,7 @@ esensor_t SESensor[7] = /*ok*/
     },
 };
 
-key_t KEY[6] = /*ok*/
+key_t KEY[7] = /*ok*/
 {
         [0] = {
                 .Init = KEY_Init,
@@ -147,6 +147,24 @@ key_t KEY[6] = /*ok*/
                 .GPIOn = &GPIO_Resources[15].GPION,
         },
 
+        [4] = {
+                .Init = KEY_Init,
+                .Self = &KEY[4],
+                .GPIOn = &GPIO_Resources[16].GPION,
+        },
+
+        [5] = {
+                .Init = KEY_Init,
+                .Self = &KEY[5],
+                .GPIOn = &GPIO_Resources[17].GPION,
+        },
+
+        [6] = {
+                .Init = KEY_Init,
+                .Self = &KEY[6],
+                .GPIOn = &GPIO_Resources[12].GPION,
+        },
+
 };
 
 
@@ -167,13 +185,13 @@ motor_ctrl_t Motor =/*ok*/
 {
         .Init = MotorInit,
         .Self = &Motor,
-        .Pwmn = {&PWM_Resources[0].PWMN,&PWM_Resources[1].PWMN},
+        .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
         .Encn = &ENC_Resources[0].ENCN,
 };
 
 screen_t Screen = /*ok*/
 {
-        .Hight = 158,
+        .Hight = 160,
         .Width = 128,
         .Font = {
                 .Type = 1,
