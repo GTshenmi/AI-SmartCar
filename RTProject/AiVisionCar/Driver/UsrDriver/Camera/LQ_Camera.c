@@ -11,8 +11,8 @@
 --------------------------------------------------------------------*/
 #include "include.h"
 #include "LQ_Camera.h"
-#include "LQ_12864.h"
-#include "LQ_SGP18T.h"
+//#include "LQ_12864.h"
+//#include "LQ_SGP18T.h"
 #include "stdio.h"
 #ifdef LQMT9V034
 #include "LQ_MT9V034M.h"
@@ -198,13 +198,13 @@ void Get_01_Value(uint8_t mode)
       Threshold = GetOSTU(Image_Use);//大津法阈值
 //      Threshold = (uint8_t)(Threshold * 0.5) + 70;
   } 
-#ifdef OLED
-  sprintf(txt,"%03d",Threshold);//前者为大津法求得的阈值，后者为平均值  
-  LCD_P6x8Str(80,0,txt);
-#else
-  sprintf(txt,"%03d",Threshold);//前者为大津法求得的阈值，后者为平均值  
-  TFTSPI_P8X8Str(0,15, txt,u16RED,u16BLUE);
-#endif
+//#ifdef OLED
+//  sprintf(txt,"%03d",Threshold);//前者为大津法求得的阈值，后者为平均值  
+//  LCD_P6x8Str(80,0,txt);
+//#else
+//  sprintf(txt,"%03d",Threshold);//前者为大津法求得的阈值，后者为平均值  
+//  TFTSPI_P8X8Str(0,15, txt,u16RED,u16BLUE);
+//#endif
   
   for(i = 0; i < Use_ROWS; i++)
   {
@@ -238,11 +238,11 @@ void Draw_Road(void)
   uint8_t i = 0, j = 0,temp=0;
   for(i=0;i<56;i+=8)// 56行 
   {
-#ifdef LQOV7725
-    LCD_Set_Pos(24,i/8+1);
-#else 
-    LCD_Set_Pos(17,i/8+1);
-#endif
+//#ifdef LQOV7725
+//    LCD_Set_Pos(24,i/8+1);
+//#else 
+//    LCD_Set_Pos(17,i/8+1);
+//#endif
     for(j=0;j<Use_Line;j++) 
     { 
       temp=0;
@@ -254,7 +254,7 @@ void Draw_Road(void)
       if(Pixle[5+i][j]) temp|=0x20;
       if(Pixle[6+i][j]) temp|=0x40;
       if(Pixle[7+i][j]) temp|=0x80;
-      LCD_WrDat(temp); 	  	  	  	  
+//      LCD_WrDat(temp); 	  	  	  	  
     }
   }  
 }

@@ -10,6 +10,7 @@
 
 #include "sys_driver.h"
 #include "LQ_MT9V034M.h"
+#include "LQ_Camera.h"
 #include "LQ_CSI.h"
 
 extern uint16_t fps;

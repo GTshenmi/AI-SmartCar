@@ -10,8 +10,6 @@
 #include <app.h>
 #include "include.h"
 
-sint16_t speed = 0;
-
 /*
  * @Brief:CPU0 Main Func
  *  This Core is for Control and Data Process.

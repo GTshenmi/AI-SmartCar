@@ -16,7 +16,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </JLinkDriver>
     <DebugChecksum>
-        <Checksum>577437186</Checksum>
+        <Checksum>2449313891</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -139,11 +139,8 @@
     <Breakpoints2>
         <Bp0>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\OS\Device\Screen\screen.c}.461.5" 0 0 1 "" 0 "" 0</Bp0>
         <Bp1>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\OS\Device\Screen\screen.c}.506.5" 0 0 1 "" 0 "" 0</Bp1>
-        <Bp2>_ 1 "EMUL_CODE" "{D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\App\app.c}.46.9" 0 0 1 "" 0 "" 0</Bp2>
-        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.c}.150.5" 0 0 1 "" 0 "" 0</Bp3>
-        <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.c}.156.5" 0 0 1 "" 0 "" 0</Bp4>
-        <Bp5>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.c}.158.5" 0 0 1 "" 0 "" 0</Bp5>
-        <Count>6</Count>
+        <Bp2>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\OS\Device\Capture\capture.c}.170.5" 0 0 1 "" 0 "" 0</Bp2>
+        <Count>3</Count>
     </Breakpoints2>
     <Aliases>
         <Count>0</Count>

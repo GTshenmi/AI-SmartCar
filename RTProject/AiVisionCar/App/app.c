@@ -33,29 +33,29 @@ void Core0_Main()
         KEY[i].Init(KEY[i].Self);
         KEY[i].PressedCallBack = Key_PressedCallBack;
     }
-   Capture.Init(Capture.Self,30);
-   Capture.Read(Capture.Self,0);
-   Capture.Stop(Capture.Self);
-   Capture.Show(Capture.Self,Capture.ImageCache,0);
-   
-   
-   while(1)
-   {
-        sint16_t lspeed,rspeed;
-      
-        lspeed = LMotor.GetSpeed(LMotor.Self);
-        rspeed = RMotor.GetSpeed(RMotor.Self);
-        Screen.Clear(Screen.Self,WHITE);
-        Screen.WriteXLine(Screen.Self,0,"lspeed:%d",lspeed);
-        Screen.WriteXLine(Screen.Self,1,"rspeed:%d",rspeed);
-     
-        //Screen.Fill(Screen.Self,0,0,0,2*Screen.Font.Hight,WHITE);
-        LMotor.SetSpeed(LMotor.Self,2000);
-        RMotor.SetSpeed(RMotor.Self,4000);
-      
-        for(int i = 0 ; i < 5 ; i ++)
-          KEY[i].Scan(KEY[i].Self);
-        
-        os.time.delay(2,ms);
-   }
+
+//    Capture.Init(Capture.Self,100);
+//    Capture.Start(Capture.Self);
+//    
+//    while (1)
+//    {            
+//        Capture.Read(Capture.Self,1);
+//        
+//        while(Capture.GetState(Capture.Self) != Capture_Fin); 
+//        
+//        Capture.Show(Capture.Self,Capture.ImageCache,0);
+//        
+//        Capture.ClearFinFlag(Capture.Self);
+//    }
+    
+    Capture.Init(Capture.Self,100);
+    
+    while (1)
+    {            
+        Capture.Start(Capture.Self);
+        Capture.Read(Capture.Self,0);
+
+        Capture.Stop(Capture.Self);    
+        Capture.Show(Capture.Self,Capture.ImageCache,0);
+    }
 }

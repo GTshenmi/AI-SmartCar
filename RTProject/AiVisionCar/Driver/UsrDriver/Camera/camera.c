@@ -16,7 +16,8 @@ uint8_t CameraInit(void *config)
 
 uint8_t CameraStart()
 {
-     CAMERA_RECEIVER_Start(&cameraReceiver);   // 启动接收camera数据
+     CAMERA_RECEIVER_Start(&cameraReceiver);   // 启动接收camera数据  
+     
      return 0;
 }
 
@@ -28,15 +29,25 @@ uint8_t CameraStop()
 
 uint8_t CameraGetState()
 {
-    uint32_t fullCameraBufferAddr; 
-    CAMERA_RECEIVER_GetFullBuffer(&cameraReceiver, &fullCameraBufferAddr);
-    return 0;
+    uint8_t res = 1;
+ 
+    if(CAMERA_RECEIVER_GetFullBuffer(&cameraReceiver, &fullCameraBufferAddr) == kStatus_Success)
+      res = 0;
+    else
+      res = 1;
+    
+    return res;
 }
 
 uint8_t CameraRead()
 {
     CameraStart();
-    while(CameraGetState() != kStatus_Success);
-    CameraStop();
+    
+    while(CameraGetState());
+    
+    CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, fullCameraBufferAddr);
+    
+    while(CameraGetState());
+    
     return 0;
 }

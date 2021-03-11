@@ -10,9 +10,11 @@
 
 #include "platform.h"
 
+#if defined(Chip) && (Chip == TC264 || Chip == TC377)
 #define Screen_AcquireMutex(lock) IfxCpu_acquireMutex(lock)
 #define Screen_ReleaseMutex(lock) IfxCpu_releaseMutex(lock)
 #define Screen_LockMutex(lock)    IfxCpu_setSpinLock((lock),10)
+#endif
 
 #define SCREEN_MAX_BUF_LEN 32
 

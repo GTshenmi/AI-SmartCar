@@ -19,7 +19,7 @@ capture.pbi: \
   C:\Applications\IAR8.4RT\arm\inc\c\stdlib.h \
   C:\Applications\IAR8.4RT\arm\inc\c\DLib_Product_stdlib.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\OS\Device\Capture/image.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera\camera.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\driver.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\SysDriver\sys_driver.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\SysDriverLQ\sys_driverlq.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Device\fsl_device_registers.h \
@@ -122,9 +122,10 @@ capture.pbi: \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\SysDriverLQ\LQ_DMA.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\SysDriver/henv.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\OS\resource_config.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_MT9V034M.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_CSI.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\driver.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\usr_driver.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\LCD\lcd_driver.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera\camera.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_MT9V034M.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_Camera.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_CSI.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\SD\sd.h

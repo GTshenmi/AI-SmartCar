@@ -2495,6 +2495,12 @@
                     <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\camera.h</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_Camera.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_Camera.h</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\..\Driver\UsrDriver\Camera\LQ_CSI.c</name>
                 </file>
                 <file>

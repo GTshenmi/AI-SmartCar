@@ -10,6 +10,12 @@
 
 #include "platform.h"
 
+#if defined(Chip) && (Chip == TC264 || Chip == TC377)
+#define Com_AcquireMutex(lock) IfxCpu_acquireMutex(lock)
+#define Com_ReleaseMutex(lock) IfxCpu_releaseMutex(lock)
+#define Com_LockMutex(lock)    IfxCpu_setSpinLock((lock),10)
+#endif
+
 #define COMM_MAX_BUF_LEN 256
 
 enum
@@ -22,6 +28,8 @@ typedef struct communicate
 
         void *Communicatorn;
         uint32_t CommunicationType;
+        uint Is_Busy;
+
 
      public
 
@@ -39,6 +47,6 @@ typedef struct communicate
 
 }communicate_t;
 
-uint8_t CommInit(struct communicate *self);
+uint8_t ComInit(struct communicate *self);
 
 #endif /* OS_DEVICE_COMMUNICATE_COMMUNICATE_H_ */

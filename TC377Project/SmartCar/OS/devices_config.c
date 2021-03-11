@@ -43,7 +43,7 @@ capture_t Capture = /*unknow*/
 
 communicate_t CUART = /*ok*/
 {
-        .Init = CommInit,
+        .Init = ComInit,
         .Self = &CUART,
         .CommunicationType = C_UART,
         .Communicatorn = (void *)&UART_Resources[0].UARTN,
@@ -51,7 +51,7 @@ communicate_t CUART = /*ok*/
 
 communicate_t DebugCom = /*ok*/
 {
-        .Init = CommInit,
+        .Init = ComInit,
         .Self = &DebugCom,
         .CommunicationType = C_UART,
         .Communicatorn = (void *)&UART_Resources[0].UARTN,

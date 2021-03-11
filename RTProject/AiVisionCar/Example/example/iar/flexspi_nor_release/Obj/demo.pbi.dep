@@ -125,5 +125,6 @@ demo.pbi: \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\LCD\lcd_driver.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera\camera.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_MT9V034M.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_Camera.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_CSI.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AiVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\SD\sd.h

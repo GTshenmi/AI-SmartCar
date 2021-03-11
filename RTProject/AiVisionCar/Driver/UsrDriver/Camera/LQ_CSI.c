@@ -162,7 +162,7 @@ void CSI_CameraInit(void)
         CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, (uint32_t)(csiFrameBuf[i]));
     }
     
-    CAMERA_RECEIVER_Start(&cameraReceiver);   // 启动接收camera数据
+    //CAMERA_RECEIVER_Start(&cameraReceiver);   // 启动接收camera数据
     Systime.Delayms(100);        
 }
 

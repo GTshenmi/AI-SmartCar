@@ -45,14 +45,17 @@ image_t Cap_Read(struct capture *self,uint16_t flags)
 void Cap_ClearReadFinFlag(struct capture *self)
 {
     if(self->State == Capture_Fin)
+    {
+        self->__Stop__();
         self->State = Capture_Start;
+    }
 }
 
 cap_state_t Cap_GetState(struct capture *self)
 {
     if(self->State == Capture_Busy)
     {
-       if(self->__GetState__())
+       if(!self->__GetState__())
            self->State = Capture_Fin;
     }
 
@@ -66,18 +69,24 @@ void Cap_Test(struct capture *self)
     self->Report(self,self->ImageCache);
 }
 
-void Cap_Start(struct capture *self)
+uint8_t Cap_Start(struct capture *self)
 {
     if(self->State == Capture_Stop)
+    {
+        //self->__Start__();
         self->State = Capture_Start;
+    }
+    return 0;
 }
 
-void Cap_Stop(struct capture *self)
+uint8_t Cap_Stop(struct capture *self)
 {
     if(self->State != Capture_Stop)
         self->__Stop__();
 
     self->State = Capture_Stop;
+    
+    return 0;
 }
 
 void Cap_Report(struct capture *self,image_t image)
@@ -91,11 +100,11 @@ void Cap_Report(struct capture *self,image_t image)
     {
         for(j = 0; j < image.Width; j++)
         {
-            if(image.Array[i][j] == 0xfe )  //防止错误发送帧尾
-            {
-                image.Array[i][j] = 0xff;
-            }
-            UARTx.WriteByte(self->ReportUartn,image.Array[i][j],0xffffffff);
+//            if(image.Array[i][j] == 0xfe )  //防止错误发送帧尾
+//            {
+//                image.Array[i][j] = 0xff;
+//            }
+//            UARTx.WriteByte(self->ReportUartn,image.Array[i][j],0xffffffff);
         }
     }
 
@@ -105,30 +114,55 @@ void Cap_Report(struct capture *self,image_t image)
 
 void Cap_Show(struct capture *self,image_t image,uint8_t flags)
 {
-    for(int i = 0; i < image.Hight; i++)
+//    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR)) {
+//        SCB_DisableDCache();
+//    }
+//    SCB_EnableDCache();
+  
+    Get_Use_Image();        
+    uint16_t color;
+//        /* 显示图像 */
+    for(int i = 0; i < Use_ROWS; i++)   
     {
-        for(int j = 0; j < image.Width; j++)
-        {
-            uint16_t color = 0;
-            switch(flags)
+            for(int j = 0; j < Use_Line; j++)
             {
-                case 0:/*原图像*/
-                    color = (uint16_t)(image.Array[i][j] >> 3) << 11;
-                    color |= (uint16_t)(image.Array[i][j] >> 2) << 5;
-                    color |= (uint16_t)(image.Array[i][j]) >> 3;
-                    LCD_DrawPoint((uint16_t)j,(uint16_t)i,color);
-                    break;
-                case 1:/*二值化*/
-                    if(image.Array[i][j] == 1)
-                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0x0000);
-                    else
-                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0xffff);
-                    break;
-                default:
-                    break;
+                /* 将灰度转化为 RGB565 */
+                color = 0;
+                color = (Image_Use[i][j].gray[0] >> 3) << 11;
+                color |= (Image_Use[i][j].gray[0] >> 2) << 5;
+                color |= Image_Use[i][j].gray[0] >> 3;
+                /* 显示 */   
+                LCD_DrawPoint (i,j,color);    //显示数据
             }
-        }
-    }
+     }
+    
+//    for(int i = 0; i < image.Hight; i++)
+//    {
+//        for(int j = 0; j < image.Width; j++)
+//        {
+//            color = 0;
+//            switch(flags)
+//            {
+//                case 0:/*原图像*/
+//                    color = (uint16_t)(image.Array[i][j].gray[0] >> 3) << 11;
+//                    color |= (uint16_t)(image.Array[i][j].gray[0] >> 2) << 5;
+//                    color |= (uint16_t)(image.Array[i][j].gray[0]) >> 3;
+//                    //LCD_DrawPoint((uint16_t)j,(uint16_t)i,csiFrameBuf[0][i][j].rgb565);
+//                    LCD_DrawPoint((uint16_t)j,(uint16_t)i,color);
+//                    break;
+//                case 1:/*二值化*/
+//                      
+////                    if(image.Array[0][i][j] == 1)
+////                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0x0000);
+////                    else
+////                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0xffff);
+//                    
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 }
 
 uint8_t Cap_Init(struct capture *self,uint8_t fps)
@@ -142,6 +176,11 @@ uint8_t Cap_Init(struct capture *self,uint8_t fps)
     self->Report = Cap_Report;
 
     self->Show = Cap_Show;
+    
+    self->Start = Cap_Start;
+    self->Stop = Cap_Stop;
+    
+    self->State = Capture_Stop;
 
     self->Reg = 0;
 

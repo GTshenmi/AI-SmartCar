@@ -64,6 +64,7 @@ build LQ_SYSTICK.pbi : index LQ_SYSTICK.xcl
 build LQ_UART.pbi : index LQ_UART.xcl
 build LQ_UART_DMA.pbi : index LQ_UART_DMA.xcl
 build camera.pbi : index camera.xcl
+build LQ_Camera.pbi : index LQ_Camera.xcl
 build LQ_CSI.pbi : index LQ_CSI.xcl
 build LQ_MT9V034M.pbi : index LQ_MT9V034M.xcl
 build lcd_driver.pbi : index lcd_driver.xcl
@@ -153,14 +154,14 @@ build IMXRT1064_part0.pbi : link ctrlsys.pbi filter.pbi kalman_filter.pbi matrix
 build IMXRT1064_part1.pbi : link control.pbi dataprocess.pbi element.pbi parameter.pbi app.pbi foo.pbi init.pbi adc.pbi dma.pbi enc.pbi gpio.pbi
 build IMXRT1064_part2.pbi : link henv.pbi iic.pbi pwm.pbi spi.pbi systime.pbi tim.pbi uart.pbi LQ_ADC.pbi LQ_DMA.pbi LQ_Encoder.pbi LQ_GPIO.pbi
 build IMXRT1064_part3.pbi : link LQ_GPT.pbi LQ_IIC.pbi LQ_PIT.pbi LQ_PWM.pbi LQ_QTMR.pbi LQ_SOFTIIC.pbi LQ_SPI.pbi LQ_SYSTICK.pbi LQ_UART.pbi LQ_UART_DMA.pbi camera.pbi
-build IMXRT1064_part4.pbi : link LQ_CSI.pbi LQ_MT9V034M.pbi lcd_driver.pbi sd.pbi board.pbi clock_config.pbi pin_mux.pbi fsl_adc.pbi fsl_cache.pbi fsl_clock.pbi fsl_common.pbi
-build IMXRT1064_part5.pbi : link fsl_csi.pbi fsl_csi_camera_adapter.pbi fsl_dmamux.pbi fsl_edma.pbi fsl_enc.pbi fsl_flexcan.pbi fsl_flexio.pbi fsl_flexio_camera.pbi fsl_flexio_camera_edma.pbi fsl_flexspi.pbi fsl_gpio.pbi
-build IMXRT1064_part6.pbi : link fsl_gpt.pbi fsl_lpi2c.pbi fsl_lpspi.pbi fsl_lpuart.pbi fsl_lpuart_edma.pbi fsl_pit.pbi fsl_pwm.pbi fsl_qtmr.pbi fsl_rtwdog.pbi fsl_sccb.pbi fsl_tempmon.pbi
-build IMXRT1064_part7.pbi : link fsl_trng.pbi fsl_usdhc.pbi fsl_wdog.pbi fsl_xbara.pbi fsl_sd.pbi fsl_sdmmc_common.pbi fsl_sdmmc_event.pbi fsl_sdmmc_host.pbi system_MIMXRT1064.pbi fsl_assert.pbi fsl_debug_console.pbi
-build IMXRT1064_part8.pbi : link fsl_io.pbi fsl_log.pbi fsl_str.pbi evkmimxrt1064_flexspi_nor_config.pbi evkmimxrt1064_sdram_ini_dcd.pbi fsl_flexspi_nor_boot.pbi ano_dt.pbi console.pbi print.pbi beep.pbi bluetooth.pbi
-build IMXRT1064_part9.pbi : link capture.pbi image.pbi communicate.pbi demo.pbi esensor.pbi key.pbi led.pbi motor.pbi screen.pbi sdcard.pbi servo.pbi
-build IMXRT1064_part10.pbi : link dipswitch.pbi switch.pbi wirelessserial.pbi diskio.pbi ff.pbi ffsystem.pbi ffunicode.pbi fsl_sd_disk.pbi file.pbi malloc.pbi task.pbi
-build IMXRT1064_part11.pbi : link ostime.pbi softtimer.pbi ui.pbi devices_config.pbi os.pbi resource_config.pbi irq.pbi main.pbi
+build IMXRT1064_part4.pbi : link LQ_Camera.pbi LQ_CSI.pbi LQ_MT9V034M.pbi lcd_driver.pbi sd.pbi board.pbi clock_config.pbi pin_mux.pbi fsl_adc.pbi fsl_cache.pbi fsl_clock.pbi
+build IMXRT1064_part5.pbi : link fsl_common.pbi fsl_csi.pbi fsl_csi_camera_adapter.pbi fsl_dmamux.pbi fsl_edma.pbi fsl_enc.pbi fsl_flexcan.pbi fsl_flexio.pbi fsl_flexio_camera.pbi fsl_flexio_camera_edma.pbi fsl_flexspi.pbi
+build IMXRT1064_part6.pbi : link fsl_gpio.pbi fsl_gpt.pbi fsl_lpi2c.pbi fsl_lpspi.pbi fsl_lpuart.pbi fsl_lpuart_edma.pbi fsl_pit.pbi fsl_pwm.pbi fsl_qtmr.pbi fsl_rtwdog.pbi fsl_sccb.pbi
+build IMXRT1064_part7.pbi : link fsl_tempmon.pbi fsl_trng.pbi fsl_usdhc.pbi fsl_wdog.pbi fsl_xbara.pbi fsl_sd.pbi fsl_sdmmc_common.pbi fsl_sdmmc_event.pbi fsl_sdmmc_host.pbi system_MIMXRT1064.pbi fsl_assert.pbi
+build IMXRT1064_part8.pbi : link fsl_debug_console.pbi fsl_io.pbi fsl_log.pbi fsl_str.pbi evkmimxrt1064_flexspi_nor_config.pbi evkmimxrt1064_sdram_ini_dcd.pbi fsl_flexspi_nor_boot.pbi ano_dt.pbi console.pbi print.pbi beep.pbi
+build IMXRT1064_part9.pbi : link bluetooth.pbi capture.pbi image.pbi communicate.pbi demo.pbi esensor.pbi key.pbi led.pbi motor.pbi screen.pbi sdcard.pbi
+build IMXRT1064_part10.pbi : link servo.pbi dipswitch.pbi switch.pbi wirelessserial.pbi diskio.pbi ff.pbi ffsystem.pbi ffunicode.pbi fsl_sd_disk.pbi file.pbi malloc.pbi
+build IMXRT1064_part11.pbi : link task.pbi ostime.pbi softtimer.pbi ui.pbi devices_config.pbi os.pbi resource_config.pbi irq.pbi main.pbi
 build IMXRT1064.pbd : link IMXRT1064_part0.pbi IMXRT1064_part1.pbi IMXRT1064_part2.pbi IMXRT1064_part3.pbi IMXRT1064_part4.pbi IMXRT1064_part5.pbi IMXRT1064_part6.pbi IMXRT1064_part7.pbi IMXRT1064_part8.pbi IMXRT1064_part9.pbi IMXRT1064_part10.pbi IMXRT1064_part11.pbi
 build IMXRT1064.pbw : browsedata IMXRT1064.pbd
 

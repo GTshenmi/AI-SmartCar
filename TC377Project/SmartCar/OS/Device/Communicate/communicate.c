@@ -7,8 +7,16 @@
 #include "communicate.h"
 #include "driver.h"
 
-uint8_t CommTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
+uint8_t ComTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
 {
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+
+    while(!Com_AcquireMutex(&self->Is_Busy));
+
+    Com_LockMutex(&self->Is_Busy);
+
+#endif
+
     if(self->CommunicationType == C_SPI)
     {
         if(time_out == 0)
@@ -21,9 +29,14 @@ uint8_t CommTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t
             time_out = UARTx.Time_Infinite;
         return UARTx.WriteBytes((uartx_t *)self->Communicatorn,str,len,time_out);
     }
+
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+    Com_ReleaseMutex(&self->Is_Busy);
+#endif
+
     return 0;
 }
-uint8_t CommReceive(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
+uint8_t ComReceive(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
 {
     if(self->CommunicationType == C_SPI)
     {
@@ -42,7 +55,7 @@ uint8_t CommReceive(struct communicate *self,uint8_t *str,uint32_t len,sint64_t 
 
 
 
-uint32_t CommRead(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t ComRead(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     uint32_t len = 0;
 
@@ -64,7 +77,7 @@ uint32_t CommRead(struct communicate *self,sint64_t time_out,const char *fmt,...
 
     return len;
 }
-uint32_t CommReadLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t ComReadLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     uint32_t len = 0;
 
@@ -89,7 +102,7 @@ uint32_t CommReadLine(struct communicate *self,sint64_t time_out,const char *fmt
 
 
 
-uint32_t CommWrite(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t ComWrite(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     char writebuf[COMM_MAX_BUF_LEN];
 
@@ -104,7 +117,7 @@ uint32_t CommWrite(struct communicate *self,sint64_t time_out,const char *fmt,..
 
     return len;
 }
-uint32_t CommWriteLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t ComWriteLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     char writebuf[COMM_MAX_BUF_LEN];
 
@@ -127,14 +140,14 @@ uint32_t CommWriteLine(struct communicate *self,sint64_t time_out,const char *fm
 
 
 
-uint8_t CommInit(struct communicate *self)
+uint8_t ComInit(struct communicate *self)
 {
-    self->Receive = CommReceive;
-    self->Transmit = CommTransmit;
-    self->Read = CommRead;
-    self->ReadLine = CommReadLine;
-    self->Write = CommWrite;
-    self->WriteLine = CommWriteLine;
+    self->Receive = ComReceive;
+    self->Transmit = ComTransmit;
+    self->Read = ComRead;
+    self->ReadLine = ComReadLine;
+    self->Write = ComWrite;
+    self->WriteLine = ComWriteLine;
 
     uint8_t res = 0;
 
@@ -146,6 +159,12 @@ uint8_t CommInit(struct communicate *self)
     {
         res = UARTx.Init((uartx_t *)self->Communicatorn);
     }
+
+    self->Is_Busy = false;
+
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+    Com_ReleaseMutex(&self->Is_Busy);
+#endif
 
     return res;
 }
