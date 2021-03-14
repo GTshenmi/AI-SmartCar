@@ -13,7 +13,7 @@ uint8_t LCD_Type = 1;
 static uint8_t LCD_Enable = true;
 
 #if defined(Chip) && (Chip == TC264 || Chip == TC377)
-static IfxCpu_mutexLock LCD_mutexLock = 1;
+static IfxCpu_mutexLock LCD_mutexLock = 0;
 #endif
 
 /**

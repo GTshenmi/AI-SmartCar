@@ -1,0 +1,18 @@
+system_MIMXRT1064.pbi: \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device\system_MIMXRT1064.c \
+  C:\Applications\IAR8.4RT\arm\inc\c\stdint.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\ycheck.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\yvals.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\DLib_Defaults.h \
+  C:\\Applications\\IAR8.4RT\\arm\\inc\\c\\DLib_Config_Normal.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\DLib_Product.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device/fsl_device_registers.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device/MIMXRT1064.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\CMSIS\Include\core_cm7.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\CMSIS\Include/cmsis_version.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\CMSIS\Include/cmsis_compiler.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\CMSIS\Include\cmsis_iccarm.h \
+  C:\Applications\IAR8.4RT\arm\inc\c\iccarm_builtin.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\CMSIS\Include/mpu_armv7.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device/system_MIMXRT1064.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device/MIMXRT1064_features.h
