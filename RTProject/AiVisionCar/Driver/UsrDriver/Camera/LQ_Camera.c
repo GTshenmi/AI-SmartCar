@@ -179,7 +179,7 @@ void Get_01_Value(uint8_t mode)
   int i = 0,j = 0;
   uint8_t Threshold;
   uint32_t  tv=0;
-  char txt[16];
+  //char txt[16];
   if(mode)
   {
       //¿€º”

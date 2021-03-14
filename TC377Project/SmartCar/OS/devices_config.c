@@ -28,7 +28,7 @@ capture_t Capture = /*unknow*/
         .__Stop__ = CameraStop,
         .__GetState__ = CameraGetState,
         .__Read__ = CameraRead,
-        .Init = Cap_Init,
+        .Init = Capture_Init,
 
         .ImageCache =
         {
@@ -201,11 +201,18 @@ screen_t Screen = /*ok*/
                 .Backcolor = WHITE,
         },
 
-        .__DeInit__ = LCD_DeInit,
         .__Init__ = LCD_Init,
         .__InitConfig__ = &LCD_Type,
-        .__AddrReset__ = LCD_AddrReset,
         .__SetPixel__ =LCD_DrawPoint,
+
+        .__AddrReset__ = LCD_AddrReset,
+        .__DeInit__ = LCD_DeInit,
+        .__SetEnable__ = LCD_SetEnable,
+        .__FastDrawArea__ = LCD_FastDrawArea,
+        .__FastSetPixel__ = LCD_WriteWord,
+        .__Fill__ = LCD_Fill,
+        .__SetArea__ = LCD_SetArea,
+
 
         .Init = Screen_Init,
         .Self = &Screen,

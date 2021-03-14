@@ -64,7 +64,7 @@ void Test_Camera_Reprot(void);
   *
   * @date     2019/6/24 ÐÇÆÚÒ»
   */
-void CSI_CameraInit(void);
+void CSI_CameraInit(uint8_t fps);
 
 
 #endif

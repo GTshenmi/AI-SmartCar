@@ -13,6 +13,12 @@
 #if 1
 #include "sys_driver.h"
 
+#if defined(Chip) && (Chip == TC264 || Chip == TC377)
+#define LCD_AcquireMutex(lock) IfxCpu_acquireMutex(lock)
+#define LCD_ReleaseMutex(lock) IfxCpu_releaseMutex(lock)
+#define LCD_LockMutex(lock)    IfxCpu_setSpinLock((lock),1)
+#endif
+
 #define USING_HARDWARE_CONTROLER 0
 
 /*                      !important!                         */
@@ -28,11 +34,11 @@
 #define LCD_WriteCmd    LCD_SoftWareWriteCmd    //send command function interface->LCD_SoftWareWriteCmd
 #define _GPIO_WritePin  GPIOx.Write
 
-#define LCD_DC_GPIO     &GPIO_Resources[0].GPION
-#define LCD_RST_GPIO    &GPIO_Resources[1].GPION
-#define LCD_SDA_GPIO    &GPIO_Resources[2].GPION
-#define LCD_SCL_GPIO    &GPIO_Resources[3].GPION
-#define LCD_CS_GPIO     &GPIO_Resources[4].GPION
+#define LCD_DC_GPIO     &GPIO_Resources[1].GPION
+#define LCD_RST_GPIO    &GPIO_Resources[2].GPION
+#define LCD_SDA_GPIO    &GPIO_Resources[3].GPION
+#define LCD_SCL_GPIO    &GPIO_Resources[4].GPION
+#define LCD_CS_GPIO     &GPIO_Resources[5].GPION
 
 #define LCD_DC(x)   ((x==1)?_GPIO_WritePin(LCD_DC_GPIO,1):_GPIO_WritePin(LCD_DC_GPIO,0))
 #define LCD_RST(x)  ((x==1)?_GPIO_WritePin(LCD_RST_GPIO,1):_GPIO_WritePin(LCD_RST_GPIO,0))
@@ -67,6 +73,12 @@ void LCD_HardWareWriteCmd(uint8_t cmd);
 #endif
 void LCD_AddrReset(void);
 void LCD_DrawPoint(uint16_t xs,uint16_t ys,uint16_t color);
+
+
+void LCD_SetEnable(bool enable);
+void LCD_SetArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye);
+void LCD_FastDrawArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t **array);
+void LCD_Fill(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
 
 /*                                                                                              ×ÖÌå¿â                                                                                                 */
 extern uint8_t Font_code8[][6];

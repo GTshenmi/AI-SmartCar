@@ -10,11 +10,10 @@
 
 #include "platform.h"
 #include "image.h"
-#include "camera.h"
 
 typedef enum
 {
-    Capture_Stop,Capture_Start,Capture_Busy,Capture_Fin,
+    Capture_Stopped,Capture_Started,Capture_Busy,Capture_Fin,
 }cap_state_t;
 
 typedef struct capture
@@ -54,15 +53,14 @@ typedef struct capture
      void (*Test)(struct capture *self);
 
      image_t ImageCache;
-     
-     pixel_t ***PixelCache;
 
      cap_state_t State;
+     
      
      struct capture *Self;
 
 }capture_t;
 
-uint8_t Cap_Init(struct capture *self,uint8_t fps);
+uint8_t Capture_Init(struct capture *self,uint8_t fps);
 
 #endif /* OS_DEVICE_CAPTURE_CAPTURE_H_ */

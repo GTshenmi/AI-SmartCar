@@ -10,28 +10,25 @@
 
 void Screen_SetPixel(struct screen *self,uint16_t x,uint16_t y,uint16_t color)
 {
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    while(!Screen_AcquireMutex(&self->Is_Busy));
-
-    //while(!Screen_LockMutex(&self->Is_Busy));
-
-    Screen_LockMutex(&self->Is_Busy);
-#endif
-
     if(x >= self->Width)
         x = 0;
     if(y >= self->Hight)
         y = 0;
 
     self->__SetPixel__(x,y,color);
-
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    Screen_ReleaseMutex(&self->Is_Busy);
-#endif
 }
 void Screen_DeInit(struct screen *self)
 {
-    self->__DeInit__();
+    if(self->__DeInit__ != NULL)
+        self->__DeInit__();
+}
+
+void Screen_SetEnable(struct screen *self,bool enable)
+{
+    if(self->__SetEnable__ != NULL)
+    {
+        self->__SetEnable__(enable);
+    }
 }
 /**
     *
@@ -170,11 +167,18 @@ void Screen_Clear(struct screen *self,uint16_t color)
 {
     uint16_t i,j;
 
-    for(i=0;i<self->Width;i++)      //160
+    if(self->__Fill__ != NULL)
     {
-        for(j=0;j<self->Hight;j++)
+        self->__Fill__(0,0,self->Width,self->Hight,color);
+    }
+    else
+    {
+        for(i=0;i<self->Width;i++)      //160
         {
-            self->SetPixel(self,i,j,color);
+            for(j=0;j<self->Hight;j++)
+            {
+                self->SetPixel(self,i,j,color);
+            }
         }
     }
 }
@@ -192,9 +196,16 @@ void Screen_Clear(struct screen *self,uint16_t color)
 void Screen_Fill(struct screen *self,uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color)
 {
     uint16_t i,j;
-    for(i=xs;i<xe;i++)
-        for(j=ys;j<=ye;j++)
-            self->SetPixel(self,i,j,color);
+    if(self->__Fill__ != NULL)
+    {
+        self->__Fill__(xs,ys,xe,ye,color);
+    }
+    else
+    {
+        for(i=xs;i<xe;i++)
+            for(j=ys;j<=ye;j++)
+                self->SetPixel(self,i,j,color);
+    }
 }
 /**
     *
@@ -537,13 +548,9 @@ uint8_t Screen_Init(struct screen *self)
 
     self->Fill = Screen_Fill;
 
-    self->Is_Busy = false;
-
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    Screen_ReleaseMutex(&self->Is_Busy);
-#endif
-
     self->SetPixel = Screen_SetPixel;
+
+    self->SetEnable = Screen_SetEnable;
 
     uint8_t res = 0;
     if(self->__Init__ != NULL && self->__InitConfig__ != NULL)

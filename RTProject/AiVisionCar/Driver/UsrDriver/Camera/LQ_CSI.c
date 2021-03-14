@@ -131,7 +131,7 @@ camera_config_t cameraConfig = {
   *
   * @date     2019/6/24 星期一
   */
-void CSI_CameraInit(void)  
+void CSI_CameraInit(uint8_t fps)  
 {
     /* 手动产生一个IIC停止信号，防止IIC卡死 */
     PIN_InitConfig(J11, PIN_MODE_OUTPUT, 1);
@@ -151,6 +151,8 @@ void CSI_CameraInit(void)
     
     CSI_PinsInit();
     
+    cameraConfig.framePerSec = fps;
+    
     CAMERA_RECEIVER_Init(&cameraReceiver, &cameraConfig, NULL, NULL);  //初始化csi
     
     CAMERA_DEVICE_Init(&cameraDevice, &cameraConfig);                  //初始化摄像头
@@ -163,6 +165,7 @@ void CSI_CameraInit(void)
     }
     
     //CAMERA_RECEIVER_Start(&cameraReceiver);   // 启动接收camera数据
+    
     Systime.Delayms(100);        
 }
 
@@ -185,7 +188,7 @@ void Test_Camera_Reprot(void)
     uint32_t fullCameraBufferAddr;  
 
     UART_InitConfig(LPUART1, 115200);
-    CSI_CameraInit();
+    CSI_CameraInit(100);
     //LED_Init();       
     uint8_t count = 0;
 

@@ -9,22 +9,14 @@
 #define OS_DEVICE_CAPTURE_IMAGE_H_
 
 #include "platform.h"
-#include "driver.h"
 
 typedef struct
 {
     int Hight;
-    int Width;  
-    pixel_t **Array;
-}image_t;
+    int Width;
 
-//typedef struct
-//{
-//    int Hight;
-//    int Width;
-//
-//    uint16_t **Array;
-//}image_t;
+    uint8_t **Array;
+}image_t;
 
 typedef struct
 {

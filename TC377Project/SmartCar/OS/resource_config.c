@@ -190,7 +190,7 @@ uart_resource_t UART_Resources[2] =
 spi_resource_t SPI_Resources[2] =
 {
         [0] = {
-               .SPIN = {SPI2,QSPI2_CLK_P15_3,QSPI2_MISO_P15_7/*not used*/,QSPI2_MOSI_P15_5, QSPI2_CS_P15_2,3,QSPI,5000000},
+               .SPIN = {SPI2,QSPI2_CLK_P15_8,QSPI2_MISO_P15_7,QSPI2_MOSI_P15_5/*not used*/,QSPI2_CS_P15_2,2,QSPI,9600},
                .Description = "LCD SPI"
         },
         [1] = {

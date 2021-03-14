@@ -54,8 +54,6 @@ void Core0_Init()
     LMotor.Start(LMotor.Self);
     RMotor.Start(RMotor.Self);
     
-    
-    
     Servo1.Init(Servo1.Self);
     Servo2.Init(Servo2.Self);
     

@@ -15,7 +15,7 @@ capture_t Capture = /*unknow*/
         .__Stop__ = CameraStop,
         .__GetState__ = CameraGetState,
         .__Read__ = CameraRead,
-        .Init = Cap_Init,
+        .Init = Capture_Init,
         
         .Self = &Capture,
 
@@ -26,7 +26,7 @@ capture_t Capture = /*unknow*/
 #if ((defined(Chip)) && ((Chip == TC264) || (Chip == TC377)))
                 .Array = (uint8_t **)Image_Data,
 #else
-                .Array = (pixel_t **)(Image_Use),
+               // .Array = (pixel_t **)(Image_Use),
 #endif
         },
 
@@ -36,7 +36,7 @@ communicate_t DebugCom;
 
 communicate_t CUART = /*ok*/
 {
-        .Init = CommInit,
+        .Init = ComInit,
         .Self = &CUART,
         .CommunicationType = C_UART,
         .Communicatorn = (void *)&UART_Resources[0].UARTN,
@@ -91,14 +91,14 @@ motor_ctrl_t LMotor =/*ok*/
 {
         .Init = MotorInit,
         .Self = &LMotor,
-        .Pwmn = {&PWM_Resources[2].PWMN,&PWM_Resources[3].PWMN},
+        .Pwmn = {&PWM_Resources[3].PWMN,&PWM_Resources[2].PWMN},
         .Encn = &ENC_Resources[0].ENCN,
 };
 motor_ctrl_t RMotor =/*ok*/
 {
         .Init = MotorInit,
         .Self = &RMotor,
-        .Pwmn = {&PWM_Resources[0].PWMN,&PWM_Resources[1].PWMN},
+        .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
         .Encn = &ENC_Resources[1].ENCN,
 };
 
@@ -120,6 +120,21 @@ screen_t Screen = /*ok*/
         .__InitConfig__ = &LCD_Type,
         .__AddrReset__ = LCD_AddrReset,
         .__SetPixel__ =LCD_DrawPoint,
+        
+        .__Fill__ = LCD_Fill,
+        .__SetEnable__ = LCD_SetEnable,
+        .__FastDrawArea__= LCD_FastDrawArea,
+
+        .__FastSetPixel__= LCD_WriteWord,
+        .__SetArea__= LCD_SetArea,
+        
+//        .__Fill__ = NULL,
+//        .__SetEnable__ = NULL,
+//        .__FastDrawArea__= NULL,
+//        .__Fill__= NULL,
+//
+//        .__FastSetPixel__= NULL,
+//        .__SetArea__= NULL,
 
         .Init = Screen_Init,
         .Self = &Screen,

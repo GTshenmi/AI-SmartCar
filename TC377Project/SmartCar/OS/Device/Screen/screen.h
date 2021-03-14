@@ -10,12 +10,6 @@
 
 #include "platform.h"
 
-#if defined(Chip) && (Chip == TC264 || Chip == TC377)
-#define Screen_AcquireMutex(lock) IfxCpu_acquireMutex(lock)
-#define Screen_ReleaseMutex(lock) IfxCpu_releaseMutex(lock)
-#define Screen_LockMutex(lock)    IfxCpu_setSpinLock((lock),10)
-#endif
-
 #define SCREEN_MAX_BUF_LEN 32
 
 volatile typedef enum
@@ -64,16 +58,21 @@ typedef struct screen
         /*The following four functions are from screen(LCD/OLED) driver*/
         uint8_t (*__Init__)(void *config);
         void *__InitConfig__;
+        void (*__SetPixel__)(uint16_t x,uint16_t y,uint16_t color);
 
         void (*__DeInit__)(void);
         void (*__AddrReset__)(void);
-        void (*__SetPixel__)(uint16_t x,uint16_t y,uint16_t color);
+        void (*__SetEnable__)(bool enable);
+        void (*__FastDrawArea__)(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t **array);
+        void (*__Fill__)(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
 
-        uint Is_Busy;
+        void (*__FastSetPixel__)(uint16_t color);/*not thread-safe*/
+        void (*__SetArea__)(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye);/*not thread-safe*/
 
     public
 
         void (*SetPixel)(struct screen *self,uint16_t x,uint16_t y,uint16_t color);
+        void (*SetEnable)(struct screen *self,bool enable);
 
         uint8_t (*Init)(struct screen *self);
         void (*DeInit)(struct screen *self);

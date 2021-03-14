@@ -9,6 +9,13 @@
 #if 1
 #include <lcd_driver.h>
 uint8_t LCD_Type = 1;
+
+static uint8_t LCD_Enable = true;
+
+#if defined(Chip) && (Chip == TC264 || Chip == TC377)
+static IfxCpu_mutexLock LCD_mutexLock = 1;
+#endif
+
 /**
     *
   * @brief  LCD 初始化
@@ -132,19 +139,22 @@ void LCD_DeInit()
   */
 void LCD_SoftWareWriteByte(uint8_t data)
 {
-    uint8_t i;
-    LCD_DC(1);
-    for(i=0;i<8;i++)
+    if(LCD_Enable)
     {
-        LCD_SCL(0);
-        //LCD_delayus(1);
-        if(data&0x80)
-            LCD_SDA(1);
-        else
-            LCD_SDA(0);
-        LCD_SCL(1);
-        //LCD_delayus(1);
-        data = (data<<1);
+        uint8_t i;
+        LCD_DC(1);
+        for(i=0;i<8;i++)
+        {
+            LCD_SCL(0);
+            //LCD_delayus(1);
+            if(data&0x80)
+                LCD_SDA(1);
+            else
+                LCD_SDA(0);
+            LCD_SCL(1);
+            //LCD_delayus(1);
+            data = (data<<1);
+        }
     }
 }
 /**
@@ -157,19 +167,22 @@ void LCD_SoftWareWriteByte(uint8_t data)
   */
 void LCD_SoftWareWriteWord(uint16_t data)
 {
-    uint8_t i;
-
-    LCD_DC(1);
-
-    for(i=0;i<16;i++)
+    if(LCD_Enable)
     {
-        LCD_SCL(0);
-        //LCD_delayus(1);
-        if(data&0x8000){ LCD_SDA(1);}
-        else{LCD_SDA(0);}
-        LCD_SCL(1);
-        //LCD_delayus(1);
-        data<<=1;
+        uint8_t i;
+
+        LCD_DC(1);
+
+        for(i=0;i<16;i++)
+        {
+            LCD_SCL(0);
+            //LCD_delayus(1);
+            if(data&0x8000){ LCD_SDA(1);}
+            else{LCD_SDA(0);}
+            LCD_SCL(1);
+            //LCD_delayus(1);
+            data<<=1;
+        }
     }
 }
 /**
@@ -182,18 +195,21 @@ void LCD_SoftWareWriteWord(uint16_t data)
   */
 void LCD_SoftWareWriteCmd(uint8_t cmd)
 {
-    uint8_t i;
-
-    LCD_DC(0);
-    for(i=0;i<8;i++)
+    if(LCD_Enable)
     {
-        LCD_SCL(0);
-        //LCD_delayus(1);
-        if(cmd&0x80){LCD_SDA(1);}
-        else{LCD_SDA(0);}
-        LCD_SCL(1);
-        //LCD_delayus(1);
-        cmd = (cmd<<1);
+        uint8_t i;
+
+        LCD_DC(0);
+        for(i=0;i<8;i++)
+        {
+            LCD_SCL(0);
+            //LCD_delayus(1);
+            if(cmd&0x80){LCD_SDA(1);}
+            else{LCD_SDA(0);}
+            LCD_SCL(1);
+            //LCD_delayus(1);
+            cmd = (cmd<<1);
+        }
     }
 }
 #else
@@ -219,9 +235,12 @@ void LCD_HardWareSPIInit(uint16_t baudrate)
   */
 void LCD_HardWareWriteByte(uint8_t data)
 {
-    LCD_DC=1;
-    uint8_t ReceiveData = 0;
-    SPI_RadeWrite(ADS1292_SPIx, ADS1292_SPI_CS,&data,&ReceiveData,1);
+    if(LCD_Enable)
+    {
+        LCD_DC=1;
+        uint8_t ReceiveData = 0;
+        SPI_RadeWrite(ADS1292_SPIx, ADS1292_SPI_CS,&data,&ReceiveData,1);
+    }
 }
 /**
     *
@@ -233,8 +252,11 @@ void LCD_HardWareWriteByte(uint8_t data)
   */
 void LCD_HardWareWriteWord(uint16_t data)
 {
-    LCD_HardWareWriteByte((uint8_t)((data&0xFF00)>>8));
-    LCD_HardWareWriteByte((uint8_t)(data&0x00FF));
+    if(LCD_Enable)
+    {
+        LCD_HardWareWriteByte((uint8_t)((data&0xFF00)>>8));
+        LCD_HardWareWriteByte((uint8_t)(data&0x00FF));
+    }
 }
 /**
     *
@@ -246,9 +268,12 @@ void LCD_HardWareWriteWord(uint16_t data)
   */
 void LCD_HardWareWriteCmd(uint8_t cmd)
 {
-    LCD_DC=0;
-    uint8_t ReceiveData = 0;
-    SPI_RadeWrite(ADS1292_SPIx, ADS1292_SPI_CS,&cmd,&ReceiveData,1);
+    if(LCD_Enable)
+    {
+        LCD_DC=0;
+        uint8_t ReceiveData = 0;
+        SPI_RadeWrite(ADS1292_SPIx, ADS1292_SPI_CS,&cmd,&ReceiveData,1);
+    }
 }
 #endif
 /**
@@ -323,6 +348,16 @@ void _LCD_DrawPoint(uint8_t xs,uint8_t ys,uint16_t color)
 
 void LCD_DrawPoint(uint16_t xs,uint16_t ys,uint16_t color)
 {
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+
+    while(!LCD_AcquireMutex(&LCD_mutexLock));
+
+    //while(Screen_LockMutex(&self->Is_Busy));
+
+    LCD_LockMutex(&LCD_mutexLock);
+
+#endif
+
     uint8_t x = (uint8_t)xs ;
     uint8_t y = (uint8_t)ys ;
 
@@ -338,6 +373,115 @@ void LCD_DrawPoint(uint16_t xs,uint16_t ys,uint16_t color)
     LCD_WriteByte(y);          //列终止坐标低8位
     LCD_WriteCmd(0x2C);         //GRAM接收MCU数据或命令
     LCD_WriteWord(color);
+
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+    LCD_ReleaseMutex(&LCD_mutexLock);
+#endif
+}
+
+void LCD_SetArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye)
+{
+    uint8_t x1 = (uint8_t)xs;
+    uint8_t x2 = (uint8_t)xe;
+    uint8_t y1 = (uint8_t)ys;
+    uint8_t y2 = (uint8_t)ye;
+
+    LCD_WriteCmd(0x2A);       //Colulm addRSTs set
+    LCD_WriteByte(0x00);      //行起始坐标高8位，始终为零
+    LCD_WriteByte(x1);            //行起始坐标低8位
+    LCD_WriteByte(0x00);      //行终止坐标高8位，始终为零
+    LCD_WriteByte(x2);            //行终止坐标低8位
+    LCD_WriteCmd(0x2B);       //Colulm addRSTs set
+    LCD_WriteByte(0x00);      //列起始坐标高8位，始终为零
+    LCD_WriteByte(y1);            //列起始坐标低8位
+    LCD_WriteByte(0x00);      //列终止坐标高8位，始终为零
+    LCD_WriteByte(y2);            //列终止坐标低8位
+    LCD_WriteCmd(0x2C);       //GRAM接收MCU数据或命令
+}
+
+void LCD_FastDrawArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t **array)
+{
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+
+    while(!LCD_AcquireMutex(&LCD_mutexLock));
+
+    //while(Screen_LockMutex(&self->Is_Busy));
+
+    LCD_LockMutex(&LCD_mutexLock);
+
+#endif
+
+    uint8_t x1 = (uint8_t)xs;
+    uint8_t x2 = (uint8_t)xe;
+    uint8_t y1 = (uint8_t)ys;
+    uint8_t y2 = (uint8_t)ye;
+
+    LCD_WriteCmd(0x2A);       //Colulm addRSTs set
+    LCD_WriteByte(0x00);      //行起始坐标高8位，始终为零
+    LCD_WriteByte(x1);            //行起始坐标低8位
+    LCD_WriteByte(0x00);      //行终止坐标高8位，始终为零
+    LCD_WriteByte(x2);            //行终止坐标低8位
+    LCD_WriteCmd(0x2B);       //Colulm addRSTs set
+    LCD_WriteByte(0x00);      //列起始坐标高8位，始终为零
+    LCD_WriteByte(y1);            //列起始坐标低8位
+    LCD_WriteByte(0x00);      //列终止坐标高8位，始终为零
+    LCD_WriteByte(y2);            //列终止坐标低8位
+    LCD_WriteCmd(0x2C);       //GRAM接收MCU数据或命令
+
+    for(int i = xs;i < xe ; i++)
+    {
+        for(int j = ys;j < ye ; j++)
+            LCD_WriteWord(array[i][j]);
+    }
+
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+    LCD_ReleaseMutex(&LCD_mutexLock);
+#endif
+}
+
+void LCD_Fill(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color)
+{
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+
+    while(!LCD_AcquireMutex(&LCD_mutexLock));
+
+    //while(Screen_LockMutex(&self->Is_Busy));
+
+    LCD_LockMutex(&LCD_mutexLock);
+
+#endif
+
+    uint8_t x1 = (uint8_t)xs;
+    uint8_t x2 = (uint8_t)xe;
+    uint8_t y1 = (uint8_t)ys;
+    uint8_t y2 = (uint8_t)ye;
+
+    LCD_WriteCmd(0x2A);       //Colulm addRSTs set
+    LCD_WriteByte(0x00);      //行起始坐标高8位，始终为零
+    LCD_WriteByte(x1);            //行起始坐标低8位
+    LCD_WriteByte(0x00);      //行终止坐标高8位，始终为零
+    LCD_WriteByte(x2);            //行终止坐标低8位
+    LCD_WriteCmd(0x2B);       //Colulm addRSTs set
+    LCD_WriteByte(0x00);      //列起始坐标高8位，始终为零
+    LCD_WriteByte(y1);            //列起始坐标低8位
+    LCD_WriteByte(0x00);      //列终止坐标高8位，始终为零
+    LCD_WriteByte(y2);            //列终止坐标低8位
+    LCD_WriteCmd(0x2C);       //GRAM接收MCU数据或命令
+
+    for(int i = xs;i < xe ; i++)
+    {
+        for(int j = ys;j < ye ; j++)
+            LCD_WriteWord(color);
+    }
+
+#if defined(Chip) && Chip == TC377 || Chip == TC264
+    LCD_ReleaseMutex(&LCD_mutexLock);
+#endif
+}
+
+void LCD_SetEnable(bool enable)
+{
+    LCD_Enable = enable;
 }
 
 /*                  ASCII字符编码                       */
@@ -444,9 +588,3 @@ uint8_t Font_code8[][6] = {
   {0x00,0x1C,0x2A,0x32,0x2A,0x1C},//笑面(131)
   {0x00,0x1C,0x22,0x44,0x22,0x1C}};//爱心(132)
 #endif
-
-
-
-
-
-
