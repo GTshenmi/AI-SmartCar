@@ -4,15 +4,23 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../OS/UI/number_settting_page.c \
+../OS/UI/template_page.c \
 ../OS/UI/ui.c 
 
 OBJS += \
+./OS/UI/number_settting_page.o \
+./OS/UI/template_page.o \
 ./OS/UI/ui.o 
 
 COMPILED_SRCS += \
+./OS/UI/number_settting_page.src \
+./OS/UI/template_page.src \
 ./OS/UI/ui.src 
 
 C_DEPS += \
+./OS/UI/number_settting_page.d \
+./OS/UI/template_page.d \
 ./OS/UI/ui.d 
 
 

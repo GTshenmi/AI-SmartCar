@@ -26,7 +26,8 @@ capture_t Capture = /*unknow*/
 #if ((defined(Chip)) && ((Chip == TC264) || (Chip == TC377)))
                 .Array = (uint8_t **)Image_Data,
 #else
-               // .Array = (pixel_t **)(Image_Use),
+                //.Array = (pixel_t **)(Image_Use),
+                .Array = (uint16_t *)&csiFrameBuf[0][0][0],
 #endif
         },
 

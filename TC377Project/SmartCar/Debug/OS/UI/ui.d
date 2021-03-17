@@ -42,3 +42,7 @@ ui.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 ui.o :	../OS/Device/device.h
 ../OS/Device/device.h :
+ui.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+ui.o :	../OS/UI/number_setting_page.h
+../OS/UI/number_setting_page.h :

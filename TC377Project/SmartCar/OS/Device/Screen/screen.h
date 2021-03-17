@@ -5,12 +5,12 @@
  *      Author: 936305695
  */
 
-#ifndef DRIVER_USRDRIVER_DISPLAY_API_H_
-#define DRIVER_USRDRIVER_DISPLAY_API_H_
+#ifndef OS_DEVICE_SCREEN_SCREEN_H_
+#define OS_DEVICE_SCREEN_SCREEN_H_
 
 #include "platform.h"
 
-#define SCREEN_MAX_BUF_LEN 32
+#define SCREEN_MAX_BUF_LEN 64
 
 volatile typedef enum
 {

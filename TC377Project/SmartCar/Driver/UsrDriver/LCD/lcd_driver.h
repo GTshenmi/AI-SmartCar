@@ -13,12 +13,6 @@
 #if 1
 #include "sys_driver.h"
 
-#if defined(Chip) && (Chip == TC264 || Chip == TC377)
-#define LCD_AcquireMutex(lock) IfxCpu_acquireMutex(lock)
-#define LCD_ReleaseMutex(lock) IfxCpu_releaseMutex(lock)
-#define LCD_LockMutex(lock)    IfxCpu_setSpinLock((lock),1)
-#endif
-
 void LCD_SetEnable(bool enable);
 void LCD_SetArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye);
 void LCD_FastDrawArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t **array);

@@ -23,29 +23,7 @@ sint8_t ad_data[7] = {-124,-107,-59,-14,30,-117,1};
  * */
 void Core0_Main()
 {
-//    GPIOx.Init(LCD_DC_GPIO);
-//    GPIOx.Init(LCD_RST_GPIO);
-//    GPIOx.Init(LCD_SDA_GPIO);
-//    GPIOx.Init(LCD_SCL_GPIO);
-//    GPIOx.Init(LCD_CS_GPIO);
-
     Screen.Init(Screen.Self);
-
-    Screen.Test(Screen.Self);
-
-    //Screen.WriteXLine(Screen.Self,0,"Core0 Init Finished.");
-
-    //Servo.SetPwmValue(Servo.Self,850);
-    //Servo.SetPwmCentValue(Servo.Self,1750);
-    //Servo.SetAngle(Servo.Self,0);
-
-    //Servo.SetPwmValue(Servo.Self,700);
-
-    //Motor.SetPwmValue(Motor.Self,2000);
-
-    //Screen.WriteXLine(Screen.Self,3,"Core0 Begin While");
-
-    //LCD_Init(0);
 
     GLED.ON(GLED.Self);
 
@@ -59,19 +37,15 @@ void Core0_Main()
     //训练模型时，转角是被压缩到了-128至127， 压缩时使用的公式为*128/1651，所以这里需要*1651/128进行还原，然后再用于转角控制
     angle = (int16_t)(servo_value * (int32_t)1651 / 128);
 
-
-    //Servo.SetPwmValue(Servo.Self,5000);
-
     while(1)
     {
 
+    //    GLED.Toggle(GLED.Self);
 
-       // GLED.Toggle(GLED.Self);
-
-       // os.time.delayms(200);
+    //    os.time.delayms(200);
 
     //    LCD_WriteByte(0xf0);
-//
+
     //    LCD_WriteCmd(0x0f);
 
 

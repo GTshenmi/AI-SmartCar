@@ -52,8 +52,8 @@ typedef struct servo_ctrl
         void *Pwmn;
         void *MPUn;
 
-        sint16_t MaxAngle;
-        sint16_t MinAngle;
+        float MaxAngle;
+        float MinAngle;
 
         uint16_t PwmValue;     /*占空比*/
         uint16_t PwmCentValue; /*舵机中心值*/
@@ -79,9 +79,9 @@ typedef struct servo_ctrl
         uint8_t (*Init)(struct servo_ctrl *self);
 
         uint16_t (*Update)(struct servo_ctrl *self);
-        uint16_t (*CtrlStrategy)(struct servo_ctrl *self,sint16_t target_angle,float actual_angle,void *argv,uint16_t argc);/*Servo Close Loop Control Function,It Can Re-Definition,Keep It NULL if  MPU6050 or other Angle Sensor not exist.*/
+        uint16_t (*CtrlStrategy)(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc);/*Servo Close Loop Control Function,It Can Re-Definition,Keep It NULL if  MPU6050 or other Angle Sensor not exist.*/
 
-        void (*Protect)(struct servo_ctrl *self,sint16_t angle,void *argv,uint16_t argc);/*Servo Protect,It Can Re-Definition*/
+        void (*Protect)(struct servo_ctrl *self,float angle,void *argv,uint16_t argc);/*Servo Protect,It Can Re-Definition*/
 
         void (*Start)(struct servo_ctrl *self);/*Start Servo*/
         void (*Sleep)(struct servo_ctrl *self);/*Disable CtrlStrategy,But DataRead and Process Still Enable*/
@@ -89,15 +89,15 @@ typedef struct servo_ctrl
         void (*Stop)(struct servo_ctrl *self); /*Normal Stop Servo:angle = 0*/
         void (*Break)(struct servo_ctrl *self);/*Force Stop Servo:PwmValue = PwmCentValue*/
 
-        uint16_t (*SetAngle)(struct servo_ctrl *self,sint16_t angle);/*闭环驱动*/
-        void (*SetAngleLimit)(struct servo_ctrl *self,sint16_t MaxAngle,sint16_t MinAngle);
+        uint16_t (*SetAngle)(struct servo_ctrl *self,float angle);/*闭环驱动*/
+        void (*SetAngleLimit)(struct servo_ctrl *self,float MaxAngle,float MinAngle);
         void (*SetPwmCentValue)(struct servo_ctrl *self,uint16_t value);
 
         float (*GetAngle)(struct servo_ctrl *self);
         float (*GetAngleFromCache)(struct servo_ctrl *self);
         servo_state_t (*GetState)(struct servo_ctrl *self);
-        sint16_t (*GetMaxAngle)(struct servo_ctrl *self);
-        sint16_t (*GetMinAngle)(struct servo_ctrl *self);
+        float (*GetMaxAngle)(struct servo_ctrl *self);
+        float (*GetMinAngle)(struct servo_ctrl *self);
         uint16_t (*GetPwmValue)(struct servo_ctrl *self);
         uint16_t (*GetPwmCentValue)(struct servo_ctrl *self);
 

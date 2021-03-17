@@ -62,7 +62,7 @@ typedef struct servo_ctrl
 
         servo_state_t State;
 
-        float TargetAngle;
+        sint16_t TargetAngle;
         float AngleCache;
 
         void *Argv;

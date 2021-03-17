@@ -85,4 +85,17 @@
 #define uintMax UINT32_MAX
 #endif
 
+#if defined(Chip) && (Chip == TC264 || Chip == TC377)
+#define Cpu_AcquireMutex(lock) IfxCpu_acquireMutex(lock)
+#define Cpu_ReleaseMutex(lock) IfxCpu_releaseMutex(lock)
+#define Cpu_LockMutex(lock) IfxCpu_setSpinLock((lock),1)
+#define Cpu_MutexLock IfxCpu_mutexLock
+
+#define Cpu_AcquireAndLockMutex(lock)     \
+    while(!Cpu_AcquireMutex(lock));\
+    Cpu_LockMutex(lock);
+#endif
+
+
+
 #endif /* DRIVER_SYSDRIVER_PLATFORM_H_ */

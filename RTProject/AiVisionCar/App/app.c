@@ -30,7 +30,10 @@ void CaptureDemo1()
         Capture.Read(Capture.Self,0);
         Capture.Stop(Capture.Self);
         
-        Capture.Show(Capture.Self,Capture.ImageCache,0);
+        Get_Use_Image();
+        //Capture.Show(Capture.Self,Capture.ImageCache,0);
+        
+        Capture.Show(Capture.Self,ImageUsed,0);
     }  
 }
 
@@ -87,6 +90,7 @@ void Core0_Main()
         KEY[i].Init(KEY[i].Self);
         KEY[i].PressedCallBack = Key_PressedCallBack;
     }
+    
     CaptureDemo1();
     
     while(1);

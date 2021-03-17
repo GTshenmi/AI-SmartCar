@@ -47,7 +47,7 @@ uint16_t ServoUpdate(struct servo_ctrl *self)
     return self->PwmValue;
 }
 
-uint16_t ServoSetAngle(struct servo_ctrl *self,sint16_t angle)
+uint16_t ServoSetAngle(struct servo_ctrl *self,float angle)
 {
     if(angle > self->MaxAngle)
         angle = self->MaxAngle;
@@ -59,7 +59,7 @@ uint16_t ServoSetAngle(struct servo_ctrl *self,sint16_t angle)
 
 float ServoGetAngle(struct servo_ctrl *self)
 {
-    return self->AngleCache = self->PwmCentValue - self->PwmValue;
+    return self->AngleCache = (float)(self->PwmCentValue - self->PwmValue);
 }
 
 float ServoGetAngleFromCache(struct servo_ctrl *self)
@@ -108,18 +108,18 @@ void ServoBindUsrData(struct servo_ctrl *self,void *argv,uint16_t argc)
     self->Argc = argc;
 }
 
-void ServoSetAngleLimit(struct servo_ctrl *self,sint16_t MaxAngle,sint16_t MinAngle)
+void ServoSetAngleLimit(struct servo_ctrl *self,float MaxAngle,float MinAngle)
 {
     self->MaxAngle = MaxAngle;
     self->MinAngle = MinAngle;
 }
 
-sint16_t ServoGetMaxAngle(struct servo_ctrl *self)
+float ServoGetMaxAngle(struct servo_ctrl *self)
 {
     return self->MaxAngle;
 }
 
-sint16_t ServoGetMinAngle(struct servo_ctrl *self)
+float ServoGetMinAngle(struct servo_ctrl *self)
 {
     return self->MinAngle;
 }
@@ -139,15 +139,15 @@ void ServoSetPwmCentValue(struct servo_ctrl *self,uint16_t value)
     self->PwmCentValue = value;
 }
 
-void ServoDefaultProtect(struct servo_ctrl *self,sint16_t angle,void *argv,uint16_t argc)
+void ServoDefaultProtect(struct servo_ctrl *self,float angle,void *argv,uint16_t argc)
 {
 //    if(...)
 //        self->State = Servo_Stalling;
 }
 
-uint16_t ServoDefaultCtrlStrategy(struct servo_ctrl *self,sint16_t target_angle,float actual_angle,void *argv,uint16_t argc)
+uint16_t ServoDefaultCtrlStrategy(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc)
 {
-    return -target_angle + self->PwmCentValue;
+    return (uint16_t)(-target_angle + self->PwmCentValue);
 }
 
 void ServoSetPwmValue(struct servo_ctrl *self,uint16_t value)

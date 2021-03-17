@@ -115,14 +115,19 @@ void Capture_Report(struct capture *self,image_t image)
 void Capture_Show(struct capture *self,image_t image,uint8_t flags)
 {
     uint16_t color;    
+    //uint16_t pixel = 0;
     
-    Screen.__SetArea__(0,0,Use_ROWS-1,Use_Line - 1);
+    pixel_t pixel;
+    
+    //Screen.__SetArea__(0,0,Use_ROWS-1,Use_Line - 1);
+    
+    Screen.__SetArea__(0,0,image.Hight - 1,image.Width - 1);
     
     switch(flags)
     {
       case 0:/*原图像*/
           /* 显示图像 */
-        Get_Use_Image();
+        //Get_Use_Image();
         
         for(int j = 0; j < Use_Line; j++)
         {
@@ -130,11 +135,15 @@ void Capture_Show(struct capture *self,image_t image,uint8_t flags)
            {
             /* 将灰度转化为 RGB565 */
             color = 0;
-                          
-            color = (Image_Use[i][j].gray[0] >> 3) << 11;
-            color |= (Image_Use[i][j].gray[0] >> 2) << 5;
-            color |= Image_Use[i][j].gray[0] >> 3;
-            Screen.__FastSetPixel__(color);     
+            
+            pixel = (*((pixel_t *)image.Array + i * image.Width + j)); 
+            
+            color = (pixel.gray[0] >> 3) << 11;
+            color |= (pixel.gray[0] >> 2) << 5;
+            color |= pixel.gray[0] >> 3;
+            
+            Screen.__FastSetPixel__(color);   
+            
          //   LCD_DrawPoint(i,j,color);
            }
         }

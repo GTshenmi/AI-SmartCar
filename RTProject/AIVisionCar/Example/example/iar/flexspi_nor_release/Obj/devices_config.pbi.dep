@@ -28,14 +28,6 @@ devices_config.pbi: \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\KEY\key.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Capture\capture.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Capture/image.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Communicate\communicate.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Switch\switch.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Switch\dipswitch.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\SDCard\sdcard.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\BLE\bluetooth.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\WirelessSerial\wirelessserial.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Demo\demo.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\OS\devices_config.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\driver.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\SysDriver\sys_driver.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\SysDriverLQ\sys_driverlq.h \
@@ -145,4 +137,12 @@ devices_config.pbi: \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_MT9V034M.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_Camera.h \
   D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\Camera/LQ_CSI.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\SD\sd.h
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\Driver\UsrDriver\SD\sd.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Communicate\communicate.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Switch\switch.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Switch\dipswitch.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\SDCard\sdcard.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\BLE\bluetooth.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\WirelessSerial\wirelessserial.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\..\..\OS\Device\Demo\demo.h \
+  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\OS\devices_config.h

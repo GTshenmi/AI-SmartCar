@@ -19,6 +19,8 @@ typedef struct
         UART_RX_t RxPin;
         UART_TX_t TxPin;
         uint32_t BaudRate;
+        Cpu_MutexLock MutexLock;
+
 }uartx_t;
 
 typedef struct

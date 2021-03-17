@@ -9,34 +9,33 @@
 adc_resource_t ADC_Resources[12];
 
 gpio_resource_t GPIO_Resources[20]=
-{
+{ 
   [0]={
-    .GPION={A7,PIN_MODE_OUTPUT,1,false,false},
-    .Description = "LED",
-  },
-  
-  
-  [1]={
     .GPION={N4,PIN_MODE_OUTPUT,1,false,false},
     .Description = "LCD_DC_GPIO",
   },  
-  [2]={
+  [1]={
     .GPION={P5,PIN_MODE_OUTPUT,1,false,false},
     .Description = "LCD_RST_GPIO",
   },   
-  [3]={
+  [2]={
     .GPION={P3,PIN_MODE_OUTPUT,1,false,false},
     .Description = "LCD_SDA_GPIO",
   },
-  [4]={
+  [3]={
     .GPION={L4,PIN_MODE_OUTPUT,1,false,false},
     .Description = "LCD_SCL_GPIO",
   },  
-  [5]={
+  [4]={
     .GPION={L3,PIN_MODE_OUTPUT,0,false,false},
     .Description = "LCD_CS_GPIO",
   },  
 
+  [5]={
+    .GPION={A7,PIN_MODE_OUTPUT,1,false,false},
+    .Description = "LED",
+  },
+  
   [6]={
     .GPION={L11,PIN_MODE_INPUT,1,false,false},
     .Description = "KEY 0",

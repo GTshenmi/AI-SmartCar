@@ -9,14 +9,6 @@
 
 uint8_t ComTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
 {
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-
-    while(!Com_AcquireMutex(&self->Is_Busy));
-
-    Com_LockMutex(&self->Is_Busy);
-
-#endif
-
     if(self->CommunicationType == C_SPI)
     {
         if(time_out == 0)
@@ -29,10 +21,6 @@ uint8_t ComTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t 
             time_out = UARTx.Time_Infinite;
         return UARTx.WriteBytes((uartx_t *)self->Communicatorn,str,len,time_out);
     }
-
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    Com_ReleaseMutex(&self->Is_Busy);
-#endif
 
     return 0;
 }
@@ -159,12 +147,6 @@ uint8_t ComInit(struct communicate *self)
     {
         res = UARTx.Init((uartx_t *)self->Communicatorn);
     }
-
-    self->Is_Busy = false;
-
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    Com_ReleaseMutex(&self->Is_Busy);
-#endif
 
     return res;
 }

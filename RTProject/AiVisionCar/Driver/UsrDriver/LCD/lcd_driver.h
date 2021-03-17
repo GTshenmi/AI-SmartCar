@@ -34,11 +34,11 @@
 #define LCD_WriteCmd    LCD_SoftWareWriteCmd    //send command function interface->LCD_SoftWareWriteCmd
 #define _GPIO_WritePin  GPIOx.Write
 
-#define LCD_DC_GPIO     &GPIO_Resources[1].GPION
-#define LCD_RST_GPIO    &GPIO_Resources[2].GPION
-#define LCD_SDA_GPIO    &GPIO_Resources[3].GPION
-#define LCD_SCL_GPIO    &GPIO_Resources[4].GPION
-#define LCD_CS_GPIO     &GPIO_Resources[5].GPION
+#define LCD_DC_GPIO     &GPIO_Resources[0].GPION
+#define LCD_RST_GPIO    &GPIO_Resources[1].GPION
+#define LCD_SDA_GPIO    &GPIO_Resources[2].GPION
+#define LCD_SCL_GPIO    &GPIO_Resources[3].GPION
+#define LCD_CS_GPIO     &GPIO_Resources[4].GPION
 
 #define LCD_DC(x)   ((x==1)?_GPIO_WritePin(LCD_DC_GPIO,1):_GPIO_WritePin(LCD_DC_GPIO,0))
 #define LCD_RST(x)  ((x==1)?_GPIO_WritePin(LCD_RST_GPIO,1):_GPIO_WritePin(LCD_RST_GPIO,0))

@@ -7,6 +7,8 @@
 #include "devices_config.h"
 #include "driver.h"
 
+#pragma section all "cpu0_dsram"
+
 beep_t BEEP = /*unknow*/
 {
         .Init = BEEP_Init,
@@ -39,22 +41,6 @@ capture_t Capture = /*unknow*/
 #endif
         },
 
-};
-
-communicate_t CUART = /*ok*/
-{
-        .Init = ComInit,
-        .Self = &CUART,
-        .CommunicationType = C_UART,
-        .Communicatorn = (void *)&UART_Resources[0].UARTN,
-};
-
-communicate_t DebugCom = /*ok*/
-{
-        .Init = ComInit,
-        .Self = &DebugCom,
-        .CommunicationType = C_UART,
-        .Communicatorn = (void *)&UART_Resources[0].UARTN,
 };
 
 esensor_t LESensor[5] =/*ok*/ /*9 - 16 Left*/
@@ -174,12 +160,6 @@ led_t GLED = /*ok*/
         .Self = &GLED,
         .GPIOn = &GPIO_Resources[9].GPION,
 };
-led_t BLED =  /*ok*/
-{
-        .Init = LED_Init,
-        .Self = &BLED,
-        .GPIOn = &GPIO_Resources[10].GPION,
-};
 
 motor_ctrl_t Motor =/*ok*/
 {
@@ -218,6 +198,26 @@ screen_t Screen = /*ok*/
         .Self = &Screen,
 };
 
+servo_ctrl_t Servo =/*ok*/
+{
+        .Pwmn = &PWM_Resources[2].PWMN,
+        .Init = ServoInit,
+        .Self = &Servo,
+};
+
+
+#pragma section all restore
+
+
+#pragma section all "cpu1_dsram"
+
+led_t BLED =  /*ok*/
+{
+        .Init = LED_Init,
+        .Self = &BLED,
+        .GPIOn = &GPIO_Resources[10].GPION,
+};
+
 sdcard_t SDCard = /*待定*/
 {
         .Init = SDCard_Init,
@@ -231,12 +231,6 @@ sdcard_t SDCard = /*待定*/
         .Self = &SDCard,
 };
 
-servo_ctrl_t Servo =/*ok*/
-{
-        .Pwmn = &PWM_Resources[2].PWMN,
-        .Init = ServoInit,
-        .Self = &Servo,
-};
 
 switch_t Switch[4] = /*ok*/
 {
@@ -266,6 +260,22 @@ switch_t Switch[4] = /*ok*/
     },
 };
 
+communicate_t CUART = /*ok*/
+{
+        .Init = ComInit,
+        .Self = &CUART,
+        .CommunicationType = C_UART,
+        .Communicatorn = (void *)&UART_Resources[0].UARTN,
+};
+
+communicate_t DebugCom = /*ok*/
+{
+        .Init = ComInit,
+        .Self = &DebugCom,
+        .CommunicationType = C_UART,
+        .Communicatorn = (void *)&UART_Resources[0].UARTN,
+};
+
 dip_switch_t DIPSwitch = /*ok*/
 {
        .Init = DIPSwitch_Init,
@@ -278,5 +288,14 @@ wireless_serial_t WirelessSerial = /*与CUART相同*/
         .Init = WirelessSerial_Init,
         .Self = &WirelessSerial
 };
+
+#pragma section all restore
+
+
+#pragma section all "cpu2_dsram"
+
+
+#pragma section all restore
+
 
 

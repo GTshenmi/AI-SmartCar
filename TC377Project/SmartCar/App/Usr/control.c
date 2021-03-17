@@ -75,7 +75,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,signed short target_speed,sig
  * @output: Angle£º[-90(×ó):90(ÓÒ)]
  * @Attention:ALLÄ£Ê½
  * */
-unsigned short ServoCtrlStrategy(struct servo_ctrl *self,signed short target_angle,float actual_angle,void *argv,uint16_t argc)
+uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc)
 {
     data_t *data =(data_t *) argv;
 
