@@ -13,5 +13,6 @@
 #include "dataprocess.h"
 #include "element.h"
 #include "neuralnetwork.h"
+#include "camera_algorithm.h"
 
 #endif /* APP_USR_USR_H_ */

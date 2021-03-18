@@ -110,7 +110,7 @@ esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/
     },
 };
 
-key_t KEY[7] = /*ok*/
+key_t KEY[7] = /*ok*/ /*按键接口换了*/
 {
         [0] = {
                 .Init = KEY_Init,

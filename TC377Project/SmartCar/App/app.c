@@ -23,7 +23,8 @@ sint8_t ad_data[7] = {-124,-107,-59,-14,30,-117,1};
  * */
 void Core0_Main()
 {
-    Screen.Init(Screen.Self);
+    Screen.WriteXLine(Screen.Self,1,"Core0 Run To Main.");
+    Console.WriteLine("Core0 Run To Main.");
 
     GLED.ON(GLED.Self);
 
@@ -37,9 +38,16 @@ void Core0_Main()
     //训练模型时，转角是被压缩到了-128至127， 压缩时使用的公式为*128/1651，所以这里需要*1651/128进行还原，然后再用于转角控制
     angle = (int16_t)(servo_value * (int32_t)1651 / 128);
 
+    Screen.WriteXLine(Screen.Self,3,"Core1 Begin While");
+    Console.WriteLine("Core0 Begin While.");
+
+    os.time.delayms(500);
+
     while(1)
     {
+        Console.WriteLine("Temp = %d\nservo_value = %d \nAngle = %.3f \n ",temp,servo_value,angle*1.0);
 
+        os.time.delayms(1000);
     //    GLED.Toggle(GLED.Self);
 
     //    os.time.delayms(200);
@@ -77,18 +85,20 @@ void Core0_Main()
  * */
 void Core1_Main()
 {
-//    Screen.WriteXLine(Screen.Self,1,"Core1 Init Finished.");
-//
-//    KEY[0].SetShield(KEY[0].Self,true);
-//    BLED.ON(BLED.Self);
-//
-//    Screen.WriteXLine(Screen.Self,4,"Core1 Begin While");
+    Screen.WriteXLine(Screen.Self,2,"Core1 Init Finished.");
+    Console.WriteLine("Core1 Run To Main.");
+
+    KEY[0].SetShield(KEY[0].Self,true);
+    BLED.ON(BLED.Self);
+
+    Screen.WriteXLine(Screen.Self,4,"Core1 Begin While");
+    Console.WriteLine("Core1 Begin While.");
 
     while(1)
     {
-        //os.task.KeyScan(NULL,0);
-        //BLED.Toggle(BLED.Self);
-        //os.time.delayms(20);
+        os.task.KeyScan(NULL,0);
+        BLED.Toggle(BLED.Self);
+        os.time.delayms(20);
     }
 }
 

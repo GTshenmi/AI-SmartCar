@@ -235,7 +235,7 @@ void Test_Camera_Reprot(void)
         
         /* 重新启动接收camera数据 */
         CAMERA_RECEIVER_Start(&cameraReceiver);
-		SCB_DisableDCache();
+	SCB_DisableDCache();
         SCB_EnableDCache();  //刷新D-Cache		
         /* 重新启动接收后接收一帧数据 */
         while (kStatus_Success != CAMERA_RECEIVER_GetFullBuffer(&cameraReceiver, &fullCameraBufferAddr))  

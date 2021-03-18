@@ -47,12 +47,12 @@ typedef struct capture
 
      uint8_t (*Filter)(struct capture *self);
 
-     void (*Show)(struct capture *self,image_t image,uint8_t flags);
-     void (*Report)(struct capture *self,image_t image);
+     void (*Show)(struct capture *self,image_t *image,uint8_t flags);
+     void (*Report)(struct capture *self,image_t *image);
 
      void (*Test)(struct capture *self);
 
-     image_t ImageCache;
+     image_t ImageCache[4];
 
      cap_state_t State;
      

@@ -13,7 +13,16 @@ uint8_t SD_HardWareReadWriteByte(uint8_t data)
     SPIx.ReadWriteBytes(SD_SPI,&data,&rx_data,1,0);
 
     return rx_data;
-}	  
+}
+
+uint8_t SD_SoftWareReadWriteByte(uint8_t data)
+{
+    uint8_t rx_data = 0;
+
+    //SPIx.ReadWriteBytes(SD_SPI,&data,&rx_data,1,0);
+
+    return rx_data;
+}
 
 /*SD卡初始化的时候,需要低速*/
 void SD_SPI_SpeedLow(void)

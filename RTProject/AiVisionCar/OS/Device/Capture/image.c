@@ -11,14 +11,14 @@ image_t ImageUsed =
 {
     .Hight = 120,
     .Width = 160,
-    .Array = (uint16_t *)&Image_Use[0][0],
+    .Array = Image_Use,
 };
 
 image_t ImageBinary = 
 {
     .Hight = 120,
     .Width = 160,
-    .Array = (uint16_t *)&Pixle[0][0],  
+    .Array = Pixle,  
 };
 /*!
   * @example :
@@ -28,7 +28,7 @@ image_t ImageBinary =
   */
 void Image_Init(image_t *image,uint16_t *array_addr/*全局定义的数组*/,uint Hight,uint Width)
 {
-    image->Array = array_addr;
+    //image->Array = array_addr;
     image->Hight = Hight;
     image->Width = Width;
 }
@@ -52,20 +52,63 @@ uint8_t Image_AssertRange(image_t image,image_range_t range)
 //imageout.array[y-Hight][x-Width];
 void Image_Cut(image_t *imagein,image_t *imageout,image_range_t range)
 {
-    if(Image_AssertRange(*imagein,range) || Image_AssertRange(*imageout,range))
-    {
-        exit(0);
-    }
+//    if(Image_AssertRange(*imagein,range) || Image_AssertRange(*imageout,range))
+//    {
+//        exit(0);
+//    }
     
     for(int i = range.xs ; i < range.xe ;i++)
     {
         for(int j = range.ys ; j < range.ye ;j++)
-        {            
-             *(imageout->Array + j * imageout->Width + i) = \
-             *(imagein->Array + j * imagein->Width + i);
-               
+        {                     
+             imageout->Array[j][i] = imagein->Array[j][i];               
         }
     }
+}
+
+void GetUsedImage(image_t *imagein,image_t *imageout)
+{
+    //注意，使用csiFrameBuf数组时，最好刷新一下D-Cache 不然上次数据可能会存放在cache里面，造成数据错乱
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR)) {
+        SCB_DisableDCache();
+    }
+    SCB_EnableDCache();
+    
+    uint8_t div_h, div_w;
+    uint32_t temp_h = 0;
+    uint32_t temp_w = 0;
+    uint32_t row_start = 0;
+    uint32_t lin_start = 0;
+    
+    div_h = imagein->Hight/imageout->Hight;
+    div_w = imagein->Width/imageout->Width;
+    
+    /* 从中心取图像 */
+    if(imageout->Hight * div_h != imagein->Hight)
+    {
+        row_start = (imagein->Hight - imageout->Hight * div_h)/2;
+        temp_h = (uint32_t)(row_start/2) * APP_CAMERA_WIDTH;
+    }
+    if(imageout->Width * div_w != imagein->Width)
+    {
+        lin_start = (imagein->Width - imageout->Width * div_w)/2;       
+    }
+    for(int i = 0; i < imageout->Hight; i += 2)
+    {
+
+        temp_w = lin_start;
+        for(int j = 0; j < imageout->Width; j++)
+        {  
+            Image_Use[i][j].gray[0] = (*((uint8_t *)fullCameraBufferAddr +  temp_h + temp_w));
+            Image_Use[i+1][j].gray[0] = (*((uint8_t *)fullCameraBufferAddr +  temp_h + temp_w + APP_CAMERA_WIDTH));
+            //Image_Use[i][j].gray[0] = (*((uint8_t *)imagein +  temp_h + temp_w));
+            //Image_Use[i+1][j].gray[0] = (*((uint8_t *)imagein +  temp_h + temp_w + APP_CAMERA_WIDTH));
+
+            temp_w += div_w;
+        }
+        temp_h += div_h * 2 * APP_CAMERA_WIDTH;
+    }
+    CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, fullCameraBufferAddr);
 }
 
 void Image_Zip(image_t *imagein,image_t *imageout)
@@ -97,7 +140,8 @@ void Image_Zip(image_t *imagein,image_t *imageout)
         temp_w = lin_start;
         for(uint j = 0; j < imageout->Width; j++)
         {
-            *(imageout->Array + i * imageout->Width + j) = *(imagein->Array + temp_h * imageout->Width + temp_w);
+            imageout->Array[i][j] = imagein->Array[temp_h][temp_w];  
+            
             temp_w += div_w;
         }
         temp_h += div_h;
@@ -120,9 +164,9 @@ int Imagee_GetAverageThreshold(image_t *imagein,int base)/*平均阈值*/
     {
         for(j = 0; j < imagein->Width; j++)
         {
-            pixel = *((pixel_t *)imagein->Array + i * imagein->Width + j);
+            pixel = imagein->Array[i][j];
             
-            tv+= (pixel.gray[0] + pixel.gray[1]);   //累加
+            tv+= pixel.gray[0];   //累加
         }
     }
 
@@ -153,8 +197,7 @@ int Image_GetOSTU(image_t *imagein)/*大律法阈值*/
     {
         for (i = 0; i < imagein->Width; i++)
         {
-            //HistoGram[imagein->Array[j][i]]++; //统计灰度级中每个像素在整幅图像中的个数
-            HistoGram[*(imagein->Array + i * imagein->Width + j)]++;
+            HistoGram[imagein->Array[j][i].gray[0]]++; //统计灰度级中每个像素在整幅图像中的个数
         }
     }
 
@@ -192,24 +235,24 @@ int Image_GetOSTU(image_t *imagein)/*大律法阈值*/
     return Threshold;                        //返回最佳阈值;
 }
 
-void ImageBinarization(image_t *imagein,image_t *imageout,int Threshold)/*二值化*/
+void Image_Binarization(image_t *imagein,image_t *imageout,int Threshold)/*二值化*/
 {
       int i = 0,j = 0;
 
-      if(imagein->Hight != imageout->Hight || imagein->Width != imageout->Width)
-      {
-          exit(0);
-      }
+//      if(imagein->Hight != imageout->Hight || imagein->Width != imageout->Width)
+//      {
+//          exit(0);
+//      }
 
       for(i = 0 ; i < imagein->Hight ; i++)
       {
-//          for(j = 0 ; j < imagein->Width ; j++)
-//          {
-//              if(imagein->Array[i][j] >Threshold) //数值越大，显示的内容越多，较浅的图像也能显示出来
-//                imageout->Array[i][j] = 1;
-//              else
-//                imageout->Array[i][j] = 0;
-//          }
+          for(j = 0 ; j < imagein->Width ; j++)
+          {
+              if(imagein->Array[i][j].gray[0] >Threshold) //数值越大，显示的内容越多，较浅的图像也能显示出来
+                imageout->Array[i][j].binary = 1;
+              else
+                imageout->Array[i][j].binary = 0;
+          }
       }
 
 }
@@ -236,61 +279,61 @@ void Image_Sobel(image_t *imagein,image_t *imageout, unsigned char Threshold)
 //    {
 //        exit(0);
 //    }
-//
-//    /** 卷积核大小 */
-//    int KERNEL_SIZE = 3;
-//    int xStart = KERNEL_SIZE/2;
-//    int xEnd   = imagein->Width - KERNEL_SIZE/2;
-//    int yStart = KERNEL_SIZE/2;
-//    int yEnd   = imagein->Hight - KERNEL_SIZE/2;
-//    int i, j, k;
-//    int temp[4];
-//    for(i = yStart; i < yEnd; i++)
-//    {
-//        for(j = xStart; j < xEnd; j++)
-//        {
-//            /* 计算不同方向梯度幅值  */
-//            temp[0] = -(int)imagein->Array[i-1][j-1] + (int)imagein->Array[i-1][j+1]     //{{-1, 0, 1},
-//                      -(int)imagein->Array[i][j-1]   +(int)imagein->Array[i][j+1]        // {-1, 0, 1},
-//                      -(int)imagein->Array[i+1][j-1] + (int)imagein->Array[i+1][j+1];    // {-1, 0, 1}};
-//
-//            temp[1] = -(int)imagein->Array[i-1][j-1] + (int)imagein->Array[i+1][j-1]     //{{-1, -1, -1},
-//                      -(int)imagein->Array[i-1][j]   + (int)imagein->Array[i+1][j]       // { 0,  0,  0},
-//                      -(int)imagein->Array[i-1][j+1] + (int)imagein->Array[i+1][j+1];    // { 1,  1,  1}};
-//
-//
-//            temp[2] = -(int)imagein->Array[i-1][j]   + (int)imagein->Array[i][j-1]       //  0, -1, -1
-//                      -(int)imagein->Array[i][j+1]   + (int)imagein->Array[i+1][j]       //  1,  0, -1
-//                      -(int)imagein->Array[i-1][j+1] + (int)imagein->Array[i+1][j-1];    //  1,  1,  0
-//
-//            temp[3] = -(int)imagein->Array[i-1][j]   + (int)imagein->Array[i][j+1]       // -1, -1,  0
-//                      -(int)imagein->Array[i][j-1]   + (int)imagein->Array[i+1][j]       // -1,  0,  1
-//                      -(int)imagein->Array[i-1][j-1] + (int)imagein->Array[i+1][j+1];    //  0,  1,  1
-//
-//            temp[0] = abs(temp[0]);
-//            temp[1] = abs(temp[1]);
-//            temp[2] = abs(temp[2]);
-//            temp[3] = abs(temp[3]);
-//
-//            /* 找出梯度幅值最大值  */
-//            for(k = 1; k < 4; k++)
-//            {
-//                if(temp[0] < temp[k])
-//                {
-//                    temp[0] = temp[k];
-//                }
-//            }
-//
-//            if(temp[0] > Threshold)
-//            {
-//                imageout->Array[i][j] = 1;
-//            }
-//            else
-//            {
-//                imageout->Array[i][j] = 0;
-//            }
-//        }
-//    }
+
+    /** 卷积核大小 */
+    int KERNEL_SIZE = 3;
+    int xStart = KERNEL_SIZE/2;
+    int xEnd   = imagein->Width - KERNEL_SIZE/2;
+    int yStart = KERNEL_SIZE/2;
+    int yEnd   = imagein->Hight - KERNEL_SIZE/2;
+    int i, j, k;
+    int temp[4];
+    for(i = yStart; i < yEnd; i++)
+    {
+        for(j = xStart; j < xEnd; j++)
+        {
+            /* 计算不同方向梯度幅值  */
+            temp[0] = -(int)imagein->Array[i-1][j-1].gray[0] + (int)imagein->Array[i-1][j+1].gray[0]     //{{-1, 0, 1},
+                      -(int)imagein->Array[i][j-1].gray[0]   +(int)imagein->Array[i][j+1].gray[0]        // {-1, 0, 1},
+                      -(int)imagein->Array[i+1][j-1].gray[0] + (int)imagein->Array[i+1][j+1].gray[0];    // {-1, 0, 1}};
+
+            temp[1] = -(int)imagein->Array[i-1][j-1].gray[0] + (int)imagein->Array[i+1][j-1].gray[0]     //{{-1, -1, -1},
+                      -(int)imagein->Array[i-1][j].gray[0]   + (int)imagein->Array[i+1][j].gray[0]       // { 0,  0,  0},
+                      -(int)imagein->Array[i-1][j+1].gray[0] + (int)imagein->Array[i+1][j+1].gray[0];    // { 1,  1,  1}};
+
+
+            temp[2] = -(int)imagein->Array[i-1][j].gray[0]   + (int)imagein->Array[i][j-1].gray[0]       //  0, -1, -1
+                      -(int)imagein->Array[i][j+1].gray[0]   + (int)imagein->Array[i+1][j].gray[0]       //  1,  0, -1
+                      -(int)imagein->Array[i-1][j+1].gray[0] + (int)imagein->Array[i+1][j-1].gray[0];    //  1,  1,  0
+
+            temp[3] = -(int)imagein->Array[i-1][j].gray[0]   + (int)imagein->Array[i][j+1].gray[0]      // -1, -1,  0
+                      -(int)imagein->Array[i][j-1].gray[0]   + (int)imagein->Array[i+1][j].gray[0]       // -1,  0,  1
+                      -(int)imagein->Array[i-1][j-1].gray[0] + (int)imagein->Array[i+1][j+1].gray[0];    //  0,  1,  1
+
+            temp[0] = abs(temp[0]);
+            temp[1] = abs(temp[1]);
+            temp[2] = abs(temp[2]);
+            temp[3] = abs(temp[3]);
+
+            /* 找出梯度幅值最大值  */
+            for(k = 1; k < 4; k++)
+            {
+                if(temp[0] < temp[k])
+                {
+                    temp[0] = temp[k];
+                }
+            }
+
+            if(temp[0] > Threshold)
+            {
+                imageout->Array[i][j].binary = 1;
+            }
+            else
+            {
+                imageout->Array[i][j].binary = 0;
+            }
+        }
+    }
 }
 
 /*!
@@ -313,64 +356,64 @@ void Image_SobelAutoThreshold(image_t *imagein,image_t *imageout)
 //    {
 //        exit(0);
 //    }
-//    /** 卷积核大小 */
-//    int KERNEL_SIZE = 3;
-//    int xStart = KERNEL_SIZE/2;
-//    int xEnd   = imagein->Width - KERNEL_SIZE/2;
-//    int yStart = KERNEL_SIZE/2;
-//    int yEnd   = imagein->Hight - KERNEL_SIZE/2;
-//    int i, j, k;
-//    int temp[4];
-//    for(i = yStart; i < yEnd; i++)
-//    {
-//        for(j = xStart; j < xEnd; j++)
-//        {
-//            /* 计算不同方向梯度幅值  */
-//            temp[0] = -(int)imagein->Array[i-1][j-1] + (int)imagein->Array[i-1][j+1]     //{{-1, 0, 1},
-//                      -(int)imagein->Array[i][j-1]   + (int)imagein->Array[i][j+1]       // {-1, 0, 1},
-//                      -(int)imagein->Array[i+1][j-1] + (int)imagein->Array[i+1][j+1];    // {-1, 0, 1}};
-//
-//            temp[1] = -(int)imagein->Array[i-1][j-1] + (int)imagein->Array[i+1][j-1]     //{{-1, -1, -1},
-//                      -(int)imagein->Array[i-1][j]   + (int)imagein->Array[i+1][j]       // { 0,  0,  0},
-//                      -(int)imagein->Array[i-1][j+1] + (int)imagein->Array[i+1][j+1];    // { 1,  1,  1}};
-//
-//
-//            temp[2] = -(int)imagein->Array[i-1][j]   + (int)imagein->Array[i][j-1]       //  0, -1, -1
-//                      -(int)imagein->Array[i][j+1]   + (int)imagein->Array[i+1][j]       //  1,  0, -1
-//                      -(int)imagein->Array[i-1][j+1] + (int)imagein->Array[i+1][j-1];    //  1,  1,  0
-//
-//            temp[3] = -(int)imagein->Array[i-1][j]   + (int)imagein->Array[i][j+1]       // -1, -1,  0
-//                      -(int)imagein->Array[i][j-1]   + (int)imagein->Array[i+1][j]       // -1,  0,  1
-//                      -(int)imagein->Array[i-1][j-1] + (int)imagein->Array[i+1][j+1];    //  0,  1,  1
-//
-//            temp[0] = abs(temp[0]);
-//            temp[1] = abs(temp[1]);
-//            temp[2] = abs(temp[2]);
-//            temp[3] = abs(temp[3]);
-//
-//            /* 找出梯度幅值最大值  */
-//            for(k = 1; k < 4; k++)
-//            {
-//                if(temp[0] < temp[k])
-//                {
-//                    temp[0] = temp[k];
-//                }
-//            }
-//
-//            /* 使用像素点邻域内像素点之和的一定比例    作为阈值  */
-//            temp[3] = (int)imagein->Array[i-1][j-1]   + (int)imagein->Array[i-1][j] +  (int)imagein->Array[i-1][j+1]
-//                     +(int)imagein->Array[i  ][j-1]   + (int)imagein->Array[i  ][j] +  (int)imagein->Array[i  ][j+1]
-//                     +(int)imagein->Array[i+1][j-1]   + (int)imagein->Array[i+1][j] +  (int)imagein->Array[i+1][j+1];
-//
-//            if(temp[0] > temp[3]/12.0f)
-//            {
-//                imageout->Array[i][j] = 1;
-//            }
-//            else
-//            {
-//                imageout->Array[i][j] = 0;
-//            }
-//        }
-//    }
+    /** 卷积核大小 */
+    int KERNEL_SIZE = 3;
+    int xStart = KERNEL_SIZE/2;
+    int xEnd   = imagein->Width - KERNEL_SIZE/2;
+    int yStart = KERNEL_SIZE/2;
+    int yEnd   = imagein->Hight - KERNEL_SIZE/2;
+    int i, j, k;
+    int temp[4];
+    for(i = yStart; i < yEnd; i++)
+    {
+        for(j = xStart; j < xEnd; j++)
+        {
+            /* 计算不同方向梯度幅值  */
+            temp[0] = -(int)imagein->Array[i-1][j-1].gray[0] + (int)imagein->Array[i-1][j+1].gray[0]     //{{-1, 0, 1},
+                      -(int)imagein->Array[i][j-1].gray[0]   + (int)imagein->Array[i][j+1].gray[0]       // {-1, 0, 1},
+                      -(int)imagein->Array[i+1][j-1].gray[0] + (int)imagein->Array[i+1][j+1].gray[0];    // {-1, 0, 1}};
+
+            temp[1] = -(int)imagein->Array[i-1][j-1].gray[0] + (int)imagein->Array[i+1][j-1].gray[0]     //{{-1, -1, -1},
+                      -(int)imagein->Array[i-1][j].gray[0]   + (int)imagein->Array[i+1][j].gray[0]       // { 0,  0,  0},
+                      -(int)imagein->Array[i-1][j+1].gray[0] + (int)imagein->Array[i+1][j+1].gray[0];    // { 1,  1,  1}};
+
+
+            temp[2] = -(int)imagein->Array[i-1][j].gray[0]   + (int)imagein->Array[i][j-1].gray[0]       //  0, -1, -1
+                      -(int)imagein->Array[i][j+1].gray[0]   + (int)imagein->Array[i+1][j].gray[0]       //  1,  0, -1
+                      -(int)imagein->Array[i-1][j+1].gray[0] + (int)imagein->Array[i+1][j-1].gray[0];    //  1,  1,  0
+
+            temp[3] = -(int)imagein->Array[i-1][j].gray[0]   + (int)imagein->Array[i][j+1].gray[0]       // -1, -1,  0
+                      -(int)imagein->Array[i][j-1].gray[0]   + (int)imagein->Array[i+1][j].gray[0]       // -1,  0,  1
+                      -(int)imagein->Array[i-1][j-1].gray[0] + (int)imagein->Array[i+1][j+1].gray[0];    //  0,  1,  1
+
+            temp[0] = abs(temp[0]);
+            temp[1] = abs(temp[1]);
+            temp[2] = abs(temp[2]);
+            temp[3] = abs(temp[3]);
+
+            /* 找出梯度幅值最大值  */
+            for(k = 1; k < 4; k++)
+            {
+                if(temp[0] < temp[k])
+                {
+                    temp[0] = temp[k];
+                }
+            }
+
+            /* 使用像素点邻域内像素点之和的一定比例    作为阈值  */
+            temp[3] = (int)imagein->Array[i-1][j-1].gray[0]   + (int)imagein->Array[i-1][j].gray[0] +  (int)imagein->Array[i-1][j+1].gray[0]
+                     +(int)imagein->Array[i  ][j-1].gray[0]   + (int)imagein->Array[i  ][j].gray[0] +  (int)imagein->Array[i  ][j+1].gray[0]
+                     +(int)imagein->Array[i+1][j-1].gray[0]   + (int)imagein->Array[i+1][j].gray[0] +  (int)imagein->Array[i+1][j+1].gray[0];
+
+            if(temp[0] > temp[3]/12.0f)
+            {
+                imageout->Array[i][j].binary = 1;
+            }
+            else
+            {
+                imageout->Array[i][j].binary = 0;
+            }
+        }
+    }
 }
 

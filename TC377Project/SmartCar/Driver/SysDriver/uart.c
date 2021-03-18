@@ -14,13 +14,13 @@ uint8_t UARTx_Init(uartx_t *uart)
 
 uint8_t UARTx_WriteByte(uartx_t *uart,uint8_t byte,sint64_t time_out)
 {
-    Cpu_AcquireAndLockMutex(&uart->MutexLock);
+  //  Cpu_AcquireAndLockMutex(&uart->MutexLock);
 
     Ifx_SizeT count = 1;
 
     uint8_t res = IfxAsclin_Asc_write(&g_UartConfig[uart->UARTn], &byte, &count,time_out);
 
-    Cpu_ReleaseMutex(&uart->MutexLock);
+  //  Cpu_ReleaseMutex(&uart->MutexLock);
 
     return res;
 }

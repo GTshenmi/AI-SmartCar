@@ -1,7 +1,0 @@
-ff.pbi: \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device\fatfs\fatfs\source\ff.c \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device\fatfs\fatfs\source/ff.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device\fatfs\fatfs\source/integer.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Example\example\iar\..\sd\ffconf.h \
-  D:\Onedrive\OneDrive\Car\AI-SmartCar\RTProject\AIVisionCar\Device\fatfs\fatfs\source/diskio.h \
-  C:\Applications\IAR8.4RT\arm\inc\c\stdarg.h

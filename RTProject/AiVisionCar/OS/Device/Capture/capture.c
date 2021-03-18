@@ -41,13 +41,17 @@ image_t Capture_Read(struct capture *self,uint16_t flags)
         }
     }
 
-    return self->ImageCache;
+    return self->ImageCache[3];
 }
 
 void Capture_ClearReadFinFlag(struct capture *self)
 {
     if(self->State == Capture_Fin)
+    {
         self->State = Capture_Started;
+        
+//        CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, fullCameraBufferAddr);
+    }
 }
 
 cap_state_t Capture_GetState(struct capture *self)
@@ -65,13 +69,15 @@ void Capture_Test(struct capture *self)
 {
     self->Init(self,30);
     self->Read(self,0);
-    self->Report(self,self->ImageCache);
+    //self->Report(self,self->ImageCache);
 }
 
 uint8_t Capture_Start(struct capture *self)
 {
     if(self->State == Capture_Stopped)
     {
+        SCB_DisableDCache();
+        SCB_EnableDCache();  //刷新D-Cache	
         self->__Start__();
         self->State = Capture_Started;
     }
@@ -89,98 +95,81 @@ uint8_t Capture_Stop(struct capture *self)
     return self->State;
 }
 
-void Capture_Report(struct capture *self,image_t image)
+void Capture_Report(struct capture *self,image_t *image)
 {
-    //int j,i;
+    int j,i;
 
     UARTx.WriteByte(self->ReportUartn,0xfe,0xffffffff);
     UARTx.WriteByte(self->ReportUartn,0xef,0xffffffff);
 
-//    for(i = 0; i < image.Hight; i++)
-//    {
-//        for(j = 0; j < image.Width; j++)
-//        {
-//            if(image.Array[i][j] == 0xfe )  //防止错误发送帧尾
-//            {
-//                image.Array[i][j] = 0xff;
-//            }
-//            UARTx.WriteByte(self->ReportUartn,image.Array[i][j],0xffffffff);
-//        }
-//    }
+    for(i = 0; i < image->Hight; i++)
+    {
+        for(j = 0; j < image->Width; j++)
+        {
+            if(image->Array[i][j].gray[0] == 0xfe )  //防止错误发送帧尾
+            {
+                image->Array[i][j].gray[0] = 0xff;
+            }
+            UARTx.WriteByte(self->ReportUartn,image->Array[i][j].gray[0],0xffffffff);
+        }
+    }
 
     UARTx.WriteByte(self->ReportUartn,0xef,0xffffffff);
     UARTx.WriteByte(self->ReportUartn,0xfe,0xffffffff);
 }
 
-void Capture_Show(struct capture *self,image_t image,uint8_t flags)
+void Capture_Show(struct capture *self,image_t *image,uint8_t flags)
 {
     uint16_t color;    
-    //uint16_t pixel = 0;
     
     pixel_t pixel;
     
-    //Screen.__SetArea__(0,0,Use_ROWS-1,Use_Line - 1);
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR)) {
+        SCB_DisableDCache();
+    }
+    SCB_EnableDCache();
     
-    Screen.__SetArea__(0,0,image.Hight - 1,image.Width - 1);
+    Screen.__SetArea__(0,0,image->Hight - 1,image->Width - 1);
     
     switch(flags)
     {
       case 0:/*原图像*/
           /* 显示图像 */
-        //Get_Use_Image();
         
-        for(int j = 0; j < Use_Line; j++)
+        for(int j = 0; j < image->Width; j++)
         {
-           for(int i = 0; i < Use_ROWS; i++) 
+           for(int i = image->Hight; i > 0; i--) 
            {
-            /* 将灰度转化为 RGB565 */
-            color = 0;
-            
-            pixel = (*((pixel_t *)image.Array + i * image.Width + j)); 
-            
-            color = (pixel.gray[0] >> 3) << 11;
-            color |= (pixel.gray[0] >> 2) << 5;
-            color |= pixel.gray[0] >> 3;
-            
-            Screen.__FastSetPixel__(color);   
-            
-         //   LCD_DrawPoint(i,j,color);
+              /* 将灰度转化为 RGB565 */
+              color = 0;
+              
+              pixel = image->Array[i][j]; 
+              
+              color = (pixel.gray[0] >> 3) << 11;
+              color |= (pixel.gray[0] >> 2) << 5;
+              color |= pixel.gray[0] >> 3;
+              
+              Screen.__FastSetPixel__(color);   
+              //Screen.SetPixel(Screen.Self,i,j,color);
            }
         }
         break;
         case 1:/*二值化*/
-//          if(image.Array[i][j] == 1)
-//            LCD_DrawPoint((uint16_t)j,(uint16_t)i,0x0000);
-//          else
-//            LCD_DrawPoint((uint16_t)j,(uint16_t)i,0xffff);
-//          break;
+          
+         for(int j = 0; j < image->Width; j++)
+         {
+            for(int i = image->Hight; i > 0; i--) 
+            {          
+                if(image->Array[i][j].binary == 1)
+                  Screen.__FastSetPixel__(BLACK);  
+                else
+                  Screen.__FastSetPixel__(WHITE);          
+            }
+         }
+          break;
         default:
           break;
     }
-//    for(int i = 0; i < image.Hight; i++)
-//    {
-//        for(int j = 0; j < image.Width; j++)
-//        {
-//            uint16_t color = 0;
-//            switch(flags)
-//            {
-//                case 0:/*原图像*/
-//                    color = (uint16_t)(Use_Image[i][j] >> 3) << 11;
-//                    color |= (uint16_t)(image.Array[i][j] >> 2) << 5;
-//                    color |= (uint16_t)(image.Array[i][j]) >> 3;
-//                    LCD_DrawPoint((uint16_t)j,(uint16_t)i,color);
-//                    break;
-//                case 1:/*二值化*/
-////                    if(image.Array[i][j] == 1)
-////                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0x0000);
-////                    else
-////                        LCD_DrawPoint((uint16_t)j,(uint16_t)i,0xffff);
-////                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
 }
 
 uint8_t Capture_Init(struct capture *self,uint8_t fps)

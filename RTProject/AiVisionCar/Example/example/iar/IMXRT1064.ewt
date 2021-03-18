@@ -2446,6 +2446,12 @@
                 </file>
             </group>
             <file>
+                <name>$PROJ_DIR$\..\..\..\App\Usr\camera_algorithm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\App\Usr\camera_algorithm.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\App\Usr\control.c</name>
             </file>
             <file>

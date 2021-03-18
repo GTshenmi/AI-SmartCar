@@ -17,9 +17,18 @@ typedef struct
     int Width;
 
     //pixel_t *Array;
+    //uint16_t (*Array)[188];
+    volatile pixel_t (*Array)[188];
+}image_t;
+
+typedef struct
+{
+    int Hight;
+    int Width;
+
     uint16_t *Array;
     
-}image_t;
+}image_cache_t;
 
 typedef struct
 {
@@ -30,5 +39,10 @@ typedef struct
 }image_range_t;
 
 extern image_t ImageUsed;
+extern image_t ImageBinary;
+
+void Image_Binarization(image_t *imagein,image_t *imageout,int Threshold);
+void Image_Sobel(image_t *imagein,image_t *imageout, unsigned char Threshold);
+void GetUsedImage(image_t *imagein,image_t *imageout);
 
 #endif /* OS_DEVICE_CAPTURE_IMAGE_H_ */

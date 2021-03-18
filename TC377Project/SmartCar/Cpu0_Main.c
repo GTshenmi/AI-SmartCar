@@ -19,7 +19,7 @@ int core0_main (void)
 
     os.init(0);
 
-    //Console.WriteLine("Sync Finished.");
+    Console.WriteLine("Sync Finished.");
 
     os.core[0].Run();
 

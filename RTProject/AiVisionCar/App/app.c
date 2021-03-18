@@ -20,7 +20,7 @@ void Key_PressedCallBack(struct key *self,void *argv,uint16_t argc)
 }
 void CaptureDemo1()
 {
-    Capture.Init(Capture.Self,100);
+    Capture.Init(Capture.Self,50);
     
     while (1)
     {   
@@ -30,16 +30,24 @@ void CaptureDemo1()
         Capture.Read(Capture.Self,0);
         Capture.Stop(Capture.Self);
         
-        Get_Use_Image();
-        //Capture.Show(Capture.Self,Capture.ImageCache,0);
+        //Get_Use_Image();
         
-        Capture.Show(Capture.Self,ImageUsed,0);
+        GetUsedImage(&Capture.ImageCache[0],&ImageUsed);
+        
+        //Image_Binarization(&ImageUsed,&ImageBinary,100);
+        
+        //Image_Sobel(&ImageUsed,&ImageBinary,100);
+        //Capture.Show(Capture.Self,Capture.ImageCache[0],0);
+        
+        Capture.Show(Capture.Self,&ImageUsed,0);
+        
+        //Capture.Show(Capture.Self,&ImageBinary,1);
     }  
 }
 
 void CaptureDemo2()
 {
-    Capture.Init(Capture.Self,100);
+    Capture.Init(Capture.Self,50);
     Capture.Start(Capture.Self);
     
     while (1)
@@ -48,7 +56,9 @@ void CaptureDemo2()
         
         while(Capture.GetState(Capture.Self) != Capture_Fin); 
         
-        Capture.Show(Capture.Self,Capture.ImageCache,0);
+        GetUsedImage(&Capture.ImageCache[0],&ImageUsed);
+        
+        Capture.Show(Capture.Self,&ImageUsed,0);
         
         Capture.ClearFinFlag(Capture.Self);
     }
@@ -91,7 +101,7 @@ void Core0_Main()
         KEY[i].PressedCallBack = Key_PressedCallBack;
     }
     
-    CaptureDemo1();
+    CaptureDemo2();
     
     while(1);
     

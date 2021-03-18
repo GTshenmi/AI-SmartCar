@@ -3,13 +3,13 @@
 
 #include "LQ_CSI.h"
 /* 用于存放需要使用数据 */
-extern pixel_t Image_Use[Use_ROWS][Use_Line]; 
+extern volatile pixel_t Image_Use[IMAGEH][IMAGEW]; 
 
 /* 用于储存当前帧的地址 */
 extern uint32_t fullCameraBufferAddr;
 
 /* 存放二值化后的数据 */
-extern uint8_t Pixle[Use_ROWS][Use_Line];
+extern volatile pixel_t Pixle[IMAGEH][IMAGEW];
 
 /**
   * @brief    获取需要使用的图像数组

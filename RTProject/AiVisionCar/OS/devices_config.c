@@ -21,14 +21,30 @@ capture_t Capture = /*unknow*/
 
         .ImageCache =
         {
-                .Hight = 120,
-                .Width = 188,
-#if ((defined(Chip)) && ((Chip == TC264) || (Chip == TC377)))
-                .Array = (uint8_t **)Image_Data,
-#else
-                //.Array = (pixel_t **)(Image_Use),
-                .Array = (uint16_t *)&csiFrameBuf[0][0][0],
-#endif
+              [0] = 
+              {
+                 .Hight = 120,
+                 .Width = 188,
+                 .Array = &csiFrameBuf[0][0],
+              },
+              [1] = 
+              {
+                 .Hight = 120,
+                 .Width = 188,
+                 .Array = &csiFrameBuf[0][1],
+              },
+              [2] = 
+              {
+                 .Hight = 120,
+                 .Width = 188,
+                 .Array = &csiFrameBuf[0][2],
+              },
+              [3] = 
+              {
+                 .Hight = 120,
+                 .Width = 188,
+                 .Array = &csiFrameBuf[0][3],
+              },
         },
 
 };

@@ -12,6 +12,14 @@
 
 void UIParameterInit(void);
 
+void KeyPressedCallBack (struct key *self, void *argv, uint16_t argc)
+{
+    for(int i = 0 ; i < 6 ; i++)
+    {
+        if(self == KEY[i].Self)
+            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
+    }
+}
 void BeepOffTimerCallBack(void *argc,unsigned short argv)
 {
     BEEP.OFF(BEEP.Self);
@@ -45,20 +53,28 @@ void Core0_HardWareInit()
 
     BEEP.Init(BEEP.Self);
 
-#if 1
-    CUART.Init(CUART.Self);
+#if 0
+    //CUART.Init(CUART.Self);
+    //DebugCom.Init(DebugCom.Self);
 #else
     Console.Init();
 #endif
 
     //UI_Init();
 
+    for(int i = 0 ; i < CData.MaxKEYDeviceNum;i++)
+    {
+        KEY[i].Init(KEY[i].Self);
+        KEY[i].PressedCallBack = KeyPressedCallBack;
+    }
+
+    Screen.Init(Screen.Self);
 /*System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
 /*Set BEEP OFF 1 sec later*/
     os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
 
-    //Console.WriteLine("HardWare System Init Finished.");
+    Console.WriteLine("HardWare System Init Finished.");
 }
 
 /*
@@ -98,8 +114,8 @@ void Core0_SoftWareInit()
 
     UIParameterInit();
 
-    //Console.WriteLine("SoftWare System Init Finished.");
-    //Console.WriteLine("Wait For Core Sync...");
+    Console.WriteLine("SoftWare System Init Finished.");
+    Console.WriteLine("Wait For Core Sync...");
 }
 
 /*

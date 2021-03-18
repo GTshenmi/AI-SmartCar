@@ -20,11 +20,17 @@
 #include "LQ_OV7725M.h"
 #endif
 
+///* 用于存放需要使用数据 */
+//pixel_t volatile Image_Use[Use_ROWS][Use_Line]; 
+//
+///* 存放二值化后的数据 */
+//uint8_t volatile Pixle[Use_ROWS][Use_Line];     
+
 /* 用于存放需要使用数据 */
-pixel_t Image_Use[Use_ROWS][Use_Line]; 
+pixel_t volatile Image_Use[IMAGEH][IMAGEW]; 
 
 /* 存放二值化后的数据 */
-uint8_t Pixle[Use_ROWS][Use_Line];     
+pixel_t volatile Pixle[IMAGEH][IMAGEW];     
 
 /* 用于储存当前帧的地址 */
 uint32_t fullCameraBufferAddr;  
@@ -53,15 +59,15 @@ void Get_Use_Image(void)
     }
     SCB_EnableDCache();
     
-	uint8_t div_h, div_w;
+    uint8_t div_h, div_w;
     uint32_t temp_h = 0;
     uint32_t temp_w = 0;
     uint32_t row_start = 0;
     uint32_t lin_start = 0;
 
 #ifdef LQMT9V034    //使用神眼
-	div_h = IMAGEH/Use_ROWS;
-	div_w = IMAGEW/Use_Line;
+    div_h = IMAGEH/Use_ROWS;
+    div_w = IMAGEW/Use_Line;
     
     /* 从中心取图像 */
     if(Use_ROWS * div_h != IMAGEH)
@@ -123,7 +129,7 @@ void Get_Use_Image(void)
 #else               //使用7725  RGB
     
     div_h = APP_CAMERA_HEIGHT/Use_ROWS;
-	div_w = APP_CAMERA_WIDTH/Use_Line;
+    div_w = APP_CAMERA_WIDTH/Use_Line;
     /* 从中心取图像 */
     if(Use_ROWS * div_h != APP_CAMERA_HEIGHT)
     {
@@ -148,7 +154,7 @@ void Get_Use_Image(void)
 #endif
 #endif
     /* 将空帧提交到缓冲区 */
-	CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, fullCameraBufferAddr);    
+    CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, fullCameraBufferAddr);    
 }
 
 
@@ -210,10 +216,10 @@ void Get_01_Value(uint8_t mode)
   {
     for(j = 0; j < Use_Line; j++)
     {                                
-      if(Image_Use[i][j].gray[0] >Threshold) //数值越大，显示的内容越多，较浅的图像也能显示出来    
-        Pixle[i][j] =1;        
-      else                                        
-        Pixle[i][j] =0;
+//      if(Image_Use[i][j].gray[0] >Threshold) //数值越大，显示的内容越多，较浅的图像也能显示出来    
+//        Pixle[i][j] =1;        
+//      else                                        
+//        Pixle[i][j] =0;
     }    
   }
 }
@@ -235,28 +241,28 @@ void Get_01_Value(uint8_t mode)
   */
 void Draw_Road(void)
 { 	 
-  uint8_t i = 0, j = 0,temp=0;
-  for(i=0;i<56;i+=8)// 56行 
-  {
+  //uint8_t i = 0, j = 0,temp=0;
+ // for(i=0;i<56;i+=8)// 56行 
+ // {
 //#ifdef LQOV7725
 //    LCD_Set_Pos(24,i/8+1);
 //#else 
 //    LCD_Set_Pos(17,i/8+1);
 //#endif
-    for(j=0;j<Use_Line;j++) 
-    { 
-      temp=0;
-      if(Pixle[0+i][j]) temp|=1;
-      if(Pixle[1+i][j]) temp|=2;
-      if(Pixle[2+i][j]) temp|=4;
-      if(Pixle[3+i][j]) temp|=8;
-      if(Pixle[4+i][j]) temp|=0x10;
-      if(Pixle[5+i][j]) temp|=0x20;
-      if(Pixle[6+i][j]) temp|=0x40;
-      if(Pixle[7+i][j]) temp|=0x80;
+ //   for(j=0;j<Use_Line;j++) 
+ //   { 
+//      temp=0;
+//      if(Pixle[0+i][j]) temp|=1;
+//      if(Pixle[1+i][j]) temp|=2;
+//      if(Pixle[2+i][j]) temp|=4;
+//      if(Pixle[3+i][j]) temp|=8;
+//      if(Pixle[4+i][j]) temp|=0x10;
+//      if(Pixle[5+i][j]) temp|=0x20;
+//      if(Pixle[6+i][j]) temp|=0x40;
+//      if(Pixle[7+i][j]) temp|=0x80;
 //      LCD_WrDat(temp); 	  	  	  	  
-    }
-  }  
+//   }
+ // }  
 }
 
 

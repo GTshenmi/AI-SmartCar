@@ -23,7 +23,7 @@
 #define R_SD_SPI_MOSO(x) SD_GPIO_Read((SD_SPI_MOSO_GPIO))
 
 
-#define SD_USING_HARDWARE_CTRL 1
+#define SD_USING_HARDWARE_CTRL 0
 
 #if SD_USING_HARDWARE_CTRL
 #define SD_SPIReadWriteByte SD_HardWareReadWriteByte

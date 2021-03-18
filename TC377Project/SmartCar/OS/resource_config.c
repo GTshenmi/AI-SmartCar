@@ -183,7 +183,7 @@ tim_resource_t TIM_Resources[2] =
 uart_resource_t UART_Resources[2] =
 {
         [0] = {
-               .UARTN = {UART1,UART1_RX_P11_10,UART1_TX_P11_12,115200},
+               .UARTN = {UART3,UART3_RX_P00_1,UART3_TX_P00_0,115200,0},
                .Description = "CUART And Console."
         },
 };

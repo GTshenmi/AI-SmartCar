@@ -23,6 +23,7 @@ typedef struct
 
 typedef union 
 {
+    uint16_t binary;
     uint16_t rgb565;
     uint8_t  gray[2];
     rgb565_t rgb;
