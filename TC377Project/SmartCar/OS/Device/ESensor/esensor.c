@@ -24,6 +24,11 @@ uint16_t ESensorRead(struct esensor *self)
     if(self->ConfigReg & ESENSOR_BITS_GAIN_ENABLE_MASK)
         self->Cache = (uint16_t)((self->Cache) * self->Gain);
 
+#if 0
+    if(self->Cache * 1.0 > ADCx.MaxValue  * self->Gain)
+        self->Cache = (uint16_t)ADCx.MaxValue * self->Gain;
+#endif
+
     return self->Cache;
 }
 

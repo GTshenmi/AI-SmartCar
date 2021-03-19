@@ -23,6 +23,8 @@ sint8_t ad_data[7] = {-124,-107,-59,-14,30,-117,1};
  * */
 void Core0_Main()
 {
+    TIMx.Init(&TIM_Resources[1].TIMN);
+
     Screen.WriteXLine(Screen.Self,1,"Core0 Run To Main.");
     Console.WriteLine("Core0 Run To Main.");
 
@@ -41,41 +43,14 @@ void Core0_Main()
     Screen.WriteXLine(Screen.Self,3,"Core1 Begin While");
     Console.WriteLine("Core0 Begin While.");
 
-    os.time.delayms(500);
+   // os.time.delayms(500);
+
+    //Screen.Clear(Screen.Self,WHITE);
 
     while(1)
     {
-        Console.WriteLine("Temp = %d\nservo_value = %d \nAngle = %.3f \n ",temp,servo_value,angle*1.0);
-
-        os.time.delayms(1000);
-    //    GLED.Toggle(GLED.Self);
-
-    //    os.time.delayms(200);
-
-    //    LCD_WriteByte(0xf0);
-
-    //    LCD_WriteCmd(0x0f);
-
-
-
-//        for(int i = 0 ; i < CData.MaxLADCDeviceNum;i++)
-//        {
-//            Data[data_pointer].LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
-//        }
-//        for(int i = 0 ; i < CData.MaxSADCDeviceNum;i++)
-//        {
-//            Data[data_pointer].SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
-//        }
-//
-//        Screen.Clear(Screen.Self,WHITE);
-//
-//        os.task.UiUpdate(&UIData,sizeof(UIData));
-//
-//        sint16_t speed = Motor.GetSpeed(Motor.Self);
-//
-//        Screen.WriteXLine(Screen.Self,16,"speed = %d",speed);
-//
-//        os.time.delayms(200);
+        GLED.Toggle(GLED.Self);
+        os.task.UiUpdate(&UIData,sizeof(UIData));
     }
 }
 
@@ -89,15 +64,27 @@ void Core1_Main()
     Console.WriteLine("Core1 Run To Main.");
 
     KEY[0].SetShield(KEY[0].Self,true);
-    BLED.ON(BLED.Self);
 
     Screen.WriteXLine(Screen.Self,4,"Core1 Begin While");
     Console.WriteLine("Core1 Begin While.");
 
+    //Screen.Clear(Screen.Self,WHITE);
+
+    //os.time.delayms(500);
+
+    uint32_t times = 0;
+
+
+
     while(1)
     {
+        times++;
+
+        if(times % 50)
+            BLED.Toggle(BLED.Self);
+
         os.task.KeyScan(NULL,0);
-        BLED.Toggle(BLED.Self);
+
         os.time.delayms(20);
     }
 }

@@ -31,16 +31,23 @@ void BeepOffTimerCallBack(void *argc,unsigned short argv)
  * */
 void Core0_HardWareInit()
 {
-    //Motor.Init(Motor.Self);
+    data_pointer = CarMode;
+    Motor.Init(Motor.Self);
+    Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
+    Motor.CtrlStrategy = MotorCtrlStrategy;
 
     Servo.Init(Servo.Self);
-    //Servo.SetPwmCentValue(Servo.Self,850);
-    //Servo.Start(Servo.Self);
+    Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
+    Servo.CtrlStrategy = ServoCtrlStrategy;
+    Servo.SetPwmCentValue(Servo.Self,850);
+    Servo.Start(Servo.Self);
 
     for(int i = 0;i<CData.MaxLADCDeviceNum;i++)
     {
         LESensor[i].Init(LESensor[i].Self);
         LESensor[i].EnableFilter(LESensor[i].Self,false);
+//        LESensor[i].EnableGain(LESensor[i].Self,true);
+//        LESensor[i].SetGain(LESensor[i].Self,1.5);
     }
     for(int i = 0;i<CData.MaxSADCDeviceNum;i++)
     {
@@ -60,16 +67,17 @@ void Core0_HardWareInit()
     Console.Init();
 #endif
 
-    //UI_Init();
+//    for(int i = 0 ; i < CData.MaxKEYDeviceNum;i++)
+//    {
+//        KEY[i].Init(KEY[i].Self);
+//        KEY[i].PressedCallBack = KeyPressedCallBack;
+//    }
 
-    for(int i = 0 ; i < CData.MaxKEYDeviceNum;i++)
-    {
-        KEY[i].Init(KEY[i].Self);
-        KEY[i].PressedCallBack = KeyPressedCallBack;
-    }
+    UIParameterInit();
 
-    Screen.Init(Screen.Self);
-/*System Init Finished,BEEP ON */
+    UI_Init();
+    //Screen.Init(Screen.Self);
+/* System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
 /*Set BEEP OFF 1 sec later*/
     os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
@@ -82,16 +90,10 @@ void Core0_HardWareInit()
  * */
 void Core0_SoftWareInit()
 {
-    data_pointer = CarMode;
-
     ServoCtrlSysInit();
     MotorCtrlSysInit();
 
-//    Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
-//    Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
     /*其他单元不需要划分，可以共用同一个函数，如果需要划分可以仿照DecisionUnit更改*/
-//    Motor.CtrlStrategy = MotorCtrlStrategy;
-//    Servo.CtrlStrategy = ServoCtrlStrategy;
 
     MEU.Run = Motor_ExecutionUnitRun;
     SEU.Run = Servo_ExecutionUnitRun;
@@ -105,14 +107,12 @@ void Core0_SoftWareInit()
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
     PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,1.0));
 
-    MDecisionUnit.Run = Motor_DecisionUnitRun_AIMode;
-    SDecisionUnit.Run = Servo_DecisionUnitRun_AIMode;
+    MDU.Run = Motor_DecisionUnitRun_AutoBootMode;
+    SDU.Run = Servo_DecisionUnitRun_AutoBootMode;
     Data[data_pointer].AI_State = AI_Free;
 
     PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.1,0.0,0.0));
     PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
-
-    UIParameterInit();
 
     Console.WriteLine("SoftWare System Init Finished.");
     Console.WriteLine("Wait For Core Sync...");

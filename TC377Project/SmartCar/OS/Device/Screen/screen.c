@@ -419,6 +419,19 @@ void Screen_WriteXLine(struct screen *self,uint16_t row,const sint8_t *format,..
     va_end(arg);
 }
 
+
+void Screen_ClearLine(struct screen *self,uint16_t row,uint16_t color)
+{
+    self->Fill(self,0,row * self->Font.Hight,self->Width,(row + 1) * self->Font.Hight,color);
+}
+
+void Screen_ClearLines(struct screen *self,uint16_t row_start,uint16_t row_end,uint16_t color)
+{
+    self->Fill(self,0,row_start * self->Font.Hight,self->Width,(row_end + 1) * self->Font.Hight,color);
+}
+
+
+
 /**
     *
     * @brief    ÉèÖÃScreen¹â±ê
@@ -536,6 +549,9 @@ uint8_t Screen_Init(struct screen *self)
     self->Write = Screen_Write;
     self->WriteLine = Screen_WriteLine;
     self->WriteXLine =Screen_WriteXLine;
+
+    self->ClearLine = Screen_ClearLine;
+    self->ClearLines = Screen_ClearLines;
 
     self->SetCursor = Screen_SetCursor;
     self->SetFontColor = Screen_SetFontColor;

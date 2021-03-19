@@ -92,6 +92,10 @@ typedef struct screen
 
         void (*Write)(struct screen *self,uint16_t x,uint16_t y,const sint8_t *format,...);
         void (*WriteLine)(struct screen *self,const sint8_t *format,...);//
+
+        void (*ClearLine)(struct screen *self,uint16_t row,uint16_t color);
+        void (*ClearLines)(struct screen *self,uint16_t row_start,uint16_t row_end,uint16_t color);
+
         void (*WriteXLine)(struct screen *self,uint16_t row,const sint8_t *format,...);//
 
         void (*SetCursor)(struct screen *self,uint16_t x,uint16_t y);

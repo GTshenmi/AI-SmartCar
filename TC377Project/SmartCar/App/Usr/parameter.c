@@ -65,18 +65,30 @@ data_t Data[MAX_DATA_LEN] =
         [0] = {
                 .Cache = 0,
                 .CarMode = AI_Mode,
+                .ReportMotorData = 0,
+                .ReportSensorData = 0,
+                .ReportServoData = 0,
         },
         [1] = {
                 .Cache = 0,
                 .CarMode = AutoBoot_Mode,
+                .ReportMotorData = 0,
+                .ReportSensorData = 0,
+                .ReportServoData = 0,
         },
         [2] = {
                 .Cache = 0,
                 .CarMode = ManualBoot_Mode,
+                .ReportMotorData = 0,
+                .ReportSensorData = 0,
+                .ReportServoData = 0,
         },
         [3] = {
                 .Cache = 0,
                 .CarMode = DebugMode,
+                .ReportMotorData = 0,
+                .ReportSensorData = 0,
+                .ReportServoData = 0,
         },
 };
 

@@ -45,6 +45,26 @@ void Servo_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
         for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
             data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
 
+
+        ANO.Send("%f",data->N_LADC[0]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /*通知神经网络开始解算*/
         if(data->AI_State == AI_Free)
             data->AI_State = AI_Start;
@@ -162,6 +182,17 @@ void Motor_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
         data->Speed = 2000;
     }
 }
+
+float CalculateDistance(void *argv)
+{
+    data_t *data = (data_t *)argv;
+
+    float distance = 0.0;
+
+    distance = CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[4]);
+
+    return distance;
+}
 /*
  * @Brief:  数据处理及角度决策
  * @Output: Angle
@@ -195,7 +226,7 @@ void Servo_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
 //        };
         static float angle[5] = {0.0};
 
-        data->_Bias = 100.0 * CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[4]);
+        data->_Bias = 100.0 * CalculateDistance(argv);
 
         data->Bias = FIR_Filter(Kb,dis,data->_Bias,33);
 

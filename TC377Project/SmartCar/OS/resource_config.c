@@ -179,6 +179,11 @@ tim_resource_t TIM_Resources[2] =
                .TIMN = {STM0,STM_Channel_0,1000,true,true,STM},
                .Description = "System TIM"
         },
+        [1] = {
+               .TIMN = {STM1,STM_Channel_0,2000,true,true,STM},
+               .Description = "Interrupt Timer."
+        },
+
 };
 uart_resource_t UART_Resources[2] =
 {
