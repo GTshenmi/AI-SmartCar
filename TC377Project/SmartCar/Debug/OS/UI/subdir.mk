@@ -4,24 +4,32 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../OS/UI/number_settting_page.c \
+../OS/UI/info_page.c \
+../OS/UI/settting_page.c \
 ../OS/UI/template_page.c \
-../OS/UI/ui.c 
+../OS/UI/ui.c \
+../OS/UI/ui_utilities.c 
 
 OBJS += \
-./OS/UI/number_settting_page.o \
+./OS/UI/info_page.o \
+./OS/UI/settting_page.o \
 ./OS/UI/template_page.o \
-./OS/UI/ui.o 
+./OS/UI/ui.o \
+./OS/UI/ui_utilities.o 
 
 COMPILED_SRCS += \
-./OS/UI/number_settting_page.src \
+./OS/UI/info_page.src \
+./OS/UI/settting_page.src \
 ./OS/UI/template_page.src \
-./OS/UI/ui.src 
+./OS/UI/ui.src \
+./OS/UI/ui_utilities.src 
 
 C_DEPS += \
-./OS/UI/number_settting_page.d \
+./OS/UI/info_page.d \
+./OS/UI/settting_page.d \
 ./OS/UI/template_page.d \
-./OS/UI/ui.d 
+./OS/UI/ui.d \
+./OS/UI/ui_utilities.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

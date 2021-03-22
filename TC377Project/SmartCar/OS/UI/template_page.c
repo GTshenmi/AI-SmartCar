@@ -5,16 +5,25 @@
  *      Author:
  */
 
+#include <setting_page.h>
 #include "template_page.h"
-#include "number_setting_page.h"
 
-void displayCursor (UIPageStruct *Self, int16_t showLineNumber);
+uint8_t cursorSelected (UIPageStruct *Self)
+{
+    if (Self->cursorSelected)
+    {
+        return BLUE;
+    }
+    else
+    {
+        return BLACK;
+    }
+}
 
 void displayDataAlone (UIPageStruct *Self)
 {
     uint8_t dataLineTmp = 0;
     int16_t beginLineTmp = Self->beginLine;
-    displayCursor(Self, beginLineTmp);
 
     while (1)
     {
@@ -31,13 +40,17 @@ void displayDataAlone (UIPageStruct *Self)
 
         if (Self->targetDataType == INTEGER)
         {
-            Screen.WriteXLine(Screen.Self, beginLineTmp, "%s = %04d", Self->description,
-                    (((uint16_t*) (Self->primaryTargetData))[dataLineTmp]));
+            char stringBuffer[30];
+            sprintf(stringBuffer,"%s: %04d ",Self->description,
+                    (((int16_t*) (Self->primaryTargetData))[dataLineTmp]));
+            Screen.ShowString(Screen.Self,0,beginLineTmp * Screen.Font.Hight * 2,(uint8_t *)stringBuffer,cursorSelected(Self));
         }
         else if(Self->targetDataType == FLOAT)
         {
-            Screen.WriteXLine(Screen.Self, beginLineTmp, "%s = %.3f", Self->description,
-                    (((float*) (Self->secondaryTargetData))[dataLineTmp]));
+            char stringBuffer[30];
+            sprintf(stringBuffer,"%s: %.3f", Self->description,
+                            (((float*) (Self->secondaryTargetData))[dataLineTmp]));
+            Screen.ShowString(Screen.Self,0,beginLineTmp * Screen.Font.Hight * 2,(uint8_t *)stringBuffer,cursorSelected(Self));
         }
 
         beginLineTmp++;
@@ -45,16 +58,9 @@ void displayDataAlone (UIPageStruct *Self)
     }
 }
 
-void showDataWithGraph(UIPageStruct *Self)
-{
-
-}
-
-void displayPIDData(UIPageStruct *Self){
+void displayDesciption(UIPageStruct *Self){
     uint8_t dataLineTmp = 0;
     int16_t beginLineTmp = Self->beginLine;
-    float* targetData = (float*)Self->primaryTargetData;
-    displayCursor(Self, beginLineTmp);
 
     while (1)
     {
@@ -69,29 +75,81 @@ void displayPIDData(UIPageStruct *Self){
             break;
         }
 
-        Screen.WriteXLine(Screen.Self, beginLineTmp, "%s: P=%.3f I=%.3f D=%.3f", Self->description, targetData, targetData+1, targetData+2);
+        Screen.WriteXLine(Screen.Self,beginLineTmp * 2,Self->description);
 
         beginLineTmp++;
         dataLineTmp++;
     }
 }
 
-void displayCursor (UIPageStruct *Self, int16_t showLineNumber)
+void displayDataWithGraph(UIPageStruct *Self)
 {
-    if ((showLineNumber >= SCREEN_MIN_LINE || showLineNumber <= SCREEN_MAX_LINE) & Self->cursorSelected)
-        //Screen.ShowChar(Screen.Self, Screen.Width - Screen.Font.Width, Screen.Font.Hight * showLineNumber, 'Z', RED);
-        Screen.DrawSqr(Screen.Self,0,Self->beginLine * Screen.Font.Hight,Screen.Width,(Self->beginLine+Self->lineLength) * Screen.Font.Hight,LIGHTBLUE);
+    uint8_t dataLineTmp = 0;
+    int16_t beginLineTmp = Self->beginLine;
+    // displayCursor(Self, beginLineTmp);
+
+    while (1)
+    {
+        if (beginLineTmp < SCREEN_MIN_LINE)
+        {
+            beginLineTmp++;
+            dataLineTmp++;
+            continue;
+        }
+        if (beginLineTmp >= SCREEN_MAX_LINE || dataLineTmp >= Self->lineLength)
+        {
+            break;
+        }
+
+        if (Self->targetDataType == INTEGER)
+        {
+            char stringBuffer[30];
+            sprintf(stringBuffer,"%s: %04d ",Self->description,
+                    (((int16_t*) (Self->primaryTargetData))[dataLineTmp]));
+            Screen.ShowString(Screen.Self,0,beginLineTmp * Screen.Font.Hight * 2,(uint8_t *)stringBuffer,cursorSelected(Self));
+
+            Screen.DrawSqr(Screen.Self,Screen.Width/2,beginLineTmp * Screen.Font.Hight * 2,Screen.Width-1,(beginLineTmp*2+1) * Screen.Font.Hight,BLACK);
+            uint16_t lengthToFill = (uint16_t)Screen.Width/2.0*(((int16_t*) (Self->primaryTargetData))[dataLineTmp]/ADC_MAX_NUMBER);
+            Screen.Fill(Screen.Self,Screen.Width/2,beginLineTmp * Screen.Font.Hight * 2,Screen.Width/2 + lengthToFill,(beginLineTmp*2+1) * Screen.Font.Hight,BLACK);
+        }
+        else if(Self->targetDataType == FLOAT)
+        {
+            char stringBuffer[30];
+            sprintf(stringBuffer,"%s: %.3f", Self->description,
+                            (((float*) (Self->secondaryTargetData))[dataLineTmp]));
+            Screen.ShowString(Screen.Self,0,beginLineTmp * Screen.Font.Hight * 2,(uint8_t *)stringBuffer,cursorSelected(Self));
+
+            Screen.DrawSqr(Screen.Self,Screen.Width/2,beginLineTmp * Screen.Font.Hight * 2,Screen.Width-1,(beginLineTmp*2+1) * Screen.Font.Hight,BLACK);
+            uint16_t lengthToFill = (uint16_t)Screen.Width/2.0*(((float*) (Self->secondaryTargetData))[dataLineTmp]/ADC_MAX_NUMBER);
+            Screen.Fill(Screen.Self,Screen.Width/2,beginLineTmp * Screen.Font.Hight * 2,Screen.Width/2 + lengthToFill,(beginLineTmp*2+1) * Screen.Font.Hight,BLACK);
+
+        }
+
+        beginLineTmp++;
+        dataLineTmp++;
+    }
+}
+
+void loadFromSD(UIPageStruct *Self){
+    LoadParameterFromSD();
+}
+
+void saveToSD(UIPageStruct *Self){
+    SaveParameterToSD();
 }
 
 void changeDisplayType (UIPageStruct *Self) // 是否归一化
 {
-    if(Self->targetDataType == INTEGER)
+    if (Self->targetDataType == INTEGER &&  Self->secondaryTargetData != NULL)
     {
         Self->targetDataType = FLOAT;
-    }else
+    }
+    else if(Self->targetDataType == FLOAT && Self->secondaryTargetData != NULL)
     {
         Self->targetDataType = INTEGER;
     }
+
+    Self->displayData(Self);
 }
 
 void emptyConfirmAction (UIPageStruct *Self)
@@ -115,20 +173,24 @@ void UIPagesInit (void)
 
     UIPages[3].primaryTargetData = UIData.Actual_Speed;
     UIPages[3].secondaryTargetData = UIData.NActual_Speed;
-    UIPages[4].secondaryTargetData = UIData.MPID_Kp;
-    UIPages[5].secondaryTargetData = UIData.MPID_Ki;
-    UIPages[6].secondaryTargetData = UIData.MPID_Kd;
-    UIPages[7].secondaryTargetData = UIData.MPID_Result;
-    UIPages[8].primaryTargetData = UIData.M_PwmDuty;
-    UIPages[9].primaryTargetData = UIData.Angle;
-    UIPages[9].secondaryTargetData = UIData.NAngle;
-    UIPages[10].secondaryTargetData = UIData.Bias;
-    UIPages[11].secondaryTargetData = UIData.SPID_Kp;
 
-    UIPages[12].secondaryTargetData = UIData.SPID_Ki;
-    UIPages[13].secondaryTargetData = UIData.SPID_Kd;
-    UIPages[14].secondaryTargetData = UIData.SPID_Result;
-    UIPages[15].secondaryTargetData = UIData.S_PwmDuty;
+    UIPages[4].primaryTargetData = UIData.Actual_Speed;
+    UIPages[4].secondaryTargetData = UIData.NActual_Speed;
+
+    UIPages[5].secondaryTargetData = UIData.MPID_Kp;
+    UIPages[6].secondaryTargetData = UIData.MPID_Ki;
+    UIPages[7].secondaryTargetData = UIData.MPID_Kd;
+    UIPages[8].secondaryTargetData = UIData.MPID_Result;
+    UIPages[9].primaryTargetData = UIData.M_PwmDuty;
+    UIPages[10].primaryTargetData = UIData.Angle;
+    UIPages[10].secondaryTargetData = UIData.NAngle;
+    UIPages[11].secondaryTargetData = UIData.Bias;
+    UIPages[12].secondaryTargetData = UIData.SPID_Kp;
+
+    UIPages[13].secondaryTargetData = UIData.SPID_Ki;
+    UIPages[14].secondaryTargetData = UIData.SPID_Kd;
+    UIPages[15].secondaryTargetData = UIData.SPID_Result;
+    UIPages[16].secondaryTargetData = UIData.S_PwmDuty;
 
     UIPages[0].beginLine = 0;
     for (uint8_t i = 1; i < TOTAL_PAGE_NUMBER; i++)
@@ -147,7 +209,7 @@ void UIPagesInit (void)
 UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
     [0] = {
             .description = "LADC",
-            .displayData = displayDataAlone,
+            .displayData = displayDataWithGraph,
             .Self = &UIPages[0],
             .lineLength = 5,
             .targetDataType = INTEGER,
@@ -155,14 +217,14 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
     },
     [1] = {
             .description = "SADC",
-            .displayData = displayDataAlone,
+            .displayData = displayDataWithGraph,
             .Self = &UIPages[1],
             .lineLength = 7,
             .targetDataType = INTEGER,
             .confirmAction = changeDisplayType,
     },
     [2] = {
-            .description = "MotorSpeedSet", //要设置的电机转速(原数据sint16_t，归一化后float)
+            .description = "MSpeed", //要设置的电机转速(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[2],
             .lineLength = 1,
@@ -170,23 +232,23 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = changeDisplayType,
     },
     [3] = {
-            .description = "ActualMotorSped", //电机的实际速度(原数据sint16_t，归一化后float)
+            .description = "MSpeed", //要设置的电机转速(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[3],
             .lineLength = 1,
             .targetDataType = INTEGER,
-            .confirmAction = changeDisplayType,
+            .confirmAction = openSettingPage,
     },
     [4] = {
-            .description = "MotorSpeed P", //电机PID的三个参数
+            .description = "AMSpeed", //电机的实际速度(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[4],
             .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = openSettingPage,
+            .targetDataType = INTEGER,
+            .confirmAction = changeDisplayType,
     },
     [5] = {
-            .description = "MotorSpeed I", //电机PID的三个参数
+            .description = "MPID.P", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[5],
             .lineLength = 1,
@@ -194,7 +256,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [6] = {
-            .description = "MotorSpeed D", //电机PID的三个参数
+            .description = "MPID.I", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[6],
             .lineLength = 1,
@@ -202,47 +264,47 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [7] = {
-            .description = "MotorSpeedOutPut", //电机PID输出(float)
+            .description = "MPID.D", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[7],
             .lineLength = 1,
             .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
+            .confirmAction = openSettingPage,
     },
     [8] = {
-            .description = "MotorSpeedOutPut", //电机最终的占空比(sint16_t)
+            .description = "MPID.Res", //电机PID输出(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[8],
             .lineLength = 1,
-            .targetDataType = INTEGER,
+            .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },
     [9] = {
-            .description = "AngleToSet", //要设置的舵机角度(sint16_t，归一化后float)
+            .description = "MPwmValue", //电机最终的占空比(sint16_t)
             .displayData = displayDataAlone,
             .Self = &UIPages[9],
             .lineLength = 1,
             .targetDataType = INTEGER,
-            .confirmAction = changeDisplayType,
+            .confirmAction = emptyConfirmAction,
     },
     [10] = {
-            .description = "Bias", //中线偏差(float)
+            .description = "Angle", //要设置的舵机角度(sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[10],
             .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
+            .targetDataType = INTEGER,
+            .confirmAction = changeDisplayType,
     },
     [11] = {
-            .description = "Angle P", //舵机PID的三个参数(float)
+            .description = "Bias", //中线偏差(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[11],
             .lineLength = 1,
             .targetDataType = FLOAT,
-            .confirmAction = openSettingPage,
+            .confirmAction = emptyConfirmAction,
     },
     [12] = {
-            .description = "Angle I", //舵机PID的三个参数(float)
+            .description = "SPID.P", //舵机PID的三个参数(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[12],
             .lineLength = 1,
@@ -250,7 +312,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [13] = {
-            .description = "Angle D", //舵机PID的三个参数(float)
+            .description = "SPID.I", //舵机PID的三个参数(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[13],
             .lineLength = 1,
@@ -258,7 +320,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [14] = {
-            .description = "AngleOutput", //舵机PID的输出(float)
+            .description = "SPID.D", //舵机PID的三个参数(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[14],
             .lineLength = 1,
@@ -266,12 +328,34 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [15] = {
-            .description = "AnglePWM", //舵机最终的占空比(uint16_t)
+            .description = "SPID.Res", //舵机PID的输出(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[15],
             .lineLength = 1,
             .targetDataType = FLOAT,
+            .confirmAction = openSettingPage,
+    },
+    [16] = {
+            .description = "SPwmValue", //舵机最终的占空比(uint16_t)
+            .displayData = displayDataAlone,
+            .Self = &UIPages[16],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
+    },
+    [17] = {
+            .description = "LoadParameterFromSD",
+            .displayData = displayDesciption,
+            .Self = &UIPages[17],
+            .lineLength = 1,
+            .confirmAction = loadFromSD,
+    },
+    [18] = {
+            .description = "SaveParameterToSD",
+            .displayData = displayDesciption,
+            .Self = &UIPages[18],
+            .lineLength = 1,
+            .confirmAction = saveToSD,
     },
 };
 

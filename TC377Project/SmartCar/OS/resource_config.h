@@ -56,7 +56,7 @@ extern gpio_resource_t GPIO_Resources[20];
 extern adc_resource_t ADC_Resources[20];
 extern pwm_resource_t PWM_Resources[3];
 extern enc_resource_t ENC_Resources[2];
-extern tim_resource_t TIM_Resources[2];
+extern tim_resource_t TIM_Resources[8];
 
 extern uart_resource_t UART_Resources[2];
 extern spi_resource_t SPI_Resources[2];

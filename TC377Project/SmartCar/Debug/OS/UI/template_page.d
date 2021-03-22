@@ -1,7 +1,7 @@
 template_page.o :	../OS/UI/template_page.c
 ../OS/UI/template_page.c :
-template_page.o :	../OS/UI/template_page.h
-../OS/UI/template_page.h :
+template_page.o :	../OS/UI/setting_page.h
+../OS/UI/setting_page.h :
 template_page.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 template_page.o :	../OS/Device/device.h
@@ -44,5 +44,21 @@ template_page.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 template_page.o :	../OS/Device/device.h
 ../OS/Device/device.h :
-template_page.o :	../OS/UI/number_setting_page.h
-../OS/UI/number_setting_page.h :
+template_page.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+template_page.o :	../OS/UI/ui.h
+../OS/UI/ui.h :
+template_page.o :	../OS/UI/ui_utilities.h
+../OS/UI/ui_utilities.h :
+template_page.o :	../Configurations/Ifx_Cfg.h
+../Configurations/Ifx_Cfg.h :
+template_page.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
+../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
+template_page.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
+../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
+template_page.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+template_page.o :	../OS/UI/ui_utilities.h
+../OS/UI/ui_utilities.h :
+template_page.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :

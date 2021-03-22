@@ -25,4 +25,6 @@ void Servo_DecisionUnitRun_ManualBootMode(struct unit *self,void *argv,uint16_t 
 void Motor_DecisionUnitRun_DebugMode(struct unit *self,void *argv,uint16_t argc);
 void Servo_DecisionUnitRun_DebugMode(struct unit *self,void *argv,uint16_t argc);
 
+float CalculateDistance(void *argv);
+
 #endif /* APP_USR_DATAPROCESS_H_ */

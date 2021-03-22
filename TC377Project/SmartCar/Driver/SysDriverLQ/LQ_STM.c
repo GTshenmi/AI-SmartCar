@@ -87,21 +87,21 @@ IfxStm_CompareConfig g_StmCompareConfig[4];
 *  修改时间：2020年3月30日
 *  备    注：STM0_CH1使用的中断服务函数
 *************************************************************************/
-void STM0_CH1_IRQHandler(void)
-{
-	/* 开启CPU中断  否则中断不可嵌套 */
-	IfxCpu_enableInterrupts();
-
-	//清除中断标志
-	IfxStm_clearCompareFlag(&MODULE_STM0, g_StmCompareConfig[1].comparator);
-
-	//开启新的中断配置，开始下次中断
-	IfxStm_increaseCompare(&MODULE_STM0, g_StmCompareConfig[1].comparator, g_StmCompareConfig[1].ticks);
-
-	/* 用户代码 */
-	//LED_Ctrl(LED1,RVS);        //电平翻转,LED闪烁
-
-}
+//void STM0_CH1_IRQHandler(void)
+//{
+//	/* 开启CPU中断  否则中断不可嵌套 */
+//	IfxCpu_enableInterrupts();
+//
+//	//清除中断标志
+//	IfxStm_clearCompareFlag(&MODULE_STM0, g_StmCompareConfig[1].comparator);
+//
+//	//开启新的中断配置，开始下次中断
+//	IfxStm_increaseCompare(&MODULE_STM0, g_StmCompareConfig[1].comparator, g_StmCompareConfig[1].ticks);
+//
+//	/* 用户代码 */
+//	//LED_Ctrl(LED1,RVS);        //电平翻转,LED闪烁
+//
+//}
 
 /*************************************************************************
 *  函数名称：void STM1_CH0_IRQHandler(void)
@@ -135,20 +135,20 @@ void STM0_CH1_IRQHandler(void)
 *  修改时间：2020年3月30日
 *  备    注：STM1_CH1使用的中断服务函数
 *************************************************************************/
-void STM1_CH1_IRQHandler(void)
-{
-	/* 开启CPU中断  否则中断不可嵌套 */
-	IfxCpu_enableInterrupts();
-
-	//清除中断标志
-	IfxStm_clearCompareFlag(&MODULE_STM1, g_StmCompareConfig[3].comparator);
-
-	//开启新的中断配置，开始下次中断
-	IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
-
-	/* 用户代码 */
-
-}
+//void STM1_CH1_IRQHandler(void)
+//{
+//	/* 开启CPU中断  否则中断不可嵌套 */
+//	IfxCpu_enableInterrupts();
+//
+//	//清除中断标志
+//	IfxStm_clearCompareFlag(&MODULE_STM1, g_StmCompareConfig[3].comparator);
+//
+//	//开启新的中断配置，开始下次中断
+//	IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
+//
+//	/* 用户代码 */
+//
+//}
 
 
  /*************************************************************************

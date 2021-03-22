@@ -218,6 +218,12 @@ dataprocess.o :	../OS/Debug/ano_dt.h
 ../OS/Debug/ano_dt.h :
 dataprocess.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+dataprocess.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+dataprocess.o :	../OS/UI/ui.h
+../OS/UI/ui.h :
+dataprocess.o :	../OS/UI/ui_utilities.h
+../OS/UI/ui_utilities.h :
 dataprocess.o :	../App/Sys/ctrlsys.h
 ../App/Sys/ctrlsys.h :
 dataprocess.o :	../App/Sys/filter.h

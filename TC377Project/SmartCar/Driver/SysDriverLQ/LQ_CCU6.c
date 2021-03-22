@@ -50,90 +50,90 @@ const void *Ccu6IrqFuncPointer[4] = {&CCU60_CH0_IRQHandler, &CCU60_CH1_IRQHandle
 /********************************CCU6外部中断  服务函数******************************************/
 /***********************************************************************************************/
 
-/*************************************************************************
- *  函数名称：void CCU60_CH0_IRQHandler(void)
- *  功能说明：
- *  参数说明：无
- *  函数返回：无
- *  修改时间：2020年3月30日
- *  备    注：CCU60_CH0使用的中断服务函数
- *************************************************************************/
-void CCU60_CH0_IRQHandler (void)
-{
-    /* 开启CPU中断  否则中断不可嵌套 */
-    IfxCpu_enableInterrupts();
-
-    //清除中断标志
-    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t12PeriodMatch);
-
-    /* 用户代码 */
-  //  LED_Ctrl(LED3,RVS);
-
-}
-
-/*************************************************************************
- *  函数名称：void CCU60_CH1_IRQHandler(void)
- *  功能说明：
- *  参数说明：无
- *  函数返回：无
- *  修改时间：2020年3月30日
- *  备    注：CCU60_CH1使用的中断服务函数
- *************************************************************************/
-void CCU60_CH1_IRQHandler (void)
-{
-    /* 开启CPU中断  否则中断不可嵌套 */
-    IfxCpu_enableInterrupts();
-
-    //清除中断标志
-    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t13PeriodMatch);
-
-    /* 用户代码 */
-  //  LED_Ctrl(LED2,RVS);
-
-}
-
-/*************************************************************************
- *  函数名称：void CCU61_CH0_IRQHandler(void)
- *  功能说明：
- *  参数说明：无
- *  函数返回：无
- *  修改时间：2020年3月30日
- *  备    注：CCU61_CH0使用的中断服务函数
- *************************************************************************/
-void CCU61_CH0_IRQHandler(void)
-{
-    /* 开启CPU中断  否则中断不可嵌套 */
-    IfxCpu_enableInterrupts();
-
-    //清除中断标志
-    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU61, IfxCcu6_InterruptSource_t12PeriodMatch);
-
+///*************************************************************************
+// *  函数名称：void CCU60_CH0_IRQHandler(void)
+// *  功能说明：
+// *  参数说明：无
+// *  函数返回：无
+// *  修改时间：2020年3月30日
+// *  备    注：CCU60_CH0使用的中断服务函数
+// *************************************************************************/
+//void CCU60_CH0_IRQHandler (void)
+//{
+//    /* 开启CPU中断  否则中断不可嵌套 */
+//    IfxCpu_enableInterrupts();
+//
+//    //清除中断标志
+//    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t12PeriodMatch);
+//
 //    /* 用户代码 */
-//    /* 获取编码器值 */
-//    ECPULSE1 = ENC_GetCounter(ENC2_InPut_P33_7); // 左电机 母板上编码器1，小车前进为负值
-//    ECPULSE2 = ENC_GetCounter(ENC4_InPut_P02_8); // 右电机 母板上编码器2，小车前进为正值
-//    RAllPulse += ECPULSE2;
-}
-
-/*************************************************************************
- *  函数名称：void CCU61_CH1_IRQHandler(void)
- *  功能说明：
- *  参数说明：无
- *  函数返回：无
- *  修改时间：2020年3月30日
- *  备    注：CCU61_CH1使用的中断服务函数
- *************************************************************************/
-void CCU61_CH1_IRQHandler (void)
-{
-    /* 开启CPU中断  否则中断不可嵌套 */
-    IfxCpu_enableInterrupts();
-
-    //清除中断标志
-    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU61, IfxCcu6_InterruptSource_t13PeriodMatch);
-
-    /* 用户代码 */
-   // LED_Ctrl(LED0,RVS);
-}
+//  //  LED_Ctrl(LED3,RVS);
+//
+//}
+//
+///*************************************************************************
+// *  函数名称：void CCU60_CH1_IRQHandler(void)
+// *  功能说明：
+// *  参数说明：无
+// *  函数返回：无
+// *  修改时间：2020年3月30日
+// *  备    注：CCU60_CH1使用的中断服务函数
+// *************************************************************************/
+//void CCU60_CH1_IRQHandler (void)
+//{
+//    /* 开启CPU中断  否则中断不可嵌套 */
+//    IfxCpu_enableInterrupts();
+//
+//    //清除中断标志
+//    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t13PeriodMatch);
+//
+//    /* 用户代码 */
+//  //  LED_Ctrl(LED2,RVS);
+//
+//}
+//
+///*************************************************************************
+// *  函数名称：void CCU61_CH0_IRQHandler(void)
+// *  功能说明：
+// *  参数说明：无
+// *  函数返回：无
+// *  修改时间：2020年3月30日
+// *  备    注：CCU61_CH0使用的中断服务函数
+// *************************************************************************/
+//void CCU61_CH0_IRQHandler(void)
+//{
+//    /* 开启CPU中断  否则中断不可嵌套 */
+//    IfxCpu_enableInterrupts();
+//
+//    //清除中断标志
+//    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU61, IfxCcu6_InterruptSource_t12PeriodMatch);
+//
+////    /* 用户代码 */
+////    /* 获取编码器值 */
+////    ECPULSE1 = ENC_GetCounter(ENC2_InPut_P33_7); // 左电机 母板上编码器1，小车前进为负值
+////    ECPULSE2 = ENC_GetCounter(ENC4_InPut_P02_8); // 右电机 母板上编码器2，小车前进为正值
+////    RAllPulse += ECPULSE2;
+//}
+//
+///*************************************************************************
+// *  函数名称：void CCU61_CH1_IRQHandler(void)
+// *  功能说明：
+// *  参数说明：无
+// *  函数返回：无
+// *  修改时间：2020年3月30日
+// *  备    注：CCU61_CH1使用的中断服务函数
+// *************************************************************************/
+//void CCU61_CH1_IRQHandler (void)
+//{
+//    /* 开启CPU中断  否则中断不可嵌套 */
+//    IfxCpu_enableInterrupts();
+//
+//    //清除中断标志
+//    IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU61, IfxCcu6_InterruptSource_t13PeriodMatch);
+//
+//    /* 用户代码 */
+//   // LED_Ctrl(LED0,RVS);
+//}
 
 /*************************************************************************
  *  函数名称：CCU6_InitConfig CCU6

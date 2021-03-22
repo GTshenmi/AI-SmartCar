@@ -218,6 +218,12 @@ app.o :	../OS/Debug/ano_dt.h
 ../OS/Debug/ano_dt.h :
 app.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+app.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+app.o :	../OS/UI/ui.h
+../OS/UI/ui.h :
+app.o :	../OS/UI/ui_utilities.h
+../OS/UI/ui_utilities.h :
 app.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 app.o :	../OS/os.h

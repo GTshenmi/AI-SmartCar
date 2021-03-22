@@ -125,27 +125,27 @@ gpio_resource_t GPIO_Resources[20] =
         },
         [12] = {
                .GPION = {P33_7, PIN_MODE_INPUT,1,false,false},//该按键硬件GPIO有问题
-               .Description = "KEY 0"
+               .Description = "KEY 0 Cursor UP. "
         },
         [13] = {
                .GPION = {P33_9, PIN_MODE_INPUT,1,false,false},
-               .Description = "KEY 1"
+               .Description = "KEY 1 Cursor Down."
         },
         [14] = {
                .GPION = {P33_10, PIN_MODE_INPUT,1,false,false},
-               .Description = "Key 2"
+               .Description = "Key 2 Cancel."
         },
         [15] = {
                .GPION = {P33_11, PIN_MODE_INPUT,1,false,false},
-               .Description = "Key 3"
+               .Description = "Key 3 Confirm."
         },
         [16] = {
                .GPION = {P33_13, PIN_MODE_INPUT,1,false,false},
-               .Description = "Key 4"
+               .Description = "Key 4 Page UP."
         },
         [17] = {
                .GPION = {P32_4, PIN_MODE_INPUT,1,false,false},
-               .Description = "Key 5"
+               .Description = "Key 5 Page Down."
         },
 };
 
@@ -173,7 +173,7 @@ enc_resource_t ENC_Resources[2] =
         },
 };
 
-tim_resource_t TIM_Resources[2] =
+tim_resource_t TIM_Resources[8] =
 {
         [0] = {
                .TIMN = {STM0,STM_Channel_0,1000,true,true,STM},
@@ -183,6 +183,11 @@ tim_resource_t TIM_Resources[2] =
                .TIMN = {STM1,STM_Channel_0,2000,true,true,STM},
                .Description = "Interrupt Timer."
         },
+        [2] = {
+               .TIMN = {STM1,STM_Channel_1,20000,true,true,STM},
+               .Description = "Interrupt Timer."
+        },
+
 
 };
 uart_resource_t UART_Resources[2] =

@@ -216,6 +216,12 @@ interrupt.o :	../OS/Debug/ano_dt.h
 ../OS/Debug/ano_dt.h :
 interrupt.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+interrupt.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+interrupt.o :	../OS/UI/ui.h
+../OS/UI/ui.h :
+interrupt.o :	../OS/UI/ui_utilities.h
+../OS/UI/ui_utilities.h :
 interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 interrupt.o :	../OS/os.h

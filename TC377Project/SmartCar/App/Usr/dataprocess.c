@@ -46,7 +46,7 @@ void Servo_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
             data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
 
 
-        ANO.Send("%f",data->N_LADC[0]);
+        //ANO.Send("%f",data->N_LADC[0]);
 
 
 

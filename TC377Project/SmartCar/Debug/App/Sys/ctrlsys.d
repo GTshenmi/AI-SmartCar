@@ -216,3 +216,9 @@ ctrlsys.o :	../OS/Debug/ano_dt.h
 ../OS/Debug/ano_dt.h :
 ctrlsys.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+ctrlsys.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+ctrlsys.o :	../OS/UI/ui.h
+../OS/UI/ui.h :
+ctrlsys.o :	../OS/UI/ui_utilities.h
+../OS/UI/ui_utilities.h :

@@ -32,15 +32,18 @@ void BeepOffTimerCallBack(void *argc,unsigned short argv)
 void Core0_HardWareInit()
 {
     data_pointer = CarMode;
-    Motor.Init(Motor.Self);
-    Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
-    Motor.CtrlStrategy = MotorCtrlStrategy;
+//    Motor.Init(Motor.Self);
+//    Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
+//    Motor.CtrlStrategy = MotorCtrlStrategy;
 
-    Servo.Init(Servo.Self);
-    Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
-    Servo.CtrlStrategy = ServoCtrlStrategy;
-    Servo.SetPwmCentValue(Servo.Self,850);
-    Servo.Start(Servo.Self);
+//    Servo.Init(Servo.Self);
+//    Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
+//    Servo.SetAngleLimit(Servo.Self,90.0,-90.0);
+//    Servo.CtrlStrategy = ServoCtrlStrategy;
+//    Servo.SetPwmCentValue(Servo.Self,275);
+//    Servo.Start(Servo.Self);
+//    Servo.SetAngle(Servo.Self,0);
+//    Servo.Update(Servo.Self);
 
     for(int i = 0;i<CData.MaxLADCDeviceNum;i++)
     {

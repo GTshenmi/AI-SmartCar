@@ -46,5 +46,17 @@ task.o :	../OS/Time/softtimer.h
 ../OS/Time/softtimer.h :
 task.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+task.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+task.o :	../OS/UI/ui.h
+../OS/UI/ui.h :
+task.o :	../OS/UI/ui_utilities.h
+../OS/UI/ui_utilities.h :
+task.o :	../Configurations/Ifx_Cfg.h
+../Configurations/Ifx_Cfg.h :
+task.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
+../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
+task.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
+../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 task.o :	../OS/Debug/console.h
 ../OS/Debug/console.h :
