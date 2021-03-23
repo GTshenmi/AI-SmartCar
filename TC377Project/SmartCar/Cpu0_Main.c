@@ -13,20 +13,52 @@ IFX_ALIGN(4) IfxCpu_syncEvent g_cpuSyncEvent = 0;//事件同步变量
 *************************************************************************/
 int core0_main (void)
 {
-    os.core[0].HardWareInit = Core0_HardWareInit;
-    os.core[0].Run = Core0_Main;
-    os.core[0].SoftWareInit = Core0_SoftWareInit;
+    // 关闭CPU总中断
+    IfxCpu_disableInterrupts();
 
-    os.init(0);
+    // 关闭看门狗，如果不设置看门狗喂狗需要关闭
+    IfxScuWdt_disableCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
+    IfxScuWdt_disableSafetyWatchdog(IfxScuWdt_getSafetyWatchdogPassword());
 
-    Console.WriteLine("Sync Finished.");
+    // 读取总线频率
+    g_AppCpu0.info.pllFreq = IfxScuCcu_getPllFrequency();
+    g_AppCpu0.info.cpuFreq = IfxScuCcu_getCpuFrequency(IfxCpu_getCoreIndex());
+    g_AppCpu0.info.sysFreq = IfxScuCcu_getSpbFrequency();
+    g_AppCpu0.info.stmFreq = IfxStm_getFrequency(&MODULE_STM0);
 
-    os.core[0].Run();
+    os.time.init();
+    os.softtimer.init();
 
-    while(1)
-    {
-        ;
-    }
+    os.time.delayms(1000);
+ //   os.file.init();
+
+    Core0_HardWareInit();
+    Core0_SoftWareInit();
+
+    // 开启CPU总中断
+    IfxCpu_enableInterrupts();
+
+    // 通知CPU2、CPU1，CPU0初始化完成
+    IfxCpu_releaseMutex(&mutexCpu0InitIsOk);
+
+    Core0_Main();
+
+    while(1);
+
+//    os.core[0].HardWareInit = Core0_HardWareInit;
+//    os.core[0].Run = Core0_Main;
+//    os.core[0].SoftWareInit = Core0_SoftWareInit;
+//
+//    os.init(0);
+//
+//    //Console.WriteLine("Sync Finished.");
+//
+//    os.core[0].Run();
+//
+//    while(1)
+//    {
+//        ;
+//    }
 }
 
 //static rt_uint8_t led_thread_stack[2048];

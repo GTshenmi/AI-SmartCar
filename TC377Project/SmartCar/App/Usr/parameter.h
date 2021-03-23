@@ -37,6 +37,8 @@ typedef struct
 
       sint16_t Actual_Speed; /*实际速度*/
 
+      uint16_t SPwmValue;
+
 
       sint16_t Speed;        /*速度*/
       sint16_t Angle;        /*角度*/

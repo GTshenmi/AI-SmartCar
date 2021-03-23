@@ -86,7 +86,9 @@ uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actu
         ANO.Send("%f%f%f%s16%u16",&data->_Bias,&data->Bias,&data->S_PID.Result,&target_angle,&PwmValue);
     }
 
-    return target_angle + self->PwmCentValue * 1.0;
+    //return target_angle + self->PwmCentValue * 1.0;
+
+    return target_angle;
 
 }
 

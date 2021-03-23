@@ -190,7 +190,7 @@ void UIPagesInit (void)
     UIPages[13].secondaryTargetData = UIData.SPID_Ki;
     UIPages[14].secondaryTargetData = UIData.SPID_Kd;
     UIPages[15].secondaryTargetData = UIData.SPID_Result;
-    UIPages[16].secondaryTargetData = UIData.S_PwmDuty;
+    UIPages[16].primaryTargetData = UIData.S_PwmDuty;
 
     UIPages[0].beginLine = 0;
     for (uint8_t i = 1; i < TOTAL_PAGE_NUMBER; i++)
@@ -340,8 +340,8 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .displayData = displayDataAlone,
             .Self = &UIPages[16],
             .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
+            .targetDataType = INTEGER,
+            .confirmAction = openSettingPage,
     },
     [17] = {
             .description = "LoadParameterFromSD",
