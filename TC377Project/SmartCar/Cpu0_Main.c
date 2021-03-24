@@ -1,6 +1,6 @@
 #include "include.h"
 
-IfxCpu_mutexLock mutexCpu0InitIsOk = 1;   // CPU0 初始化完成标志位
+IFX_ALIGN(4) IfxCpu_mutexLock mutexCpu0InitIsOk = 1;   // CPU0 初始化完成标志位
 
 IFX_ALIGN(4) IfxCpu_syncEvent g_cpuSyncEvent = 0;//事件同步变量
 /*************************************************************************
@@ -29,7 +29,7 @@ int core0_main (void)
     os.time.init();
     os.softtimer.init();
 
-    os.time.delayms(1000);
+    os.time.delayms(1500);
  //   os.file.init();
 
     Core0_HardWareInit();

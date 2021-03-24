@@ -73,7 +73,7 @@ adc_resource_t ADC_Resources[20] =
 
 };
 
-gpio_resource_t GPIO_Resources[20] =
+gpio_resource_t GPIO_Resources[25] =
 {
         [0] = {
                .GPION = {P15_3, PIN_MODE_OUTPUT,1,false,false},
@@ -83,8 +83,16 @@ gpio_resource_t GPIO_Resources[20] =
                .GPION = {P15_1, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_RST"
         },
+//        [2] = {
+//               .GPION = {P15_7, PIN_MODE_OUTPUT,1,false,false},
+//               .Description = "LCD_SDA"
+//        },
+//        [3] = {
+//               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
+//               .Description = "LCD_SCL"
+//        },
         [2] = {
-               .GPION = {P15_7, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P15_6, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_SDA"
         },
         [3] = {
@@ -96,19 +104,19 @@ gpio_resource_t GPIO_Resources[20] =
                .Description = "LCD_CS"
         },
         [5] = {
-               .GPION = {P22_0, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P01_3, PIN_MODE_INPUT,1,false,false},
                .Description = "Switch[0]"
         },
         [6] = {
-               .GPION = {P33_12, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P02_11, PIN_MODE_INPUT,1,false,false},
                .Description = "Switch[1]"
         },
         [7] = {
-               .GPION = {P32_4, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P00_11, PIN_MODE_INPUT,1,false,false},
                .Description = "Switch[2]"
         },
         [8] = {
-               .GPION = {P33_7, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P00_8, PIN_MODE_INPUT,1,false,false},
                .Description = "Switch[3]"
         },
         [9] = {
@@ -124,7 +132,7 @@ gpio_resource_t GPIO_Resources[20] =
                .Description = "BEEP"
         },
         [12] = {
-               .GPION = {P33_7, PIN_MODE_INPUT,1,false,false},//该按键硬件GPIO有问题
+               .GPION = {P33_6, PIN_MODE_INPUT,1,false,false},
                .Description = "KEY 0 Cursor UP. "
         },
         [13] = {
@@ -132,7 +140,7 @@ gpio_resource_t GPIO_Resources[20] =
                .Description = "KEY 1 Cursor Down."
         },
         [14] = {
-               .GPION = {P33_10, PIN_MODE_INPUT,1,false,false},
+               .GPION = {P33_10, PIN_MODE_INPUT,1,false,false},//该按键硬件GPIO有问题
                .Description = "Key 2 Cancel."
         },
         [15] = {
@@ -140,12 +148,29 @@ gpio_resource_t GPIO_Resources[20] =
                .Description = "Key 3 Confirm."
         },
         [16] = {
-               .GPION = {P33_13, PIN_MODE_INPUT,1,false,false},
+               .GPION = {P33_12, PIN_MODE_INPUT,1,false,false},
                .Description = "Key 4 Page UP."
         },
         [17] = {
                .GPION = {P32_4, PIN_MODE_INPUT,1,false,false},
                .Description = "Key 5 Page Down."
+        },
+
+        [18] = {
+               .GPION = {P00_5, PIN_MODE_INPUT,1,false,false},
+               .Description = "Switch[4]"
+        },
+        [19] = {
+               .GPION = {P00_2, PIN_MODE_INPUT,1,false,false},
+               .Description = "Switch[5]"
+        },
+        [20] = {
+               .GPION = {P02_8, PIN_MODE_INPUT,1,false,false},
+               .Description = "Switch[6]"
+        },
+        [21] = {
+               .GPION = {P02_5, PIN_MODE_INPUT,1,false,false},
+               .Description = "Switch[7]"
         },
 };
 
@@ -160,7 +185,7 @@ pwm_resource_t PWM_Resources[3] =
                .Description = "Motor EN"
         },
         [2] = {
-               .PWMN = {(void *)&IfxGtm_ATOM0_3_TOUT56_P21_5_OUT,50,0,ATOM},
+               .PWMN = {(void *)&IfxGtm_ATOM2_5_TOUT35_P33_13_OUT,50,0,ATOM},
                .Description = "Servo"
         },
 };

@@ -39,7 +39,7 @@ void DIPSwitch_Init(struct dip_switch *self)
     switch_t *Switch = (switch_t *)self->Switch;
 
     self->Bits = 0;
-    self->SwitchNum = 4;
+    //self->SwitchNum = 4;
 
     for(uint8_t i = 0; i < self->SwitchNum;i++)
         Switch[i].Init(Switch[i].Self);

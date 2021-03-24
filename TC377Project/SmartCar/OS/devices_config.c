@@ -9,6 +9,35 @@
 
 #pragma section all "cpu0_dsram"
 
+screen_t Screen = /*ok*/
+{
+        .Hight = 160,
+        .Width = 128,
+        .Font = {
+                .Type = 1,
+                .Hight = 8,
+                .Width = 6,
+                .Color = BLACK,
+                .Backcolor = WHITE,
+        },
+
+        .__Init__ = LCD_Init,
+        .__InitConfig__ = &LCD_Type,
+        .__SetPixel__ =LCD_DrawPoint,
+
+        .__AddrReset__ = LCD_AddrReset,
+        .__DeInit__ = LCD_DeInit,
+        .__SetEnable__ = LCD_SetEnable,
+        .__FastDrawArea__ = LCD_FastDrawArea,
+        .__FastSetPixel__ = LCD_WriteWord,
+        .__Fill__ = LCD_Fill,
+        .__SetArea__ = LCD_SetArea,
+
+
+        .Init = Screen_Init,
+        .Self = &Screen,
+};
+
 beep_t BEEP = /*unknow*/
 {
         .Init = BEEP_Init,
@@ -110,6 +139,27 @@ esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/
     },
 };
 
+motor_ctrl_t Motor =/*ok*/
+{
+        .Init = MotorInit,
+        .Self = &Motor,
+        .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
+        .Encn = &ENC_Resources[0].ENCN,
+};
+
+servo_ctrl_t Servo =/*ok*/
+{
+        .Pwmn = &PWM_Resources[2].PWMN,
+        .Init = ServoInit,
+        .Self = &Servo,
+};
+
+
+#pragma section all restore
+
+
+#pragma section all "cpu1_dsram"
+
 key_t KEY[7] = /*ok*/ /*按键接口换了*/
 {
         [0] = {
@@ -153,64 +203,6 @@ key_t KEY[7] = /*ok*/ /*按键接口换了*/
 
 };
 
-
-led_t GLED = /*ok*/
-{
-        .Init = LED_Init,
-        .Self = &GLED,
-        .GPIOn = &GPIO_Resources[9].GPION,
-};
-
-motor_ctrl_t Motor =/*ok*/
-{
-        .Init = MotorInit,
-        .Self = &Motor,
-        .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
-        .Encn = &ENC_Resources[0].ENCN,
-};
-
-screen_t Screen = /*ok*/
-{
-        .Hight = 160,
-        .Width = 128,
-        .Font = {
-                .Type = 1,
-                .Hight = 8,
-                .Width = 6,
-                .Color = BLACK,
-                .Backcolor = WHITE,
-        },
-
-        .__Init__ = LCD_Init,
-        .__InitConfig__ = &LCD_Type,
-        .__SetPixel__ =LCD_DrawPoint,
-
-        .__AddrReset__ = LCD_AddrReset,
-        .__DeInit__ = LCD_DeInit,
-        .__SetEnable__ = LCD_SetEnable,
-        .__FastDrawArea__ = LCD_FastDrawArea,
-        .__FastSetPixel__ = LCD_WriteWord,
-        .__Fill__ = LCD_Fill,
-        .__SetArea__ = LCD_SetArea,
-
-
-        .Init = Screen_Init,
-        .Self = &Screen,
-};
-
-servo_ctrl_t Servo =/*ok*/
-{
-        .Pwmn = &PWM_Resources[2].PWMN,
-        .Init = ServoInit,
-        .Self = &Servo,
-};
-
-
-#pragma section all restore
-
-
-#pragma section all "cpu1_dsram"
-
 led_t BLED =  /*ok*/
 {
         .Init = LED_Init,
@@ -232,7 +224,7 @@ sdcard_t SDCard = /*待定*/
 };
 
 
-switch_t Switch[4] = /*ok*/
+switch_t Switch[8] = /*ok*/
 {
     [0] = {
             .DownLevel = 0,
@@ -258,6 +250,31 @@ switch_t Switch[4] = /*ok*/
             .Init = Switch_Init,
             .Self = &Switch[3],
     },
+
+    [4] = {
+            .DownLevel = 0,
+            .GPIOn =  &GPIO_Resources[18].GPION,
+            .Init = Switch_Init,
+            .Self = &Switch[4],
+    },
+    [5] = {
+            .DownLevel = 0,
+            .GPIOn =  &GPIO_Resources[19].GPION,
+            .Init = Switch_Init,
+            .Self = &Switch[5],
+    },
+    [6] = {
+            .DownLevel = 0,
+            .GPIOn =  &GPIO_Resources[20].GPION,
+            .Init = Switch_Init,
+            .Self = &Switch[6],
+    },
+    [7] = {
+            .DownLevel = 0,
+            .GPIOn =  &GPIO_Resources[21].GPION,
+            .Init = Switch_Init,
+            .Self = &Switch[7],
+    },
 };
 
 communicate_t CUART = /*ok*/
@@ -281,6 +298,7 @@ dip_switch_t DIPSwitch = /*ok*/
        .Init = DIPSwitch_Init,
        .Self = &DIPSwitch,
        .Switch = Switch,
+       .SwitchNum = 8,
 };
 
 wireless_serial_t WirelessSerial = /*与CUART相同*/
@@ -289,11 +307,18 @@ wireless_serial_t WirelessSerial = /*与CUART相同*/
         .Self = &WirelessSerial
 };
 
+
 #pragma section all restore
 
 
 #pragma section all "cpu2_dsram"
 
+led_t GLED = /*ok*/
+{
+        .Init = LED_Init,
+        .Self = &GLED,
+        .GPIOn = &GPIO_Resources[9].GPION,
+};
 
 #pragma section all restore
 

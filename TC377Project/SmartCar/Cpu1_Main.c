@@ -9,6 +9,8 @@ int core1_main (void)
     // πÿ±’ø¥√≈π∑
     IfxScuWdt_disableCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
 
+    //delayms(500);
+
     Core1_HardWareInit();
     Core1_SoftWareInit();
 

@@ -17,22 +17,39 @@ sint16_t servo_value = 0;
 sint16_t temp = 0;
 sint8_t ad_data[7] = {-124,-107,-59,-14,30,-117,1};
 
+
+void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
+{
+    for(int i = 0 ; i < 6 ; i++)
+    {
+        if(self == KEY[i].Self)
+            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
+    }
+}
 /*
  * @Brief:CPU0 Main Func
  *  This Core is for Control and Data Process.
  * */
 void Core0_Main()
 {
+    DIPSwitch.Init(DIPSwitch.Self);
+    DIPSwitch.SetSwitchNum(DIPSwitch.Self,8);
     TIMx.Init(&TIM_Resources[1].TIMN);
+
+    //Console.WriteLine("Hello,World.");
 
     GLED.ON(GLED.Self);
 
-    //os.time.delayms(2000);
-
     PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.8,0.0,0.0));
+
+    //Console.WriteLine("DJ is Dog.");
 
     while(1)
     {
+        uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
+
+        Console.WriteLine("Bits = 0x%x",bits);
+
         GLED.Toggle(GLED.Self);
         os.task.UiUpdate(&UIData,sizeof(UIData));
     }
@@ -44,11 +61,7 @@ void Core0_Main()
  * */
 void Core1_Main()
 {
-    KEY[0].SetShield(KEY[0].Self,true);
-
     uint32_t times = 0;
-
-    //os.time.delayms(300);
 
     while(1)
     {
@@ -75,15 +88,10 @@ void Core2_Main()
 
     BEEP.OFF(BEEP.Self);
 
-    while(1)
-    {
-       //  os.task.SoftTimerUpdate(NULL,0);
-
-       //  os.task.KeyScan(NULL,0);
-
-       //  os.task.DebugConsole(NULL,0);
-
-       //  os.time.delayms(20);
-    }
+    while(1);
+//    {
+//        GLED.Toggle(GLED.Self);
+//        os.task.UiUpdate(&UIData,sizeof(UIData));
+//    }
 }
 

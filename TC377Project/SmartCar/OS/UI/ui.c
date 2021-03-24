@@ -75,6 +75,7 @@ void UI_Update (void *argv, uint16_t argc)
 
 void cursorUpPressedCallBack (key_t *self, void *argv, uint16_t argc) // π‚±Í…œ…˝
 {
+    Screen.WriteXLine(Screen.Self,0,"KEY 0 PressedCallBack.");
     Screen.ShowNum(Screen.Self,Screen.Width - Screen.Font.Width,0,0,BLACK);
 }
 

@@ -33,7 +33,7 @@ extern sdcard_t SDCard;
 
 extern servo_ctrl_t Servo;
 
-extern switch_t Switch[4];
+extern switch_t Switch[8];
 extern dip_switch_t DIPSwitch;
 
 extern wireless_serial_t WirelessSerial;

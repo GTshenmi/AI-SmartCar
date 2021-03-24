@@ -17,7 +17,7 @@
 #include "app.h"
 #include "test.h"
 
-extern IfxCpu_mutexLock mutexCpu0InitIsOk;
+extern IFX_ALIGN(4) IfxCpu_mutexLock mutexCpu0InitIsOk;
 extern IFX_ALIGN(4) IfxCpu_syncEvent g_cpuSyncEvent;
 
 #endif /* APP_INCLUDE_H_ */

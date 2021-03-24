@@ -227,7 +227,7 @@ IfxStm_CompareConfig g_StmCompareConfig[4];
  *************************************************************************/
  void delayms(unsigned short stmms)	//
  {
-#if 1
+#if 0
 	while(stmms--)
 	{
 	     STM_DelayUs(STM0, 1000);

@@ -12,14 +12,14 @@
 
 void UIParameterInit(void);
 
-void KeyPressedCallBack (struct key *self, void *argv, uint16_t argc)
-{
-    for(int i = 0 ; i < 6 ; i++)
-    {
-        if(self == KEY[i].Self)
-            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
-    }
-}
+//void KeyPressedCallBack (struct key *self, void *argv, uint16_t argc)
+//{
+//    for(int i = 0 ; i < 6 ; i++)
+//    {
+//        if(self == KEY[i].Self)
+//            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
+//    }
+//}
 void BeepOffTimerCallBack(void *argc,unsigned short argv)
 {
     BEEP.OFF(BEEP.Self);
