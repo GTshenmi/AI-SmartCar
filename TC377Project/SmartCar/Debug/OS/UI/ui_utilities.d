@@ -48,3 +48,9 @@ ui_utilities.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 ui_utilities.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
+ui_utilities.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :
+ui_utilities.o :	../OS/UI/ui.h
+../OS/UI/ui.h :
+ui_utilities.o :	../OS/UI/template_page.h
+../OS/UI/template_page.h :

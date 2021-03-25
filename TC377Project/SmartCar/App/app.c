@@ -36,19 +36,20 @@ void Core0_Main()
     DIPSwitch.SetSwitchNum(DIPSwitch.Self,8);
     TIMx.Init(&TIM_Resources[1].TIMN);
 
-    //Console.WriteLine("Hello,World.");
-
     GLED.ON(GLED.Self);
 
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.8,0.0,0.0));
+    Motor.SetSpeed(Motor.Self,2000);
 
-    //Console.WriteLine("DJ is Dog.");
+    Motor.Update(Motor.Self);
+
+    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(1.0,0.0,0.0));
+    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(3.2,0.0,0.0));
 
     while(1)
     {
-        uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
+        //uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
 
-        Console.WriteLine("Bits = 0x%x",bits);
+        //Console.WriteLine("Bits = 0x%x",bits);
 
         GLED.Toggle(GLED.Self);
         os.task.UiUpdate(&UIData,sizeof(UIData));
@@ -63,6 +64,8 @@ void Core1_Main()
 {
     uint32_t times = 0;
 
+    data_t *data = &Data[data_pointer];
+
     while(1)
     {
         times++;
@@ -71,6 +74,11 @@ void Core1_Main()
             BLED.Toggle(BLED.Self);
 
         os.task.KeyScan(NULL,0);
+
+        for(int i = 0 ; i < 5;i++)
+            Console.WriteLine("AD[%d] = %u",i,data->LADC_Value[i]);
+
+        Console.WriteLine("Angle = %d",data->Angle);
 
         os.time.delayms(20);
     }

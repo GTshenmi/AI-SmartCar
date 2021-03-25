@@ -222,8 +222,6 @@ control.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 control.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-control.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :
 control.o :	../App/Sys/ctrlsys.h
 ../App/Sys/ctrlsys.h :
 control.o :	../App/Sys/filter.h

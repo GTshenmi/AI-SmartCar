@@ -222,8 +222,6 @@ neuralnetwork.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 neuralnetwork.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-neuralnetwork.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :
 neuralnetwork.o :	../App/Sys/ctrlsys.h
 ../App/Sys/ctrlsys.h :
 neuralnetwork.o :	../App/Sys/filter.h

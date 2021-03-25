@@ -18,7 +18,7 @@ adc_resource_t ADC_Resources[20] =
         },
         [2] = {
                .ADCN = {ADC10,10000},
-               .Description = "Short ESensor[2]->AD3 Problem"
+               .Description = "Short ESensor[2]->AD3"
         },
         [3] = {
                .ADCN = {ADC21,10000},
@@ -29,7 +29,7 @@ adc_resource_t ADC_Resources[20] =
                .Description = "Short ESensor[4]->AD5"
         },
         [5] = {
-               .ADCN = {ADC21,10000},
+               .ADCN = {ADC26,10000},
                .Description = "Short ESensor[5]->AD6"
         },
         [6] = {
@@ -37,38 +37,43 @@ adc_resource_t ADC_Resources[20] =
                .Description = "Short ESensor[6]->AD7"
         },
 
-
         [7] = {
                .ADCN = {ADC27,10000},
-               .Description = "Long ESensor[0]->AD9"
+               .Description = "Reversed."
         },
+
+
         [8] = {
                .ADCN = {ADC1,10000},
-               .Description = "Long ESensor[1]->AD10"
+               .Description = "Long ESensor[0]"
         },
         [9] = {
                .ADCN = {ADC0,10000},
-               .Description = "Long ESensor[2]->AD11"
+               .Description = "Long ESensor[1]"
         },
         [10] = {
                .ADCN = {ADC4,10000},
-               .Description = "Long ESensor[3]->AD12"
+               .Description = "Long ESensor[2]"
         },
         [11] = {
                .ADCN = {ADC2,10000},
-               .Description = "Long ESensor[4]->AD13"
+               .Description = "Long ESensor[3]"
         },
         [12] = {
                .ADCN = {ADC7,10000},
+               .Description = "Long ESensor[4]"
         },
         [13] = {
                .ADCN = {ADC5,10000},
+               .Description = "Reversed."
         },
         [14] = {
                .ADCN = {ADC8,10000},
+               .Description = "Reversed."
         },
         [15] = {
                .ADCN = {ADC3,10000},
+               .Description = "Reversed."
         },
 
 };

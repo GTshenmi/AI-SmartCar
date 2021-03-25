@@ -222,8 +222,6 @@ init.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 init.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-init.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :
 init.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 init.o :	../OS/os.h

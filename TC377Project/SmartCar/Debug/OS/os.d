@@ -218,7 +218,5 @@ os.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 os.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-os.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :
 os.o :	../Driver/SysDriver/henv.h
 ../Driver/SysDriver/henv.h :

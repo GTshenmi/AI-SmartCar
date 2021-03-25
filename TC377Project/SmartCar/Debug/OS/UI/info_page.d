@@ -56,9 +56,3 @@ info_page.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 info_page.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
-info_page.o :	../OS/UI/template_page.h
-../OS/UI/template_page.h :
-info_page.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :
-info_page.o :	../OS/UI/template_page.h
-../OS/UI/template_page.h :

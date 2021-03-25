@@ -53,20 +53,24 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,signed short target_speed,sig
     tspeed = 100.0 * NormalizeFloat(target_speed * 1.0,0.0,self->MaxSpeed * 1.0);
     aspeed = 100.0 * NormalizeFloat(actual_speed * 1.0,0.0,self->MaxSpeed * 1.0);
 
-    if(fabs(data->M_PID.PID_Error[2]) > 20.0)
-    {
-        PwmValue = (sint16_t)(PWMx.MaxPwmDuty * fsign(data->M_PID.PID_Error[2]) * 0.8);
-    }
-    else
-    {
-        PID_Ctrl(&data->M_PID,tspeed,aspeed);
-        PwmValue = (sint16_t)data->M_PID.Result;
-    }
+//    if(fabs(data->M_PID.PID_Error[2]) > 20.0)
+//    {
+//        PwmValue = (sint16_t)(PWMx.MaxPwmDuty * fsign(data->M_PID.PID_Error[2]) * 0.8);
+//    }
+//    else
+//    {
+//        PID_Ctrl(&data->M_PID,tspeed,aspeed);
+//        PwmValue = (sint16_t)data->M_PID.Result;
+//    }
+//
+//    if(data->ReportMotorData)
+//    {
+//        ANO.Send("%s%s16%s16",&target_speed,&actual_speed,&PwmValue);
+//    }
 
-    if(data->ReportMotorData)
-    {
-        ANO.Send("%s%s16%s16",&target_speed,&actual_speed,&PwmValue);
-    }
+    //PID_Ctrl(&data->M_PID,tspeed,aspeed);
+    //PwmValue = (sint16_t)data->M_PID.Result;
+    PwmValue = target_speed;
 
     return PwmValue;
 }
@@ -86,9 +90,9 @@ uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actu
         ANO.Send("%f%f%f%s16%u16",&data->_Bias,&data->Bias,&data->S_PID.Result,&target_angle,&PwmValue);
     }
 
-    //return target_angle + self->PwmCentValue * 1.0;
+    return -target_angle + self->PwmCentValue * 1.0;
 
-    return target_angle;
+    //return target_angle;
 
 }
 

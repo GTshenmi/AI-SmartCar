@@ -35,12 +35,13 @@ void Core0_HardWareInit()
     Motor.Init(Motor.Self);
     Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
     Motor.CtrlStrategy = MotorCtrlStrategy;
+    Motor.Start(Motor.Self);
 
     Servo.Init(Servo.Self);
     Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
-    Servo.SetAngleLimit(Servo.Self,90.0,-90.0);
+    Servo.SetAngleLimit(Servo.Self,200.0,-200.0);
     Servo.CtrlStrategy = ServoCtrlStrategy;
-    Servo.SetPwmCentValue(Servo.Self,275);
+    Servo.SetPwmCentValue(Servo.Self,300);
     Servo.Start(Servo.Self);
     Servo.SetAngle(Servo.Self,0);
     Servo.Update(Servo.Self);
@@ -48,14 +49,14 @@ void Core0_HardWareInit()
     for(int i = 0;i<CData.MaxLADCDeviceNum;i++)
     {
         LESensor[i].Init(LESensor[i].Self);
-        LESensor[i].EnableFilter(LESensor[i].Self,false);
+        LESensor[i].EnableFilter(LESensor[i].Self,true);
 //        LESensor[i].EnableGain(LESensor[i].Self,true);
 //        LESensor[i].SetGain(LESensor[i].Self,1.5);
     }
     for(int i = 0;i<CData.MaxSADCDeviceNum;i++)
     {
         SESensor[i].Init(SESensor[i].Self);
-        SESensor[i].EnableFilter(SESensor[i].Self,false);
+        SESensor[i].EnableFilter(SESensor[i].Self,true);
     }
 
     GLED.Init(GLED.Self);
@@ -70,22 +71,13 @@ void Core0_HardWareInit()
     Console.Init();
 #endif
 
-//    for(int i = 0 ; i < CData.MaxKEYDeviceNum;i++)
-//    {
-//        KEY[i].Init(KEY[i].Self);
-//        KEY[i].PressedCallBack = KeyPressedCallBack;
-//    }
-
     UIParameterInit();
 
     UI_Init();
-    //Screen.Init(Screen.Self);
 /* System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
 /*Set BEEP OFF 1 sec later*/
     os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
-
-    //Console.WriteLine("HardWare System Init Finished.");
 }
 
 /*
@@ -173,8 +165,8 @@ void UIParameterInit(void)
     UIData.SPID_Ki =      &Data[data_pointer].S_PID.Ki;
     UIData.SPID_Kp =      &Data[data_pointer].S_PID.Kp;
     UIData.SPID_Result =  &Data[data_pointer].S_PID.Result;
-    //UIData.S_PwmDuty =    &Servo.PwmValue;
-    UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
+    UIData.S_PwmDuty =    &Servo.PwmValue;
+    //UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
     UIData.Speed =        &Data[data_pointer].Speed;
 
     UIData.SADC =          Data[data_pointer].SADC_Value;

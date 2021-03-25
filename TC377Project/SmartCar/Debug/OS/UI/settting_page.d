@@ -56,7 +56,3 @@ settting_page.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
 settting_page.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
-settting_page.o :	../OS/UI/template_page.h
-../OS/UI/template_page.h :
-settting_page.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :

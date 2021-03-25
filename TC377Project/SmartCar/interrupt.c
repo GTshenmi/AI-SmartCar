@@ -26,6 +26,8 @@ void STM0_CH1_IRQHandler(void)
 
 void STM1_CH0_IRQHandler(void)
 {
+   // uint32_t SystimeNow = os.time.getTimems();
+
     /* 开启CPU中断  否则中断不可嵌套 */
     IfxCpu_enableInterrupts();
 
@@ -43,6 +45,8 @@ void STM1_CH0_IRQHandler(void)
     for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
         data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
 
+    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
     /*归一化*/
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
         data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
@@ -53,17 +57,21 @@ void STM1_CH0_IRQHandler(void)
 
     PID_Ctrl(&data->S_PID,0,data->Bias);
 
-    //data->Angle = (sint16_t)(data->S_PID.Result);
+    data->Angle = (sint16_t)(-data->S_PID.Result);
 
-    data->Speed = 2000;
+    data->Speed = 2500;
 
-    //Servo.SetAngle(Servo.Self,data);
+    Servo.SetAngle(Servo.Self,data->Angle);
 
-    Servo.SetPwmValue(Servo.Self,data->SPwmValue);
     Motor.SetSpeed(Motor.Self,data->Speed);
 
     Motor.Update(Motor.Self);
-    //Servo.Update(Servo.Self);
+    Servo.Update(Servo.Self);
+
+    //uint32_t dt = os.time.getTimems() - SystimeNow;
+
+    //Console.WriteLine("Time = %ld",dt);
+
 
 //    SSU.Run(SSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
 //    MSU.Run(MSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));

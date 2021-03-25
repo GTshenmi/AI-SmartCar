@@ -220,5 +220,3 @@ sysmath.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 sysmath.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-sysmath.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :

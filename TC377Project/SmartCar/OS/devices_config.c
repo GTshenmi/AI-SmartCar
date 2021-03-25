@@ -77,27 +77,27 @@ esensor_t LESensor[5] =/*ok*/ /*9 - 16 Left*/
     [0] = {
             .Init = ESensorInit,
             .Self = &LESensor[0],
-            .ADCn = &ADC_Resources[8].ADCN,//AD9
+            .ADCn = &ADC_Resources[8].ADCN,
     },
     [1] = {
             .Init = ESensorInit,
             .Self = &LESensor[1],
-            .ADCn = &ADC_Resources[9].ADCN,//AD10
+            .ADCn = &ADC_Resources[9].ADCN,
     },
     [2] = {
             .Init = ESensorInit,
             .Self = &LESensor[2],
-            .ADCn = &ADC_Resources[10].ADCN,//AD11
+            .ADCn = &ADC_Resources[10].ADCN,
     },
     [3] = {
             .Init = ESensorInit,
             .Self = &LESensor[3],
-            .ADCn = &ADC_Resources[11].ADCN,//AD12
+            .ADCn = &ADC_Resources[11].ADCN,
     },
     [4] = {
             .Init = ESensorInit,
             .Self = &LESensor[4],
-            .ADCn = &ADC_Resources[12].ADCN,//AD13
+            .ADCn = &ADC_Resources[12].ADCN,
     },
 };
 esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/

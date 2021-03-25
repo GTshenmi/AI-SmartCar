@@ -220,8 +220,6 @@ Cpu2_Main.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 Cpu2_Main.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-Cpu2_Main.o :	../OS/UI/ui_utilities.h
-../OS/UI/ui_utilities.h :
 Cpu2_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 Cpu2_Main.o :	../OS/os.h

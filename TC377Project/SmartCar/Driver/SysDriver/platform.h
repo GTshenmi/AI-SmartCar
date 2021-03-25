@@ -93,7 +93,7 @@
 
 #define Cpu_AcquireAndLockMutex(lock)     \
     while(!Cpu_AcquireMutex(lock));\
-    Cpu_LockMutex(lock);
+    //Cpu_LockMutex(lock);
 #endif
 
 
