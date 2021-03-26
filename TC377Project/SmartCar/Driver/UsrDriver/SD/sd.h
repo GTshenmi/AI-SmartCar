@@ -3,9 +3,11 @@
 
 #include "sys_driver.h"
 
-#define SD_SPI &SPI_Resources[1].SPIN
-#define SD_SPI_CS_GPIO NULL
-#define SD_SPI_CLK_GPIO NULL
+#define SD_SPI           &SPI_Resources[1].SPIN
+
+#define SD_SPI_CS_GPIO   &GPIO_Resources[22].GPION
+
+#define SD_SPI_CLK_GPIO  NULL
 #define SD_SPI_MOSI_GPIO NULL
 #define SD_SPI_MOSO_GPIO NULL
 
@@ -23,7 +25,7 @@
 #define R_SD_SPI_MOSO(x) SD_GPIO_Read((SD_SPI_MOSO_GPIO))
 
 
-#define SD_USING_HARDWARE_CTRL 0
+#define SD_USING_HARDWARE_CTRL 1
 
 #if SD_USING_HARDWARE_CTRL
 #define SD_SPIReadWriteByte SD_HardWareReadWriteByte

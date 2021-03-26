@@ -177,6 +177,12 @@ gpio_resource_t GPIO_Resources[25] =
                .GPION = {P02_5, PIN_MODE_INPUT,1,false,false},
                .Description = "Switch[7]"
         },
+
+
+        [22] = {
+               .GPION = {P11_10, PIN_MODE_OUTPUT,0,false,false},
+               .Description = "SD CS"
+        },
 };
 
 pwm_resource_t PWM_Resources[3] =
@@ -220,6 +226,7 @@ tim_resource_t TIM_Resources[8] =
 
 
 };
+
 uart_resource_t UART_Resources[2] =
 {
         [0] = {
@@ -227,14 +234,15 @@ uart_resource_t UART_Resources[2] =
                .Description = "CUART And Console."
         },
 };
+
 spi_resource_t SPI_Resources[2] =
 {
         [0] = {
-               .SPIN = {SPI2,QSPI2_CLK_P15_8,QSPI2_MISO_P15_7,QSPI2_MOSI_P15_5/*not used*/,QSPI2_CS_P15_2,2,QSPI,9600},
+               .SPIN = {SPI2,QSPI2_CLK_P15_8,QSPI2_MISO_P15_7/*not used*/,QSPI2_MOSI_P15_6,QSPI2_CS_P15_2,2,QSPI,32000000},
                .Description = "LCD SPI"
         },
         [1] = {
-                .SPIN = {SPI0,QSPI0_CLK_P20_13,QSPI0_MISO_P20_12,QSPI0_MOSI_P20_14, QSPI0_CS_P20_8,3,QSPI,5000000},
+                .SPIN = {SPI1,QSPI1_CLK_P11_6,QSPI1_MISO_P11_3,QSPI1_MOSI_P11_9, QSPI1_CS_P11_10,2,QSPI,9600},
                 .Description = "SD Card SPI",
         },
 };

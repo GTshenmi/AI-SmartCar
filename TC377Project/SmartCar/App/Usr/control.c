@@ -46,7 +46,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,signed short target_speed,sig
 {
     sint16_t PwmValue = 0;
 
-    data_t *data =(data_t *) argv;
+    //data_t *data =(data_t *) argv;
 
     float tspeed,aspeed = 0.0;
 

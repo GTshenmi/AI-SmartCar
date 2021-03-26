@@ -37,7 +37,6 @@ void STM1_CH0_IRQHandler(void)
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[2].comparator, g_StmCompareConfig[2].ticks);
 
-
     data_t *data = &Data[data_pointer];
 
     for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
@@ -71,16 +70,6 @@ void STM1_CH0_IRQHandler(void)
     //uint32_t dt = os.time.getTimems() - SystimeNow;
 
     //Console.WriteLine("Time = %ld",dt);
-
-
-//    SSU.Run(SSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-//    MSU.Run(MSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-//
-//    MDU.Run(MDU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-//    SDU.Run(SDU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-//
-//    SEU.Run(SEU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-//    MEU.Run(MEU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
 }
 
 void STM1_CH1_IRQHandler(void)
@@ -95,7 +84,14 @@ void STM1_CH1_IRQHandler(void)
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
 
     /* 用户代码 */
-
+    //    SSU.Run(SSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
+    //    MSU.Run(MSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
+    //
+    //    MDU.Run(MDU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
+    //    SDU.Run(SDU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
+    //
+    //    SEU.Run(SEU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
+    //    MEU.Run(MEU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
 }
 
 void CCU60_CH0_IRQHandler (void)

@@ -167,8 +167,12 @@ uint8_t SD_Initialize(void *config)
 	uint16_t i;
 
 #if SD_USING_HARDWARE_CTRL
+
     SPIx.Init(SD_SPI);
     GPIOx.Init(SD_SPI_CS_GPIO);
+
+    //W_SD_SPI_CS(0);
+
 #else
     GPIOx.Init(SD_SPI_CS_GPIO);
     GPIOx.Init(SD_SPI_CLK_GPIO);
@@ -180,7 +184,9 @@ uint8_t SD_Initialize(void *config)
 
  	for(i=0;i<10;i++)
  	    SD_SPIReadWriteByte(0XFF);//发送最少74个脉冲
+
 	retry=20;
+
 	do
 	{
 		r1=SD_SendCmd(CMD0,0,0x95);//进入IDLE状态

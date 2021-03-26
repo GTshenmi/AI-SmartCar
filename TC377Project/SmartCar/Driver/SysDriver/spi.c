@@ -23,8 +23,8 @@ uint8_t SPIx_Init(spix_t *spi)
 
 uint8_t SPIx_ReadWriteBytes(spix_t *spi,uint8_t *txData, uint8_t *rxData, uint32_t len,sint64_t time_out)
 {
-    if(time_out == TIME_INFINITE)
-        time_out = TIME_INFINITE/len;
+//    if(time_out == TIME_INFINITE)
+//        time_out = TIME_INFINITE/len;
 
     if(spi->Spi_Source == SPI)
     {
@@ -44,23 +44,16 @@ uint8_t SPIx_ReadWriteBytes(spix_t *spi,uint8_t *txData, uint8_t *rxData, uint32
     }
     else if(spi->Spi_Source == QSPI)
     {
-        uint32_t start_time = 0;
-        uint32_t end_time = 0;
         /* 开始传输 */
         IfxQspi_SpiMaster_exchange(&g_QspiMasterChannel[spi->SPIn], txData, rxData,(unsigned short)len);
-        start_time = Systime.Get_Timeus();
+
         /* 等待传输结束  */
-        while (IfxQspi_SpiMaster_getStatus(&g_QspiMasterChannel[spi->SPIn]) == SpiIf_Status_busy)
-        {
-            end_time = Systime.Get_Timeus();
-            if((end_time - start_time) > len * time_out)
-                break;
-        }
+        while (IfxQspi_SpiMaster_getStatus(&g_QspiMasterChannel[spi->SPIn]) == SpiIf_Status_busy);
 
     }
     else
         return 1;
-    return 0;
+       return 0;
 }
 
 sspi_m SPIx =

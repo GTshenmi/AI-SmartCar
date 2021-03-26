@@ -18,7 +18,7 @@ void LCD_SetArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye);
 void LCD_FastDrawArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t **array);
 void LCD_Fill(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
 
-#define USING_HARDWARE_CONTROLER 0
+#define USING_HARDWARE_CONTROLER 1
 
 /*                      !important!                         */
 #define LCD_delayus(us) Systime.Delayus(us);            //Delay function interface->delay x us
@@ -50,7 +50,17 @@ void LCD_Fill(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
 #define LCD_SPI         &SPI_Resources[0].SPIN
 #define LCD_WriteByte   LCD_HardWareWriteByte //send byte function interface->LCD_SoftWareWriteByte
 #define LCD_WriteWord   LCD_HardWareWriteWord //send word function interface->LCD_SoftWareWriteWord
-#define LCD_WriteCmd  LCD_HardWareWriteCmd  //send command function interface->LCD_SoftWareWriteCmd
+#define LCD_WriteCmd    LCD_HardWareWriteCmd  //send command function interface->LCD_SoftWareWriteCmd
+
+#define _GPIO_WritePin  GPIOx.Write
+
+#define LCD_DC_GPIO     &GPIO_Resources[0].GPION
+#define LCD_RST_GPIO    &GPIO_Resources[1].GPION
+#define LCD_CS_GPIO     &GPIO_Resources[4].GPION
+
+#define LCD_DC(x)   ((x==1)?_GPIO_WritePin(LCD_DC_GPIO,1):_GPIO_WritePin(LCD_DC_GPIO,0))
+#define LCD_RST(x)  ((x==1)?_GPIO_WritePin(LCD_RST_GPIO,1):_GPIO_WritePin(LCD_RST_GPIO,0))
+#define LCD_CS(x)   ((x==1)?_GPIO_WritePin(LCD_CS_GPIO,1):_GPIO_WritePin(LCD_CS_GPIO,0))
 
 #endif
 /*                      !SPI Control!                           */
@@ -65,7 +75,7 @@ void LCD_SoftWareWriteByte(uint8_t data);
 void LCD_SoftWareWriteWord(uint16_t data);
 void LCD_SoftWareWriteCmd(uint8_t cmd);
 #else
-void LCD_HardWareSPIInit(uint16_t baudrate);
+void LCD_HardWareSPIInit(uint32_t baudrate);
 void LCD_HardWareWriteByte(uint8_t data);
 void LCD_HardWareWriteWord(uint16_t data);
 void LCD_HardWareWriteCmd(uint8_t cmd);

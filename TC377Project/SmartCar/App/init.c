@@ -74,6 +74,9 @@ void Core0_HardWareInit()
     UIParameterInit();
 
     UI_Init();
+
+    DIPSwitch.Init(DIPSwitch.Self);
+
 /* System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
 /*Set BEEP OFF 1 sec later*/
@@ -106,8 +109,8 @@ void Core0_SoftWareInit()
     SDU.Run = Servo_DecisionUnitRun_AutoBootMode;
     Data[data_pointer].AI_State = AI_Free;
 
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(0.1,0.0,0.0));
-    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(0.1,0.0,0.0));
+    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(1.0,0.0,0.0));
+    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(3.2,0.0,0.0));
 
 //    Console.WriteLine("SoftWare System Init Finished.");
 //    Console.WriteLine("Wait For Core Sync...");

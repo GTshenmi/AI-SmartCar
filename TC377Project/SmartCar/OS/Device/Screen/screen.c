@@ -224,16 +224,34 @@ void Screen_ShowChar(struct screen *self,uint16_t x,uint16_t y,uint8_t ch,uint16
     if(x>self->Width)
        y+=self->Font.Hight,x=0;
 
-    for(j=0; j< self->Font.Hight; j++)
-    {
-        for(i=0; i< self->Font.Width; i++)
+//    if(self->__SetArea__ != NULL && self->__FastSetPixel__ != NULL)
+//    {
+//        self->__SetArea__(x,y,x+self->Font.Width - 1,y+self->Font.Hight - 1);
+//
+//        for(j=0; j< self->Font.Hight; j++)
+//        {
+//            for(i=0; i< self->Font.Width; i++)
+//            {
+//              if((Font_code8[ch-32][i]) & (0x01<<j))
+//                  self->__FastSetPixel__(color);
+//              else
+//                  self->__FastSetPixel__(self->Font.Backcolor);
+//            }
+//        }
+//    }
+//    else
+//    {
+        for(j=0; j< self->Font.Hight; j++)
         {
-          if((Font_code8[ch-32][i]) & (0x01<<j))
-              self->SetPixel(self,x+i,y+j,color);
-          else
-              self->SetPixel(self,x+i,y+j,self->Font.Backcolor);
+            for(i=0; i< self->Font.Width; i++)
+            {
+              if((Font_code8[ch-32][i]) & (0x01<<j))
+                  self->SetPixel(self,x+i,y+j,color);
+              else
+                  self->SetPixel(self,x+i,y+j,self->Font.Backcolor);
+            }
         }
-    }
+//    }
 }
 /**
     *

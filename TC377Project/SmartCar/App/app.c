@@ -32,27 +32,25 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
  * */
 void Core0_Main()
 {
-    DIPSwitch.Init(DIPSwitch.Self);
-    DIPSwitch.SetSwitchNum(DIPSwitch.Self,8);
-    TIMx.Init(&TIM_Resources[1].TIMN);
+    //TIMx.Init(&TIM_Resources[1].TIMN);
+
+    //Screen.Init(Screen.Self);
 
     GLED.ON(GLED.Self);
 
-    Motor.SetSpeed(Motor.Self,2000);
-
-    Motor.Update(Motor.Self);
-
-    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(1.0,0.0,0.0));
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(3.2,0.0,0.0));
+    //Screen.Test(Screen.Self);
 
     while(1)
     {
-        //uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
-
-        //Console.WriteLine("Bits = 0x%x",bits);
-
         GLED.Toggle(GLED.Self);
+
+        uint32_t SystimeNow = os.time.getTimems();
+
         os.task.UiUpdate(&UIData,sizeof(UIData));
+
+        uint32_t dt = os.time.getTimems() - SystimeNow;
+
+        Screen.WriteXLine(Screen.Self,17,"Time = %lu",dt);
     }
 }
 
@@ -91,8 +89,6 @@ void Core1_Main()
 void Core2_Main()
 {
     BEEP.ON(BEEP.Self);
-
-    //os.time.delayms(500);
 
     BEEP.OFF(BEEP.Self);
 

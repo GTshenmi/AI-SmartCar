@@ -133,14 +133,21 @@ uint8_t LCD_Init(void *config)
     GPIOx.Init(LCD_CS_GPIO);
 
 #else
-    LCD_HardWareSPIInit(9600);
-    GPIO_PinInit(LCD_DC_GPIO_PIN,GPO,0);
-    GPIO_PinInit(LCD_RST_GPIO_PIN,GPO,0);
+
+    GPIOx.Init(LCD_DC_GPIO);
+    GPIOx.Init(LCD_RST_GPIO);
+    GPIOx.Init(LCD_CS_GPIO);
+
+    LCD_HardWareSPIInit(32000000);
+
+    LCD_CS(0);
+
 #endif
 
     LCD_RST(0);
     LCD_delayms(50);
     LCD_RST(1);
+
     LCD_delayms(50);
     LCD_WriteCmd(0x11);                 //关闭睡眠，振荡器工作
     LCD_delayms(10);
@@ -319,8 +326,10 @@ void LCD_SoftWareWriteCmd(uint8_t cmd)
   * @retval 无
     *
   */
-void LCD_HardWareSPIInit(uint16_t baudrate)
+void LCD_HardWareSPIInit(uint32_t baudrate)
 {
+    *LCD_SPI.BaudRate = baudrate;
+
     SPIx.Init(LCD_SPI);
 }
 
@@ -336,9 +345,21 @@ void LCD_HardWareWriteByte(uint8_t data)
 {
     if(LCD_Enable)
     {
-        LCD_DC=1;
+        LCD_DC(1);
         uint8_t ReceiveData = 0;
-        //SPI_RadeWrite(ADS1292_SPIx, ADS1292_SPI_CS,&data,&ReceiveData,1);
+#if defined(Chip) && (Chip == TC377 || Chip == TC264)
+
+        spix_t *spi = LCD_SPI;
+
+        /* 开始传输 */
+        IfxQspi_SpiMaster_exchange(&g_QspiMasterChannel[spi->SPIn], &data, &ReceiveData,1);
+
+        /* 等待传输结束  */
+        while (IfxQspi_SpiMaster_getStatus(&g_QspiMasterChannel[spi->SPIn]) == SpiIf_Status_busy);
+
+#else
+        SPIx.ReadWriteBytes(LCD_SPI,&data,&ReceiveData,1,SPIx.Time_Infinite);
+#endif
     }
 }
 /**
@@ -369,9 +390,22 @@ void LCD_HardWareWriteCmd(uint8_t cmd)
 {
     if(LCD_Enable)
     {
-        LCD_DC=0;
+        LCD_DC(0);
         uint8_t ReceiveData = 0;
-        SPI_RadeWrite(ADS1292_SPIx, ADS1292_SPI_CS,&cmd,&ReceiveData,1);
+
+#if defined(Chip) && (Chip == TC377 || Chip == TC264)
+
+        spix_t *spi = LCD_SPI;
+
+        /* 开始传输 */
+        IfxQspi_SpiMaster_exchange(&g_QspiMasterChannel[spi->SPIn], &cmd, &ReceiveData,1);
+
+        /* 等待传输结束  */
+        while (IfxQspi_SpiMaster_getStatus(&g_QspiMasterChannel[spi->SPIn]) == SpiIf_Status_busy);
+
+#else
+        SPIx.ReadWriteBytes(LCD_SPI,&cmd,&ReceiveData,1,SPIx.Time_Infinite);
+#endif
     }
 }
 #endif
