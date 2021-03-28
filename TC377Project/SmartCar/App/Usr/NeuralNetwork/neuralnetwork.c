@@ -7,7 +7,6 @@
  *          This file is for the Neural Network.
  */
 #include <neuralnetwork.h>
-#include "NNLayer.h"
 #include "include.h"
 
 model_info_struct Model_Info_Element;

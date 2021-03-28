@@ -4,25 +4,25 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../App/Usr/NeuralNetwork/NNLayer.c \
+../App/Usr/NeuralNetwork/NNLib.c \
 ../App/Usr/NeuralNetwork/element.nncu.c \
 ../App/Usr/NeuralNetwork/neuralnetwork.c \
 ../App/Usr/NeuralNetwork/tracking.nncu.c 
 
 OBJS += \
-./App/Usr/NeuralNetwork/NNLayer.o \
+./App/Usr/NeuralNetwork/NNLib.o \
 ./App/Usr/NeuralNetwork/element.nncu.o \
 ./App/Usr/NeuralNetwork/neuralnetwork.o \
 ./App/Usr/NeuralNetwork/tracking.nncu.o 
 
 COMPILED_SRCS += \
-./App/Usr/NeuralNetwork/NNLayer.src \
+./App/Usr/NeuralNetwork/NNLib.src \
 ./App/Usr/NeuralNetwork/element.nncu.src \
 ./App/Usr/NeuralNetwork/neuralnetwork.src \
 ./App/Usr/NeuralNetwork/tracking.nncu.src 
 
 C_DEPS += \
-./App/Usr/NeuralNetwork/NNLayer.d \
+./App/Usr/NeuralNetwork/NNLib.d \
 ./App/Usr/NeuralNetwork/element.nncu.d \
 ./App/Usr/NeuralNetwork/neuralnetwork.d \
 ./App/Usr/NeuralNetwork/tracking.nncu.d 

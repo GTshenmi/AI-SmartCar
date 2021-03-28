@@ -10,6 +10,7 @@
 
 #include "sys.h"
 #include "model.nncu.h"
+#include "NNLib.h"
 
 #define Model_GetInfo get_model_info
 #define Model_Run run_model
