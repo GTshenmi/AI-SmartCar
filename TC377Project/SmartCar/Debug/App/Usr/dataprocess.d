@@ -262,12 +262,12 @@ dataprocess.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-dataprocess.o :	../App/Usr/NeuralNetwork/model.nncu.h
-../App/Usr/NeuralNetwork/model.nncu.h :
 dataprocess.o :	../App/Usr/NeuralNetwork/NNLib.h
 ../App/Usr/NeuralNetwork/NNLib.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+dataprocess.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
 dataprocess.o :	../App/foo.h
 ../App/foo.h :
 dataprocess.o :	../App/init.h

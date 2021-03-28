@@ -262,12 +262,12 @@ foo.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-foo.o :	../App/Usr/NeuralNetwork/model.nncu.h
-../App/Usr/NeuralNetwork/model.nncu.h :
 foo.o :	../App/Usr/NeuralNetwork/NNLib.h
 ../App/Usr/NeuralNetwork/NNLib.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+foo.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
 foo.o :	../App/init.h
 ../App/init.h :
 foo.o :	../App/app.h

@@ -5,27 +5,23 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../App/Usr/NeuralNetwork/NNLib.c \
-../App/Usr/NeuralNetwork/element.nncu.c \
-../App/Usr/NeuralNetwork/neuralnetwork.c \
-../App/Usr/NeuralNetwork/tracking.nncu.c 
+../App/Usr/NeuralNetwork/NNParameter.c \
+../App/Usr/NeuralNetwork/neuralnetwork.c 
 
 OBJS += \
 ./App/Usr/NeuralNetwork/NNLib.o \
-./App/Usr/NeuralNetwork/element.nncu.o \
-./App/Usr/NeuralNetwork/neuralnetwork.o \
-./App/Usr/NeuralNetwork/tracking.nncu.o 
+./App/Usr/NeuralNetwork/NNParameter.o \
+./App/Usr/NeuralNetwork/neuralnetwork.o 
 
 COMPILED_SRCS += \
 ./App/Usr/NeuralNetwork/NNLib.src \
-./App/Usr/NeuralNetwork/element.nncu.src \
-./App/Usr/NeuralNetwork/neuralnetwork.src \
-./App/Usr/NeuralNetwork/tracking.nncu.src 
+./App/Usr/NeuralNetwork/NNParameter.src \
+./App/Usr/NeuralNetwork/neuralnetwork.src 
 
 C_DEPS += \
 ./App/Usr/NeuralNetwork/NNLib.d \
-./App/Usr/NeuralNetwork/element.nncu.d \
-./App/Usr/NeuralNetwork/neuralnetwork.d \
-./App/Usr/NeuralNetwork/tracking.nncu.d 
+./App/Usr/NeuralNetwork/NNParameter.d \
+./App/Usr/NeuralNetwork/neuralnetwork.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -9,7 +9,6 @@
 #define APP_USR_NEURALNETWORK_NEURALNETWORK_H_
 
 #include "sys.h"
-#include "model.nncu.h"
 #include "NNLib.h"
 
 #define Model_GetInfo get_model_info

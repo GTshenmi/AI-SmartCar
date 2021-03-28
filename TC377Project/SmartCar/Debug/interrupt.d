@@ -260,12 +260,12 @@ interrupt.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-interrupt.o :	../App/Usr/NeuralNetwork/model.nncu.h
-../App/Usr/NeuralNetwork/model.nncu.h :
 interrupt.o :	../App/Usr/NeuralNetwork/NNLib.h
 ../App/Usr/NeuralNetwork/NNLib.h :
 interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+interrupt.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
 interrupt.o :	../App/foo.h
 ../App/foo.h :
 interrupt.o :	../App/init.h

@@ -236,3 +236,5 @@ NNLib.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 NNLib.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+NNLib.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :

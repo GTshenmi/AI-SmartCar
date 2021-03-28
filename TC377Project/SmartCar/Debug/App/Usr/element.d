@@ -262,12 +262,12 @@ element.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 element.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-element.o :	../App/Usr/NeuralNetwork/model.nncu.h
-../App/Usr/NeuralNetwork/model.nncu.h :
 element.o :	../App/Usr/NeuralNetwork/NNLib.h
 ../App/Usr/NeuralNetwork/NNLib.h :
 element.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+element.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
 element.o :	../App/foo.h
 ../App/foo.h :
 element.o :	../App/init.h

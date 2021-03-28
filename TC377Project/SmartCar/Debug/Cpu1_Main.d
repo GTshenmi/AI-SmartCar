@@ -260,12 +260,12 @@ Cpu1_Main.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 Cpu1_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-Cpu1_Main.o :	../App/Usr/NeuralNetwork/model.nncu.h
-../App/Usr/NeuralNetwork/model.nncu.h :
 Cpu1_Main.o :	../App/Usr/NeuralNetwork/NNLib.h
 ../App/Usr/NeuralNetwork/NNLib.h :
 Cpu1_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+Cpu1_Main.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
 Cpu1_Main.o :	../App/foo.h
 ../App/foo.h :
 Cpu1_Main.o :	../App/init.h

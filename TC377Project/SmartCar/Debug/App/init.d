@@ -262,12 +262,12 @@ init.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 init.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-init.o :	../App/Usr/NeuralNetwork/model.nncu.h
-../App/Usr/NeuralNetwork/model.nncu.h :
 init.o :	../App/Usr/NeuralNetwork/NNLib.h
 ../App/Usr/NeuralNetwork/NNLib.h :
 init.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+init.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
 init.o :	../App/foo.h
 ../App/foo.h :
 init.o :	../App/app.h

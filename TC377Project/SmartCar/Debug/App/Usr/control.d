@@ -262,12 +262,12 @@ control.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 control.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-control.o :	../App/Usr/NeuralNetwork/model.nncu.h
-../App/Usr/NeuralNetwork/model.nncu.h :
 control.o :	../App/Usr/NeuralNetwork/NNLib.h
 ../App/Usr/NeuralNetwork/NNLib.h :
 control.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+control.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
 control.o :	../App/foo.h
 ../App/foo.h :
 control.o :	../App/init.h

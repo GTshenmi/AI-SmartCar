@@ -9,6 +9,7 @@
 #define APP_USR_NEURALNETWORK_NNLIB_H_
 
 #include "sys.h"
+#include "NNParameter.h"
 
 #define LAYER_TOTAL         4
 #define LAYER_0_INDIM       3
@@ -24,7 +25,7 @@ typedef struct
     double* weight;             //权重二维矩阵  INDIM * OUTDIM
     double* bais;               //偏置数组      1 * OUTDIM
 
-    double (*ActiveFunc)(double input);
+    double (*Active)(double input);
 
     int inDim;                  //输入维数
     int outDim;                 //输出维数
