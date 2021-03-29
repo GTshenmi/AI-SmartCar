@@ -34,6 +34,7 @@ void UI_Init ()
     {
         KEY[i].Init(KEY[i].Self);
     }
+    DIPSwitch.Init(DIPSwitch.Self);
 
     KEY[0].PressedCallBack = cursorUpPressedCallBack;
     KEY[1].PressedCallBack = cursorDownPressedCallBack;

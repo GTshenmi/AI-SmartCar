@@ -64,5 +64,7 @@ void ADC_InitConfig(ADC_Channel_t channel, unsigned long Freq_Hz);
 unsigned short ADC_Read(ADC_Channel_t chn);
 unsigned short ADC_ReadAverage(ADC_Channel_t  chn, unsigned char count);
 
+extern Ifx_EVADC_G_RES conversionResult;
+extern IfxEvadc_Adc_Channel g_AdcChannel[ADC_CHANNELS_NUM];
 
 #endif /* 0_APPSW_TRICORE_APP_LQ_ADC_H_ */

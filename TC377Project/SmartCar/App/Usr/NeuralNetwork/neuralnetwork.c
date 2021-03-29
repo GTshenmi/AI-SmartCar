@@ -10,7 +10,7 @@
 #include "include.h"
 
 
-void NeuralNetworkInit(void)
+void NeuralNetworkInit(void *data)
 {
 
 }

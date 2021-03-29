@@ -268,6 +268,8 @@ interrupt.o :	../App/Usr/NeuralNetwork/NNParameter.h
 ../App/Usr/NeuralNetwork/NNParameter.h :
 interrupt.o :	../App/foo.h
 ../App/foo.h :
+interrupt.o :	../OS/os.h
+../OS/os.h :
 interrupt.o :	../App/init.h
 ../App/init.h :
 interrupt.o :	../App/app.h

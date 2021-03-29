@@ -28,7 +28,7 @@ double _getWeight(double* arr,int r,int rNum,int c)
     return *(arr + r*rNum + c);
 }
 
-double SignmodActiveFunc(double input)
+double SigmoidActiveFunc(double input)
 {
     return 1/(1 + exp(-input));
 }
@@ -38,12 +38,12 @@ double TanhActiveFunc(double input)
     return (exp(input) - exp(-input))/(exp(input) + exp(-input));
 }
 
-double RuleActiveFunc(double input)
+double ReluActiveFunc(double input)
 {
     return max(0,input);
 }
 
-double RuleActiveFuncLimit8(double input)
+double ReluActiveFuncLimit8(double input)
 {
     double res = max(0,input);
 
@@ -58,7 +58,7 @@ double RuleActiveFuncLimit8(double input)
 *   设置每层的输入维度，输出维度
 *   绑定每层的输出暂存数组
 */
-void NerualNetworkLayerInit(NNLayer_t* model)
+void NNInit(NNLayer_t* model)
 {
     TestModel[0].weight = (double *)W0;
     TestModel[0].bais = B0;
@@ -66,13 +66,11 @@ void NerualNetworkLayerInit(NNLayer_t* model)
     TestModel[0].outDim = 140;
     TestModel[0].outVal = Layer0OutVal;
 
-
     TestModel[1].weight = (double *)W1;
     TestModel[1].bais =B1;
     TestModel[1].inDim = 140;
     TestModel[1].outDim = 100;
     TestModel[1].outVal = Layer1OutVal;
-
 
     TestModel[2].weight = (double *)W2;
     TestModel[2].bais =B2;
@@ -86,9 +84,9 @@ void NerualNetworkLayerInit(NNLayer_t* model)
     TestModel[3].outDim = 1;
     TestModel[3].outVal = Layer3OutVal;
 
-    TestModel[0].Active = RuleActiveFunc;
-    TestModel[1].Active = RuleActiveFunc;
-    TestModel[2].Active = RuleActiveFuncLimit8;
+    TestModel[0].Active = ReluActiveFunc;
+    TestModel[1].Active = ReluActiveFunc;
+    TestModel[2].Active = ReluActiveFuncLimit8;
     TestModel[3].Active = NULL;
 }
 /*
@@ -97,11 +95,11 @@ void NerualNetworkLayerInit(NNLayer_t* model)
  *  @Parameter: input:
  *  @Return:    result
  */
-float NerualNetworkLayerPredict(NNLayer_t* model,double* input)
+float NNForWardReasoning(NNLayer_t* model,double* input,uint32_t layer_num)
 {
     int _indexW,_indexX,_indexLayer;
 
-    for(_indexLayer = 0 ; _indexLayer < LAYER_TOTAL ; _indexLayer++)  //遍历每一层
+    for(_indexLayer = 0 ; _indexLayer < layer_num ; _indexLayer++)  //遍历每一层
     {
         for(_indexW = 0 ; _indexW < model[_indexLayer].outDim ; _indexW++)  //遍历该层的所有神经元
         {

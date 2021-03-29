@@ -32,6 +32,11 @@
 #define BYTE2(dwTemp)       ( *( (char *)(&dwTemp) + 2) )     /*!< uint32_t 数据拆分 byte2  */
 #define BYTE3(dwTemp)       ( *( (char *)(&dwTemp) + 3) )     /*!< uint32_t 数据拆分 byte3  */
 
+
+void ANO_Init()
+{
+    pass;
+}
 /**  发送数据缓存 */
 unsigned char data_to_send[50];
 
@@ -377,6 +382,7 @@ void ANO_Test(void)
 
 ano_debug_t ANO =
 {
+    .Init = ANO_Init,
     .Send = ANO_Send,
 
     .SendBool = ANO_SendBool,

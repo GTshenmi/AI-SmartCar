@@ -21,21 +21,35 @@ void SysTime_Init()
 }
 uint32_t SysTime_Get_Timeus()
 {
-    return STM_GetNowUs(Systime.STM);
+    Ifx_STM * STM = IfxStm_getAddress((IfxStm_Index)Systime.STM);
+    sint32 freq = (sint32)IfxStm_getFrequency(STM)/1000000;
+    Ifx_TickTime stmNow;
+    char      interruptState;
+
+    interruptState = disableInterrupts();
+    stmNow         = (Ifx_TickTime)IfxStm_get(STM) & TIME_INFINITE;
+    restoreInterrupts(interruptState);
+
+    return (unsigned long)(stmNow/freq);
 }
 
 uint32_t SysTime_Get_Timems()
 {
-    return STM_GetNowUs(Systime.STM)/1000;
+    return SysTime_Get_Timeus()/1000;
 }
 uint8_t SysTime_Delayus(uint32_t us)
 {
-    STM_DelayUs(Systime.STM,us);
+    Ifx_STM * STM = IfxStm_getAddress((IfxStm_Index)Systime.STM);
+    uint32 tick = IfxStm_getTicksFromMicroseconds(STM, us);
+
+    IfxStm_waitTicks(STM, tick);
+
     return 0;
 }
 uint8_t SysTime_Delayms(uint32_t ms)
 {
-    STM_DelayUs(Systime.STM,ms * 1000);
+    SysTime_Delayus(ms * 1000);
+
     return 0;
 }
 

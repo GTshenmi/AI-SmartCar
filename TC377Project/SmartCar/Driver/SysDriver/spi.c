@@ -28,19 +28,11 @@ uint8_t SPIx_ReadWriteBytes(spix_t *spi,uint8_t *txData, uint8_t *rxData, uint32
 
     if(spi->Spi_Source == SPI)
     {
-        uint32_t start_time = 0;
-        uint32_t end_time = 0;
         /* SPI传输结构体 */
         IfxAsclin_Spi_exchange(&g_SpiConfig[spi->SPIn], txData, rxData, len);
-        start_time = Systime.Get_Timeus();
-        /* 等待传输结束  */
-        while (IfxAsclin_Spi_getStatus(&g_SpiConfig[spi->SPIn]) == IfxAsclin_Spi_Status_busy)
-        {
-            end_time = Systime.Get_Timeus();
-            if((end_time - start_time) > len * time_out)
-                break;
-        }
 
+        /* 等待传输结束  */
+        while (IfxAsclin_Spi_getStatus(&g_SpiConfig[spi->SPIn]) == IfxAsclin_Spi_Status_busy);
     }
     else if(spi->Spi_Source == QSPI)
     {

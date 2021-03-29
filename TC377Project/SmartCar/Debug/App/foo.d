@@ -2,8 +2,6 @@ foo.o :	../App/foo.c
 ../App/foo.c :
 foo.o :	../App/foo.h
 ../App/foo.h :
-foo.o :	../App/include.h
-../App/include.h :
 foo.o :	../OS/os.h
 ../OS/os.h :
 foo.o :	../Driver/driver.h
@@ -222,6 +220,10 @@ foo.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 foo.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+foo.o :	../App/include.h
+../App/include.h :
+foo.o :	../OS/os.h
+../OS/os.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 foo.o :	../OS/os.h
@@ -268,6 +270,8 @@ foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 foo.o :	../App/Usr/NeuralNetwork/NNParameter.h
 ../App/Usr/NeuralNetwork/NNParameter.h :
+foo.o :	../App/foo.h
+../App/foo.h :
 foo.o :	../App/init.h
 ../App/init.h :
 foo.o :	../App/app.h

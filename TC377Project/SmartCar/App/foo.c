@@ -11,18 +11,18 @@
 FIL ExcelFp;
 FIL ParameterTxtFp;
 
-void DataSaveSysInit()
+void DataSaveSysInit(char * excel_filename,char * txt_filename)
 {
-    f_open(&ExcelFp,"1.xls",FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_OPEN_ALWAYS | FA_CREATE_NEW);
-    f_open(&ParameterTxtFp,"1.txt",FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_OPEN_ALWAYS | FA_CREATE_NEW);
+//    f_open(&ExcelFp,excel_filename,FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_OPEN_ALWAYS | FA_CREATE_NEW);
+//    f_open(&ParameterTxtFp,txt_filename,FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_OPEN_ALWAYS | FA_CREATE_NEW);
 }
-void DataSaveSysDeInit()
+void DataSaveSysDeInit(FIL *excel_fp,FIL *txt_fp)
 {
-    f_close(&ExcelFp);
-    f_close(&ParameterTxtFp);
+    f_close(excel_fp);
+    f_close(txt_fp);
 }
 
-void SavePIDStrToSDCard(PID_TypeDef *PID,char *name)
+void SavePIDStrToSDCard(PID_TypeDef *PID,char * name)
 {
     f_printf(&ParameterTxtFp,"%s.Gain.Input = %f;\n",name,PID->Gain.Input);
     f_printf(&ParameterTxtFp,"%s.Gain.Input = %f;\n",name,PID->Gain.Output);

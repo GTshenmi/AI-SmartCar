@@ -48,23 +48,6 @@ void Servo_SensorUnitRun(struct unit *self,void *argv,uint16_t argc)
 
         //ANO.Send("%f",data->N_LADC[0]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /*通知神经网络开始解算*/
         if(data->AI_State == AI_Free)
             data->AI_State = AI_Start;

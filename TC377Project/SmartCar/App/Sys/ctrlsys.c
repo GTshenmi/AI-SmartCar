@@ -5,6 +5,7 @@
  *      Author: 936305695
  */
 #include <ctrlsys.h>
+#include "include.h"
 #include "os.h"
 
 void ServoCtrlSysInit()
@@ -14,6 +15,10 @@ void ServoCtrlSysInit()
     SSU.Start(SSU.Self);
     SDU.Start(SDU.Self);
     SEU.Start(SEU.Self);
+
+    SEU.Run = Servo_ExecutionUnitRun;
+    SSU.Run = Servo_SensorUnitRun;
+    SDU.Run = Servo_DecisionUnitRun_AutoBootMode;
 }
 void MotorCtrlSysInit()
 {
@@ -22,6 +27,10 @@ void MotorCtrlSysInit()
     MSU.Start(MSU.Self);
     MDU.Start(MDU.Self);
     MEU.Start(MEU.Self);
+
+    MEU.Run = Motor_ExecutionUnitRun;
+    MSU.Run = Motor_SensorUnitRun;
+    MDU.Run = Motor_DecisionUnitRun_AutoBootMode;
 }
 
 void Unit_Init(struct unit *self);

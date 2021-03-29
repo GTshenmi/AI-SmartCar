@@ -36,12 +36,33 @@ uint8_t PWMx_Write(pwmx_t *pwm,unsigned long duty)
     if(pwm_source == TOM)
     {
         IfxGtm_Tom_ToutMap *pin =(IfxGtm_Tom_ToutMap *) pwm->Pin;
-        TOM_PWM_SetDuty(*pin,pwm->Duty,pwm->Freq);
+
+        unsigned long period = TOM_PWM_CLK / pwm->Freq;                         //设置输出周期
+        unsigned long dutyCycle = (unsigned long)(duty * ((float)period / TOM_PWM_MAX));//设置占空比
+
+        Ifx_GTM_TOM     *atomSFR = &MODULE_GTM.TOM[pin->tom];
+
+        //设置频率
+//        IfxGtm_Tom_Ch_setCompareZeroShadow(atomSFR, pin.channel, period);
+
+        //设置占空比
+        IfxGtm_Tom_Ch_setCompareOneShadow(atomSFR, pin->channel, dutyCycle);
     }
     else if(pwm_source == ATOM)
     {
         IfxGtm_Atom_ToutMap *pin =(IfxGtm_Atom_ToutMap *) pwm->Pin;
-        ATOM_PWM_SetDuty(*pin,pwm->Duty,pwm->Freq);
+
+        unsigned long period = ATOM_PWM_CLK / pwm->Freq;                         //设置输出周期
+        unsigned long dutyCycle = (unsigned long)(duty * ((float)period / ATOM_PWM_MAX));//设置占空比
+
+        Ifx_GTM_ATOM     *atomSFR = &MODULE_GTM.ATOM[pin->atom];
+
+        //设置频率
+//        IfxGtm_Atom_Ch_setCompareZeroShadow(atomSFR, pin.channel, period);
+
+        //设置占空比
+        IfxGtm_Atom_Ch_setCompareOneShadow(atomSFR, pin->channel, dutyCycle);
+
     }
     else
         return 0;

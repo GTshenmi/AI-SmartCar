@@ -35,8 +35,8 @@ typedef struct
 
 extern NNLayer_t TestModel[4]; // 4 ²ã
 
-void NerualNetworkLayerInit(NNLayer_t* model);
-float NerualNetworkLayerPredict(NNLayer_t* model,double* input);
+void NNInit(NNLayer_t* model);
+float NNForWardReasoning(NNLayer_t* model,double* input,uint32_t layer_num);
 
 
 

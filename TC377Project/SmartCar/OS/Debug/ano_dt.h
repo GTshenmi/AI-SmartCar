@@ -44,6 +44,7 @@ typedef struct ano_debug
  *       Send("%f%u16%s8%s32",&x,&y,&z,&i);
  *
  */
+    void (*Init)(void);
     void (*Send)(char *fmt,...);
 
     void (*SendBool)(void *data);

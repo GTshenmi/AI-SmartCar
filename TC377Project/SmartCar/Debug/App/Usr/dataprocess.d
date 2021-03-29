@@ -270,6 +270,8 @@ dataprocess.o :	../App/Usr/NeuralNetwork/NNParameter.h
 ../App/Usr/NeuralNetwork/NNParameter.h :
 dataprocess.o :	../App/foo.h
 ../App/foo.h :
+dataprocess.o :	../OS/os.h
+../OS/os.h :
 dataprocess.o :	../App/init.h
 ../App/init.h :
 dataprocess.o :	../App/app.h

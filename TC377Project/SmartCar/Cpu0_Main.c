@@ -35,11 +35,19 @@ int core0_main (void)
     Core0_HardWareInit();
     Core0_SoftWareInit();
 
+#if defined(Debug)
+    Console.WriteLine("Sync Finished.");
+#endif
+
     // 开启CPU总中断
     IfxCpu_enableInterrupts();
 
     // 通知CPU2、CPU1，CPU0初始化完成
     IfxCpu_releaseMutex(&mutexCpu0InitIsOk);
+
+#if defined(Debug)
+    Console.WriteLine("Core0 Run To Main.");
+#endif
 
     Core0_Main();
 

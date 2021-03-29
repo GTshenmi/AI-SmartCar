@@ -40,6 +40,11 @@ char *ElementTypeDictionary[] =\
     "NULL"\
 };
 
+void ParameterInit(void *data)
+{
+
+}
+
 char *GetCarState(uint index)
 {
     return CarStateDictionary[index];
@@ -68,6 +73,7 @@ data_t Data[MAX_DATA_LEN] =
                 .ReportMotorData = 0,
                 .ReportSensorData = 0,
                 .ReportServoData = 0,
+                .AI_State = AI_Free,
         },
         [1] = {
                 .Cache = 0,
@@ -75,6 +81,7 @@ data_t Data[MAX_DATA_LEN] =
                 .ReportMotorData = 0,
                 .ReportSensorData = 0,
                 .ReportServoData = 0,
+                .AI_State = AI_Free,
         },
         [2] = {
                 .Cache = 0,
@@ -82,6 +89,7 @@ data_t Data[MAX_DATA_LEN] =
                 .ReportMotorData = 0,
                 .ReportSensorData = 0,
                 .ReportServoData = 0,
+                .AI_State = AI_Free,
         },
         [3] = {
                 .Cache = 0,
@@ -89,6 +97,7 @@ data_t Data[MAX_DATA_LEN] =
                 .ReportMotorData = 0,
                 .ReportSensorData = 0,
                 .ReportServoData = 0,
+                .AI_State = AI_Free,
         },
 };
 

@@ -17,6 +17,9 @@
 #include <stdarg.h>
 #include "stdlib.h"
 
+/*Debug Mode: #define Debug.*/
+#define Debug
+
 #define TC264 0
 #define TC377 1
 #define RT1064 2
@@ -28,6 +31,10 @@
 #define or ||
 #define public /*public*/
 #define private /*private*/
+
+#define pass
+
+typedef char * string;
 
 #ifndef uint8_t
 #define uint8_t unsigned char

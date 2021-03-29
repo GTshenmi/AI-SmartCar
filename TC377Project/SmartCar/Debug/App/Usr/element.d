@@ -270,6 +270,8 @@ element.o :	../App/Usr/NeuralNetwork/NNParameter.h
 ../App/Usr/NeuralNetwork/NNParameter.h :
 element.o :	../App/foo.h
 ../App/foo.h :
+element.o :	../OS/os.h
+../OS/os.h :
 element.o :	../App/init.h
 ../App/init.h :
 element.o :	../App/app.h

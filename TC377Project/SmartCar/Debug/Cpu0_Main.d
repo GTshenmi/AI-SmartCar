@@ -268,6 +268,8 @@ Cpu0_Main.o :	../App/Usr/NeuralNetwork/NNParameter.h
 ../App/Usr/NeuralNetwork/NNParameter.h :
 Cpu0_Main.o :	../App/foo.h
 ../App/foo.h :
+Cpu0_Main.o :	../OS/os.h
+../OS/os.h :
 Cpu0_Main.o :	../App/init.h
 ../App/init.h :
 Cpu0_Main.o :	../App/app.h

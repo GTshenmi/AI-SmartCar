@@ -270,6 +270,8 @@ app.o :	../App/Usr/NeuralNetwork/NNParameter.h
 ../App/Usr/NeuralNetwork/NNParameter.h :
 app.o :	../App/foo.h
 ../App/foo.h :
+app.o :	../OS/os.h
+../OS/os.h :
 app.o :	../App/init.h
 ../App/init.h :
 app.o :	../App/test.h

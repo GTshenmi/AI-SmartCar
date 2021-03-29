@@ -12,31 +12,22 @@
 
 void UIParameterInit(void);
 
-//void KeyPressedCallBack (struct key *self, void *argv, uint16_t argc)
-//{
-//    for(int i = 0 ; i < 6 ; i++)
-//    {
-//        if(self == KEY[i].Self)
-//            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
-//    }
-//}
 void BeepOffTimerCallBack(void *argc,unsigned short argv)
 {
     BEEP.OFF(BEEP.Self);
 }
 
-/*
- * @Brief:  核心0硬件设备初始化
- * @Attention: 不要在此函数中初始化定时器或中断,放到SoftWareInit后面
- * */
 void Core0_HardWareInit()
 {
     data_pointer = CarMode;
+
+    /*Init Motor.*/
     Motor.Init(Motor.Self);
     Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
     Motor.CtrlStrategy = MotorCtrlStrategy;
     Motor.Start(Motor.Self);
 
+    /*Init Servo.*/
     Servo.Init(Servo.Self);
     Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
     Servo.SetAngleLimit(Servo.Self,200.0,-200.0);
@@ -46,12 +37,11 @@ void Core0_HardWareInit()
     Servo.SetAngle(Servo.Self,0);
     Servo.Update(Servo.Self);
 
+    /*Init Sensor.*/
     for(int i = 0;i<CData.MaxLADCDeviceNum;i++)
     {
         LESensor[i].Init(LESensor[i].Self);
         LESensor[i].EnableFilter(LESensor[i].Self,true);
-//        LESensor[i].EnableGain(LESensor[i].Self,true);
-//        LESensor[i].SetGain(LESensor[i].Self,1.5);
     }
     for(int i = 0;i<CData.MaxSADCDeviceNum;i++)
     {
@@ -59,94 +49,77 @@ void Core0_HardWareInit()
         SESensor[i].EnableFilter(SESensor[i].Self,true);
     }
 
+    /*Init LED And BEEP.*/
     GLED.Init(GLED.Self);
     BLED.Init(BLED.Self);
 
     BEEP.Init(BEEP.Self);
 
-#if 0
-    //CUART.Init(CUART.Self);
-    //DebugCom.Init(DebugCom.Self);
-#else
+    /*Init Debug Console.*/
+
     Console.Init();
-#endif
+
+    /*Init User Interface.*/
 
     UIParameterInit();
 
     UI_Init();
 
-    DIPSwitch.Init(DIPSwitch.Self);
-
-/* System Init Finished,BEEP ON */
+    /* System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
-/*Set BEEP OFF 1 sec later*/
+    /*Set BEEP OFF 1 sec later*/
     os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
+
+#if defined(Debug)
+    Console.WriteLine("HardWare System Init Finished.");
+#endif
+
 }
 
-/*
- * @Brief:  核心0软件初始化(参数/函数指针初始化)
- * */
 void Core0_SoftWareInit()
 {
+    /*Init Control System.*/
     ServoCtrlSysInit();
     MotorCtrlSysInit();
-
-    /*其他单元不需要划分，可以共用同一个函数，如果需要划分可以仿照DecisionUnit更改*/
-
-    MEU.Run = Motor_ExecutionUnitRun;
-    SEU.Run = Servo_ExecutionUnitRun;
-    MSU.Run = Motor_SensorUnitRun;
-    SSU.Run = Servo_SensorUnitRun;
-
+    /*Init PID Controller.*/
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
-
-
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
     PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,1.0));
-
-    MDU.Run = Motor_DecisionUnitRun_AutoBootMode;
-    SDU.Run = Servo_DecisionUnitRun_AutoBootMode;
-    Data[data_pointer].AI_State = AI_Free;
-
     PID_SetValue(&Data[data_pointer].M_PID,PIDValue(1.0,0.0,0.0));
     PID_SetValue(&Data[data_pointer].S_PID,PIDValue(3.2,0.0,0.0));
 
-//    Console.WriteLine("SoftWare System Init Finished.");
-//    Console.WriteLine("Wait For Core Sync...");
+    /*Init Data Save System.*/
+    DataSaveSysInit("1.xls","1.txt");
+
+    /*Init Debug System.*/
+    ANO.Init();
+
+    /*Init NerualNetWork.*/
+    NeuralNetworkInit(NULL);
+
+    /*Init Parameter.*/
+    ParameterInit(&Data[data_pointer]);
+
+#if defined(Debug)
+    Console.WriteLine("SoftWare System Init Finished.");
+    Console.WriteLine("Wait For Core Sync...");
+#endif
 }
 
-/*
- * @Brief:  核心1硬件设备初始化
- * @Attention: 不要在此函数中初始化定时器或中断,放到SoftWareInit后面
- * */
 void Core1_HardWareInit()
 {
 
 }
-/*
- * @Brief:  核心1软件初始化(参数/函数指针初始化)
- * */
 void Core1_SoftWareInit()
 {
 
 }
 
-
-
-
-
-/*
- * @Brief:  核心2硬件设备初始化
- * @Attention: 不要在此函数中初始化定时器或中断,放到SoftWareInit后面
- * */
 void Core2_HardWareInit()
 {
 
 }
-/*
- * @Brief:  核心2软件初始化(参数/函数指针初始化)
- * */
 void Core2_SoftWareInit()
 {
 

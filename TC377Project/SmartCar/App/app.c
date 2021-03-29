@@ -10,14 +10,6 @@
 #include <app.h>
 #include "include.h"
 
-
-model_info_struct Model1_Info;
-sint16_t angle = 0;
-sint16_t servo_value = 0;
-sint16_t temp = 0;
-sint8_t ad_data[7] = {-124,-107,-59,-14,30,-117,1};
-
-
 void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
 {
     for(int i = 0 ; i < 6 ; i++)
@@ -34,11 +26,7 @@ void Core0_Main()
 {
     //TIMx.Init(&TIM_Resources[1].TIMN);
 
-    //Screen.Init(Screen.Self);
-
     GLED.ON(GLED.Self);
-
-    //Screen.Test(Screen.Self);
 
     while(1)
     {

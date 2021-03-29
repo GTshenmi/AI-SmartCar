@@ -270,6 +270,8 @@ neuralnetwork.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 neuralnetwork.o :	../App/foo.h
 ../App/foo.h :
+neuralnetwork.o :	../OS/os.h
+../OS/os.h :
 neuralnetwork.o :	../App/init.h
 ../App/init.h :
 neuralnetwork.o :	../App/app.h

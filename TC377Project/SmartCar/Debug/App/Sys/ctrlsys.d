@@ -4,6 +4,8 @@ ctrlsys.o :	../App/Sys/ctrlsys.h
 ../App/Sys/ctrlsys.h :
 ctrlsys.o :	../Driver/SysDriver/platform.h
 ../Driver/SysDriver/platform.h :
+ctrlsys.o :	../App/include.h
+../App/include.h :
 ctrlsys.o :	../OS/os.h
 ../OS/os.h :
 ctrlsys.o :	../Driver/driver.h
@@ -220,3 +222,59 @@ ctrlsys.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 ctrlsys.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+ctrlsys.o :	../OS/os.h
+../OS/os.h :
+ctrlsys.o :	../App/Sys/filter.h
+../App/Sys/filter.h :
+ctrlsys.o :	../App/Sys/kalman_filter.h
+../App/Sys/kalman_filter.h :
+ctrlsys.o :	../App/Sys/pid_ctrl.h
+../App/Sys/pid_ctrl.h :
+ctrlsys.o :	../App/Sys/sort.h
+../App/Sys/sort.h :
+ctrlsys.o :	../App/Sys/matrix.h
+../App/Sys/matrix.h :
+ctrlsys.o :	../App/Sys/sysmath.h
+../App/Sys/sysmath.h :
+ctrlsys.o :	../App/Usr/usr.h
+../App/Usr/usr.h :
+ctrlsys.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/control.h
+../App/Usr/control.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/dataprocess.h
+../App/Usr/dataprocess.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/element.h
+../App/Usr/element.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
+../App/Usr/NeuralNetwork/neuralnetwork.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/NNLib.h
+../App/Usr/NeuralNetwork/NNLib.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/NNParameter.h
+../App/Usr/NeuralNetwork/NNParameter.h :
+ctrlsys.o :	../App/foo.h
+../App/foo.h :
+ctrlsys.o :	../OS/os.h
+../OS/os.h :
+ctrlsys.o :	../App/init.h
+../App/init.h :
+ctrlsys.o :	../App/app.h
+../App/app.h :
+ctrlsys.o :	../App/test.h
+../App/test.h :
+ctrlsys.o :	../OS/os.h
+../OS/os.h :

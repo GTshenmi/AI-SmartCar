@@ -71,6 +71,8 @@ typedef struct
 
 }constdata_t;
 
+void ParameterInit(void *data);
+
 char *GetCarState(uint index);
 char *GetCarMode(uint index);
 char *GetAIState(uint index);

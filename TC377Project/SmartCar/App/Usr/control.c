@@ -16,11 +16,9 @@
  * */
 void Motor_ExecutionUnitRun(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *data =(data_t *) argv;
-
     if(self->State == CtrlSys_Running)
     {
-        Motor.SetSpeed(Motor.Self,data->Speed);
+        Motor.Update(Motor.Self);
     }
 }
 /*
@@ -29,11 +27,9 @@ void Motor_ExecutionUnitRun(struct unit *self,void *argv,uint16_t argc)
  * */
 void Servo_ExecutionUnitRun(struct unit *self,void *argv,uint16_t argc)
 {
-    data_t *data =(data_t *) argv;
-
     if(self->State == CtrlSys_Running)
     {
-        Servo.SetAngle(Servo.Self,data->Angle);
+        Servo.Update(Servo.Self);
     }
 }
 
