@@ -17,18 +17,18 @@ void Core0_CheckStatus()
     times++;
     if(times % 3 == 0)
     {
-        Screen.ClearLine(Screen.Self,16,WHITE);
-        Screen.WriteXLine(Screen.Self,16,"Core0 Running.");
+        Screen.ClearLine(Screen.Self,17,WHITE);
+        Screen.WriteXLine(Screen.Self,17,"Core0 Running.");
     }
     else if(times % 3 == 1)
     {
-        Screen.ClearLine(Screen.Self,16,WHITE);
-        Screen.WriteXLine(Screen.Self,16,"Core0 Running..");
+        Screen.ClearLine(Screen.Self,17,WHITE);
+        Screen.WriteXLine(Screen.Self,17,"Core0 Running..");
     }
     else
     {
-        Screen.ClearLine(Screen.Self,16,WHITE);
-        Screen.WriteXLine(Screen.Self,16,"Core0 Running...");
+        Screen.ClearLine(Screen.Self,17,WHITE);
+        Screen.WriteXLine(Screen.Self,17,"Core0 Running...");
     }
 
 #if defined(Debug)
@@ -43,18 +43,18 @@ void Core1_CheckStatus()
     times++;
     if(times % 3 == 0)
     {
-        Screen.ClearLine(Screen.Self,17,WHITE);
-        Screen.WriteXLine(Screen.Self,17,"Core1 Running.");
+        Screen.ClearLine(Screen.Self,18,WHITE);
+        Screen.WriteXLine(Screen.Self,18,"Core1 Running.");
     }
     else if(times % 3 == 1)
     {
-        Screen.ClearLine(Screen.Self,17,WHITE);
-        Screen.WriteXLine(Screen.Self,17,"Core1 Running..");
+        Screen.ClearLine(Screen.Self,18,WHITE);
+        Screen.WriteXLine(Screen.Self,18,"Core1 Running..");
     }
     else
     {
-        Screen.ClearLine(Screen.Self,17,WHITE);
-        Screen.WriteXLine(Screen.Self,17,"Core1 Running...");
+        Screen.ClearLine(Screen.Self,18,WHITE);
+        Screen.WriteXLine(Screen.Self,18,"Core1 Running...");
     }
 
 #if defined(Debug)
@@ -69,18 +69,18 @@ void Core2_CheckStatus()
     times++;
     if(times % 3 == 0)
     {
-        Screen.ClearLine(Screen.Self,18,WHITE);
-        Screen.WriteXLine(Screen.Self,18,"Core2 Running.");
+        Screen.ClearLine(Screen.Self,19,WHITE);
+        Screen.WriteXLine(Screen.Self,19,"Core2 Running.");
     }
     else if(times % 3 == 1)
     {
-        Screen.ClearLine(Screen.Self,18,WHITE);
-        Screen.WriteXLine(Screen.Self,18,"Core2 Running..");
+        Screen.ClearLine(Screen.Self,19,WHITE);
+        Screen.WriteXLine(Screen.Self,19,"Core2 Running..");
     }
     else
     {
-        Screen.ClearLine(Screen.Self,18,WHITE);
-        Screen.WriteXLine(Screen.Self,18,"Core2 Running...");
+        Screen.ClearLine(Screen.Self,19,WHITE);
+        Screen.WriteXLine(Screen.Self,19,"Core2 Running...");
     }
 
 #if defined(Debug)

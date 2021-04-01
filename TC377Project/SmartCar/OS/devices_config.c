@@ -140,8 +140,8 @@ servo_ctrl_t Servo =/*ok*/
 
 screen_t Screen = /*ok*/
 {
-        .Hight = 160,
-        .Width = 128,
+        .Hight = 162,
+        .Width = 130,
         .Font = {
                 .Type = 1,
                 .Hight = 8,
