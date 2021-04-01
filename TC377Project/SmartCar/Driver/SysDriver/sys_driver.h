@@ -8,7 +8,7 @@
 #ifndef DRIVER_SYSDRIVER_SYS_DRIVER_H_
 #define DRIVER_SYSDRIVER_SYS_DRIVER_H_
 
-#include "sys_driverlq.h"
+#include "common.h"
 #include "platform.h"
 #include "adc.h"
 #include "enc.h"
@@ -20,7 +20,6 @@
 #include "iic.h"
 #include "dma.h"
 #include "systime.h"
-#include "henv.h"
 #include "resource_config.h"
 
 

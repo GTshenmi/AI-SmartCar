@@ -195,5 +195,240 @@ void PIN_INT3_IRQHandler(void)
 
 }
 
+/**
+  * @brief    QSPI0_RX_IRQHandler中断服务函数
+  * @note     QSPI0 接收中断服务函数
+  */
+void QSPI0_RX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrReceive(&g_QSPIConfig[0]);
+
+    /* 用户代码 */
+}
+
+void QSPI0_TX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrTransmit(&g_QSPIConfig[0]);
+    /* 用户代码 */
+}
+
+void QSPI0_ER_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrError(&g_QSPIConfig[0]);
+    /* 用户代码 */
+}
+
+void QSPI1_RX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrReceive(&g_QSPIConfig[1]);
+    /* 用户代码 */
+}
+
+void QSPI1_TX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrTransmit(&g_QSPIConfig[1]);
+    /* 用户代码 */
+}
+
+void QSPI1_ER_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrError(&g_QSPIConfig[1]);
+    /* 用户代码 */
+}
+
+void QSPI2_RX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrReceive(&g_QSPIConfig[2]);
+    /* 用户代码 */
+}
+
+void QSPI2_TX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrTransmit(&g_QSPIConfig[2]);
+    /* 用户代码 */
+}
+
+void QSPI2_ER_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrError(&g_QSPIConfig[2]);
+    /* 用户代码 */
+}
+
+void QSPI3_RX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrReceive(&g_QSPIConfig[3]);
+    /* 用户代码 */
+}
+
+void QSPI3_TX_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrTransmit(&g_QSPIConfig[3]);
+    /* 用户代码 */
+}
+
+void QSPI3_ER_IRQHandler(void)
+{
+    IfxQspi_SpiMaster_isrError(&g_QSPIConfig[3]);
+    /* 用户代码 */
+}
 
 
+/**
+  * @brief    SPI0_RX_IRQHandler中断服务函数
+  * @note     SPI0 接收中断服务函数
+  */
+void SPI0_RX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrReceive(&g_SpiConfig[0]);
+    /* 用户代码 */
+}
+
+void SPI0_TX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrTransmit(&g_SpiConfig[0]);
+    /* 用户代码 */
+}
+
+void SPI0_ER_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrError(&g_SpiConfig[0]);
+    /* 用户代码 */
+}
+
+void SPI1_RX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrReceive(&g_SpiConfig[1]);
+    /* 用户代码 */
+}
+
+void SPI1_TX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrTransmit(&g_SpiConfig[1]);
+    /* 用户代码 */
+}
+
+void SPI1_ER_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrError(&g_SpiConfig[1]);
+    /* 用户代码 */
+}
+
+void SPI2_RX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrReceive(&g_SpiConfig[2]);
+    /* 用户代码 */
+}
+
+void SPI2_TX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrTransmit(&g_SpiConfig[2]);
+    /* 用户代码 */
+}
+
+void SPI2_ER_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrError(&g_SpiConfig[2]);
+    /* 用户代码 */
+}
+
+void SPI3_RX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrReceive(&g_SpiConfig[3]);
+    /* 用户代码 */
+}
+
+void SPI3_TX_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrTransmit(&g_SpiConfig[3]);
+    /* 用户代码 */
+}
+
+void SPI3_ER_IRQHandler(void)
+{
+    IfxAsclin_Spi_isrError(&g_SpiConfig[3]);
+    /* 用户代码 */
+}
+
+void UART0_RX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrReceive(&g_UartConfig[0]);
+
+    /* 用户代码 */
+}
+
+void UART0_TX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrTransmit(&g_UartConfig[0]);
+
+    /* 用户代码 */
+}
+
+void UART0_ER_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrError(&g_UartConfig[0]);
+
+    /* 用户代码 */
+}
+
+void UART1_RX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrReceive(&g_UartConfig[1]);
+
+    /* 用户代码 */
+}
+
+void UART1_TX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrTransmit(&g_UartConfig[1]);
+
+    /* 用户代码 */
+}
+
+void UART1_ER_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrError(&g_UartConfig[1]);
+
+    /* 用户代码 */
+}
+
+void UART2_RX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrReceive(&g_UartConfig[2]);
+
+    /* 用户代码 */
+}
+
+void UART2_TX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrTransmit(&g_UartConfig[2]);
+
+    /* 用户代码 */
+}
+
+void UART2_ER_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrError(&g_UartConfig[2]);
+
+    /* 用户代码 */
+}
+
+void UART3_RX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrReceive(&g_UartConfig[3]);
+
+    /* 用户代码 */
+}
+
+void UART3_TX_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrTransmit(&g_UartConfig[3]);
+
+    /* 用户代码 */
+}
+
+void UART3_ER_IRQHandler(void)
+{
+    IfxAsclin_Asc_isrError(&g_UartConfig[3]);
+
+    /* 用户代码 */
+}

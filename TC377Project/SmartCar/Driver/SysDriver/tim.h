@@ -8,8 +8,7 @@
 #ifndef DRIVER_SYSDRIVER_TIM_H_
 #define DRIVER_SYSDRIVER_TIM_H_
 
-#include "LQ_CCU6.h"
-#include "LQ_STM.h"
+#include "common.h"
 #include "platform.h"
 
 typedef enum

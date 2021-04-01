@@ -8,7 +8,7 @@
 #ifndef DRIVER_USRDRIVER_GPIO_H_
 #define DRIVER_USRDRIVER_GPIO_H_
 
-#include "LQ_GPIO.h"
+#include "common.h"
 #include "platform.h"
 
 typedef enum

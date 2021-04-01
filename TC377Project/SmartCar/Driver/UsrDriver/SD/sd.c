@@ -61,6 +61,7 @@ uint8_t SD_WaitReady(void)
 		if(SD_SPIReadWriteByte(0XFF)==0XFF)return 0;//OK
 		t++;		  	
 	}while(t<0XFFFFFF);//µÈ´ý 
+
 	return 1;
 }
 

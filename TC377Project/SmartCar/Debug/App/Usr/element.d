@@ -10,8 +10,10 @@ element.o :	../Driver/driver.h
 ../Driver/driver.h :
 element.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
-element.o :	../Driver/SysDriverLQ/sys_driverlq.h
-../Driver/SysDriverLQ/sys_driverlq.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
+element.o :	../Driver/SysDriverLQ/ifx_hal.h
+../Driver/SysDriverLQ/ifx_hal.h :
 element.o :	../Configurations/Ifx_Cfg.h
 ../Configurations/Ifx_Cfg.h :
 element.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
@@ -48,42 +50,8 @@ element.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 element.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
-element.o :	../Driver/SysDriverLQ/LQ_ADC.h
-../Driver/SysDriverLQ/LQ_ADC.h :
-element.o :	../Driver/SysDriverLQ/LQ_CCU6.h
-../Driver/SysDriverLQ/LQ_CCU6.h :
-element.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
-../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-element.o :	../Driver/SysDriverLQ/LQ_DMA.h
-../Driver/SysDriverLQ/LQ_DMA.h :
-element.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
-../Driver/SysDriverLQ/LQ_EEPROM.h :
-element.o :	../Driver/SysDriverLQ/LQ_GPIO.h
-../Driver/SysDriverLQ/LQ_GPIO.h :
-element.o :	../Driver/SysDriverLQ/LQ_GPSR.h
-../Driver/SysDriverLQ/LQ_GPSR.h :
-element.o :	../Driver/SysDriverLQ/LQ_GPT12_ENC.h
-../Driver/SysDriverLQ/LQ_GPT12_ENC.h :
-element.o :	../Driver/SysDriverLQ/LQ_GTM.h
-../Driver/SysDriverLQ/LQ_GTM.h :
-element.o :	../Driver/SysDriverLQ/LQ_QSPI.h
-../Driver/SysDriverLQ/LQ_QSPI.h :
 element.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
-element.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
-../Libraries/Service/CpuGeneric/If/SpiIf.h :
-element.o :	../Driver/SysDriverLQ/LQ_SOFTI2C.h
-../Driver/SysDriverLQ/LQ_SOFTI2C.h :
-element.o :	../Driver/SysDriverLQ/LQ_GPIO.h
-../Driver/SysDriverLQ/LQ_GPIO.h :
-element.o :	../Driver/SysDriverLQ/LQ_SPI.h
-../Driver/SysDriverLQ/LQ_SPI.h :
-element.o :	../Driver/SysDriverLQ/LQ_STM.h
-../Driver/SysDriverLQ/LQ_STM.h :
-element.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
-../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
-element.o :	../Driver/SysDriverLQ/LQ_UART.h
-../Driver/SysDriverLQ/LQ_UART.h :
 element.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
 element.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
@@ -94,54 +62,50 @@ element.o :	../Driver/SysDriver/platform.h
 ../Driver/SysDriver/platform.h :
 element.o :	../Driver/SysDriver/adc.h
 ../Driver/SysDriver/adc.h :
-element.o :	../Driver/SysDriverLQ/LQ_ADC.h
-../Driver/SysDriverLQ/LQ_ADC.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/enc.h
 ../Driver/SysDriver/enc.h :
-element.o :	../Driver/SysDriverLQ/LQ_GPT12_ENC.h
-../Driver/SysDriverLQ/LQ_GPT12_ENC.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/gpio.h
 ../Driver/SysDriver/gpio.h :
-element.o :	../Driver/SysDriverLQ/LQ_GPIO.h
-../Driver/SysDriverLQ/LQ_GPIO.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/pwm.h
 ../Driver/SysDriver/pwm.h :
-element.o :	../Driver/SysDriverLQ/LQ_GTM.h
-../Driver/SysDriverLQ/LQ_GTM.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/tim.h
 ../Driver/SysDriver/tim.h :
-element.o :	../Driver/SysDriverLQ/LQ_CCU6.h
-../Driver/SysDriverLQ/LQ_CCU6.h :
-element.o :	../Driver/SysDriverLQ/LQ_STM.h
-../Driver/SysDriverLQ/LQ_STM.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/uart.h
 ../Driver/SysDriver/uart.h :
-element.o :	../Driver/SysDriverLQ/LQ_UART.h
-../Driver/SysDriverLQ/LQ_UART.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/spi.h
 ../Driver/SysDriver/spi.h :
-element.o :	../Driver/SysDriverLQ/LQ_QSPI.h
-../Driver/SysDriverLQ/LQ_QSPI.h :
-element.o :	../Driver/SysDriverLQ/LQ_SPI.h
-../Driver/SysDriverLQ/LQ_SPI.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-element.o :	../Driver/SysDriverLQ/LQ_STM.h
-../Driver/SysDriverLQ/LQ_STM.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
+element.o :	../Driver/SysDriver/tim.h
+../Driver/SysDriver/tim.h :
 element.o :	../Driver/SysDriver/iic.h
 ../Driver/SysDriver/iic.h :
-element.o :	../Driver/SysDriverLQ/LQ_GPIO.h
-../Driver/SysDriverLQ/LQ_GPIO.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
+element.o :	../Driver/SysDriver/gpio.h
+../Driver/SysDriver/gpio.h :
 element.o :	../Driver/SysDriver/dma.h
 ../Driver/SysDriver/dma.h :
-element.o :	../Driver/SysDriverLQ/LQ_DMA.h
-../Driver/SysDriverLQ/LQ_DMA.h :
+element.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-element.o :	../Driver/SysDriver/henv.h
-../Driver/SysDriver/henv.h :
-element.o :	../Driver/SysDriverLQ/sys_driverlq.h
-../Driver/SysDriverLQ/sys_driverlq.h :
 element.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 element.o :	../Driver/SysDriver/sys_driver.h

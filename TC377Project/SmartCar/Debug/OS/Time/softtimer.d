@@ -44,17 +44,55 @@ softtimer.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 softtimer.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-softtimer.o :	../Driver/SysDriverLQ/LQ_STM.h
-../Driver/SysDriverLQ/LQ_STM.h :
+softtimer.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
+softtimer.o :	../Driver/SysDriverLQ/ifx_hal.h
+../Driver/SysDriverLQ/ifx_hal.h :
 softtimer.o :	../Configurations/Ifx_Cfg.h
 ../Configurations/Ifx_Cfg.h :
 softtimer.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
-softtimer.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
-../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
+../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/TPwm.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/TPwm.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/Timer.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/Timer.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/Icu.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/Icu.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/PwmHl.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/PwmHl.h :
+softtimer.o :	../Driver/SysDriverLQ/ConfigurationIsr.h
+../Driver/SysDriverLQ/ConfigurationIsr.h :
+softtimer.o :	../Driver/SysDriverLQ/Configuration.h
+../Driver/SysDriverLQ/Configuration.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_PwmHl.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_PwmHl.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Pos.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Pos.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
+../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
+softtimer.o :	../Driver/SysDriverLQ/interrupt.h
+../Driver/SysDriverLQ/interrupt.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
+../Libraries/Service/CpuGeneric/If/SpiIf.h :
 softtimer.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
 softtimer.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
-softtimer.o :	../Driver/SysDriverLQ/interrupt.h
-../Driver/SysDriverLQ/interrupt.h :
+softtimer.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
+../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
+softtimer.o :	../Driver/SysDriver/tim.h
+../Driver/SysDriver/tim.h :
+softtimer.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :

@@ -5,10 +5,10 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Driver/SysDriver/adc.c \
+../Driver/SysDriver/common.c \
 ../Driver/SysDriver/dma.c \
 ../Driver/SysDriver/enc.c \
 ../Driver/SysDriver/gpio.c \
-../Driver/SysDriver/henv.c \
 ../Driver/SysDriver/iic.c \
 ../Driver/SysDriver/pwm.c \
 ../Driver/SysDriver/spi.c \
@@ -18,10 +18,10 @@ C_SRCS += \
 
 OBJS += \
 ./Driver/SysDriver/adc.o \
+./Driver/SysDriver/common.o \
 ./Driver/SysDriver/dma.o \
 ./Driver/SysDriver/enc.o \
 ./Driver/SysDriver/gpio.o \
-./Driver/SysDriver/henv.o \
 ./Driver/SysDriver/iic.o \
 ./Driver/SysDriver/pwm.o \
 ./Driver/SysDriver/spi.o \
@@ -31,10 +31,10 @@ OBJS += \
 
 COMPILED_SRCS += \
 ./Driver/SysDriver/adc.src \
+./Driver/SysDriver/common.src \
 ./Driver/SysDriver/dma.src \
 ./Driver/SysDriver/enc.src \
 ./Driver/SysDriver/gpio.src \
-./Driver/SysDriver/henv.src \
 ./Driver/SysDriver/iic.src \
 ./Driver/SysDriver/pwm.src \
 ./Driver/SysDriver/spi.src \
@@ -44,10 +44,10 @@ COMPILED_SRCS += \
 
 C_DEPS += \
 ./Driver/SysDriver/adc.d \
+./Driver/SysDriver/common.d \
 ./Driver/SysDriver/dma.d \
 ./Driver/SysDriver/enc.d \
 ./Driver/SysDriver/gpio.d \
-./Driver/SysDriver/henv.d \
 ./Driver/SysDriver/iic.d \
 ./Driver/SysDriver/pwm.d \
 ./Driver/SysDriver/spi.d \

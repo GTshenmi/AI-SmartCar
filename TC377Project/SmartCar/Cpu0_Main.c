@@ -39,11 +39,11 @@ int core0_main (void)
     Console.WriteLine("Sync Finished.");
 #endif
 
+    IfxCpu_emitEvent(&g_cpuSyncEvent);
+    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFF);
+
     // 开启CPU总中断
     IfxCpu_enableInterrupts();
-
-    // 通知CPU2、CPU1，CPU0初始化完成
-    IfxCpu_releaseMutex(&mutexCpu0InitIsOk);
 
 #if defined(Debug)
     Console.WriteLine("Core0 Run To Main.");
@@ -52,21 +52,6 @@ int core0_main (void)
     Core0_Main();
 
     while(1);
-
-//    os.core[0].HardWareInit = Core0_HardWareInit;
-//    os.core[0].Run = Core0_Main;
-//    os.core[0].SoftWareInit = Core0_SoftWareInit;
-//
-//    os.init(0);
-//
-//    //Console.WriteLine("Sync Finished.");
-//
-//    os.core[0].Run();
-//
-//    while(1)
-//    {
-//        ;
-//    }
 }
 
 //static rt_uint8_t led_thread_stack[2048];

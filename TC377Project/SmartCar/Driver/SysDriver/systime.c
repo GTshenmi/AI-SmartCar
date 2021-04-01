@@ -16,7 +16,36 @@ void STM0_CH0_IRQHandler()
 
 void SysTime_Init()
 {
-    STM_InitConfig(Systime.STM,Systime.Channel,1000);
+    char      interruptState;
+    interruptState = disableInterrupts();
+
+    Ifx_STM * STM = IfxStm_getAddress((IfxStm_Index)Systime.STM);
+    unsigned char Index = (unsigned char)IfxStm_getIndex(STM) * 2 + (unsigned char)Systime.Channel;
+
+    IfxStm_CompareConfig *stmCompareConfig = &g_StmCompareConfig[Index];
+
+    //调用结构体实现配置
+    IfxStm_initCompareConfig(stmCompareConfig);
+
+     //挂起
+    IfxStm_enableOcdsSuspend(STM);
+
+    //获取STM模块的微秒计时 tick 数值
+    sint32 ticks = IfxStm_getTicksFromMicroseconds((Ifx_STM *)STM, 1000);
+
+    //修改ticks数值，使能触发输出
+    stmCompareConfig->ticks = ticks;
+    stmCompareConfig->comparator           = (IfxStm_Comparator)Systime.Channel;
+    stmCompareConfig->comparatorInterrupt  = (IfxStm_ComparatorInterrupt)Systime.Channel; //中断选择
+    stmCompareConfig->triggerPriority      = StmIrqPriority[Index];               //中断优先级设置
+    stmCompareConfig->typeOfService        = StmIrqVectabNum[Systime.STM];                //服务内核
+
+    //比较功能初始化
+    IfxStm_initCompare(STM, stmCompareConfig);
+    IfxCpu_Irq_installInterruptHandler((void*)StmIrqFuncPointer[Index], StmIrqPriority[Index]);//配置中断函数和中断号
+
+    restoreInterrupts(interruptState);
+
     Systime.InterruptCallBack = NULL;
 }
 uint32_t SysTime_Get_Timeus()

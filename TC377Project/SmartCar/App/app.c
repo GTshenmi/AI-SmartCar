@@ -28,17 +28,18 @@ void Core0_Main()
 
     GLED.ON(GLED.Self);
 
+    //NNTest();
+
     while(1)
     {
         GLED.Toggle(GLED.Self);
+        for(int i = 0 ; i < 65536 ; i++)
+        {
+            for(int j = 0 ; j < 200 ; j++)
+            {
 
-        uint32_t SystimeNow = os.time.getTimems();
-
-        os.task.UiUpdate(&UIData,sizeof(UIData));
-
-        uint32_t dt = os.time.getTimems() - SystimeNow;
-
-        Screen.WriteXLine(Screen.Self,17,"Time = %lu",dt);
+            }
+        }
     }
 }
 
@@ -48,25 +49,10 @@ void Core0_Main()
  * */
 void Core1_Main()
 {
-    uint32_t times = 0;
-
-    data_t *data = &Data[data_pointer];
 
     while(1)
     {
-        times++;
-
-        if(!(times% 50))
-            BLED.Toggle(BLED.Self);
-
-        os.task.KeyScan(NULL,0);
-
-        for(int i = 0 ; i < 5;i++)
-            Console.WriteLine("AD[%d] = %u",i,data->LADC_Value[i]);
-
-        Console.WriteLine("Angle = %d",data->Angle);
-
-        os.time.delayms(20);
+        os.task.UiUpdate(&UIData,sizeof(UIData));
     }
 }
 
@@ -80,10 +66,20 @@ void Core2_Main()
 
     BEEP.OFF(BEEP.Self);
 
-    while(1);
-//    {
-//        GLED.Toggle(GLED.Self);
-//        os.task.UiUpdate(&UIData,sizeof(UIData));
-//    }
+    uint32_t times = 0;
+
+    while(1)
+    {
+        times++;
+
+        if(!(times% 50))
+            BLED.Toggle(BLED.Self);
+
+        os.task.KeyScan(NULL,0);
+        os.task.SoftTimerUpdate(NULL,0);
+        os.task.DebugConsole(NULL,0);
+
+        os.time.delayms(20);
+    }
 }
 

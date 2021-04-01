@@ -8,8 +8,8 @@
 #ifndef DRIVER_SYSDRIVER_PWM_H_
 #define DRIVER_SYSDRIVER_PWM_H_
 
-#include "LQ_GTM.h"
 #include "platform.h"
+#include "common.h"
 
 typedef enum
 {

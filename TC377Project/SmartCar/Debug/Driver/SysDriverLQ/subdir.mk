@@ -4,64 +4,20 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Driver/SysDriverLQ/LQ_ADC.c \
-../Driver/SysDriverLQ/LQ_CCU6.c \
-../Driver/SysDriverLQ/LQ_DMA.c \
 ../Driver/SysDriverLQ/LQ_EEPROM.c \
-../Driver/SysDriverLQ/LQ_GPIO.c \
-../Driver/SysDriverLQ/LQ_GPSR.c \
-../Driver/SysDriverLQ/LQ_GPT12_ENC.c \
-../Driver/SysDriverLQ/LQ_GTM.c \
-../Driver/SysDriverLQ/LQ_QSPI.c \
-../Driver/SysDriverLQ/LQ_SOFTI2C.c \
-../Driver/SysDriverLQ/LQ_SPI.c \
-../Driver/SysDriverLQ/LQ_STM.c \
-../Driver/SysDriverLQ/LQ_UART.c 
+../Driver/SysDriverLQ/LQ_GPSR.c 
 
 OBJS += \
-./Driver/SysDriverLQ/LQ_ADC.o \
-./Driver/SysDriverLQ/LQ_CCU6.o \
-./Driver/SysDriverLQ/LQ_DMA.o \
 ./Driver/SysDriverLQ/LQ_EEPROM.o \
-./Driver/SysDriverLQ/LQ_GPIO.o \
-./Driver/SysDriverLQ/LQ_GPSR.o \
-./Driver/SysDriverLQ/LQ_GPT12_ENC.o \
-./Driver/SysDriverLQ/LQ_GTM.o \
-./Driver/SysDriverLQ/LQ_QSPI.o \
-./Driver/SysDriverLQ/LQ_SOFTI2C.o \
-./Driver/SysDriverLQ/LQ_SPI.o \
-./Driver/SysDriverLQ/LQ_STM.o \
-./Driver/SysDriverLQ/LQ_UART.o 
+./Driver/SysDriverLQ/LQ_GPSR.o 
 
 COMPILED_SRCS += \
-./Driver/SysDriverLQ/LQ_ADC.src \
-./Driver/SysDriverLQ/LQ_CCU6.src \
-./Driver/SysDriverLQ/LQ_DMA.src \
 ./Driver/SysDriverLQ/LQ_EEPROM.src \
-./Driver/SysDriverLQ/LQ_GPIO.src \
-./Driver/SysDriverLQ/LQ_GPSR.src \
-./Driver/SysDriverLQ/LQ_GPT12_ENC.src \
-./Driver/SysDriverLQ/LQ_GTM.src \
-./Driver/SysDriverLQ/LQ_QSPI.src \
-./Driver/SysDriverLQ/LQ_SOFTI2C.src \
-./Driver/SysDriverLQ/LQ_SPI.src \
-./Driver/SysDriverLQ/LQ_STM.src \
-./Driver/SysDriverLQ/LQ_UART.src 
+./Driver/SysDriverLQ/LQ_GPSR.src 
 
 C_DEPS += \
-./Driver/SysDriverLQ/LQ_ADC.d \
-./Driver/SysDriverLQ/LQ_CCU6.d \
-./Driver/SysDriverLQ/LQ_DMA.d \
 ./Driver/SysDriverLQ/LQ_EEPROM.d \
-./Driver/SysDriverLQ/LQ_GPIO.d \
-./Driver/SysDriverLQ/LQ_GPSR.d \
-./Driver/SysDriverLQ/LQ_GPT12_ENC.d \
-./Driver/SysDriverLQ/LQ_GTM.d \
-./Driver/SysDriverLQ/LQ_QSPI.d \
-./Driver/SysDriverLQ/LQ_SOFTI2C.d \
-./Driver/SysDriverLQ/LQ_SPI.d \
-./Driver/SysDriverLQ/LQ_STM.d \
-./Driver/SysDriverLQ/LQ_UART.d 
+./Driver/SysDriverLQ/LQ_GPSR.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -8,8 +8,7 @@
 #ifndef DRIVER_SYSDRIVER_SPI_H_
 #define DRIVER_SYSDRIVER_SPI_H_
 
-#include "LQ_QSPI.h"
-#include "LQ_SPI.h"
+#include "common.h"
 #include "platform.h"
 #include "systime.h"
 

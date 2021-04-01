@@ -13,6 +13,6 @@
 void MotorTest(struct motor_ctrl *self);
 void ServoTest(struct servo_ctrl *self);
 
-
+void NNTest(void);
 
 #endif /* APP_TEST_H_ */

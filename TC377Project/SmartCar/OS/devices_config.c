@@ -9,33 +9,11 @@
 
 #pragma section all "cpu0_dsram"
 
-screen_t Screen = /*ok*/
+led_t GLED = /*ok*/
 {
-        .Hight = 160,
-        .Width = 128,
-        .Font = {
-                .Type = 1,
-                .Hight = 8,
-                .Width = 6,
-                .Color = BLACK,
-                .Backcolor = WHITE,
-        },
-
-        .__Init__ = LCD_Init,
-        .__InitConfig__ = &LCD_Type,
-        .__SetPixel__ =LCD_DrawPoint,
-
-        .__AddrReset__ = LCD_AddrReset,
-        .__DeInit__ = LCD_DeInit,
-        .__SetEnable__ = LCD_SetEnable,
-        .__FastDrawArea__ = LCD_FastDrawArea,
-        .__FastSetPixel__ = LCD_WriteWord,
-        .__Fill__ = LCD_Fill,
-        .__SetArea__ = LCD_SetArea,
-
-
-        .Init = Screen_Init,
-        .Self = &Screen,
+        .Init = LED_Init,
+        .Self = &GLED,
+        .GPIOn = &GPIO_Resources[9].GPION,
 };
 
 beep_t BEEP = /*unknow*/
@@ -160,47 +138,33 @@ servo_ctrl_t Servo =/*ok*/
 
 #pragma section all "cpu1_dsram"
 
-key_t KEY[7] = /*ok*/ /*按键接口换了*/
+screen_t Screen = /*ok*/
 {
-        [0] = {
-                .Init = KEY_Init,
-                .Self = &KEY[0],
-                .GPIOn = &GPIO_Resources[12].GPION,
-        },
-        [1] = {
-                .Init = KEY_Init,
-                .Self = &KEY[1],
-                .GPIOn = &GPIO_Resources[13].GPION,
-        },
-        [2] = {
-                .Init = KEY_Init,
-                .Self = &KEY[2],
-                .GPIOn = &GPIO_Resources[14].GPION,
-        },
-        [3] = {
-                .Init = KEY_Init,
-                .Self = &KEY[3],
-                .GPIOn = &GPIO_Resources[15].GPION,
+        .Hight = 160,
+        .Width = 128,
+        .Font = {
+                .Type = 1,
+                .Hight = 8,
+                .Width = 6,
+                .Color = BLACK,
+                .Backcolor = WHITE,
         },
 
-        [4] = {
-                .Init = KEY_Init,
-                .Self = &KEY[4],
-                .GPIOn = &GPIO_Resources[16].GPION,
-        },
+        .__Init__ = LCD_Init,
+        .__InitConfig__ = &LCD_Type,
+        .__SetPixel__ =LCD_DrawPoint,
 
-        [5] = {
-                .Init = KEY_Init,
-                .Self = &KEY[5],
-                .GPIOn = &GPIO_Resources[17].GPION,
-        },
+        .__AddrReset__ = LCD_AddrReset,
+        .__DeInit__ = LCD_DeInit,
+        .__SetEnable__ = LCD_SetEnable,
+        .__FastDrawArea__ = LCD_FastDrawArea,
+        .__FastSetPixel__ = LCD_WriteWord,
+        .__Fill__ = LCD_Fill,
+        .__SetArea__ = LCD_SetArea,
 
-        [6] = {
-                .Init = KEY_Init,
-                .Self = &KEY[6],
-                .GPIOn = &GPIO_Resources[12].GPION,
-        },
 
+        .Init = Screen_Init,
+        .Self = &Screen,
 };
 
 led_t BLED =  /*ok*/
@@ -313,11 +277,47 @@ wireless_serial_t WirelessSerial = /*与CUART相同*/
 
 #pragma section all "cpu2_dsram"
 
-led_t GLED = /*ok*/
+key_t KEY[7] = /*ok*/ /*按键接口换了*/
 {
-        .Init = LED_Init,
-        .Self = &GLED,
-        .GPIOn = &GPIO_Resources[9].GPION,
+        [0] = {
+                .Init = KEY_Init,
+                .Self = &KEY[0],
+                .GPIOn = &GPIO_Resources[12].GPION,
+        },
+        [1] = {
+                .Init = KEY_Init,
+                .Self = &KEY[1],
+                .GPIOn = &GPIO_Resources[13].GPION,
+        },
+        [2] = {
+                .Init = KEY_Init,
+                .Self = &KEY[2],
+                .GPIOn = &GPIO_Resources[14].GPION,
+        },
+        [3] = {
+                .Init = KEY_Init,
+                .Self = &KEY[3],
+                .GPIOn = &GPIO_Resources[15].GPION,
+        },
+
+        [4] = {
+                .Init = KEY_Init,
+                .Self = &KEY[4],
+                .GPIOn = &GPIO_Resources[16].GPION,
+        },
+
+        [5] = {
+                .Init = KEY_Init,
+                .Self = &KEY[5],
+                .GPIOn = &GPIO_Resources[17].GPION,
+        },
+
+        [6] = {
+                .Init = KEY_Init,
+                .Self = &KEY[6],
+                .GPIOn = &GPIO_Resources[12].GPION,
+        },
+
 };
 
 #pragma section all restore

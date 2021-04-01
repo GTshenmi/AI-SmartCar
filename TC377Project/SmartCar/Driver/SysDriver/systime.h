@@ -8,7 +8,8 @@
 #ifndef DRIVER_SYSDRIVER_SYSTIME_H_
 #define DRIVER_SYSDRIVER_SYSTIME_H_
 
-#include "LQ_STM.h"
+#include "common.h"
+#include "tim.h"
 #include "platform.h"
 
 typedef struct

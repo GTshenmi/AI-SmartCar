@@ -64,19 +64,10 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #include "IfxCpu_reg.h"
 #include <Ifx_Cfg.h>
 #include "interrupt.h"
-#include "LQ_ADC.h"
-#include "LQ_CCU6.h"
-#include "LQ_DMA.h"
-#include "LQ_EEPROM.h"
-#include "LQ_GPIO.h"
-#include "LQ_GPSR.h"
-#include "LQ_GPT12_ENC.h"
-#include "LQ_GTM.h"
-#include "LQ_QSPI.h"
-#include "LQ_SOFTI2C.h"
-#include "LQ_SPI.h"
-#include "LQ_STM.h"
-#include "LQ_UART.h"
+
+//#include "LQ_EEPROM.h"
+//#include "LQ_GPSR.h"
+
 #include "IfxScu_reg.h"
 #include "IfxPort.h"
 #include "IfxPort_reg.h"
@@ -98,28 +89,7 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #include "I2c/I2c/IfxI2c_I2c.h"
 
 #include "Bsp.h"
-//#include "LQ_ADC_test.h"
-//#include "LQ_CAMERA.h"
-//#include "LQ_I2C_9AX.h"
-//#include "LQ_GPIO_ExInt.h"
-//#include "LQ_ICM20602.h"
-//#include "LQ_GPIO_KEY.h"
-//#include "LQ_GPIO_LED.h"
-//#include "LQ_GPT_mini512.h"
-//#include "LQ_Atom_Motor.h"
-//#include "LQ_I2C_MPU6050.h"
-//#include "LQ_MT9V034.h"
-//#include "LQ_OLED096.h"
-//#include "LQ_Tom_Servo.h"
-//#include "LQ_I2C_VL53.h"
-//#include "LQ_TFT18.h"
-//#include "LQ_RDA5807.h"
-//#include "LQ_UART_Bluetooth.h"
-//#include "LQ_STM_TImer.h"
-//#include "LQ_CCU6_Timer.h"
-//#include "LQ_Tim_InputCature.h"
-//#include "LQ_EEPROM_TEST.h"
-//#include "LQ_FFT_TEST.h"
+
 ////////////////////////////////////////////////////////////////////////////
 typedef struct
 {

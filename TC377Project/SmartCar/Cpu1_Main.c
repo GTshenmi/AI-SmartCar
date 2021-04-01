@@ -3,8 +3,7 @@
 
 int core1_main (void)
 {
-    // 开启CPU总中断
-    IfxCpu_enableInterrupts();
+    disableInterrupts();
 
     // 关闭看门狗
     IfxScuWdt_disableCpuWatchdog(IfxScuWdt_getCpuWatchdogPassword());
@@ -15,7 +14,10 @@ int core1_main (void)
     Core1_SoftWareInit();
 
     // 等待CPU0 初始化完成
-    while(!IfxCpu_acquireMutex(&mutexCpu0InitIsOk));
+    IfxCpu_emitEvent(&g_cpuSyncEvent);
+    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFF);
+
+    IfxCpu_enableInterrupts();
 
     Core1_Main();
 
@@ -23,17 +25,4 @@ int core1_main (void)
     {
 
     }
-
-//    os.core[1].HardWareInit = Core1_HardWareInit;
-//    os.core[1].Run = Core1_Main;
-//    os.core[1].SoftWareInit = Core1_SoftWareInit;
-//
-//    os.init(1);
-//
-//    os.core[1].Run();
-//
-//    while(1)
-//    {
-//       ;
-//    }
 }

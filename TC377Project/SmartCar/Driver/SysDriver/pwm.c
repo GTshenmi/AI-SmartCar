@@ -12,12 +12,63 @@ uint8_t PWMx_Init(pwmx_t *pwm)
     if(pwm_source == TOM)
     {
         IfxGtm_Tom_ToutMap *pin =(IfxGtm_Tom_ToutMap *) pwm->Pin;
-        TOM_PWM_InitConfig(*pin,pwm->Duty,pwm->Freq);
+
+        static uint8 count = 0;
+
+        if(count == 0)
+        {
+            IfxGtm_enable(&MODULE_GTM); /* 使能 GTM */
+
+            IfxGtm_Cmu_enableClocks(&MODULE_GTM, IFXGTM_CMU_CLKEN_FXCLK);       /* Enable the FXU clocks               */
+
+            count ++;
+        }
+
+
+        IfxGtm_Tom_Pwm_initConfig(&tomConfig, &MODULE_GTM);                 /* Initialize default parameters            */
+
+        tomConfig.tom = pin->tom;                                 //选择PWM输出管脚
+        tomConfig.tomChannel = pin->channel;                      //选择PWM输出管脚对应的通道
+        tomConfig.pin.outputPin = pin;                           //设置输出管脚
+        tomConfig.period = TOM_PWM_CLK / pwm->Freq;              //设置输出周期
+        tomConfig.dutyCycle = (unsigned long)(pwm->Duty * ((float)tomConfig.period / TOM_PWM_MAX));//设置占空比
+        tomConfig.synchronousUpdateEnabled = TRUE;                        //使能PWM同步更新
+        tomConfig.clock = IfxGtm_Tom_Ch_ClkSrc_cmuFxclk1;                   /* Select the FXU clock 1              */
+
+        uint8 tempNum = (uint8)pin->tom * 16 + (uint8)pin->channel;
+        IfxGtm_Tom_Pwm_init(&tomDriverPWM[tempNum], &tomConfig);         /* Initialize the module                    */
+        IfxGtm_Tom_Pwm_start(&tomDriverPWM[tempNum], TRUE);              /* Start the generation of the PWM signal   */
     }
     else if(pwm_source == ATOM)
     {
         IfxGtm_Atom_ToutMap *pin =(IfxGtm_Atom_ToutMap *) pwm->Pin;
-        ATOM_PWM_InitConfig(*pin,pwm->Duty,pwm->Freq);
+
+        static uint8 count = 0;
+
+        if(count == 0)
+        {
+            IfxGtm_enable(&MODULE_GTM); /* 使能 GTM */
+
+            IfxGtm_Cmu_setClkFrequency(&MODULE_GTM, IfxGtm_Cmu_Clk_0, ATOM_PWM_CLK); //设置 CMU clock 100M 频率
+            IfxGtm_Cmu_enableClocks(&MODULE_GTM, IFXGTM_CMU_CLKEN_CLK0);             //使能 CMU clock 0
+
+            count ++;
+        }
+
+
+        IfxGtm_Atom_Pwm_initConfig(&g_atomConfig, &MODULE_GTM);
+
+        g_atomConfig.atom = pin->atom;                                //选择PWM输出管脚
+        g_atomConfig.atomChannel = pin->channel;                      //选择PWM输出管脚对应的通道
+        g_atomConfig.pin.outputPin = pin;                           //设置输出管脚
+        g_atomConfig.period = ATOM_PWM_CLK / pwm->Freq;             //设置输出周期
+        g_atomConfig.dutyCycle = (unsigned long)(pwm->Duty * ((float)g_atomConfig.period / ATOM_PWM_MAX));//设置占空比
+        g_atomConfig.synchronousUpdateEnabled = TRUE;                        //使能PWM同步更新
+
+        uint8 tempNum = (uint8)pin->atom * 8 + (uint8)pin->channel;
+
+        IfxGtm_Atom_Pwm_init(&g_AtomDriverPWM[tempNum], &g_atomConfig);      //ATOM_PWM初始化
+        IfxGtm_Atom_Pwm_start(&g_AtomDriverPWM[tempNum], TRUE);              //开始输出PWM
     }
     else
         return 0;

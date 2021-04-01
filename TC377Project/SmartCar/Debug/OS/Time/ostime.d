@@ -44,17 +44,55 @@ ostime.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 ostime.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-ostime.o :	../Driver/SysDriverLQ/LQ_STM.h
-../Driver/SysDriverLQ/LQ_STM.h :
+ostime.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
+ostime.o :	../Driver/SysDriverLQ/ifx_hal.h
+../Driver/SysDriverLQ/ifx_hal.h :
 ostime.o :	../Configurations/Ifx_Cfg.h
 ../Configurations/Ifx_Cfg.h :
 ostime.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
-ostime.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
-../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
+ostime.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
+../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
+ostime.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h :
+ostime.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf.h :
+ostime.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/TPwm.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/TPwm.h :
+ostime.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/Timer.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/Timer.h :
+ostime.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/Icu.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/Icu.h :
+ostime.o :	../Libraries/Service/CpuGeneric/If/Ccu6If/PwmHl.h
+../Libraries/Service/CpuGeneric/If/Ccu6If/PwmHl.h :
+ostime.o :	../Driver/SysDriverLQ/ConfigurationIsr.h
+../Driver/SysDriverLQ/ConfigurationIsr.h :
+ostime.o :	../Driver/SysDriverLQ/Configuration.h
+../Driver/SysDriverLQ/Configuration.h :
+ostime.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h :
+ostime.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_PwmHl.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_PwmHl.h :
+ostime.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Timer.h :
+ostime.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Pos.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_Pos.h :
+ostime.o :	../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h
+../Libraries/Service/CpuGeneric/StdIf/IfxStdIf_DPipe.h :
+ostime.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
+../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
+ostime.o :	../Driver/SysDriverLQ/interrupt.h
+../Driver/SysDriverLQ/interrupt.h :
+ostime.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
+../Libraries/Service/CpuGeneric/If/SpiIf.h :
 ostime.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
 ../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
 ostime.o :	../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h
 ../Libraries/Service/CpuGeneric/_Utilities/Ifx_Assert.h :
-ostime.o :	../Driver/SysDriverLQ/interrupt.h
-../Driver/SysDriverLQ/interrupt.h :
+ostime.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
+../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
+ostime.o :	../Driver/SysDriver/tim.h
+../Driver/SysDriver/tim.h :
+ostime.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :

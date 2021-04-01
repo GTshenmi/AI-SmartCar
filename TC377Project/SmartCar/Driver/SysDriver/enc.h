@@ -8,8 +8,12 @@
 #ifndef DRIVER_SYSDRIVERLQ_ENC_H_
 #define DRIVER_SYSDRIVERLQ_ENC_H_
 
-#include "LQ_GPT12_ENC.h"
+/*Platform HardWare Related Code Begin.*/
+
+#include "common.h"
 #include "platform.h"
+
+/*Platform HardWare Related Code End.*/
 
 typedef struct
 {

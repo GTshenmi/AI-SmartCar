@@ -5,11 +5,9 @@
  *      Author: 936305695
  */
 #include "os.h"
-#include "henv.h"
 
 void OS_Init(uint core)
 {
-    os.core[core].HEnvInit();
     switch(core)
     {
         case 0:
@@ -24,29 +22,11 @@ void OS_Init(uint core)
         default:
             break;
     }
-    os.core[core].HardWareInit();
-    os.core[core].SoftWareInit();
-    os.core[core].WaitForSync(NULL);
 }
 
 os_t os =
 {
         .init = OS_Init,
-        .core =
-        {
-                [0] = {
-                          .HEnvInit = Core0_HardWareEnvInit,
-                          .WaitForSync = Core0_WaitForSync,
-                },
-                [1] = {
-                          .HEnvInit = Core1_HardWareEnvInit,
-                          .WaitForSync = Core1_WaitForSync,
-                },
-                [2] = {
-                          .HEnvInit = Core2_HardWareEnvInit,
-                          .WaitForSync = Core2_WaitForSync,
-                },
-        },
         .time = {
                 .init = OSTime_Init,
                 .now = OSTime_Now,

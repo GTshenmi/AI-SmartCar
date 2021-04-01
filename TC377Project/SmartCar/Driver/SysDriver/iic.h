@@ -8,7 +8,8 @@
 #ifndef DRIVER_SYSDRIVER_IIC_H_
 #define DRIVER_SYSDRIVER_IIC_H_
 
-#include "LQ_GPIO.h"
+#include "common.h"
+#include "gpio.h"
 #include "platform.h"
 
 enum
@@ -26,16 +27,16 @@ enum
 };
 
 
-#define IICx_GPIO_Init(gpio)         PIN_InitConfig((gpio),PIN_MODE_OUTPUT,1)
-#define IICx_GPIO_SetDir(gpio,dir)   PIN_Dir((gpio),(dir))
-#define IICx_GPIO_Write(gpio,state)  PIN_Write((gpio),(state))
-#define IICx_GPIO_Read(gpio)         PIN_Read((gpio))
+#define IICx_GPIO_Init(gpio)         GPIOx.Init((gpio))         //PIN_InitConfig((gpio),PIN_MODE_OUTPUT,1)
+#define IICx_GPIO_SetDir(gpio,dir)   GPIOx.SetDir((gpio),(dir)) //PIN_Dir((gpio),(dir))
+#define IICx_GPIO_Write(gpio,state)  GPIOx.Write((gpio),(state)) //PIN_Write((gpio),(state))
+#define IICx_GPIO_Read(gpio)         GPIOx.Read((gpio))         //PIN_Read((gpio))
 
 
 typedef struct
 {
-        GPIO_Name_t SCLPin;
-        GPIO_Name_t SDAPin;
+        gpiox_t *SCLPin;
+        gpiox_t *SDAPin;
         uint16_t IIC_Type;
         uint16_t IIC_DeviceType;
         uint32_t BaudRate;

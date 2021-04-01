@@ -8,7 +8,7 @@
 #ifndef DRIVER_SYSDRIVER_ADC_H_
 #define DRIVER_SYSDRIVER_ADC_H_
 
-#include "LQ_ADC.h"
+#include "common.h"
 #include "platform.h"
 
 typedef struct

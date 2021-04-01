@@ -8,7 +8,7 @@
 #ifndef DRIVER_SYSDRIVER_DMA_H_
 #define DRIVER_SYSDRIVER_DMA_H_
 
-#include "LQ_DMA.h"
+#include "common.h"
 #include "platform.h"
 
 typedef struct
