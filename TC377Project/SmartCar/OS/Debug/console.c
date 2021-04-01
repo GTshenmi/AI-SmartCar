@@ -140,8 +140,8 @@ int32_t Console_ReadKey(void)
 
 int fputc(int ch, FILE *f)
 {
-    UARTx.WriteByte(DebugCom.Communicatorn,(uint8_t)ch,UARTx.Time_Infinite);
-
+    //UARTx.WriteBytes(DebugCom.Communicatorn,(uint8_t)ch,UARTx.Time_Infinite);
+    DebugCom.Transmit(DebugCom.Self,(uint8_t *)&ch,1,0);
     return ch;
 }
 

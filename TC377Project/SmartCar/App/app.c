@@ -10,6 +10,83 @@
 #include <app.h>
 #include "include.h"
 
+void Core0_CheckStatus()
+{
+    static uint times = 0;
+
+    times++;
+    if(times % 3 == 0)
+    {
+        Screen.ClearLine(Screen.Self,16,WHITE);
+        Screen.WriteXLine(Screen.Self,16,"Core0 Running.");
+    }
+    else if(times % 3 == 1)
+    {
+        Screen.ClearLine(Screen.Self,16,WHITE);
+        Screen.WriteXLine(Screen.Self,16,"Core0 Running..");
+    }
+    else
+    {
+        Screen.ClearLine(Screen.Self,16,WHITE);
+        Screen.WriteXLine(Screen.Self,16,"Core0 Running...");
+    }
+
+#if defined(Debug)
+    Console.WriteLine("Core0 Running...");
+#endif
+}
+
+void Core1_CheckStatus()
+{
+    static uint times = 0;
+
+    times++;
+    if(times % 3 == 0)
+    {
+        Screen.ClearLine(Screen.Self,17,WHITE);
+        Screen.WriteXLine(Screen.Self,17,"Core1 Running.");
+    }
+    else if(times % 3 == 1)
+    {
+        Screen.ClearLine(Screen.Self,17,WHITE);
+        Screen.WriteXLine(Screen.Self,17,"Core1 Running..");
+    }
+    else
+    {
+        Screen.ClearLine(Screen.Self,17,WHITE);
+        Screen.WriteXLine(Screen.Self,17,"Core1 Running...");
+    }
+
+#if defined(Debug)
+    Console.WriteLine("Core1 Running...");
+#endif
+}
+
+void Core2_CheckStatus()
+{
+    static uint times = 0;
+
+    times++;
+    if(times % 3 == 0)
+    {
+        Screen.ClearLine(Screen.Self,18,WHITE);
+        Screen.WriteXLine(Screen.Self,18,"Core2 Running.");
+    }
+    else if(times % 3 == 1)
+    {
+        Screen.ClearLine(Screen.Self,18,WHITE);
+        Screen.WriteXLine(Screen.Self,18,"Core2 Running..");
+    }
+    else
+    {
+        Screen.ClearLine(Screen.Self,18,WHITE);
+        Screen.WriteXLine(Screen.Self,18,"Core2 Running...");
+    }
+
+#if defined(Debug)
+    Console.WriteLine("Core2 Running...");
+#endif
+}
 void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
 {
     for(int i = 0 ; i < 6 ; i++)
@@ -24,7 +101,7 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
  * */
 void Core0_Main()
 {
-    //TIMx.Init(&TIM_Resources[1].TIMN);
+    TIMx.Init(&TIM_Resources[1].TIMN);
 
     GLED.ON(GLED.Self);
 
@@ -33,13 +110,10 @@ void Core0_Main()
     while(1)
     {
         GLED.Toggle(GLED.Self);
-        for(int i = 0 ; i < 65536 ; i++)
-        {
-            for(int j = 0 ; j < 200 ; j++)
-            {
 
-            }
-        }
+        Core0_CheckStatus();
+
+        os.time.delay(1.0,s);
     }
 }
 
@@ -53,6 +127,8 @@ void Core1_Main()
     while(1)
     {
         os.task.UiUpdate(&UIData,sizeof(UIData));
+
+        Core1_CheckStatus();
     }
 }
 
@@ -73,13 +149,16 @@ void Core2_Main()
         times++;
 
         if(!(times% 50))
+        {
             BLED.Toggle(BLED.Self);
+            Core2_CheckStatus();
+        }
 
         os.task.KeyScan(NULL,0);
         os.task.SoftTimerUpdate(NULL,0);
         os.task.DebugConsole(NULL,0);
 
-        os.time.delayms(20);
+        os.time.delay(0.02,s);
     }
 }
 

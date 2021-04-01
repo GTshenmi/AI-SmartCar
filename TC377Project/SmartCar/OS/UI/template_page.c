@@ -176,7 +176,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = changeDisplayType,
     },
     [2] = {
-            .description = "MotorSpedToSet", //要设置的电机转速(原数据sint16_t，归一化后float)
+            .description = "Speed", //要设置的电机转速(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[2],
             .lineLength = 1,
@@ -184,7 +184,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = changeDisplayType,
     },
     [3] = {
-            .description = "SetMotorSped", //要设置的电机转速(原数据sint16_t，归一化后float)
+            .description = "ASpeed", //要设置的电机转速(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[3],
             .lineLength = 1,
@@ -192,7 +192,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [4] = {
-            .description = "ActualMtrSped", //电机的实际速度(原数据sint16_t，归一化后float)
+            .description = "ASpeed", //电机的实际速度(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[4],
             .lineLength = 1,
@@ -200,7 +200,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = changeDisplayType,
     },
     [5] = {
-            .description = "MotorSpeed P", //电机PID的三个参数
+            .description = "MPID.Kp", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[5],
             .lineLength = 1,
@@ -208,7 +208,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [6] = {
-            .description = "MotorSpeed I", //电机PID的三个参数
+            .description = "MPID.Ki", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[6],
             .lineLength = 1,
@@ -216,7 +216,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [7] = {
-            .description = "MotorSpeed D", //电机PID的三个参数
+            .description = "MPID.Kd", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[7],
             .lineLength = 1,
@@ -224,7 +224,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [8] = {
-            .description = "MotorSpedOut", //电机PID输出(float)
+            .description = "MPID.Res", //电机PID输出(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[8],
             .lineLength = 1,
@@ -232,7 +232,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [9] = {
-            .description = "MotorSpeedPWM", //电机最终的占空比(sint16_t)
+            .description = "MPwmValue", //电机最终的占空比(sint16_t)
             .displayData = displayDataAlone,
             .Self = &UIPages[9],
             .lineLength = 1,
@@ -240,7 +240,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [10] = {
-            .description = "AngleToSet", //要设置的舵机角度(sint16_t，归一化后float)
+            .description = "Angle", //要设置的舵机角度(sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[10],
             .lineLength = 1,
@@ -256,7 +256,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [12] = {
-            .description = "Angle P", //舵机PID的三个参数(float)
+            .description = "SPID.Kp", //舵机PID的三个参数(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[12],
             .lineLength = 1,
@@ -264,7 +264,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [13] = {
-            .description = "Angle I", //舵机PID的三个参数(float)
+            .description = "SPID.Ki", //舵机PID的三个参数(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[13],
             .lineLength = 1,
@@ -272,7 +272,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [14] = {
-            .description = "Angle D", //舵机PID的三个参数(float)
+            .description = "SPID.Kd", //舵机PID的三个参数(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[14],
             .lineLength = 1,
@@ -280,7 +280,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [15] = {
-            .description = "AngleOutput", //舵机PID的输出(float)
+            .description = "SPID.Res", //舵机PID的输出(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[15],
             .lineLength = 1,
@@ -288,7 +288,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [16] = {
-            .description = "AnglePWM", //舵机最终的占空比(uint16_t)
+            .description = "SPwmValue", //舵机最终的占空比(uint16_t)
             .displayData = displayDataAlone,
             .Self = &UIPages[16],
             .lineLength = 1,
@@ -324,42 +324,42 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [21] = {
-            .description = "Motor.1",
+            .description = "MSU",
             .displayData = displaySysInfo,
             .Self = &UIPages[21],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
     },
     [22] = {
-            .description = "Motor.2",
+            .description = "MDU",
             .displayData = displaySysInfo,
             .Self = &UIPages[22],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
     },
     [23] = {
-            .description = "Motor.3",
+            .description = "MEU",
             .displayData = displaySysInfo,
             .Self = &UIPages[23],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
     },
     [24] = {
-            .description = "Servo.1",
+            .description = "SSU",
             .displayData = displaySysInfo,
             .Self = &UIPages[24],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
     },
     [25] = {
-            .description = "Servo.2",
+            .description = "SDU",
             .displayData = displaySysInfo,
             .Self = &UIPages[25],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
     },
     [26] = {
-            .description = "Servo.3",
+            .description = "SEU",
             .displayData = displaySysInfo,
             .Self = &UIPages[26],
             .lineLength = 1,

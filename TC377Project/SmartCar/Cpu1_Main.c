@@ -19,6 +19,10 @@ int core1_main (void)
 
     IfxCpu_enableInterrupts();
 
+#if defined(Debug)
+    Console.WriteLine("Core1 Run To Main.");
+#endif
+
     Core1_Main();
 
     while(1)//Ö÷Ñ­»·
