@@ -7,60 +7,60 @@
 #include "sdcard.h"
 #include "driver.h"
 
-uint8_t SDCard_ReadSector(struct sdcard *self,uint32_t sector,uint8_t *buf)
+uint8_t Mem_ReadSector(struct memory *self,uint32_t sector,uint32_t page,uint8_t *buf,uint32_t len)
 {
-    return self->__ReadSector__(sector,buf);
+    return self->__ReadSector__(sector,page,buf,len);
 }
 
-uint8_t SDCard_WriteSector(struct sdcard *self,uint32_t sector,uint8_t *buf)
+uint8_t Mem_WriteSector(struct memory *self,uint32_t sector,uint32_t page,uint8_t *buf,uint32_t len)
 {
-    return self->__WriteSector__(sector,buf);
+    return self->__WriteSector__(sector,page,buf,len);
 }
 
-uint8_t SDCard_ReadDisk(struct sdcard *self,uint32_t sector,uint count,uint8_t *buf)
+uint8_t Mem_ReadDisk(struct memory *self,uint32_t sector,uint count,uint8_t *buf)
 {
     uint8_t res = 0;
     while(count--)
     {
-        res += self->ReadSector(self,sector,buf);
+        res += self->ReadSector(self,sector,0,buf,0);
     }
     return res;
 }
-uint8_t SDCard_WriteDisk(struct sdcard *self,uint32_t sector,uint count,uint8_t *buf)
+uint8_t Mem_WriteDisk(struct memory *self,uint32_t sector,uint count,uint8_t *buf)
 {
     uint8_t res = 0;
     while(count--)
     {
-        res += self->WriteSector(self,sector,buf);
+        res += self->WriteSector(self,sector,0,buf,0);
     }
     return res;
 }
 
-uint32_t SDCard_GetSectorSize(struct sdcard *self)
+uint32_t Mem_GetSectorSize(struct memory *self)
 {
     return self->CardSectorSize;
 }
 
-uint32_t SDCard_GetBlockSize(struct sdcard *self)
+uint32_t Mem_GetBlockSize(struct memory *self)
 {
     return self->CardBlockSize;
 }
-uint32_t SDCard_GetSectorNum(struct sdcard *self)
+uint32_t Mem_GetSectorNum(struct memory *self)
 {
     return self->CardSectorNum;
 }
 
-uint32_t SDCard_GetCapacity(struct sdcard *self)
+uint32_t Mem_GetCapacity(struct memory *self)
 {
     return self->CardCapacity;
 }
 
-uint8_t SDCard_Init(struct sdcard *self)
+uint8_t Mem_Init(struct memory *self)
 {
-    self->WriteDisk = SDCard_WriteDisk;
-    self->ReadDisk = SDCard_ReadDisk;
-    self->WriteSector = SDCard_WriteSector;
-    self->ReadSector = SDCard_ReadSector;
+    self->WriteDisk = Mem_WriteDisk;
+    self->ReadDisk = Mem_ReadDisk;
+    self->WriteSector = Mem_WriteSector;
+    self->ReadSector = Mem_ReadSector;
 
     self->CardSectorSize = 512;
 
@@ -70,13 +70,13 @@ uint8_t SDCard_Init(struct sdcard *self)
 
     self->CardBlockSize = 8;/*???*/
 
-    self->GetSectorSize = SDCard_GetSectorSize;
+    self->GetSectorSize = Mem_GetSectorSize;
 
-    self->GetBlockSize = SDCard_GetBlockSize;
+    self->GetBlockSize = Mem_GetBlockSize;
 
-    self->GetSectorNum = SDCard_GetSectorNum;
+    self->GetSectorNum = Mem_GetSectorNum;
 
-    self->GetCapacity = SDCard_GetCapacity;
+    self->GetCapacity = Mem_GetCapacity;
 
     uint8_t res = 0;
 

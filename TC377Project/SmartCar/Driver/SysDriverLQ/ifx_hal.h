@@ -65,7 +65,7 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #include <Ifx_Cfg.h>
 #include "interrupt.h"
 
-//#include "LQ_EEPROM.h"
+#include "LQ_EEPROM.h"
 //#include "LQ_GPSR.h"
 
 #include "IfxScu_reg.h"
@@ -87,6 +87,12 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #include "_Reg\IfxStm_reg.h"
 #include "_Utilities\Ifx_Assert.h"
 #include "I2c/I2c/IfxI2c_I2c.h"
+
+#include <Cpu/Std/Platform_Types.h>
+#include "stdint.h"
+#include <IfxFlash.h>
+#include <IfxFlash_cfg.h>
+#include <IfxScuWdt.h>
 
 #include "Bsp.h"
 

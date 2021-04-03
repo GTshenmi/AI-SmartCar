@@ -50,6 +50,8 @@ dataprocess.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 dataprocess.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+dataprocess.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 dataprocess.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 dataprocess.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -106,6 +108,10 @@ dataprocess.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 dataprocess.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+dataprocess.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+dataprocess.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 dataprocess.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 dataprocess.o :	../Driver/SysDriver/sys_driver.h

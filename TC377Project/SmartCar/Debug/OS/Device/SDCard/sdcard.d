@@ -48,6 +48,8 @@ sdcard.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 sdcard.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+sdcard.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 sdcard.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 sdcard.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -102,6 +104,10 @@ sdcard.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 sdcard.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+sdcard.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+sdcard.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 sdcard.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 sdcard.o :	../Driver/SysDriver/sys_driver.h

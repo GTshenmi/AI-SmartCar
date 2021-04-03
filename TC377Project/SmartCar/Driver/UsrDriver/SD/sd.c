@@ -247,7 +247,7 @@ uint8_t SD_Initialize(void *config)
 	return 0xaa;//ÆäËû´íÎó
 }
 
-uint8_t SD_ReadSector(uint32_t sector,uint8_t*buf)
+uint8_t SD_ReadSector(uint32_t sector,uint32_t page,uint8_t *buf,uint32_t len)
 {
 	uint8_t r1;
 
@@ -265,7 +265,7 @@ uint8_t SD_ReadSector(uint32_t sector,uint8_t*buf)
 	return r1;//
 }
 
-uint8_t SD_WriteSector(uint32_t sector,uint8_t*buf)
+uint8_t SD_WriteSector(uint32_t sector,uint32_t page,uint8_t *buf,uint32_t len)
 {
 	uint8_t r1;
 	if(SD_Type!=SD_TYPE_V2HC)

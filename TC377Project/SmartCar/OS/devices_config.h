@@ -29,7 +29,7 @@ extern motor_ctrl_t Motor;
 
 extern screen_t Screen;
 
-extern sdcard_t SDCard;
+extern memory_t SDCard;
 
 extern servo_ctrl_t Servo;
 

@@ -48,6 +48,8 @@ communicate.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 communicate.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+communicate.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 communicate.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 communicate.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -102,6 +104,10 @@ communicate.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 communicate.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+communicate.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+communicate.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 communicate.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 communicate.o :	../Driver/SysDriver/sys_driver.h

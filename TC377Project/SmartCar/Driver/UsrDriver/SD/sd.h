@@ -76,8 +76,8 @@ extern uint8_t  SD_Type;			//SDø®µƒ¿‡–Õ
 
 uint8_t SD_Initialize(void *config);
 
-uint8_t SD_ReadSector(uint32_t sector,uint8_t*buf);
-uint8_t SD_WriteSector(uint32_t sector,uint8_t*buf);
+uint8_t SD_ReadSector(uint32_t sector,uint32_t page,uint8_t *buf,uint32_t len);
+uint8_t SD_WriteSector(uint32_t sector,uint32_t page,uint8_t *buf,uint32_t len);
 
 uint32_t SD_GetSectorCount(void);
  

@@ -44,6 +44,8 @@ lcd_driver.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 lcd_driver.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+lcd_driver.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 lcd_driver.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 lcd_driver.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -100,6 +102,10 @@ lcd_driver.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 lcd_driver.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+lcd_driver.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+lcd_driver.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 lcd_driver.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 lcd_driver.o :	../Driver/SysDriver/sys_driver.h

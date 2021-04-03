@@ -50,6 +50,8 @@ capture.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 capture.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+capture.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 capture.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 capture.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -104,6 +106,10 @@ capture.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 capture.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+capture.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+capture.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 capture.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 capture.o :	../Driver/SysDriver/sys_driver.h

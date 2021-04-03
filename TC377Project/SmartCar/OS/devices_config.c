@@ -174,9 +174,9 @@ led_t BLED =  /*ok*/
         .GPIOn = &GPIO_Resources[10].GPION,
 };
 
-sdcard_t SDCard = /*待定*/
+memory_t SDCard = /*待定*/
 {
-        .Init = SDCard_Init,
+        .Init = Mem_Init,
 
         .__Init__ = SD_Initialize,
         .__InitConfig__ = NULL,
@@ -185,6 +185,19 @@ sdcard_t SDCard = /*待定*/
         .__GetSectorNum__ = SD_GetSectorCount,
 
         .Self = &SDCard,
+};
+
+memory_t EEPROM = /*待定*/
+{
+        .Init = Mem_Init,
+
+        .__Init__ = NULL,
+        .__InitConfig__ = NULL,
+        .__ReadSector__ = SD_ReadSector,
+        .__WriteSector__ = SD_WriteSector,
+        .__GetSectorNum__ = SD_GetSectorCount,
+
+        .Self = &EEPROM,
 };
 
 

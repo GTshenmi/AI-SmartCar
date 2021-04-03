@@ -50,6 +50,8 @@ neuralnetwork.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 neuralnetwork.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+neuralnetwork.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 neuralnetwork.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 neuralnetwork.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -106,6 +108,10 @@ neuralnetwork.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 neuralnetwork.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+neuralnetwork.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+neuralnetwork.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 neuralnetwork.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 neuralnetwork.o :	../Driver/SysDriver/sys_driver.h

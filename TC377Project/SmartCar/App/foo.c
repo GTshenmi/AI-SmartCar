@@ -151,6 +151,18 @@ void ReadParameterFromSDCard(void *data)
     f_scanf(&ParameterTxtFp,"Speed = %d;\n",&pdata->Speed);
 }
 
+void SaveTrackingDataToEEPROM(void *data)
+{
+    data_t *pdata = data;
+
+   // for(uint i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+   //     EEPROM_Write(&ExcelFp,"%f",pdata->N_SADC[i]);
+
+
+
+    f_printf(&ExcelFp,"%d\n",pdata->Angle);
+}
+
 void SaveAutoBootModeDataToExcel(void *data)
 {
     data_t *pdata = data;

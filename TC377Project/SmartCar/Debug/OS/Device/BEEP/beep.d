@@ -48,6 +48,8 @@ beep.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 beep.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+beep.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 beep.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 beep.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -102,6 +104,10 @@ beep.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 beep.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+beep.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+beep.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 beep.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 beep.o :	../Driver/SysDriver/sys_driver.h

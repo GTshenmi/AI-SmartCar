@@ -48,6 +48,8 @@ foo.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 foo.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+foo.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 foo.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 foo.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -104,6 +106,10 @@ foo.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 foo.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+foo.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+foo.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 foo.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 foo.o :	../Driver/SysDriver/sys_driver.h

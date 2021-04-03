@@ -105,6 +105,17 @@ void Core0_Main()
 
     GLED.ON(GLED.Self);
 
+    uint8_t readbuf[10];
+
+    EEPROM_WriteSector(0,0,(uint8_t *)"DJ Is Dog.",10);
+
+    EEPROM_ReadSector(0,0,readbuf,10);
+
+   // Console.WriteLine((char *)readbuf);
+
+//    for(int i = 0 ; i < 10 ; i++)
+//        Console.WriteLine("Buf[%d] = %lu",i,readbuf[i]);
+
     //NNTest();
 
     while(1)

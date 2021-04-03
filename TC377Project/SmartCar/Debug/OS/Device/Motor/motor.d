@@ -48,6 +48,8 @@ motor.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 motor.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
+motor.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
+../Driver/SysDriverLQ/LQ_EEPROM.h :
 motor.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 motor.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
@@ -102,6 +104,10 @@ motor.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 motor.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
+motor.o :	../Driver/SysDriver/eeprom.h
+../Driver/SysDriver/eeprom.h :
+motor.o :	../Driver/SysDriver/common.h
+../Driver/SysDriver/common.h :
 motor.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 motor.o :	../Driver/SysDriver/sys_driver.h
