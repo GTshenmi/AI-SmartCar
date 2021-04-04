@@ -108,10 +108,6 @@ control.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 control.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-control.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-control.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 control.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 control.o :	../Driver/SysDriver/sys_driver.h
@@ -124,6 +120,8 @@ control.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 control.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+control.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 control.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 control.o :	../OS/Device/ESensor/esensor.h
@@ -146,12 +144,12 @@ control.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 control.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+control.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 control.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 control.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-control.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 control.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 control.o :	../OS/Device/WirelessSerial/wirelessserial.h

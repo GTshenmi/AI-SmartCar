@@ -102,10 +102,6 @@ camera.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 camera.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-camera.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-camera.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 camera.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 camera.o :	../Driver/SysDriver/sys_driver.h

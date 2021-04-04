@@ -104,10 +104,6 @@ screen.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 screen.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-screen.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-screen.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 screen.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 screen.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ screen.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 screen.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+screen.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

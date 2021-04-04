@@ -106,10 +106,6 @@ test.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 test.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-test.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-test.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 test.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 test.o :	../Driver/SysDriver/sys_driver.h
@@ -122,6 +118,8 @@ test.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 test.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+test.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 test.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 test.o :	../OS/Device/ESensor/esensor.h
@@ -144,12 +142,12 @@ test.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 test.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+test.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 test.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 test.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-test.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 test.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 test.o :	../OS/Device/WirelessSerial/wirelessserial.h

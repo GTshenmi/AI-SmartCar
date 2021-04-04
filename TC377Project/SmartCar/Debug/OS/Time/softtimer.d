@@ -26,12 +26,12 @@ softtimer.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 softtimer.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+softtimer.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 softtimer.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 softtimer.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-softtimer.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 softtimer.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 softtimer.o :	../OS/Device/WirelessSerial/wirelessserial.h

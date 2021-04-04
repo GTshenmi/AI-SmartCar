@@ -20,7 +20,6 @@
 #include "iic.h"
 #include "dma.h"
 #include "systime.h"
-#include "eeprom.h"
 #include "resource_config.h"
 
 

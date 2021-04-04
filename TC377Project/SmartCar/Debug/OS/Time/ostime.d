@@ -26,12 +26,12 @@ ostime.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 ostime.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+ostime.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 ostime.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 ostime.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-ostime.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 ostime.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 ostime.o :	../OS/Device/WirelessSerial/wirelessserial.h

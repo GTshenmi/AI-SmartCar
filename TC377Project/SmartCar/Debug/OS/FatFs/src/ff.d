@@ -32,12 +32,12 @@ ff.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 ff.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+ff.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 ff.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 ff.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-ff.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 ff.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 ff.o :	../OS/Device/WirelessSerial/wirelessserial.h

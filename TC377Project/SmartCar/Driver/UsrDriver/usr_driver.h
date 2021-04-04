@@ -11,5 +11,6 @@
 #include "lcd_driver.h"
 #include "camera.h"
 #include "sd.h"
+#include "eeprom.h"
 
 #endif /* DRIVER_USRDRIVER_USR_DRIVER_H_ */

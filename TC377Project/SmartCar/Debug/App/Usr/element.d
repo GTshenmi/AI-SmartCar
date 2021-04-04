@@ -108,10 +108,6 @@ element.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 element.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-element.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-element.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 element.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 element.o :	../Driver/SysDriver/sys_driver.h
@@ -124,6 +120,8 @@ element.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 element.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+element.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 element.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 element.o :	../OS/Device/ESensor/esensor.h
@@ -146,12 +144,12 @@ element.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 element.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+element.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 element.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 element.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-element.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 element.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 element.o :	../OS/Device/WirelessSerial/wirelessserial.h

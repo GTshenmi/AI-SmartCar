@@ -19,6 +19,10 @@
 #define KEY_BITS_SHIELD_MASK    0x00000400
 #define KeySetLevel(state)
 
+struct key;
+
+typedef void (*key_eventcallback)(struct key *self, void *argv, uint16_t argc);
+
 typedef enum _KEY_STATUS_LIST
 {
     KEY_NULL = 0x00,
@@ -44,6 +48,8 @@ typedef struct key
 
         void *Argv;
         uint16_t Argc;
+        key_eventcallback PressedCallBack;      /*回调函数(按下一次)*/
+        key_eventcallback LongPressedCallBack;  /*回调函数(长按)*/
 
         uint8_t (*ReadIOLevel)(struct key *self);/*读IO电平函数*/
         uint8_t (*Read)(struct key *self);
@@ -60,10 +66,7 @@ typedef struct key
         void (*SetShield)(struct key *self,bool is_shield);      /*按键屏蔽使能 */
         void (*SetDownLevel)(struct key *self,uint8_t downlevel);/*设置按键按下时IO口的实际电平 */
 
-        void (*PressedCallBack)(struct key *self,void *argv,uint16_t argc);    /*回调函数(按下一次)*/
-        void (*LongPressedCallBack)(struct key *self,void *argv,uint16_t argc);/*回调函数(长按)*/
-
-        void (*BindUsrData)(struct key *self,void *argv,uint16_t argc);
+        void (*Connect)(struct key *self,key_eventcallback pressedcallback,key_eventcallback longpressedcallback,void *argv,uint16_t argc);
 
         void (*Test)(struct key *self);
 

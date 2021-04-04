@@ -106,10 +106,6 @@ Cpu0_Main.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 Cpu0_Main.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-Cpu0_Main.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-Cpu0_Main.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 Cpu0_Main.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 Cpu0_Main.o :	../Driver/SysDriver/sys_driver.h
@@ -122,6 +118,8 @@ Cpu0_Main.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 Cpu0_Main.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+Cpu0_Main.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 Cpu0_Main.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 Cpu0_Main.o :	../OS/Device/ESensor/esensor.h
@@ -144,12 +142,12 @@ Cpu0_Main.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 Cpu0_Main.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+Cpu0_Main.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 Cpu0_Main.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 Cpu0_Main.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-Cpu0_Main.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 Cpu0_Main.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 Cpu0_Main.o :	../OS/Device/WirelessSerial/wirelessserial.h

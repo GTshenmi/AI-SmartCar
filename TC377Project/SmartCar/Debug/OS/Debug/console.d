@@ -26,12 +26,12 @@ console.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 console.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+console.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 console.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 console.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-console.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 console.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 console.o :	../OS/Device/WirelessSerial/wirelessserial.h
@@ -142,10 +142,6 @@ console.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 console.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-console.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-console.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 console.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 console.o :	../Driver/SysDriver/sys_driver.h
@@ -158,3 +154,5 @@ console.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 console.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+console.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

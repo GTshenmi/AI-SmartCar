@@ -104,10 +104,6 @@ bluetooth.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 bluetooth.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-bluetooth.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-bluetooth.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 bluetooth.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 bluetooth.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ bluetooth.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 bluetooth.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+bluetooth.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

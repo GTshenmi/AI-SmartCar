@@ -104,10 +104,6 @@ dipswitch.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 dipswitch.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-dipswitch.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-dipswitch.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 dipswitch.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 dipswitch.o :	../Driver/SysDriver/sys_driver.h
@@ -120,5 +116,7 @@ dipswitch.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 dipswitch.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+dipswitch.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 dipswitch.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :

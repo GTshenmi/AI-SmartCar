@@ -12,9 +12,13 @@
 
 #include "platform.h"
 
+struct servo_ctrl;
+
+typedef uint16_t (*servo_ctrlcallback)(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc);
+
 typedef struct
 {
-      sint32_t handle;
+    sint32_t handle;
 }mpu_t;
 
 typedef enum
@@ -67,6 +71,7 @@ typedef struct servo_ctrl
 
         void *Argv;
         uint16_t Argc;
+        servo_ctrlcallback CtrlStrategy;
 
         void (*SetState)(struct servo_ctrl *self,servo_state_t state);
 
@@ -79,7 +84,6 @@ typedef struct servo_ctrl
         uint8_t (*Init)(struct servo_ctrl *self);
 
         uint16_t (*Update)(struct servo_ctrl *self);
-        uint16_t (*CtrlStrategy)(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc);/*Servo Close Loop Control Function,It Can Re-Definition,Keep It NULL if  MPU6050 or other Angle Sensor not exist.*/
 
         void (*Protect)(struct servo_ctrl *self,float angle,void *argv,uint16_t argc);/*Servo Protect,It Can Re-Definition*/
 
@@ -101,7 +105,7 @@ typedef struct servo_ctrl
         uint16_t (*GetPwmValue)(struct servo_ctrl *self);
         uint16_t (*GetPwmCentValue)(struct servo_ctrl *self);
 
-        void (*BindUsrData)(struct servo_ctrl *self,void *argv,uint16_t argc);
+        void (*Connect)(struct servo_ctrl *self,servo_ctrlcallback ctrlstrategy,void *argv,uint16_t argc);
 
         struct servo_ctrl *Self;
 
@@ -109,7 +113,7 @@ typedef struct servo_ctrl
 
 }servo_ctrl_t;
 
-uint8_t ServoInit(struct servo_ctrl *self);
+uint8_t Servo_Init(struct servo_ctrl *self);
 
 
 #endif /* OS_DEVICE_SERVO_SERVO_H_ */

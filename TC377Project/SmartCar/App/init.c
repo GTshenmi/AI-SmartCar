@@ -23,15 +23,14 @@ void Core0_HardWareInit()
 
     /*Init Motor.*/
     Motor.Init(Motor.Self);
-    Motor.BindUsrData(Motor.Self,&Data[data_pointer],sizeof(data_t));
-    Motor.CtrlStrategy = MotorCtrlStrategy;
+    Motor.Connect(Motor.Self,MotorCtrlStrategy,&Data[data_pointer],sizeof(data_t));
+    Motor.SetSpeedLimit(Motor.Self,10000,-10000);
     Motor.Start(Motor.Self);
 
     /*Init Servo.*/
     Servo.Init(Servo.Self);
-    Servo.BindUsrData(Servo.Self,&Data[data_pointer],sizeof(data_t));
+    Servo.Connect(Servo.Self,ServoCtrlStrategy,&Data[data_pointer],sizeof(data_t));
     Servo.SetAngleLimit(Servo.Self,200.0,-200.0);
-    Servo.CtrlStrategy = ServoCtrlStrategy;
     Servo.SetPwmCentValue(Servo.Self,300);
     Servo.Start(Servo.Self);
     Servo.SetAngle(Servo.Self,0);
@@ -86,8 +85,6 @@ void Core0_SoftWareInit()
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
     PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,1.0));
-    PID_SetValue(&Data[data_pointer].M_PID,PIDValue(1.0,0.0,0.0));
-    PID_SetValue(&Data[data_pointer].S_PID,PIDValue(3.2,0.0,0.0));
 
     /*Init Data Save System.*/
     DataSaveSysInit("1.xls","1.txt");

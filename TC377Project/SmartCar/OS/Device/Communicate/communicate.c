@@ -7,7 +7,7 @@
 #include "communicate.h"
 #include "driver.h"
 
-uint8_t ComTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
+uint8_t Com_Transmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
 {
     if(self->CommunicationType == C_SPI)
     {
@@ -24,7 +24,7 @@ uint8_t ComTransmit(struct communicate *self,uint8_t *str,uint32_t len,sint64_t 
 
     return 0;
 }
-uint8_t ComReceive(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
+uint8_t Com_Receive(struct communicate *self,uint8_t *str,uint32_t len,sint64_t time_out)
 {
     if(self->CommunicationType == C_SPI)
     {
@@ -43,7 +43,7 @@ uint8_t ComReceive(struct communicate *self,uint8_t *str,uint32_t len,sint64_t t
 
 
 
-uint32_t ComRead(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t Com_Read(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     uint32_t len = 0;
 
@@ -65,7 +65,7 @@ uint32_t ComRead(struct communicate *self,sint64_t time_out,const char *fmt,...)
 
     return len;
 }
-uint32_t ComReadLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t Com_ReadLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     uint32_t len = 0;
 
@@ -90,7 +90,7 @@ uint32_t ComReadLine(struct communicate *self,sint64_t time_out,const char *fmt,
 
 
 
-uint32_t ComWrite(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t Com_Write(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     char writebuf[COMM_MAX_BUF_LEN];
 
@@ -105,7 +105,7 @@ uint32_t ComWrite(struct communicate *self,sint64_t time_out,const char *fmt,...
 
     return len;
 }
-uint32_t ComWriteLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
+uint32_t Com_WriteLine(struct communicate *self,sint64_t time_out,const char *fmt,...)
 {
     char writebuf[COMM_MAX_BUF_LEN];
 
@@ -128,14 +128,14 @@ uint32_t ComWriteLine(struct communicate *self,sint64_t time_out,const char *fmt
 
 
 
-uint8_t ComInit(struct communicate *self)
+uint8_t Com_Init(struct communicate *self)
 {
-    self->Receive = ComReceive;
-    self->Transmit = ComTransmit;
-    self->Read = ComRead;
-    self->ReadLine = ComReadLine;
-    self->Write = ComWrite;
-    self->WriteLine = ComWriteLine;
+    self->Receive = Com_Receive;
+    self->Transmit = Com_Transmit;
+    self->Read = Com_Read;
+    self->ReadLine = Com_ReadLine;
+    self->Write = Com_Write;
+    self->WriteLine = Com_WriteLine;
 
     uint8_t res = 0;
 

@@ -104,10 +104,6 @@ esensor.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 esensor.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-esensor.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-esensor.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 esensor.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 esensor.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ esensor.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 esensor.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+esensor.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

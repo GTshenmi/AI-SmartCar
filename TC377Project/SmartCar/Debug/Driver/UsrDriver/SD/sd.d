@@ -102,10 +102,6 @@ sd.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 sd.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-sd.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-sd.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 sd.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 sd.o :	../Driver/SysDriver/sys_driver.h

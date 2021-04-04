@@ -28,12 +28,12 @@ diskio.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 diskio.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+diskio.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 diskio.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 diskio.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-diskio.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 diskio.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 diskio.o :	../OS/Device/WirelessSerial/wirelessserial.h

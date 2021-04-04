@@ -26,12 +26,12 @@ task.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 task.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+task.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 task.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 task.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-task.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 task.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 task.o :	../OS/Device/WirelessSerial/wirelessserial.h

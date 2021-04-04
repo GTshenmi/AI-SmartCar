@@ -104,10 +104,6 @@ communicate.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 communicate.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-communicate.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-communicate.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 communicate.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 communicate.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ communicate.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 communicate.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+communicate.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

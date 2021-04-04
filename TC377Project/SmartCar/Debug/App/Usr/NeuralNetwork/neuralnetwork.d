@@ -108,10 +108,6 @@ neuralnetwork.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 neuralnetwork.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-neuralnetwork.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-neuralnetwork.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 neuralnetwork.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 neuralnetwork.o :	../Driver/SysDriver/sys_driver.h
@@ -124,6 +120,8 @@ neuralnetwork.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 neuralnetwork.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+neuralnetwork.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 neuralnetwork.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 neuralnetwork.o :	../OS/Device/ESensor/esensor.h
@@ -146,12 +144,12 @@ neuralnetwork.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 neuralnetwork.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+neuralnetwork.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 neuralnetwork.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 neuralnetwork.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-neuralnetwork.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 neuralnetwork.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 neuralnetwork.o :	../OS/Device/WirelessSerial/wirelessserial.h

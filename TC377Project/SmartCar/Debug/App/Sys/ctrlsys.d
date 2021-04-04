@@ -108,10 +108,6 @@ ctrlsys.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 ctrlsys.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-ctrlsys.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-ctrlsys.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 ctrlsys.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 ctrlsys.o :	../Driver/SysDriver/sys_driver.h
@@ -124,6 +120,8 @@ ctrlsys.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 ctrlsys.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+ctrlsys.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 ctrlsys.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 ctrlsys.o :	../OS/Device/ESensor/esensor.h
@@ -146,12 +144,12 @@ ctrlsys.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 ctrlsys.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+ctrlsys.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 ctrlsys.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 ctrlsys.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-ctrlsys.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 ctrlsys.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 ctrlsys.o :	../OS/Device/WirelessSerial/wirelessserial.h

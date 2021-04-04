@@ -17,6 +17,10 @@
 
 #define DriverChip Drv8701
 
+struct motor_ctrl;
+
+typedef sint16_t (*motor_ctrlcallback)(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc);
+
 typedef enum
 {
     Motor_Running,Motor_Sleeping,Motor_Stopped,Motor_Stalling,Motor_Normal_Stopping,Motor_Force_Stopping,
@@ -66,6 +70,7 @@ typedef struct motor_ctrl
 
         void *Argv;
         uint16_t Argc;
+        motor_ctrlcallback CtrlStrategy;
 
         sint16_t MaxSpeed;
         sint16_t MinSpeed;
@@ -80,9 +85,8 @@ typedef struct motor_ctrl
 
         sint16_t (*Update)(struct motor_ctrl *self);
 
-        sint16_t (*CtrlStrategy)(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc);/*Motor Close Loop Control Function,Can Re-Definition*/
+        void (*Connect)(struct motor_ctrl *self,motor_ctrlcallback ctrlstrategy,void *argv,uint16_t argc);
 
-        void (*BindUsrData)(struct motor_ctrl *self,void *argv,uint16_t argc);
         void (*Protect)(struct motor_ctrl *self,sint16_t speed,void *argv,uint16_t argc);/*Motor Protect,Can Re-Definition*/
 
         void (*Sleep)(struct motor_ctrl *self); /*Disable CtrlStrategy*/
@@ -107,6 +111,6 @@ typedef struct motor_ctrl
 
 }motor_ctrl_t;
 
-uint8_t MotorInit(struct motor_ctrl *self);
+uint8_t Motor_Init(struct motor_ctrl *self);
 
 #endif /* OS_DEVICE_MOTOR_MOTOR_H_ */

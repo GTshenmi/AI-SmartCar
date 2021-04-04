@@ -102,9 +102,5 @@ resource_config.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 resource_config.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-resource_config.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-resource_config.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 resource_config.o :	../OS/resource_config.h
 ../OS/resource_config.h :

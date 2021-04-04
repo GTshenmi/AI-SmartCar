@@ -39,6 +39,6 @@ typedef struct communicate
 
 }communicate_t;
 
-uint8_t ComInit(struct communicate *self);
+uint8_t Com_Init(struct communicate *self);
 
 #endif /* OS_DEVICE_COMMUNICATE_COMMUNICATE_H_ */

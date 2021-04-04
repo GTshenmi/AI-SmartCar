@@ -32,12 +32,12 @@ file.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 file.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+file.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 file.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 file.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-file.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 file.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 file.o :	../OS/Device/WirelessSerial/wirelessserial.h

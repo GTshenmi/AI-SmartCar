@@ -106,10 +106,6 @@ sysmath.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 sysmath.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-sysmath.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-sysmath.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 sysmath.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 sysmath.o :	../Driver/SysDriver/sys_driver.h
@@ -122,6 +118,8 @@ sysmath.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 sysmath.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+sysmath.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 sysmath.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 sysmath.o :	../OS/Device/ESensor/esensor.h
@@ -144,12 +142,12 @@ sysmath.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 sysmath.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+sysmath.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 sysmath.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 sysmath.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-sysmath.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 sysmath.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 sysmath.o :	../OS/Device/WirelessSerial/wirelessserial.h

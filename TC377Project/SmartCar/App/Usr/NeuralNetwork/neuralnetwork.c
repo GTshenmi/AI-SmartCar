@@ -12,7 +12,7 @@
 
 void NeuralNetworkInit(void *data)
 {
-
+    NNInit(TestModel);
 }
 /*
  * @Brief:神经网络推理接口函数

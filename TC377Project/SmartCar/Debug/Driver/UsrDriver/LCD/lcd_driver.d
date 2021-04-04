@@ -102,10 +102,6 @@ lcd_driver.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 lcd_driver.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-lcd_driver.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-lcd_driver.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 lcd_driver.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 lcd_driver.o :	../Driver/SysDriver/sys_driver.h

@@ -13,6 +13,7 @@ FIL ParameterTxtFp;
 
 void DataSaveSysInit(char * excel_filename,char * txt_filename)
 {
+    EEPROM.Init(EEPROM.Self);
 //    f_open(&ExcelFp,excel_filename,FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_OPEN_ALWAYS | FA_CREATE_NEW);
 //    f_open(&ParameterTxtFp,txt_filename,FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_OPEN_ALWAYS | FA_CREATE_NEW);
 }

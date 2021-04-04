@@ -323,7 +323,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="../App"/>
                                     									
-                                    <listOptionValue builtIn="false" value="../OS/Device/SDCard"/>
+                                    <listOptionValue builtIn="false" value="../OS/Device/Memory"/>
                                     									
                                     <listOptionValue builtIn="false" value="../OS/UI"/>
                                     									
@@ -376,6 +376,8 @@
                                     <listOptionValue builtIn="false" value="../OS/Debug"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Driver/UsrDriver/Camera"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../Driver/UsrDriver/EEPROM"/>
                                     									
                                     <listOptionValue builtIn="false" value="../App/Sys"/>
                                     									

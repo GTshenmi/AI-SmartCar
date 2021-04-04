@@ -28,12 +28,12 @@ info_page.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 info_page.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+info_page.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 info_page.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 info_page.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-info_page.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 info_page.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 info_page.o :	../OS/Device/WirelessSerial/wirelessserial.h

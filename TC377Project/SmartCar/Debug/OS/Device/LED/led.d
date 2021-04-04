@@ -104,10 +104,6 @@ led.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 led.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-led.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-led.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 led.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 led.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ led.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 led.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+led.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

@@ -26,12 +26,12 @@ devices_config.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 devices_config.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+devices_config.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 devices_config.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 devices_config.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-devices_config.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 devices_config.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 devices_config.o :	../OS/Device/WirelessSerial/wirelessserial.h
@@ -140,10 +140,6 @@ devices_config.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 devices_config.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-devices_config.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-devices_config.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 devices_config.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 devices_config.o :	../Driver/SysDriver/sys_driver.h
@@ -156,3 +152,5 @@ devices_config.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 devices_config.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+devices_config.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

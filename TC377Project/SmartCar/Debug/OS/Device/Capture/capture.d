@@ -106,10 +106,6 @@ capture.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 capture.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-capture.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-capture.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 capture.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 capture.o :	../Driver/SysDriver/sys_driver.h
@@ -122,3 +118,5 @@ capture.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 capture.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+capture.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

@@ -53,27 +53,27 @@ capture_t Capture = /*unknow*/
 esensor_t LESensor[5] =/*ok*/ /*9 - 16 Left*/
 {
     [0] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &LESensor[0],
             .ADCn = &ADC_Resources[8].ADCN,
     },
     [1] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &LESensor[1],
             .ADCn = &ADC_Resources[9].ADCN,
     },
     [2] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &LESensor[2],
             .ADCn = &ADC_Resources[10].ADCN,
     },
     [3] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &LESensor[3],
             .ADCn = &ADC_Resources[11].ADCN,
     },
     [4] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &LESensor[4],
             .ADCn = &ADC_Resources[12].ADCN,
     },
@@ -81,37 +81,37 @@ esensor_t LESensor[5] =/*ok*/ /*9 - 16 Left*/
 esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/
 {
     [0] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &SESensor[0],
             .ADCn = &ADC_Resources[0].ADCN,//AD1
     },
     [1] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &SESensor[1],
             .ADCn = &ADC_Resources[1].ADCN,//AD2
     },
     [2] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &SESensor[2],
             .ADCn = &ADC_Resources[2].ADCN,//AD3
     },
     [3] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &SESensor[3],
             .ADCn = &ADC_Resources[3].ADCN,//AD4
     },
     [4] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &SESensor[4],
             .ADCn = &ADC_Resources[4].ADCN,//AD5
     },
     [5] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &SESensor[5],
             .ADCn = &ADC_Resources[7].ADCN,//AD6
     },
     [6] = {
-            .Init = ESensorInit,
+            .Init = ESensor_Init,
             .Self = &SESensor[6],
             .ADCn = &ADC_Resources[6].ADCN,//AD7
     },
@@ -119,7 +119,7 @@ esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/
 
 motor_ctrl_t Motor =/*ok*/
 {
-        .Init = MotorInit,
+        .Init = Motor_Init,
         .Self = &Motor,
         .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
         .Encn = &ENC_Resources[0].ENCN,
@@ -128,7 +128,7 @@ motor_ctrl_t Motor =/*ok*/
 servo_ctrl_t Servo =/*ok*/
 {
         .Pwmn = &PWM_Resources[2].PWMN,
-        .Init = ServoInit,
+        .Init = Servo_Init,
         .Self = &Servo,
 };
 
@@ -183,6 +183,8 @@ memory_t SDCard = /*´ý¶¨*/
         .__ReadSector__ = SD_ReadSector,
         .__WriteSector__ = SD_WriteSector,
         .__GetSectorNum__ = SD_GetSectorCount,
+        .__SectorSize__ = 512,
+        .__BlockSize__ = 4096,
 
         .Self = &SDCard,
 };
@@ -193,9 +195,11 @@ memory_t EEPROM = /*´ý¶¨*/
 
         .__Init__ = NULL,
         .__InitConfig__ = NULL,
-        .__ReadSector__ = SD_ReadSector,
-        .__WriteSector__ = SD_WriteSector,
-        .__GetSectorNum__ = SD_GetSectorCount,
+        .__ReadSector__ = EEPROM_ReadSector,
+        .__WriteSector__ = EEPROM_WriteSector,
+        .__GetSectorNum__ = EEPROM_GetSectorNum,
+        .__SectorSize__ = 1024,
+        .__BlockSize__ = 1024,
 
         .Self = &EEPROM,
 };
@@ -256,7 +260,7 @@ switch_t Switch[8] = /*ok*/
 
 communicate_t CUART = /*ok*/
 {
-        .Init = ComInit,
+        .Init = Com_Init,
         .Self = &CUART,
         .CommunicationType = C_UART,
         .Communicatorn = (void *)&UART_Resources[0].UARTN,
@@ -264,7 +268,7 @@ communicate_t CUART = /*ok*/
 
 communicate_t DebugCom = /*ok*/
 {
-        .Init = ComInit,
+        .Init = Com_Init,
         .Self = &DebugCom,
         .CommunicationType = C_UART,
         .Communicatorn = (void *)&UART_Resources[0].UARTN,

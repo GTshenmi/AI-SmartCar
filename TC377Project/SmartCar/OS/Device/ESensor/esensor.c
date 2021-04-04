@@ -7,7 +7,7 @@
 #include <esensor.h>
 #include "driver.h"
 
-uint16_t ESensorRead(struct esensor *self)
+uint16_t ESensor_Read(struct esensor *self)
 {
     /*use filter*/
     if(self->ConfigReg & ESENSOR_BITS_FILTER_ENABLE_MASK)
@@ -32,7 +32,7 @@ uint16_t ESensorRead(struct esensor *self)
     return self->Cache;
 }
 
-static unsigned ESensorMidFilter(struct esensor *self)
+static unsigned ESensor_MidFilter(struct esensor *self)
 {
     uint16_t i,j,k,tmp;
 
@@ -61,7 +61,7 @@ static unsigned ESensorMidFilter(struct esensor *self)
     return tmp;
 }
 
-static uint16_t ESensorSlidingMedianFilter(struct esensor *self,uint16_t *FilterBuf,uint16_t len,uint16_t new_data)
+static uint16_t ESensor_SlidingMedianFilter(struct esensor *self,uint16_t *FilterBuf,uint16_t len,uint16_t new_data)
 {
     for(sint16_t i = 0;i < len-1 ;i++)
         FilterBuf[i] = FilterBuf[i+1];
@@ -77,12 +77,12 @@ static uint16_t ESensorSlidingMedianFilter(struct esensor *self,uint16_t *Filter
     return result;
 }
 
-uint16_t ESensorFilter(struct esensor *self,void *argv,uint16_t argc)
+uint16_t ESensor_Filter(struct esensor *self,void *argv,uint16_t argc)
 {
-    return ESensorSlidingMedianFilter(self,self->FilterBuf,self->FilterBufLen,ESensorMidFilter(self));
+    return ESensor_SlidingMedianFilter(self,self->FilterBuf,self->FilterBufLen,ESensor_MidFilter(self));
 }
 
-void ESensorEnableFilter(struct esensor *self,bool enable)
+void ESensor_EnableFilter(struct esensor *self,bool enable)
 {
     if(enable)
         self->ConfigReg |= ESENSOR_BITS_FILTER_ENABLE_MASK;
@@ -90,7 +90,7 @@ void ESensorEnableFilter(struct esensor *self,bool enable)
         self->ConfigReg &= ~ESENSOR_BITS_FILTER_ENABLE_MASK;
 }
 
-void ESensorEnableGain(struct esensor *self,bool enable)
+void ESensor_EnableGain(struct esensor *self,bool enable)
 {
     if(enable)
         self->ConfigReg |= ESENSOR_BITS_GAIN_ENABLE_MASK;
@@ -98,18 +98,19 @@ void ESensorEnableGain(struct esensor *self,bool enable)
         self->ConfigReg &= ~ESENSOR_BITS_GAIN_ENABLE_MASK;
 }
 
-void ESensorSetGain(struct esensor *self,float gain)
+void ESensor_SetGain(struct esensor *self,float gain)
 {
     self->Gain = gain;
 }
 
-uint16_t ESensorReadFromCache(struct esensor *self)
+uint16_t ESensor_ReadFromCache(struct esensor *self)
 {
     return self->Cache;
 }
 
-void ESensorBindUsrData(struct esensor *self,void *argv,uint16_t argc)
+void ESensor_Connect(struct esensor *self,esensor_filtercallback filter,void *argv,uint16_t argc)
 {
+    self->Filter = filter;
     self->Argv = argv;
     self->Argc = argc;
 }
@@ -121,7 +122,7 @@ uint16_t ESensor_ReadADC(struct esensor *self)
 }
 #endif
 
-uint16_t ESensorInit(struct esensor *self)
+uint16_t ESensor_Init(struct esensor *self)
 {
     ADCx.Init(self->ADCn);
 
@@ -134,13 +135,13 @@ uint16_t ESensorInit(struct esensor *self)
 
     //memset(self->FilterBuf,0,sizeof(self->FilterBuf[0]) * self->FilterBufLen);
 
-    self->Read = ESensorRead;
-    self->Filter = ESensorFilter;
-    self->EnableFilter = ESensorEnableFilter;
-    self->EnableGain = ESensorEnableGain;
-    self->SetGain = ESensorSetGain;
-    self->ReadFromCache = ESensorReadFromCache;
-    self->BindUsrData = ESensorBindUsrData;
+    self->Read = ESensor_Read;
+    self->Filter = ESensor_Filter;
+    self->EnableFilter = ESensor_EnableFilter;
+    self->EnableGain = ESensor_EnableGain;
+    self->SetGain = ESensor_SetGain;
+    self->ReadFromCache = ESensor_ReadFromCache;
+    self->Connect = ESensor_Connect;
 
 #if ESENSOR_FAST_READ_LEVEL == ESENSOR_FAST_READ_LEVEL_0
     self->ReadADC = ESensor_ReadADC;
@@ -149,6 +150,7 @@ uint16_t ESensorInit(struct esensor *self)
     self->SetGain(self,1.0);
     self->EnableFilter(self,true);
     self->EnableGain(self,false);
+    self->Connect(self,ESensor_Filter,NULL,0);
 
     return 0;
 }

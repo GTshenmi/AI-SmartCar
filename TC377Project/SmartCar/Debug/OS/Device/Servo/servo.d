@@ -104,10 +104,6 @@ servo.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 servo.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-servo.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-servo.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 servo.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 servo.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ servo.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 servo.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+servo.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

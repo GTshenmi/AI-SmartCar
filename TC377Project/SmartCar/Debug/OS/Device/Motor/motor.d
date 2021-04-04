@@ -104,10 +104,6 @@ motor.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 motor.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-motor.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-motor.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 motor.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 motor.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ motor.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 motor.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+motor.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

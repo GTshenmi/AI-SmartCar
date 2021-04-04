@@ -31,7 +31,7 @@ DSTATUS disk_initialize (
 	switch(pdrv)
 	{
 		case SD_CARD://SD卡
-			//res=SDCard.Init(SDCard.Self);//SD卡初始化
+			res=SDCard.Init(SDCard.Self);//SD卡初始化
   			break;
 //		case EX_FLASH://外部flash
 //			W25QXX_Init();
@@ -60,11 +60,11 @@ DRESULT disk_read (
 	switch(pdrv)
 	{
 		case SD_CARD://SD卡
-			//res=SDCard.ReadDisk(SDCard.Self,sector,count,buff);
+			res=SDCard.ReadDisk(SDCard.Self,sector,count,buff);
 			while(res)//读出错
 			{
-				//SDCard.Init(SDCard.Self);	//重新初始化SD卡
-				//res=SDCard.ReadDisk(SDCard.Self,sector,count,buff);
+				SDCard.Init(SDCard.Self);	//重新初始化SD卡
+				res=SDCard.ReadDisk(SDCard.Self,sector,count,buff);
 			}
 			break;
 //		case EX_FLASH://外部flash
@@ -101,11 +101,11 @@ DRESULT disk_write (
 	switch(pdrv)
 	{
 		case SD_CARD://SD卡
-			//res=SDCard.WriteDisk(SDCard.Self,sector,count,(uint8_t *)buff);
+			res=SDCard.WriteDisk(SDCard.Self,sector,count,(uint8_t *)buff);
 			while(res)//写出错
 			{
-				//SDCard.Init(SDCard.Self);	//重新初始化SD卡
-			    //res=SDCard.WriteDisk(SDCard.Self,sector,count,(uint8_t *)buff);
+				SDCard.Init(SDCard.Self);	//重新初始化SD卡
+			    res=SDCard.WriteDisk(SDCard.Self,sector,count,(uint8_t *)buff);
 			}
 			break;
 //		case EX_FLASH://外部flash
@@ -145,15 +145,15 @@ DRESULT disk_ioctl (
 				res = RES_OK;
 		        break;
 		    case GET_SECTOR_SIZE:
-				//*(DWORD*)buff = (DWORD)SDCard.GetSectorSize(SDCard.Self);
+				*(DWORD*)buff = (DWORD)SDCard.GetSectorSize(SDCard.Self);
 		        res = RES_OK;
 		        break;
 		    case GET_BLOCK_SIZE:
-				//*(WORD*)buff = (WORD)SDCard.GetBlockSize(SDCard.Self);
+				*(WORD*)buff = (WORD)SDCard.GetBlockSize(SDCard.Self);
 		        res = RES_OK;
 		        break;
 		    case GET_SECTOR_COUNT:
-		        //*(DWORD*)buff = (DWORD)SDCard.GetSectorNum(SDCard.Self);
+		        *(DWORD*)buff = (DWORD)SDCard.GetSectorNum(SDCard.Self);
 		        res = RES_OK;
 		        break;
 		    default:

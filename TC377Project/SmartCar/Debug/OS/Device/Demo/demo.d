@@ -104,10 +104,6 @@ demo.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 demo.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-demo.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-demo.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 demo.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 demo.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ demo.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 demo.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+demo.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

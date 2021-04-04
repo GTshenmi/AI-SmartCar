@@ -28,12 +28,12 @@ ui.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 ui.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+ui.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 ui.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 ui.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-ui.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 ui.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 ui.o :	../OS/Device/WirelessSerial/wirelessserial.h

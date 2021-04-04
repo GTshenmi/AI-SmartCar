@@ -7,7 +7,7 @@
 #include <motor.h>
 #include "driver.h"
 
-sint16_t MotorUpdate(struct motor_ctrl *self)
+sint16_t Motor_Update(struct motor_ctrl *self)
 {
     /*读取反馈值*/
     sint16_t actual_speed = self->SpeedCache;
@@ -50,7 +50,7 @@ sint16_t MotorUpdate(struct motor_ctrl *self)
     return self->PwmValue;
 }
 
-uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
+uint16_t Motor_SetSpeed(struct motor_ctrl *self,sint16_t speed)
 {
     /*传参检查*/
     if(speed > self->MaxSpeed)
@@ -63,7 +63,7 @@ uint16_t MotorSetSpeed(struct motor_ctrl *self,sint16_t speed)
     return self->TargetSpeed;
 }
 
-sint16_t MotorGetSpeed(struct motor_ctrl *self)
+sint16_t Motor_GetSpeed(struct motor_ctrl *self)
 {
     sint16_t speed = ENCx.Read(self->Encn);
 
@@ -75,74 +75,76 @@ sint16_t MotorGetSpeed(struct motor_ctrl *self)
     return self->SpeedCache = speed;
 }
 
-sint16_t MotorGetSpeedFromCache(struct motor_ctrl *self)
+sint16_t Motor_GetSpeedFromCache(struct motor_ctrl *self)
 {
     return self->SpeedCache;
 }
 
-void MotorSleep(struct motor_ctrl *self)
+void Motor_Sleep(struct motor_ctrl *self)
 {
     if(self->State == Motor_Running)
         self->State = Motor_Sleeping;
 }
 
-void MotorStop(struct motor_ctrl *self)
+void Motor_Stop(struct motor_ctrl *self)
 {
     if(self->State == Motor_Running || self->State == Motor_Sleeping)
         self->State = Motor_Normal_Stopping;
 }
 
-void MotorStart(struct motor_ctrl *self)
+void Motor_Start(struct motor_ctrl *self)
 {
     if(self->State == Motor_Stopped)
         self->State = Motor_Running;
 }
 
-void MotorWakeUp(struct motor_ctrl *self)
+void Motor_WakeUp(struct motor_ctrl *self)
 {
     if(self->State == Motor_Sleeping)
         self->State = Motor_Running;
 }
 
-void MotorBreak(struct motor_ctrl *self)
+void Motor_Break(struct motor_ctrl *self)
 {
     self->State = Motor_Force_Stopping;
 }
 
-motor_state_t GetMotorState(struct motor_ctrl *self)
+motor_state_t Motor_GetState(struct motor_ctrl *self)
 {
     return self->State;
 }
 
 
-void MotorBindUsrData(struct motor_ctrl *self,void *argv,uint16_t argc)
+void Motor_Connect(struct motor_ctrl *self,motor_ctrlcallback ctrlstrategy,void *argv,uint16_t argc)
 {
+    self->CtrlStrategy = ctrlstrategy;
+
     self->Argv = argv;
     self->Argc = argc;
 }
 
-void MotorSetSpeedLimit(struct motor_ctrl *self,sint16_t MaxSpeed,sint16_t MinSpeed)
+void Motor_SetSpeedLimit(struct motor_ctrl *self,sint16_t MaxSpeed,sint16_t MinSpeed)
 {
     self->MaxSpeed = MaxSpeed;
     self->MinSpeed = MinSpeed;
 }
 
-sint16_t MotorGetMaxSpeed(struct motor_ctrl *self)
+sint16_t Motor_GetMaxSpeed(struct motor_ctrl *self)
 {
     return self->MaxSpeed;
 }
 
-sint16_t MotorGetMinSpeed(struct motor_ctrl *self)
+sint16_t Motor_GetMinSpeed(struct motor_ctrl *self)
 {
     return self->MinSpeed;
 }
 
-uint16_t MotorGetPwmValue(struct motor_ctrl *self)
+uint16_t Motor_GetPwmValue(struct motor_ctrl *self)
 {
     return self->PwmValue;
 }
 
-void MotorDefaultProtect(struct motor_ctrl *self,sint16_t speed,void *argv,uint16_t argc)
+void Motor_DefaultProtect(struct motor_ctrl *self,sint16_t speed,void *argv,uint16_t argc)
 {
 //    if(self->SpeedCache < 5 && speed != 0)
 //        self->StallingTime ++;
@@ -155,22 +157,22 @@ void MotorDefaultProtect(struct motor_ctrl *self,sint16_t speed,void *argv,uint1
 //    }
 }
 
-sint16_t MotorDefaultCtrlStrategy(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc)
+sint16_t Motor_DefaultCtrlStrategy(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc)
 {
     return abs(target_speed);
 }
 
-void MotorSetPwmValue(struct motor_ctrl *self,sint16_t value)
+void Motor_SetPwmValue(struct motor_ctrl *self,sint16_t value)
 {
     self->Driver(self,value);
 }
 
-void MotorSetState(struct motor_ctrl *self,motor_state_t state)
+void Motor_SetState(struct motor_ctrl *self,motor_state_t state)
 {
     self->State = state;
 }
 
-void MotorDriver(struct motor_ctrl *self,sint16_t value)
+void Motor_Driver(struct motor_ctrl *self,sint16_t value)
 {
     self->PwmValue = value;
 
@@ -208,44 +210,47 @@ void MotorDriver(struct motor_ctrl *self,sint16_t value)
 #endif
 }
 
-uint8_t MotorInit(struct motor_ctrl *self)
+uint8_t Motor_Init(struct motor_ctrl *self)
 {
     PWMx.Init(self->Pwmn[0]);
     PWMx.Init(self->Pwmn[1]);
     ENCx.Init(self->Encn);
 
-    self->Argv = NULL;
-    self->Argc = 0;
     self->State = Motor_Stopped;
     self->MaxSpeed = 10000;
     self->MinSpeed = -10000;
     self->SpeedCache = 0;
     self->PwmValue = 0;
 
-    self->SetSpeed = MotorSetSpeed;
-    self->GetSpeed = MotorGetSpeed;
-    self->GetSpeedFromCache = MotorGetSpeedFromCache;
-    self->CtrlStrategy = MotorDefaultCtrlStrategy;
-    self->Protect = MotorDefaultProtect;
+    self->SetSpeed = Motor_SetSpeed;
+    self->GetSpeed = Motor_GetSpeed;
+    self->GetSpeedFromCache = Motor_GetSpeedFromCache;
+    self->Protect = Motor_DefaultProtect;
 
-    self->Start = MotorStart;
-    self->Stop = MotorStop;
-    self->Sleep = MotorSleep;
-    self->WakeUp = MotorWakeUp;
-    self->Break = MotorBreak;
+    self->Start = Motor_Start;
+    self->Stop = Motor_Stop;
+    self->Sleep = Motor_Sleep;
+    self->WakeUp = Motor_WakeUp;
+    self->Break = Motor_Break;
 
-    self->GetState = GetMotorState;
-    self->BindUsrData = MotorBindUsrData;
-    self->SetSpeedLimit = MotorSetSpeedLimit;
-    self->GetMaxSpeed = MotorGetMaxSpeed;
-    self->GetMinSpeed = MotorGetMinSpeed;
-    self->GetPwmValue = MotorGetPwmValue;
+    self->Argv = NULL;
+    self->Argc = 0;
+    self->CtrlStrategy = Motor_DefaultCtrlStrategy;
+    self->Connect = Motor_Connect;
 
-    self->SetPwmValue = MotorSetPwmValue;
-    self->SetState = MotorSetState;
-    self->Driver = MotorDriver;
-    self->Update = MotorUpdate;
+    self->GetState = Motor_GetState;
+    self->SetSpeedLimit = Motor_SetSpeedLimit;
+    self->GetMaxSpeed = Motor_GetMaxSpeed;
+    self->GetMinSpeed = Motor_GetMinSpeed;
+    self->GetPwmValue = Motor_GetPwmValue;
+
+    self->SetPwmValue = Motor_SetPwmValue;
+    self->SetState = Motor_SetState;
+    self->Driver = Motor_Driver;
+    self->Update = Motor_Update;
     self->TargetSpeed = 0;
+
+    self->Connect(self,Motor_DefaultCtrlStrategy,NULL,0);
 
     return 0;
 }

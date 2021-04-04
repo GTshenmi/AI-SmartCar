@@ -136,8 +136,10 @@ void KEY_SetDownLevel(struct key *self,uint8_t downlevel)
     self->DownLevel = downlevel;
 }
 
-void KEY_BindUsrData(struct key *self,void *argv,uint16_t argc)
+void KEY_Connect(struct key *self,key_eventcallback pressedcallback,key_eventcallback longpressedcallback,void *argv,uint16_t argc)
 {
+    self->PressedCallBack = pressedcallback;
+    self->LongPressedCallBack = longpressedcallback;
     self->Argv = argv;
     self->Argc = argc;
 }
@@ -159,8 +161,6 @@ uint8_t KEY_Init(struct key *self)
     self->Level = 0;
     self->State = KEY_NULL;
     self->Event = KEY_NULL;
-    self->Argv = NULL;
-    self->Argc = 0;
     self->KeyShield = false;
     self->DownLevel = 0;
 
@@ -176,13 +176,17 @@ uint8_t KEY_Init(struct key *self)
 
     self->SetDownLevel = KEY_SetDownLevel;
     self->SetShield = KEY_SetShield;
-    self->BindUsrData = KEY_BindUsrData;
 
+    self->Argv = NULL;
+    self->Argc = 0;
     self->PressedCallBack = KEY_DefaultCallBack;
     self->LongPressedCallBack = KEY_DefaultCallBack;
+    self->Connect = KEY_Connect;
 
     self->SetDownLevel(self,0);
     self->SetShield(self,false);
+    self->Connect(self,KEY_DefaultCallBack,KEY_DefaultCallBack,NULL,0);
+
 
     return GPIOx.Init(self->GPIOn);
 }

@@ -34,6 +34,7 @@ Configurations \
 Driver/SysDriver \
 Driver/SysDriverLQ \
 Driver/UsrDriver/Camera \
+Driver/UsrDriver/EEPROM \
 Driver/UsrDriver/LCD \
 Driver/UsrDriver/SD \
 Libraries/Infra/Platform/Tricore/Compilers \
@@ -91,8 +92,8 @@ OS/Device/Demo \
 OS/Device/ESensor \
 OS/Device/KEY \
 OS/Device/LED \
+OS/Device/Memory \
 OS/Device/Motor \
-OS/Device/SDCard \
 OS/Device/Screen \
 OS/Device/Servo \
 OS/Device/Switch \

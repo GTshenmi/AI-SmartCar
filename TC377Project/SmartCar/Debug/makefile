@@ -19,8 +19,8 @@ RM := rm -rf
 -include OS/Device/Switch/subdir.mk
 -include OS/Device/Servo/subdir.mk
 -include OS/Device/Screen/subdir.mk
--include OS/Device/SDCard/subdir.mk
 -include OS/Device/Motor/subdir.mk
+-include OS/Device/Memory/subdir.mk
 -include OS/Device/LED/subdir.mk
 -include OS/Device/KEY/subdir.mk
 -include OS/Device/ESensor/subdir.mk
@@ -79,6 +79,7 @@ RM := rm -rf
 -include Libraries/Infra/Platform/Tricore/Compilers/subdir.mk
 -include Driver/UsrDriver/SD/subdir.mk
 -include Driver/UsrDriver/LCD/subdir.mk
+-include Driver/UsrDriver/EEPROM/subdir.mk
 -include Driver/UsrDriver/Camera/subdir.mk
 -include Driver/SysDriverLQ/subdir.mk
 -include Driver/SysDriver/subdir.mk

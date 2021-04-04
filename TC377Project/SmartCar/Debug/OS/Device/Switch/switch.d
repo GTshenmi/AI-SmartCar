@@ -104,10 +104,6 @@ switch.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 switch.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-switch.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-switch.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 switch.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 switch.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ switch.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 switch.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+switch.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

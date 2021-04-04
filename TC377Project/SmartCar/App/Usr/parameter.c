@@ -42,7 +42,11 @@ char *ElementTypeDictionary[] =\
 
 void ParameterInit(void *data)
 {
+    data_t *pdata = (data_t *)data;
 
+    /*Set Servo And Motor PID Value.*/
+    PID_SetValue(&pdata->M_PID,PIDValue(1.0,0.0,0.0));
+    PID_SetValue(&pdata->S_PID,PIDValue(3.2,0.0,0.0));
 }
 
 char *GetCarState(uint index)

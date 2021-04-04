@@ -106,10 +106,6 @@ interrupt.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 interrupt.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-interrupt.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-interrupt.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 interrupt.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 interrupt.o :	../Driver/SysDriver/sys_driver.h
@@ -122,6 +118,8 @@ interrupt.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 interrupt.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+interrupt.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 interrupt.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 interrupt.o :	../OS/Device/ESensor/esensor.h
@@ -144,12 +142,12 @@ interrupt.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 interrupt.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+interrupt.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 interrupt.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 interrupt.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-interrupt.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 interrupt.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 interrupt.o :	../OS/Device/WirelessSerial/wirelessserial.h

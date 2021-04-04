@@ -108,10 +108,6 @@ NNLib.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 NNLib.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-NNLib.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-NNLib.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 NNLib.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 NNLib.o :	../Driver/SysDriver/sys_driver.h
@@ -124,6 +120,8 @@ NNLib.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 NNLib.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+NNLib.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 NNLib.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 NNLib.o :	../OS/Device/ESensor/esensor.h
@@ -146,12 +144,12 @@ NNLib.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 NNLib.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+NNLib.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 NNLib.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 NNLib.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-NNLib.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 NNLib.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 NNLib.o :	../OS/Device/WirelessSerial/wirelessserial.h

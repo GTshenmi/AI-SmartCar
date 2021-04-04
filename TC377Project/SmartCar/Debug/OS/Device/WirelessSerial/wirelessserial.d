@@ -104,10 +104,6 @@ wirelessserial.o :	../Driver/SysDriver/common.h
 ../Driver/SysDriver/common.h :
 wirelessserial.o :	../Driver/SysDriver/systime.h
 ../Driver/SysDriver/systime.h :
-wirelessserial.o :	../Driver/SysDriver/eeprom.h
-../Driver/SysDriver/eeprom.h :
-wirelessserial.o :	../Driver/SysDriver/common.h
-../Driver/SysDriver/common.h :
 wirelessserial.o :	../OS/resource_config.h
 ../OS/resource_config.h :
 wirelessserial.o :	../Driver/SysDriver/sys_driver.h
@@ -120,3 +116,5 @@ wirelessserial.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 wirelessserial.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+wirelessserial.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :

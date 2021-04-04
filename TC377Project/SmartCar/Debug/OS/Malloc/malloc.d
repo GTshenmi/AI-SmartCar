@@ -26,12 +26,12 @@ malloc.o :	../OS/Device/Capture/image.h
 ../OS/Device/Capture/image.h :
 malloc.o :	../OS/Device/Communicate/communicate.h
 ../OS/Device/Communicate/communicate.h :
+malloc.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
 malloc.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :
 malloc.o :	../OS/Device/Switch/dipswitch.h
 ../OS/Device/Switch/dipswitch.h :
-malloc.o :	../OS/Device/SDCard/sdcard.h
-../OS/Device/SDCard/sdcard.h :
 malloc.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 malloc.o :	../OS/Device/WirelessSerial/wirelessserial.h
