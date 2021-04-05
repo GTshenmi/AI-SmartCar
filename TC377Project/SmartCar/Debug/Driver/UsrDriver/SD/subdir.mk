@@ -4,15 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Driver/UsrDriver/SD/fatfs_sd.c \
 ../Driver/UsrDriver/SD/sd.c 
 
 OBJS += \
+./Driver/UsrDriver/SD/fatfs_sd.o \
 ./Driver/UsrDriver/SD/sd.o 
 
 COMPILED_SRCS += \
+./Driver/UsrDriver/SD/fatfs_sd.src \
 ./Driver/UsrDriver/SD/sd.src 
 
 C_DEPS += \
+./Driver/UsrDriver/SD/fatfs_sd.d \
 ./Driver/UsrDriver/SD/sd.d 
 
 

@@ -118,5 +118,45 @@ capture.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 capture.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
+capture.o :	../Driver/UsrDriver/SD/fatfs_sd.h
+../Driver/UsrDriver/SD/fatfs_sd.h :
+capture.o :	../OS/FatFs/src/diskio.h
+../OS/FatFs/src/diskio.h :
+capture.o :	../OS/FatFs/src/integer.h
+../OS/FatFs/src/integer.h :
+capture.o :	../OS/Device/device.h
+../OS/Device/device.h :
+capture.o :	../OS/Device/ESensor/esensor.h
+../OS/Device/ESensor/esensor.h :
+capture.o :	../OS/Device/Motor/motor.h
+../OS/Device/Motor/motor.h :
+capture.o :	../OS/Device/Screen/screen.h
+../OS/Device/Screen/screen.h :
+capture.o :	../OS/Device/Servo/servo.h
+../OS/Device/Servo/servo.h :
+capture.o :	../OS/Device/LED/led.h
+../OS/Device/LED/led.h :
+capture.o :	../OS/Device/BEEP/beep.h
+../OS/Device/BEEP/beep.h :
+capture.o :	../OS/Device/KEY/key.h
+../OS/Device/KEY/key.h :
+capture.o :	../OS/Device/Communicate/communicate.h
+../OS/Device/Communicate/communicate.h :
+capture.o :	../OS/Device/Memory/memory.h
+../OS/Device/Memory/memory.h :
+capture.o :	../OS/Device/Switch/switch.h
+../OS/Device/Switch/switch.h :
+capture.o :	../OS/Device/Switch/dipswitch.h
+../OS/Device/Switch/dipswitch.h :
+capture.o :	../OS/Device/BLE/bluetooth.h
+../OS/Device/BLE/bluetooth.h :
+capture.o :	../OS/Device/WirelessSerial/wirelessserial.h
+../OS/Device/WirelessSerial/wirelessserial.h :
+capture.o :	../OS/Device/Demo/demo.h
+../OS/Device/Demo/demo.h :
+capture.o :	../OS/devices_config.h
+../OS/devices_config.h :
+capture.o :	../OS/Device/device.h
+../OS/Device/device.h :
 capture.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :

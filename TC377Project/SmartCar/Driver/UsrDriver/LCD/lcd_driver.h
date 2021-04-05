@@ -8,22 +8,14 @@
 #ifndef DRIVER_USRDRIVER_LCD_LCD_DRIVER_H_
 #define DRIVER_USRDRIVER_LCD_LCD_DRIVER_H_
 
-#if 1
-
-#if 1
 #include "sys_driver.h"
 
-void LCD_SetEnable(bool enable);
-void LCD_SetArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye);
-void LCD_FastDrawArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t **array);
-void LCD_Fill(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
+#define USING_HARDWARE_CONTROLER false
 
-#define USING_HARDWARE_CONTROLER 1
-
-/*                      !important!                         */
+/*                      !Delay!                         */
 #define LCD_delayus(us) Systime.Delayus(us);            //Delay function interface->delay x us
 #define LCD_delayms(ms) Systime.Delayms(ms);            //Delay function interface->delay x ms
-/*                      !important!                         */
+/*                      !Delay!                         */
 
 /*                      !SPI Control!                           */
 #if !USING_HARDWARE_CONTROLER
@@ -65,11 +57,6 @@ void LCD_Fill(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
 #endif
 /*                      !SPI Control!                           */
 
-extern uint8_t LCD_Type;
-
-uint8_t LCD_Init(void *config);
-void LCD_DeInit(void);
-
 #if !USING_HARDWARE_CONTROLER
 void LCD_SoftWareWriteByte(uint8_t data);
 void LCD_SoftWareWriteWord(uint16_t data);
@@ -80,14 +67,22 @@ void LCD_HardWareWriteByte(uint8_t data);
 void LCD_HardWareWriteWord(uint16_t data);
 void LCD_HardWareWriteCmd(uint8_t cmd);
 #endif
+
+
+/*Public Function.*/
+extern uint8_t LCD_Type;
+uint8_t LCD_Init(void *config);
+void LCD_DeInit(void);
 void LCD_AddrReset(void);
 void LCD_DrawPoint(uint16_t xs,uint16_t ys,uint16_t color);
+void LCD_SetEnable(bool enable);
+void LCD_SetArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye);
+void LCD_FastDrawArea(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t **array);
+void LCD_Fill(uint16_t xs,uint16_t ys,uint16_t xe,uint16_t ye,uint16_t color);
+/*Public Function.*/
 
 /*                                                                                              ×ÖÌå¿â                                                                                                 */
 extern uint8_t Font_code8[][6];
 /*                                                                                              ×ÖÌå¿â                                                                                                 */
-#endif
-#endif
-
 
 #endif /* DRIVER_USRDRIVER_LCD_LCD_DRIVER_H_ */

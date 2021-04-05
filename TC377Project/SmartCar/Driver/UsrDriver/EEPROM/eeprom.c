@@ -17,104 +17,29 @@ uint8_t EEPROM_WriteSector(uint32_t sector, uint32_t page, uint8_t * buff, uint3
     uint32_t writebuf[128];
     uint32_t writelen = len / 4 + 1;
 
-    uint32_t i;
-
-    uint32_t full_uint32_num = ((uint32_t)(len/4));
-
-    uint32_t remain_bytes;
-
-    remain_bytes = len - full_uint32_num * 4;
-
-    uint8_t *p = (uint8_t *)writebuf;
+  //  uint32_t i;
 
     memcpy(writebuf,buff,len * sizeof(char));
 
-    if(remain_bytes != 0)
-        memset(((uint8_t *)(&writebuf[full_uint32_num * 4]+ 4 - remain_bytes)),'\0',sizeof(char) * (4 - remain_bytes));
-    else
-        memset(((uint8_t *)(&writebuf[full_uint32_num * 4])),'\0',sizeof(char) * (4 - remain_bytes));
-
     printf("Write:\n");
-    for(i = 0 ; i < writelen * 4; i++ )
-        printf("%c",*(p + i));
 
-    /* 计算扇区起始地址 */
-    unsigned long sector_addr = IfxFlash_dFlashTableEepLog[sector].start;
-
-    unsigned short endinitSfty_pw;
-
-    endinitSfty_pw = IfxScuWdt_getSafetyWatchdogPassword();
-
-    for(i = 0; i < writelen/2; i++)
-    {
-        /* 要写入页地址 */
-        unsigned long pageAddr = sector_addr + (page + i)* IFXFLASH_DFLASH_PAGE_LENGTH;
-
-        IfxFlash_enterPageMode(pageAddr);
-
-        /* 察忙 */
-        IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
-
-        /* 写入缓冲区  */
-        IfxFlash_loadPage2X32(pageAddr, writebuf[2*i], writebuf[2*i + 1]);
-
-        /* 写入eeprom  */
-        IfxScuWdt_clearSafetyEndinit(endinitSfty_pw);
-        IfxFlash_writePage(pageAddr);
-        IfxScuWdt_setSafetyEndinit(endinitSfty_pw);
-
-        IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
-    }
-
-    if(writelen%2)
-    {
-        /* 要写入页地址 */
-        unsigned long pageAddr = sector_addr + (page + writelen/2)* IFXFLASH_DFLASH_PAGE_LENGTH;
-
-        IfxFlash_enterPageMode(pageAddr);
-
-        /* 察忙 */
-        IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
-
-        /* 写入缓冲区  */
-        IfxFlash_loadPage2X32(pageAddr, writebuf[writelen], 0);
-
-        /* 写入eeprom  */
-        IfxScuWdt_clearSafetyEndinit(endinitSfty_pw);
-        IfxFlash_writePage(pageAddr);
-        IfxScuWdt_setSafetyEndinit(endinitSfty_pw);
-
-        IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
-
-    }
+    EEPROM_Write(1,0,writebuf,(uint16_t)writelen);
 
     return 0;
 }
 
+/* D  J     I  s     D  o  g  .
+ * 44 4A 20 49 73 20 44 6F 67 2E 00 00
+ * 4D 6A 6A 4D 7F 44 64 7F 00 00 00 00
+ * */
 uint8_t EEPROM_ReadSector(uint32_t sector, uint32_t page, uint8_t * buff, uint32_t len)
 {
     uint32_t readbuf[128];
     uint32_t readlen = len / 4 + 1;
 
-    uint8_t *p = (uint8_t *)readbuf;
+   // int i;
 
-    int i;
-
-    /* 计算扇区起始地址 */
-    unsigned long sector_addr = IfxFlash_dFlashTableEepLog[sector].start;
-
-    /* 要读页地址 */
-    volatile unsigned long * pageAddr = (unsigned long*)(sector_addr + page * IFXFLASH_DFLASH_PAGE_LENGTH);
-
-    for(i = 0; i < readlen; i++)
-    {
-        readbuf[i] = *(pageAddr++);
-    }
-
-    printf("\nRead:\n");
-
-    for(i = 0 ; i < readlen * 4; i++ )
-        printf("%c",*(p + i));
+    EEPROM_Read(1,0,readbuf,(uint16_t)readlen);
 
     memcpy(buff,readbuf,len * sizeof(char));
 

@@ -101,22 +101,29 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
  * */
 void Core0_Main()
 {
-    TIMx.Init(&TIM_Resources[1].TIMN);
+//    SPIx_Test(SD_SPI);
+//    GPIOx.Init(SD_SPI_CS_GPIO);
+//    SPIx.Init(SD_SPI);
+//
+//    while(1)
+//    {
+//        GPIOx.Write(SD_SPI_CS_GPIO,1);
+//
+//        os.time.delayms(2000);
+//
+//        GPIOx.Write(SD_SPI_CS_GPIO,0);
+//        Screen.WriteXLine(Screen.Self,1,"    0v");
+//
+//        os.time.delayms(2000);
+//    }
 
-    GLED.ON(GLED.Self);
 
-    uint8_t readbuf[10];
+    uint8_t res = SD_disk_initialize(0);
 
-    EEPROM_WriteSector(0,0,(uint8_t *)"DJ Is Dog.",10);
-
-    EEPROM_ReadSector(0,0,readbuf,10);
-
-   // Console.WriteLine((char *)readbuf);
-
-//    for(int i = 0 ; i < 10 ; i++)
-//        Console.WriteLine("Buf[%d] = %lu",i,readbuf[i]);
-
-    //NNTest();
+    if(res & STA_NOINIT)
+        Screen.WriteXLine(Screen.Self,0,"SD Card Init Failed.");
+    else
+        Screen.WriteXLine(Screen.Self,0,"SD Card Init Success.");
 
     while(1)
     {
@@ -137,7 +144,7 @@ void Core1_Main()
 
     while(1)
     {
-        os.task.UiUpdate(&UIData,sizeof(UIData));
+        //os.task.UiUpdate(&UIData,sizeof(UIData));
 
         Core1_CheckStatus();
     }
@@ -165,7 +172,7 @@ void Core2_Main()
             Core2_CheckStatus();
         }
 
-        os.task.KeyScan(NULL,0);
+        //os.task.KeyScan(NULL,0);
         os.task.SoftTimerUpdate(NULL,0);
         os.task.DebugConsole(NULL,0);
 

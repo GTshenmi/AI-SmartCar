@@ -118,8 +118,12 @@ test.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 test.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-test.o :	../Driver/UsrDriver/EEPROM/eeprom.h
-../Driver/UsrDriver/EEPROM/eeprom.h :
+test.o :	../Driver/UsrDriver/SD/fatfs_sd.h
+../Driver/UsrDriver/SD/fatfs_sd.h :
+test.o :	../OS/FatFs/src/diskio.h
+../OS/FatFs/src/diskio.h :
+test.o :	../OS/FatFs/src/integer.h
+../OS/FatFs/src/integer.h :
 test.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 test.o :	../OS/Device/ESensor/esensor.h
@@ -158,6 +162,8 @@ test.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 test.o :	../OS/Device/device.h
 ../OS/Device/device.h :
+test.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 test.o :	../OS/Malloc/malloc.h
 ../OS/Malloc/malloc.h :
 test.o :	../OS/Task/task.h
@@ -166,8 +172,6 @@ test.o :	../OS/FatFs/file.h
 ../OS/FatFs/file.h :
 test.o :	../OS/FatFs/src/ff.h
 ../OS/FatFs/src/ff.h :
-test.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
 test.o :	../OS/FatFs/src/ffconf.h
 ../OS/FatFs/src/ffconf.h :
 test.o :	../OS/Time/softtimer.h

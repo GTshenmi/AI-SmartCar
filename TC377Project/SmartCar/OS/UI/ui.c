@@ -36,6 +36,8 @@ void UI_Init ()
     }
     DIPSwitch.Init(DIPSwitch.Self);
 
+
+
     KEY[0].Connect(KEY[0].Self,cursorUpPressedCallBack,NULL,NULL,0);
     KEY[1].Connect(KEY[1].Self,cursorDownPressedCallBack,NULL,NULL,0);
     KEY[2].Connect(KEY[2].Self,confirmPressedCallBack,NULL,NULL,0);

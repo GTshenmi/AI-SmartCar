@@ -178,11 +178,11 @@ memory_t SDCard = /*´ý¶¨*/
 {
         .Init = Mem_Init,
 
-        .__Init__ = SD_Initialize,
-        .__InitConfig__ = NULL,
-        .__ReadSector__ = SD_ReadSector,
-        .__WriteSector__ = SD_WriteSector,
-        .__GetSectorNum__ = SD_GetSectorCount,
+//        .__Init__ = SD_Initialize,
+//        .__InitConfig__ = NULL,
+//        .__ReadSector__ = SD_ReadSector,
+//        .__WriteSector__ = SD_WriteSector,
+//        .__GetSectorNum__ = SD_GetSectorCount,
         .__SectorSize__ = 512,
         .__BlockSize__ = 4096,
 

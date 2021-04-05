@@ -118,8 +118,12 @@ Cpu2_Main.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 Cpu2_Main.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-Cpu2_Main.o :	../Driver/UsrDriver/EEPROM/eeprom.h
-../Driver/UsrDriver/EEPROM/eeprom.h :
+Cpu2_Main.o :	../Driver/UsrDriver/SD/fatfs_sd.h
+../Driver/UsrDriver/SD/fatfs_sd.h :
+Cpu2_Main.o :	../OS/FatFs/src/diskio.h
+../OS/FatFs/src/diskio.h :
+Cpu2_Main.o :	../OS/FatFs/src/integer.h
+../OS/FatFs/src/integer.h :
 Cpu2_Main.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 Cpu2_Main.o :	../OS/Device/ESensor/esensor.h
@@ -158,6 +162,8 @@ Cpu2_Main.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 Cpu2_Main.o :	../OS/Device/device.h
 ../OS/Device/device.h :
+Cpu2_Main.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 Cpu2_Main.o :	../OS/Malloc/malloc.h
 ../OS/Malloc/malloc.h :
 Cpu2_Main.o :	../OS/Task/task.h
@@ -166,8 +172,6 @@ Cpu2_Main.o :	../OS/FatFs/file.h
 ../OS/FatFs/file.h :
 Cpu2_Main.o :	../OS/FatFs/src/ff.h
 ../OS/FatFs/src/ff.h :
-Cpu2_Main.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
 Cpu2_Main.o :	../OS/FatFs/src/ffconf.h
 ../OS/FatFs/src/ffconf.h :
 Cpu2_Main.o :	../OS/Time/softtimer.h

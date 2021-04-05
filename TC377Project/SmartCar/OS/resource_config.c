@@ -88,22 +88,22 @@ gpio_resource_t GPIO_Resources[25] =
                .GPION = {P15_1, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_RST"
         },
+        [2] = {
+               .GPION = {P15_7, PIN_MODE_OUTPUT,1,false,false},
+               .Description = "LCD_SDA-OLD"
+        },
+        [3] = {
+               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
+               .Description = "LCD_SCL-OLD"
+        },
 //        [2] = {
-//               .GPION = {P15_7, PIN_MODE_OUTPUT,1,false,false},
+//               .GPION = {P15_6, PIN_MODE_OUTPUT,1,false,false},
 //               .Description = "LCD_SDA"
 //        },
 //        [3] = {
 //               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
 //               .Description = "LCD_SCL"
 //        },
-        [2] = {
-               .GPION = {P15_6, PIN_MODE_OUTPUT,1,false,false},
-               .Description = "LCD_SDA"
-        },
-        [3] = {
-               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
-               .Description = "LCD_SCL"
-        },
         [4] = {
                .GPION = {P15_2, PIN_MODE_OUTPUT,0,false,false},
                .Description = "LCD_CS"
@@ -180,8 +180,12 @@ gpio_resource_t GPIO_Resources[25] =
 
 
         [22] = {
-               .GPION = {P11_10, PIN_MODE_OUTPUT,0,false,false},
+               .GPION = {P11_10, PIN_MODE_OUTPUT,1,false,false},
                .Description = "SD CS"
+        },
+        [23] = {
+               .GPION = {P11_3, PIN_MODE_OUTPUT,1,false,false},
+               .Description = "SD MISO"
         },
 };
 
@@ -242,7 +246,7 @@ spi_resource_t SPI_Resources[2] =
                .Description = "LCD SPI"
         },
         [1] = {
-                .SPIN = {SPI1,QSPI1_CLK_P11_6,QSPI1_MISO_P11_3,QSPI1_MOSI_P11_9, QSPI1_CS_P11_10,2,QSPI,9600},
+                .SPIN = {SPI1,QSPI1_CLK_P11_6,QSPI1_MISO_P11_3,QSPI1_MOSI_P11_9, QSPI1_CS_P33_5,0,QSPI,9000000},
                 .Description = "SD Card SPI",
         },
 };

@@ -10,6 +10,8 @@
 
 #include "device.h"
 
+void SPIx_Test(spix_t *spi);
+
 void MotorTest(struct motor_ctrl *self);
 void ServoTest(struct servo_ctrl *self);
 

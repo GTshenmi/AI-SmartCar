@@ -119,6 +119,30 @@ void NNTest(void)
     while(1);
 
 }
+
+
+void SPIx_Test(spix_t *spi)
+{
+    SPIx.Init(spi);
+
+    uint8_t rx,tx;
+
+    tx = 0;
+
+    while(1)
+    {
+        tx ++;
+
+        SPIx.ReadWriteBytes(spi,&tx,&rx,1,0);
+
+        Screen.ClearLines(Screen.Self,1,2,WHITE);
+
+        Screen.WriteXLine(Screen.Self,1,"tx = 0x%x",tx);
+        Screen.WriteXLine(Screen.Self,2,"rx = 0x%x",rx);
+
+        os.time.delay(1.0,s);
+    }
+}
 void MotorTest(struct motor_ctrl *self)
 {
 
