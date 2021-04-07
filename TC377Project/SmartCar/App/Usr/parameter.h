@@ -44,11 +44,11 @@ typedef struct
       sint16_t Angle;        /*角度*/
       uint ElementType;  /*赛道元素类型*/
 
-      uint16_t LADC_Value[5]; /*ADC值*/
-      uint16_t SADC_Value[7]; /*ADC值*/
+      uint16_t LADC_Value[MAX_LESENSOR_NUM]; /*ADC值*/
+      uint16_t SADC_Value[MAX_SESENSOR_NUM]; /*ADC值*/
 
-      float N_LADC[5];/*归一化后的长前瞻参数*/
-      float N_SADC[7];/*归一化后的短前瞻参数*/
+      float N_LADC[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
+      float N_SADC[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
 
       uint AI_State;
 

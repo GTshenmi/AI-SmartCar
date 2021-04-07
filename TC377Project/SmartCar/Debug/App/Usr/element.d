@@ -122,10 +122,8 @@ element.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 element.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
-element.o :	../OS/FatFs/src/diskio.h
-../OS/FatFs/src/diskio.h :
-element.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
+element.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 element.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 element.o :	../OS/Device/ESensor/esensor.h
@@ -164,8 +162,6 @@ element.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 element.o :	../OS/Device/device.h
 ../OS/Device/device.h :
-element.o :	../Driver/UsrDriver/EEPROM/eeprom.h
-../Driver/UsrDriver/EEPROM/eeprom.h :
 element.o :	../OS/Malloc/malloc.h
 ../OS/Malloc/malloc.h :
 element.o :	../OS/Task/task.h
@@ -174,6 +170,8 @@ element.o :	../OS/FatFs/file.h
 ../OS/FatFs/file.h :
 element.o :	../OS/FatFs/src/ff.h
 ../OS/FatFs/src/ff.h :
+element.o :	../OS/FatFs/src/integer.h
+../OS/FatFs/src/integer.h :
 element.o :	../OS/FatFs/src/ffconf.h
 ../OS/FatFs/src/ffconf.h :
 element.o :	../OS/Time/softtimer.h

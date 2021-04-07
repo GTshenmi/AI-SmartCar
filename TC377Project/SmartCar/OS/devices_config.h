@@ -10,6 +10,10 @@
 
 #include "device.h"
 
+#define MAX_LESENSOR_NUM    7
+#define MAX_SESENSOR_NUM    8
+#define MAX_KEY_NUM         6
+
 extern beep_t BEEP;
 
 extern bluetooth_t Bluetooth;
@@ -17,10 +21,10 @@ extern bluetooth_t Bluetooth;
 extern communicate_t CUART;
 extern communicate_t DebugCom;
 
-extern esensor_t LESensor[5];
-extern esensor_t SESensor[7];
+extern esensor_t LESensor[MAX_LESENSOR_NUM];
+extern esensor_t SESensor[MAX_SESENSOR_NUM];
 
-extern key_t KEY[7];
+extern key_t KEY[MAX_KEY_NUM];
 
 extern led_t GLED;
 extern led_t BLED;

@@ -10,6 +10,8 @@
 
 #include "platform.h"
 
+#define Zero 1e-6
+
 #define fsign(x) ((x) > 0.0 ?  1.0 : -1.0 )
 
 #define max(a,b) ((a) > (b) ? (a) : (b))

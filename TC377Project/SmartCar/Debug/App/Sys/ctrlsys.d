@@ -122,10 +122,8 @@ ctrlsys.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 ctrlsys.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
-ctrlsys.o :	../OS/FatFs/src/diskio.h
-../OS/FatFs/src/diskio.h :
-ctrlsys.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
+ctrlsys.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 ctrlsys.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 ctrlsys.o :	../OS/Device/ESensor/esensor.h
@@ -164,8 +162,6 @@ ctrlsys.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 ctrlsys.o :	../OS/Device/device.h
 ../OS/Device/device.h :
-ctrlsys.o :	../Driver/UsrDriver/EEPROM/eeprom.h
-../Driver/UsrDriver/EEPROM/eeprom.h :
 ctrlsys.o :	../OS/Malloc/malloc.h
 ../OS/Malloc/malloc.h :
 ctrlsys.o :	../OS/Task/task.h
@@ -174,6 +170,8 @@ ctrlsys.o :	../OS/FatFs/file.h
 ../OS/FatFs/file.h :
 ctrlsys.o :	../OS/FatFs/src/ff.h
 ../OS/FatFs/src/ff.h :
+ctrlsys.o :	../OS/FatFs/src/integer.h
+../OS/FatFs/src/integer.h :
 ctrlsys.o :	../OS/FatFs/src/ffconf.h
 ../OS/FatFs/src/ffconf.h :
 ctrlsys.o :	../OS/Time/softtimer.h

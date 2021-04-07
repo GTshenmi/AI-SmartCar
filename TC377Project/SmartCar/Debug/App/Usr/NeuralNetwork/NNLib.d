@@ -122,10 +122,8 @@ NNLib.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 NNLib.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
-NNLib.o :	../OS/FatFs/src/diskio.h
-../OS/FatFs/src/diskio.h :
-NNLib.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
+NNLib.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 NNLib.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 NNLib.o :	../OS/Device/ESensor/esensor.h
@@ -164,8 +162,6 @@ NNLib.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 NNLib.o :	../OS/Device/device.h
 ../OS/Device/device.h :
-NNLib.o :	../Driver/UsrDriver/EEPROM/eeprom.h
-../Driver/UsrDriver/EEPROM/eeprom.h :
 NNLib.o :	../OS/Malloc/malloc.h
 ../OS/Malloc/malloc.h :
 NNLib.o :	../OS/Task/task.h
@@ -174,6 +170,8 @@ NNLib.o :	../OS/FatFs/file.h
 ../OS/FatFs/file.h :
 NNLib.o :	../OS/FatFs/src/ff.h
 ../OS/FatFs/src/ff.h :
+NNLib.o :	../OS/FatFs/src/integer.h
+../OS/FatFs/src/integer.h :
 NNLib.o :	../OS/FatFs/src/ffconf.h
 ../OS/FatFs/src/ffconf.h :
 NNLib.o :	../OS/Time/softtimer.h

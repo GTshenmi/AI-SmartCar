@@ -113,8 +113,8 @@ uint8_t SPIx_Init(spix_t *spi)
             const IfxQspi_SpiMaster_Pins pins = {QSPI_Sclk,                               /* SCLK */
                                                  IfxPort_OutputMode_pushPull,
                                                  QSPI_MOSI,  IfxPort_OutputMode_pushPull, /* MTSR */
-                                                 //QSPI_MISO,  IfxPort_InputMode_pullDown,  /* MRST */
-                                                 QSPI_MISO,  IfxPort_InputMode_pullUp,  /* MRST */
+                                                 QSPI_MISO,  IfxPort_InputMode_pullDown,  /* MRST */
+                                                 //QSPI_MISO,  IfxPort_InputMode_pullUp,  /* MRST */
                                                  IfxPort_PadDriver_cmosAutomotiveSpeed3                   /* pad driver mode */
             };
             spiMasterConfig.pins = &pins;

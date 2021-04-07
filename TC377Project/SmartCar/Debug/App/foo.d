@@ -120,10 +120,8 @@ foo.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 foo.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
-foo.o :	../OS/FatFs/src/diskio.h
-../OS/FatFs/src/diskio.h :
-foo.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
+foo.o :	../Driver/UsrDriver/EEPROM/eeprom.h
+../Driver/UsrDriver/EEPROM/eeprom.h :
 foo.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 foo.o :	../OS/Device/ESensor/esensor.h
@@ -162,8 +160,6 @@ foo.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 foo.o :	../OS/Device/device.h
 ../OS/Device/device.h :
-foo.o :	../Driver/UsrDriver/EEPROM/eeprom.h
-../Driver/UsrDriver/EEPROM/eeprom.h :
 foo.o :	../OS/Malloc/malloc.h
 ../OS/Malloc/malloc.h :
 foo.o :	../OS/Task/task.h
@@ -172,6 +168,8 @@ foo.o :	../OS/FatFs/file.h
 ../OS/FatFs/file.h :
 foo.o :	../OS/FatFs/src/ff.h
 ../OS/FatFs/src/ff.h :
+foo.o :	../OS/FatFs/src/integer.h
+../OS/FatFs/src/integer.h :
 foo.o :	../OS/FatFs/src/ffconf.h
 ../OS/FatFs/src/ffconf.h :
 foo.o :	../OS/Time/softtimer.h

@@ -156,9 +156,5 @@ console.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 console.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
-console.o :	../OS/FatFs/src/diskio.h
-../OS/FatFs/src/diskio.h :
-console.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
 console.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :

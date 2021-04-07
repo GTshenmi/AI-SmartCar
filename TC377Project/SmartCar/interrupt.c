@@ -54,11 +54,23 @@ void STM1_CH0_IRQHandler(void)
 
     data->Bias = 100.0 * CalculateDistance(data);
 
+//    if(fabs(data->Bias) >= 20.0)
+//        data->S_PID.Kp = data->Bias * data->Bias * 0.00664;
+//    /*¶¯Ì¬PIDÏÞ·ù*/
+//    if(data->S_PID.Kp > 12.0)
+//        data->S_PID.Kp = 12.0;
+
     PID_Ctrl(&data->S_PID,0,data->Bias);
 
-    data->Angle = (sint16_t)(-data->S_PID.Result);
+//    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
+//
+//    static float angle[5] = {0.0};
 
-    data->Speed = 2500;
+    //data->Angle = (sint16_t)(-FIR_Filter(Ka,angle,data->S_PID.Result,5));
+
+    data->Angle = (sint16_t)(data->S_PID.Result);
+
+    data->Speed = 3500;
 
     Servo.SetAngle(Servo.Self,data->Angle);
 

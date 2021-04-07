@@ -129,6 +129,7 @@ void UIPagesInit (void)
     UIPages[8].secondaryTargetData = UIData.MPID_Result;
     UIPages[9].primaryTargetData = UIData.M_PwmDuty;
     UIPages[10].primaryTargetData = UIData.Angle;
+
     UIPages[10].secondaryTargetData = UIData.NAngle;
     UIPages[11].secondaryTargetData = UIData.Bias;
     UIPages[12].secondaryTargetData = UIData.SPID_Kp;
@@ -163,7 +164,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .description = "LADC",
             .displayData = displayDataWithGraph,
             .Self = &UIPages[0],
-            .lineLength = 5,
+            .lineLength = MAX_LESENSOR_NUM,
             .targetDataType = INTEGER,
             .confirmAction = changeDisplayType,
     },
@@ -171,7 +172,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .description = "SADC",
             .displayData = displayDataWithGraph,
             .Self = &UIPages[1],
-            .lineLength = 7,
+            .lineLength = MAX_SESENSOR_NUM,
             .targetDataType = INTEGER,
             .confirmAction = changeDisplayType,
     },

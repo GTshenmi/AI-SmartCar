@@ -154,9 +154,5 @@ devices_config.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 devices_config.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
-devices_config.o :	../OS/FatFs/src/diskio.h
-../OS/FatFs/src/diskio.h :
-devices_config.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
 devices_config.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :

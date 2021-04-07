@@ -50,7 +50,7 @@ capture_t Capture = /*unknow*/
 
 };
 
-esensor_t LESensor[5] =/*ok*/ /*9 - 16 Left*/
+esensor_t LESensor[MAX_LESENSOR_NUM] =/*ok*/ /*9 - 16 Left*/
 {
     [0] = {
             .Init = ESensor_Init,
@@ -77,8 +77,19 @@ esensor_t LESensor[5] =/*ok*/ /*9 - 16 Left*/
             .Self = &LESensor[4],
             .ADCn = &ADC_Resources[12].ADCN,
     },
+
+    [5] = {
+            .Init = ESensor_Init,
+            .Self = &LESensor[5],
+            .ADCn = &ADC_Resources[13].ADCN,
+    },
+    [6] = {
+            .Init = ESensor_Init,
+            .Self = &LESensor[6],
+            .ADCn = &ADC_Resources[14].ADCN,
+    },
 };
-esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/
+esensor_t SESensor[MAX_SESENSOR_NUM] = /*ok*/  /*1 - 8 Right*/
 {
     [0] = {
             .Init = ESensor_Init,
@@ -108,12 +119,17 @@ esensor_t SESensor[7] = /*ok*/  /*1 - 8 Right*/
     [5] = {
             .Init = ESensor_Init,
             .Self = &SESensor[5],
-            .ADCn = &ADC_Resources[7].ADCN,//AD6
+            .ADCn = &ADC_Resources[5].ADCN,//AD6
     },
     [6] = {
             .Init = ESensor_Init,
             .Self = &SESensor[6],
             .ADCn = &ADC_Resources[6].ADCN,//AD7
+    },
+    [7] = {
+            .Init = ESensor_Init,
+            .Self = &SESensor[7],
+            .ADCn = &ADC_Resources[7].ADCN,//AD7
     },
 };
 
@@ -294,7 +310,7 @@ wireless_serial_t WirelessSerial = /*与CUART相同*/
 
 #pragma section all "cpu2_dsram"
 
-key_t KEY[7] = /*ok*/ /*按键接口换了*/
+key_t KEY[6] = /*ok*/ /*按键接口换了*/
 {
         [0] = {
                 .Init = KEY_Init,
@@ -327,12 +343,6 @@ key_t KEY[7] = /*ok*/ /*按键接口换了*/
                 .Init = KEY_Init,
                 .Self = &KEY[5],
                 .GPIOn = &GPIO_Resources[17].GPION,
-        },
-
-        [6] = {
-                .Init = KEY_Init,
-                .Self = &KEY[6],
-                .GPIOn = &GPIO_Resources[12].GPION,
         },
 
 };

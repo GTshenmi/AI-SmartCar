@@ -246,7 +246,7 @@ spi_resource_t SPI_Resources[2] =
                .Description = "LCD SPI"
         },
         [1] = {
-                .SPIN = {SPI1,QSPI1_CLK_P11_6,QSPI1_MISO_P11_3,QSPI1_MOSI_P11_9, QSPI1_CS_P33_5,0,QSPI,9000000},
+                .SPIN = {SPI1,QSPI1_CLK_P11_6,QSPI1_MISO_P11_3,QSPI1_MOSI_P11_9, QSPI1_CS_P33_5,2,QSPI,300000},
                 .Description = "SD Card SPI",
         },
 };

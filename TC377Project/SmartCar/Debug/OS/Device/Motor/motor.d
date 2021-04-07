@@ -118,45 +118,5 @@ motor.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
 motor.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
-motor.o :	../OS/FatFs/src/diskio.h
-../OS/FatFs/src/diskio.h :
-motor.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
-motor.o :	../OS/Device/device.h
-../OS/Device/device.h :
-motor.o :	../OS/Device/ESensor/esensor.h
-../OS/Device/ESensor/esensor.h :
-motor.o :	../OS/Device/Screen/screen.h
-../OS/Device/Screen/screen.h :
-motor.o :	../OS/Device/Servo/servo.h
-../OS/Device/Servo/servo.h :
-motor.o :	../OS/Device/LED/led.h
-../OS/Device/LED/led.h :
-motor.o :	../OS/Device/BEEP/beep.h
-../OS/Device/BEEP/beep.h :
-motor.o :	../OS/Device/KEY/key.h
-../OS/Device/KEY/key.h :
-motor.o :	../OS/Device/Capture/capture.h
-../OS/Device/Capture/capture.h :
-motor.o :	../OS/Device/Capture/image.h
-../OS/Device/Capture/image.h :
-motor.o :	../OS/Device/Communicate/communicate.h
-../OS/Device/Communicate/communicate.h :
-motor.o :	../OS/Device/Memory/memory.h
-../OS/Device/Memory/memory.h :
-motor.o :	../OS/Device/Switch/switch.h
-../OS/Device/Switch/switch.h :
-motor.o :	../OS/Device/Switch/dipswitch.h
-../OS/Device/Switch/dipswitch.h :
-motor.o :	../OS/Device/BLE/bluetooth.h
-../OS/Device/BLE/bluetooth.h :
-motor.o :	../OS/Device/WirelessSerial/wirelessserial.h
-../OS/Device/WirelessSerial/wirelessserial.h :
-motor.o :	../OS/Device/Demo/demo.h
-../OS/Device/Demo/demo.h :
-motor.o :	../OS/devices_config.h
-../OS/devices_config.h :
-motor.o :	../OS/Device/device.h
-../OS/Device/device.h :
 motor.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :

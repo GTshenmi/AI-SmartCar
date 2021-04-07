@@ -170,9 +170,38 @@ float CalculateDistance(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    float distance = 0.0;
+    static float distance_s = 0.0;
+    static float distance_c = 0.0;
 
-    distance = CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[4]);
+    static float distance = 0.0;
+
+    if(data->N_LADC[1] > 15.0 && data->N_LADC[5] > 15.0)
+        distance_s = CalculateDistanceDifDivSum(data->N_LADC[1],data->N_LADC[5]);
+    if(data->N_LADC[0] > 15.0 && data->N_LADC[6] > 15.0)
+        distance_c = CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[6]);
+
+//    if(distance_s > distance_c)
+//    {
+//        distance = 0.8 * distance_s + 0.2 * distance_c;
+//    }
+//    else
+//    {
+//        distance = 0.2 * distance_s + 0.8 * distance_c;
+//    }
+
+    float weight = 0.0;
+
+    if(fabs(distance_s) > fabs(distance_c))
+    {
+        weight = fabs(distance_c)/fabs(distance_s);
+
+        distance = (1 - weight) * distance_s + weight * distance_c;
+    }
+    else
+    {
+        weight = fabs(distance_s)/fabs(distance_c);
+        distance = weight * distance_s + (1 - weight) * distance_c;
+    }
 
     return distance;
 }

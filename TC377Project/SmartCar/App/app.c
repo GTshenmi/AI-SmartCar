@@ -101,6 +101,38 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
  * */
 void Core0_Main()
 {
+    uint8_t res = SD_Initialize(NULL);
+
+    if(res)
+    {
+        Screen.WriteXLine(Screen.Self,0,"SD Card Init Failed. ");
+        //Screen.WriteXLine(Screen.Self,2,"Error Code: %u",res);
+    }
+    else
+        Screen.WriteXLine(Screen.Self,0,"SD Card Init Success.");
+
+    Screen.WriteXLine(Screen.Self,1,"Read Sector[0] :");
+    //uint8_t buf[10];
+
+    uint8_t read_buf[10];
+
+//    for(int i = 0  ; i < 10 ; i++)
+//        buf[i] = i;
+
+    //SD_WriteSector(0,0,buf,10);
+
+    SD_ReadSector(0,0,read_buf,10);
+//
+//    Screen.Clear(Screen.Self,WHITE);
+
+    for(int i = 0  ; i < 10 ; i++)
+    {
+        Screen.WriteXLine(Screen.Self,i + 2,"Buf[%d] = %u",i,read_buf[i]);
+    }
+
+
+
+
 //    SPIx_Test(SD_SPI);
 //    GPIOx.Init(SD_SPI_CS_GPIO);
 //    SPIx.Init(SD_SPI);
@@ -118,15 +150,26 @@ void Core0_Main()
 //    }
 
 
-    uint8_t res = SD_disk_initialize(0);
+//    uint8_t res = SD_disk_initialize(0);
+//
+//    if(res & STA_NOINIT)
+//        Screen.WriteXLine(Screen.Self,0,"SD Card Init Failed.");
+//    else
+//        Screen.WriteXLine(Screen.Self,0,"SD Card Init Success.");
 
-    if(res & STA_NOINIT)
-        Screen.WriteXLine(Screen.Self,0,"SD Card Init Failed.");
-    else
-        Screen.WriteXLine(Screen.Self,0,"SD Card Init Success.");
+
+//   Servo.SetAngle(Servo.Self,90.0);
+//   Servo.Update(Servo.Self);
+    TIMx.Init(&TIM_Resources[1].TIMN);
+    TIMx.Init(&TIM_Resources[2].TIMN);
 
     while(1)
     {
+//        for(int i = 0 ; i < 7 ; i ++)
+//        {
+//            Screen.ClearLine(Screen.Self,i,WHITE);
+//            Screen.WriteXLine(Screen.Self,i,"SADC[%d]: %u",i,Data[data_pointer].SADC_Value[i]);
+//        }
         GLED.Toggle(GLED.Self);
 
         Core0_CheckStatus();
@@ -172,7 +215,7 @@ void Core2_Main()
             Core2_CheckStatus();
         }
 
-        //os.task.KeyScan(NULL,0);
+        os.task.KeyScan(NULL,0);
         os.task.SoftTimerUpdate(NULL,0);
         os.task.DebugConsole(NULL,0);
 

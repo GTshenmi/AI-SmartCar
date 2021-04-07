@@ -46,7 +46,7 @@ void ParameterInit(void *data)
 
     /*Set Servo And Motor PID Value.*/
     PID_SetValue(&pdata->M_PID,PIDValue(1.0,0.0,0.0));
-    PID_SetValue(&pdata->S_PID,PIDValue(3.2,0.0,0.0));
+    PID_SetValue(&pdata->S_PID,PIDValue(5.2,0.0,0.0));
 }
 
 char *GetCarState(uint index)
@@ -107,7 +107,7 @@ data_t Data[MAX_DATA_LEN] =
 
 constdata_t CData =
 {
-        .MaxLADCDeviceNum = 5,
-        .MaxSADCDeviceNum = 7,
-        .MaxKEYDeviceNum = 6,
+        .MaxLADCDeviceNum = MAX_LESENSOR_NUM,
+        .MaxSADCDeviceNum = MAX_SESENSOR_NUM,
+        .MaxKEYDeviceNum = MAX_KEY_NUM,
 };
