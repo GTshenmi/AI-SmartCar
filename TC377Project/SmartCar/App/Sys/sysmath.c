@@ -18,10 +18,20 @@ float NormalizeFloat(float value,float min,float max)
 
 float CalculateDistanceDifDivSum(float L1,float L2)
 {
-    if(fabs(L1) < Zero && fabs(L2) < Zero)
+    if(Is_Zero(L1) && Is_Zero(L2))
         return 0;
     else
         return (L1 - L2) / (L1 + L2);
+}
+
+float CalculateDistanceP(float L1,float L2)
+{
+    if(Is_Zero(L1) && Is_Zero(L2))
+        return 0;
+    else
+    {
+        return (1/L1 - 1/L2);
+    }
 }
 
 uint16_t FindMaxIndex(float *array,uint16_t len)

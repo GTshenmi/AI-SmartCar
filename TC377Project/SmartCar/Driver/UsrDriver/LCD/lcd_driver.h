@@ -10,7 +10,7 @@
 
 #include "sys_driver.h"
 
-#define USING_HARDWARE_CONTROLER false
+#define USING_HARDWARE_CONTROLER true
 
 /*                      !Delay!                         */
 #define LCD_delayus(us) Systime.Delayus(us);            //Delay function interface->delay x us

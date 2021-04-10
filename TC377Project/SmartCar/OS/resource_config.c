@@ -1,5 +1,5 @@
 /*
- * resource_config.c
+ *  resource_config.c
  *
  *  Created on: 2020Äê12ÔÂ8ÈÕ
  *      Author: 936305695
@@ -88,22 +88,22 @@ gpio_resource_t GPIO_Resources[25] =
                .GPION = {P15_1, PIN_MODE_OUTPUT,1,false,false},
                .Description = "LCD_RST"
         },
-        [2] = {
-               .GPION = {P15_7, PIN_MODE_OUTPUT,1,false,false},
-               .Description = "LCD_SDA-OLD"
-        },
-        [3] = {
-               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
-               .Description = "LCD_SCL-OLD"
-        },
 //        [2] = {
-//               .GPION = {P15_6, PIN_MODE_OUTPUT,1,false,false},
-//               .Description = "LCD_SDA"
+//               .GPION = {P15_7, PIN_MODE_OUTPUT,1,false,false},
+//               .Description = "LCD_SDA-OLD"
 //        },
 //        [3] = {
 //               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
-//               .Description = "LCD_SCL"
+//               .Description = "LCD_SCL-OLD"
 //        },
+        [2] = {
+               .GPION = {P15_6, PIN_MODE_OUTPUT,1,false,false},
+               .Description = "LCD_SDA"
+        },
+        [3] = {
+               .GPION = {P15_8, PIN_MODE_OUTPUT,1,false,false},
+               .Description = "LCD_SCL"
+        },
         [4] = {
                .GPION = {P15_2, PIN_MODE_OUTPUT,0,false,false},
                .Description = "LCD_CS"
