@@ -36,14 +36,12 @@ void UI_Init ()
     }
     DIPSwitch.Init(DIPSwitch.Self);
 
-
-
-    KEY[0].Connect(KEY[0].Self,cursorUpPressedCallBack,NULL,NULL,0);
-    KEY[1].Connect(KEY[1].Self,cursorDownPressedCallBack,NULL,NULL,0);
-    KEY[2].Connect(KEY[2].Self,confirmPressedCallBack,NULL,NULL,0);
-    KEY[3].Connect(KEY[3].Self,cancelPressedCallBack,NULL,NULL,0);
-    KEY[4].Connect(KEY[4].Self,pageDownPressedCallBack,pageDownLongPressedCallBack,NULL,0);
-    KEY[5].Connect(KEY[5].Self,pageUpPressedCallBack,pageUpLongPressedCallBack,NULL,0);
+    KEY[0].Connect(KEY[0].Self,cursorDownPressedCallBack,NULL,NULL,0);
+    KEY[1].Connect(KEY[1].Self,cursorUpPressedCallBack,NULL,NULL,0);
+    KEY[2].Connect(KEY[2].Self,cancelPressedCallBack,NULL,NULL,0);
+    KEY[3].Connect(KEY[3].Self,confirmPressedCallBack,NULL,NULL,0);
+    KEY[4].Connect(KEY[4].Self,pageUpPressedCallBack,pageUpLongPressedCallBack,NULL,0);
+    KEY[5].Connect(KEY[5].Self,pageDownPressedCallBack,pageDownLongPressedCallBack,NULL,0);
 
     UIPagesInit();
 }

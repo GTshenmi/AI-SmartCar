@@ -48,8 +48,6 @@ wirelessserial.o :	../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.
 ../Libraries/Service/CpuGeneric/SysSe/Math/Ifx_LowPassPt1F32.h :
 wirelessserial.o :	../Driver/SysDriverLQ/interrupt.h
 ../Driver/SysDriverLQ/interrupt.h :
-wirelessserial.o :	../Driver/SysDriverLQ/LQ_EEPROM.h
-../Driver/SysDriverLQ/LQ_EEPROM.h :
 wirelessserial.o :	../Libraries/Service/CpuGeneric/If/SpiIf.h
 ../Libraries/Service/CpuGeneric/If/SpiIf.h :
 wirelessserial.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h

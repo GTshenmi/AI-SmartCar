@@ -6,8 +6,6 @@
  */
 #include "include.h"
 
-
-
 void STM0_CH1_IRQHandler(void)
 {
     /* 开启CPU中断  否则中断不可嵌套 */
@@ -38,37 +36,52 @@ void STM1_CH0_IRQHandler(void)
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[2].comparator, g_StmCompareConfig[2].ticks);
 
     data_t *data = &Data[data_pointer];
-
-    for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
-        data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
-    for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
-        data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
-
-    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
-
-    /*归一化*/
-    for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
-        data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
-    for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
-        data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
-
-    data->Bias = 100.0 * CalculateDistance(data);
-
-//    if(fabs(data->Bias) >= 20.0)
-//        data->S_PID.Kp = data->Bias * data->Bias * 0.00664;
-//    /*动态PID限幅*/
-//    if(data->S_PID.Kp > 12.0)
-//        data->S_PID.Kp = 12.0;
-
-    PID_Ctrl(&data->S_PID,0,data->Bias);
-
-//    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
 //
-//    static float angle[5] = {0.0};
+//    for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
+//        data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
+//    for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
+//        data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
+//
+//    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+//
+//    /*归一化*/
+//    for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
+//        data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+//    for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+//        data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+//
+//    static float Kb[33] = {
+//       0.004310506862, 0.006396806333,-0.008907295763,-0.006022877526,  0.01509535592,
+//       0.002957194578, -0.02246881649,  0.00418050494,   0.0303422641, -0.01742442511,
+//       -0.03784247488,  0.04116194695,  0.04404707253, -0.09106717259, -0.04814339057,
+//         0.3107235134,    0.545322597,   0.3107235134, -0.04814339057, -0.09106717259,
+//        0.04404707253,  0.04116194695, -0.03784247488, -0.01742442511,   0.0303422641,
+//        0.00418050494, -0.02246881649, 0.002957194578,  0.01509535592,-0.006022877526,
+//      -0.008907295763, 0.006396806333, 0.004310506862
+//    };
+//
+//    static float dis[33] = {0.0};
+//
+//    data->_Bias = 100.0 * CalculateDistance(data);
+//
+//    data->Bias = FIR_Filter(Kb,dis,data->_Bias,33);
 
-    //data->Angle = (sint16_t)(-FIR_Filter(Ka,angle,data->S_PID.Result,5));
+    //data->Bias = 100.0 * CalculateDistance(data);
 
-    data->Angle = (sint16_t)(data->S_PID.Result);
+    if(fabs(data->Bias) >= 20.0)
+        data->S_PID.Kp = 2.0 + data->Bias * data->Bias * 0.00372; //待调
+
+    /*动态PID限幅*/
+    if(data->S_PID.Kp > 7.2)        //待调
+        data->S_PID.Kp = 7.2;
+
+    PID_Ctrl(&data->S_PID,0.0,data->Bias);
+
+    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
+
+    static float angle[5] = {0.0};
+
+    data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
     data->Speed = 3500;
 
@@ -94,6 +107,40 @@ void STM1_CH1_IRQHandler(void)
 
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
+
+    data_t *data = &Data[data_pointer];
+
+    for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
+            data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
+    for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
+            data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
+
+    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+    /*归一化*/
+    for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
+        data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+    for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+        data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+//
+//        static float Kb[33] = {
+//           0.004310506862, 0.006396806333,-0.008907295763,-0.006022877526,  0.01509535592,
+//           0.002957194578, -0.02246881649,  0.00418050494,   0.0303422641, -0.01742442511,
+//           -0.03784247488,  0.04116194695,  0.04404707253, -0.09106717259, -0.04814339057,
+//             0.3107235134,    0.545322597,   0.3107235134, -0.04814339057, -0.09106717259,
+//            0.04404707253,  0.04116194695, -0.03784247488, -0.01742442511,   0.0303422641,
+//            0.00418050494, -0.02246881649, 0.002957194578,  0.01509535592,-0.006022877526,
+//          -0.008907295763, 0.006396806333, 0.004310506862
+//        };
+//
+//        static float dis[33] = {0.0};
+//
+     data->Bias = 100.0 * CalculateDistance(data);
+
+        //data->Bias = FIR_Filter(Kb,dis,data->_Bias,33);
+
+
+
 
     /* 用户代码 */
     //    SSU.Run(SSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
@@ -442,5 +489,81 @@ void UART3_ER_IRQHandler(void)
 {
     IfxAsclin_Asc_isrError(&g_UartConfig[3]);
 
+    /* 用户代码 */
+}
+
+/**
+ * @brief    CPU0_SOFT_IRQ0Handler中断服务函数
+ * @note     cpu0 软件中断0中断服务函数
+ */
+void CPU0_SOFT_IRQ0Handler (void)
+{
+    SRC_GPSR00.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU0_SOFT_IRQ1Handler (void)
+{
+    SRC_GPSR01.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU0_SOFT_IRQ2Handler (void)
+{
+    SRC_GPSR02.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU0_SOFT_IRQ3Handler (void)
+{
+    SRC_GPSR03.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU1_SOFT_IRQ0Handler (void)
+{
+    SRC_GPSR04.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU1_SOFT_IRQ1Handler (void)
+{
+    SRC_GPSR05.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU1_SOFT_IRQ2Handler (void)
+{
+    SRC_GPSR06.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU1_SOFT_IRQ3Handler (void)
+{
+    SRC_GPSR07.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU2_SOFT_IRQ0Handler (void)
+{
+    SRC_GPSR10.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU2_SOFT_IRQ1Handler (void)
+{
+    SRC_GPSR11.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU2_SOFT_IRQ2Handler (void)
+{
+    SRC_GPSR12.B.SRR = 0;
+    /* 用户代码 */
+}
+
+void CPU2_SOFT_IRQ3Handler (void)
+{
+    SRC_GPSR13.B.SRR = 0;
     /* 用户代码 */
 }

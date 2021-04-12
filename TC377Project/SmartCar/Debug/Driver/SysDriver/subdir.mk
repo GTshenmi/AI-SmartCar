@@ -9,6 +9,7 @@ C_SRCS += \
 ../Driver/SysDriver/dma.c \
 ../Driver/SysDriver/enc.c \
 ../Driver/SysDriver/gpio.c \
+../Driver/SysDriver/gpsr.c \
 ../Driver/SysDriver/iic.c \
 ../Driver/SysDriver/pwm.c \
 ../Driver/SysDriver/spi.c \
@@ -22,6 +23,7 @@ OBJS += \
 ./Driver/SysDriver/dma.o \
 ./Driver/SysDriver/enc.o \
 ./Driver/SysDriver/gpio.o \
+./Driver/SysDriver/gpsr.o \
 ./Driver/SysDriver/iic.o \
 ./Driver/SysDriver/pwm.o \
 ./Driver/SysDriver/spi.o \
@@ -35,6 +37,7 @@ COMPILED_SRCS += \
 ./Driver/SysDriver/dma.src \
 ./Driver/SysDriver/enc.src \
 ./Driver/SysDriver/gpio.src \
+./Driver/SysDriver/gpsr.src \
 ./Driver/SysDriver/iic.src \
 ./Driver/SysDriver/pwm.src \
 ./Driver/SysDriver/spi.src \
@@ -48,6 +51,7 @@ C_DEPS += \
 ./Driver/SysDriver/dma.d \
 ./Driver/SysDriver/enc.d \
 ./Driver/SysDriver/gpio.d \
+./Driver/SysDriver/gpsr.d \
 ./Driver/SysDriver/iic.d \
 ./Driver/SysDriver/pwm.d \
 ./Driver/SysDriver/spi.d \

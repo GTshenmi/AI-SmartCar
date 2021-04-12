@@ -166,6 +166,8 @@ void Motor_DecisionUnitRun_AutoBootMode(struct unit *self,void *argv,uint16_t ar
     }
 }
 
+#define LESensor_Min 5.0
+
 float CalculateDistance(void *argv)
 {
 /*
@@ -178,25 +180,65 @@ float CalculateDistance(void *argv)
 
     data_t *data = (data_t *)argv;
 
+    static float difference_h = 0.0;
+    static float difference_v = 0.0;
+    static float difference_o = 0.0;
+
+    static float sum_h = 0.0;
+    static float sum_v = 0.0;
+    static float sum_o = 0.0;
+
     static float distance_h = 0.0;
     static float distance_v = 0.0;
     static float distance_o = 0.0;
 
     static float distance = 0.0;
 
-    if(data->N_LADC[1] > 15.0 && data->N_LADC[5] > 15.0) //横电感差值
+    if(data->N_LADC[1] > LESensor_Min && data->N_LADC[5] > LESensor_Min) //横电感差值
     {
+        sum_h = data->N_LADC[1] + data->N_LADC[5];
+        difference_h = data->N_LADC[1] - data->N_LADC[5];
+
         distance_h = CalculateDistanceDifDivSum(data->N_LADC[1],data->N_LADC[5]);
     }
 
-    if(data->N_LADC[0] > 15.0 && data->N_LADC[6] > 15.0) //竖电感差值
+    if(data->N_LADC[0] > LESensor_Min && data->N_LADC[6] > LESensor_Min) //竖电感差值
     {
+        sum_v = data->N_LADC[0] + data->N_LADC[6];
+        difference_v = data->N_LADC[0] - data->N_LADC[6];
+
         distance_v = CalculateDistanceDifDivSum(data->N_LADC[0],data->N_LADC[6]);
     }
 
-    if(data->N_LADC[2] > 15.0 && data->N_LADC[4] > 15.0) //斜电感差值
+    if(data->N_LADC[2] > LESensor_Min && data->N_LADC[4] > LESensor_Min) //斜电感差值
     {
+        sum_o = data->N_LADC[2] + data->N_LADC[4];
+        difference_o = data->N_LADC[2] - data->N_LADC[4];
         distance_o = CalculateDistanceDifDivSum(data->N_LADC[2],data->N_LADC[4]);
+    }
+
+    float weight = 0.0;
+
+
+    if(Is_Zero(difference_h) && Is_Zero(difference_v))
+    {
+        distance = 0.0;
+    }
+    else
+    {
+        if(fabs(difference_h) > fabs(difference_v))
+        {
+
+            weight = fabs(difference_v)/fabs(difference_h);
+
+            distance = (1 - weight) * distance_h + weight * distance_v;
+        }
+        else
+        {
+            weight = fabs(difference_h)/fabs(difference_v);
+
+            distance = weight * distance_h + (1 - weight) * distance_v;
+        }
     }
 
     if(data->N_LADC[3] > 80.0)
@@ -204,25 +246,12 @@ float CalculateDistance(void *argv)
         //环岛判别
     }
 
-    float weight = 0.0;
-
-    if(fabs(distance_h) > fabs(distance_v))
-    {
-        weight = fabs(distance_v)/fabs(distance_h);
-        distance = (1 - weight) * distance_h + weight * distance_v;
-    }
-    else
-    {
-        weight = fabs(distance_h)/fabs(distance_v);
-        distance = weight * distance_h + (1 - weight) * distance_v;
-    }
-
     uint index = FindMaxIndex(data->N_LADC,CData.MaxLADCDeviceNum);
 
     switch(index)
     {
         case 0:
-            //distance = 1.0;
+            //distance = -1.0;
             break;
         case 1:
             break;
@@ -233,7 +262,7 @@ float CalculateDistance(void *argv)
         case 4:
             break;
         case 5:
-           // distance = - 1.0;
+            //distance = 1.0;
             break;
     }
 

@@ -32,7 +32,6 @@ Configurations/Debug \
 Configurations \
 . \
 Driver/SysDriver \
-Driver/SysDriverLQ \
 Driver/UsrDriver/Camera \
 Driver/UsrDriver/EEPROM \
 Driver/UsrDriver/LCD \

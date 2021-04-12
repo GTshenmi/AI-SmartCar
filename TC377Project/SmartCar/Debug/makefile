@@ -81,7 +81,6 @@ RM := rm -rf
 -include Driver/UsrDriver/LCD/subdir.mk
 -include Driver/UsrDriver/EEPROM/subdir.mk
 -include Driver/UsrDriver/Camera/subdir.mk
--include Driver/SysDriverLQ/subdir.mk
 -include Driver/SysDriver/subdir.mk
 -include Configurations/Debug/subdir.mk
 -include Configurations/subdir.mk

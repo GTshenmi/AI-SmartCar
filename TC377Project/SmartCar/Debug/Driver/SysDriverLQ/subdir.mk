@@ -4,19 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Driver/SysDriverLQ/LQ_EEPROM.c \
 ../Driver/SysDriverLQ/LQ_GPSR.c 
 
 OBJS += \
-./Driver/SysDriverLQ/LQ_EEPROM.o \
 ./Driver/SysDriverLQ/LQ_GPSR.o 
 
 COMPILED_SRCS += \
-./Driver/SysDriverLQ/LQ_EEPROM.src \
 ./Driver/SysDriverLQ/LQ_GPSR.src 
 
 C_DEPS += \
-./Driver/SysDriverLQ/LQ_EEPROM.d \
 ./Driver/SysDriverLQ/LQ_GPSR.d 
 
 

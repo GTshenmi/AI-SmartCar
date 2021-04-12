@@ -106,38 +106,76 @@ void openSettingPage(UIPageStruct *Self){
     SettingPage.Open(SettingPage.Self,Self);
 }
 
+//    UIPages[0].primaryTargetData = UIData.LADC;
+//    UIPages[0].secondaryTargetData = UIData.NLADC;
+
+//    UIPages[1].primaryTargetData = UIData.SADC;
+//    UIPages[1].secondaryTargetData = UIData.NSADC;
+
+//    UIPages[2].primaryTargetData = UIData.Speed;
+//    UIPages[2].secondaryTargetData = UIData.NSpeed;
+
+//    UIPages[3].primaryTargetData = UIData.Actual_Speed;
+//    UIPages[3].secondaryTargetData = UIData.NActual_Speed;
+
+//    UIPages[4].primaryTargetData = UIData.Actual_Speed;
+//    UIPages[4].secondaryTargetData = UIData.NActual_Speed;
+
+//    UIPages[5].secondaryTargetData = UIData.MPID_Kp;
+//    UIPages[6].secondaryTargetData = UIData.MPID_Ki;
+//    UIPages[7].secondaryTargetData = UIData.MPID_Kd;
+//    UIPages[8].secondaryTargetData = UIData.MPID_Result;
+//    UIPages[9].primaryTargetData = UIData.M_PwmDuty;
+//    UIPages[10].primaryTargetData = UIData.Angle;
+
+//    UIPages[10].secondaryTargetData = UIData.NAngle;
+//    UIPages[11].secondaryTargetData = UIData.Bias;
+//    UIPages[12].secondaryTargetData = UIData.SPID_Kp;
+
+//    UIPages[13].secondaryTargetData = UIData.SPID_Ki;
+//    UIPages[14].secondaryTargetData = UIData.SPID_Kd;
+//    UIPages[15].secondaryTargetData = UIData.SPID_Result;
+//    UIPages[16].primaryTargetData = UIData.S_PwmDuty;
+
+//    UIPages[21].primaryTargetData = UIData.MotorSysState[0];
+//    UIPages[22].primaryTargetData = UIData.MotorSysState[1];
+//    UIPages[23].primaryTargetData = UIData.MotorSysState[2];
+//    UIPages[24].primaryTargetData = UIData.ServoSysState[0];
+//    UIPages[25].primaryTargetData = UIData.ServoSysState[1];
+//    UIPages[26].primaryTargetData = UIData.ServoSysState[2];
+
 void UIPagesInit (void)
 {
-    UIPages[0].primaryTargetData = UIData.LADC;
-    UIPages[0].secondaryTargetData = UIData.NLADC;
+    UIPages[1].primaryTargetData = UIData.LADC;
+    UIPages[1].secondaryTargetData = UIData.NLADC;
 
-    UIPages[1].primaryTargetData = UIData.SADC;
-    UIPages[1].secondaryTargetData = UIData.NSADC;
+    UIPages[2].primaryTargetData = UIData.SADC;
+    UIPages[2].secondaryTargetData = UIData.NSADC;
 
-    UIPages[2].primaryTargetData = UIData.Speed;
-    UIPages[2].secondaryTargetData = UIData.NSpeed;
+    UIPages[3].secondaryTargetData = UIData.Bias;
 
-    UIPages[3].primaryTargetData = UIData.Actual_Speed;
-    UIPages[3].secondaryTargetData = UIData.NActual_Speed;
+    UIPages[4].primaryTargetData = UIData.Angle;
+    //UIPages[4].secondaryTargetData = UIData.NAngle;
 
-    UIPages[4].primaryTargetData = UIData.Actual_Speed;
-    UIPages[4].secondaryTargetData = UIData.NActual_Speed;
+    UIPages[5].secondaryTargetData = UIData.SPID_Result;
+    UIPages[6].primaryTargetData = UIData.S_PwmDuty;
+    UIPages[7].secondaryTargetData = UIData.SPID_Kp;
+    UIPages[8].secondaryTargetData = UIData.SPID_Ki;
+    UIPages[9].secondaryTargetData = UIData.SPID_Kd;
 
-    UIPages[5].secondaryTargetData = UIData.MPID_Kp;
-    UIPages[6].secondaryTargetData = UIData.MPID_Ki;
-    UIPages[7].secondaryTargetData = UIData.MPID_Kd;
-    UIPages[8].secondaryTargetData = UIData.MPID_Result;
-    UIPages[9].primaryTargetData = UIData.M_PwmDuty;
-    UIPages[10].primaryTargetData = UIData.Angle;
 
-    UIPages[10].secondaryTargetData = UIData.NAngle;
-    UIPages[11].secondaryTargetData = UIData.Bias;
-    UIPages[12].secondaryTargetData = UIData.SPID_Kp;
+    UIPages[10].primaryTargetData = UIData.Speed;
+    UIPages[10].secondaryTargetData = UIData.NSpeed;
 
-    UIPages[13].secondaryTargetData = UIData.SPID_Ki;
-    UIPages[14].secondaryTargetData = UIData.SPID_Kd;
-    UIPages[15].secondaryTargetData = UIData.SPID_Result;
-    UIPages[16].primaryTargetData = UIData.S_PwmDuty;
+    UIPages[12].primaryTargetData = UIData.Actual_Speed;
+    UIPages[12].secondaryTargetData = UIData.NActual_Speed;
+
+    UIPages[13].secondaryTargetData = UIData.MPID_Result;
+    UIPages[14].primaryTargetData = UIData.M_PwmDuty;
+    UIPages[15].secondaryTargetData = UIData.MPID_Kp;
+    UIPages[16].secondaryTargetData = UIData.MPID_Ki;
+    UIPages[17].secondaryTargetData = UIData.MPID_Kd;
+
     UIPages[21].primaryTargetData = UIData.MotorSysState[0];
     UIPages[22].primaryTargetData = UIData.MotorSysState[1];
     UIPages[23].primaryTargetData = UIData.MotorSysState[2];
@@ -146,6 +184,7 @@ void UIPagesInit (void)
     UIPages[26].primaryTargetData = UIData.ServoSysState[2];
 
     UIPages[0].beginLine = 0;
+
     for (uint8_t i = 1; i < TOTAL_PAGE_NUMBER; i++)
     {
         UIPages[i].beginLine = UIPages[i - 1].beginLine + UIPages[i - 1].lineLength;
@@ -190,6 +229,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
+
     },
     [4] = {
              .description = "Angle", //要设置的舵机角度(sint16_t，归一化后float)
@@ -198,6 +238,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .lineLength = 1,
              .targetDataType = INTEGER,
              .confirmAction = changeDisplayType,
+
      },
      [5] = {
              .description = "SPID.Res", //舵机PID的输出(float)
@@ -223,6 +264,8 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .lineLength = 1,
              .targetDataType = FLOAT,
              .confirmAction = openSettingPage,
+
+
      },
      [8] = {
              .description = "SPID.Ki", //舵机PID的三个参数(float)
@@ -231,6 +274,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .lineLength = 1,
              .targetDataType = FLOAT,
              .confirmAction = openSettingPage,
+
      },
      [9] = {
              .description = "SPID.Kd", //舵机PID的三个参数(float)
@@ -239,6 +283,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .lineLength = 1,
              .targetDataType = FLOAT,
              .confirmAction = openSettingPage,
+
      },
     [10] = {
             .description = "Speed", //要设置的电机转速(原数据sint16_t，归一化后float)
@@ -325,6 +370,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .Self = &UIPages[20],
             .lineLength = 1,
             .confirmAction = emptyConfirmAction,
+
     },
     [21] = {
             .description = "MSU",
@@ -339,6 +385,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .Self = &UIPages[22],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
+
     },
     [23] = {
             .description = "MEU",
@@ -346,6 +393,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .Self = &UIPages[23],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
+
     },
     [24] = {
             .description = "SSU",
@@ -353,6 +401,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .Self = &UIPages[24],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
+
     },
     [25] = {
             .description = "SDU",
@@ -360,6 +409,8 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .Self = &UIPages[25],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
+
+
     },
     [26] = {
             .description = "SEU",
@@ -367,6 +418,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .Self = &UIPages[26],
             .lineLength = 1,
             .confirmAction = changeSysStatus,
+
     },
 };
 

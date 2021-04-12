@@ -599,6 +599,26 @@ extern const uint8_t UartIrqPriority[12];
 /** UART中断服务函数地址 */
 extern const void *UartIrqFuncPointer[12];
 
+
+/*
+ *
+ * SoftWare Interrupt.
+ *
+ * */
+/**
+ * 软件中的序号枚举
+ */
+typedef enum
+{
+    SoftIRQ0,
+    SoftIRQ1,
+    SoftIRQ2,
+    SoftIRQ3
+}SOFT_IRQ;
+
+extern const uint8 CpuSoftIrqPriority[12];
+extern const void *CpuSoftIrqFuncPointer[12];
+
 extern App_Cpu0 g_AppCpu0;
 
 #endif /* DRIVER_SYSDRIVER_COMMON_H_ */

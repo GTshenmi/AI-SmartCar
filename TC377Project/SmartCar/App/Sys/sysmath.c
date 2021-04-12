@@ -19,7 +19,7 @@ float NormalizeFloat(float value,float min,float max)
 float CalculateDistanceDifDivSum(float L1,float L2)
 {
     if(Is_Zero(L1) && Is_Zero(L2))
-        return 0;
+        return 0.0;
     else
         return (L1 - L2) / (L1 + L2);
 }

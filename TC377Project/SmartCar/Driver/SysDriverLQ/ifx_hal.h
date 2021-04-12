@@ -59,13 +59,18 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #include "Gtm\Trig\IfxGtm_Trig.h"
 #include <Gpt12\IncrEnc\IfxGpt12_IncrEnc.h>
 #include "Gpt12\Std\IfxGpt12.h"
+#include "Tricore/_Impl/IfxSrc_cfg.h"
 //#include "Ifx_Assert.h"
 #include <I2c\I2c\IfxI2c_I2c.h>
 #include "IfxCpu_reg.h"
 #include <Ifx_Cfg.h>
 #include "interrupt.h"
+#include <IfxInt_reg.h>
+#include <IfxCpu_Irq.h>
+#include <IfxSrc_reg.h>
+#include <Tricore/Src/Std/IfxSrc.h>
 
-#include "LQ_EEPROM.h"
+//#include "LQ_EEPROM.h"
 //#include "LQ_GPSR.h"
 
 #include "IfxScu_reg.h"

@@ -220,11 +220,11 @@ tim_resource_t TIM_Resources[8] =
                .Description = "System TIM"
         },
         [1] = {
-               .TIMN = {STM1,STM_Channel_0,2000,true,true,STM},
+               .TIMN = {STM1,STM_Channel_0,20000,true,true,STM},
                .Description = "Interrupt Timer."
         },
         [2] = {
-               .TIMN = {STM1,STM_Channel_1,20000,true,true,STM},
+               .TIMN = {STM1,STM_Channel_1,2000,true,true,STM},
                .Description = "Interrupt Timer."
         },
 
