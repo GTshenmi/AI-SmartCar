@@ -93,7 +93,7 @@ typedef struct servo_ctrl
         void (*Stop)(struct servo_ctrl *self); /*Normal Stop Servo:angle = 0*/
         void (*Break)(struct servo_ctrl *self);/*Force Stop Servo:PwmValue = PwmCentValue*/
 
-        uint16_t (*SetAngle)(struct servo_ctrl *self,float angle);/*闭环驱动*/
+        float (*SetAngle)(struct servo_ctrl *self,float angle);/*闭环驱动*/
         void (*SetAngleLimit)(struct servo_ctrl *self,float MaxAngle,float MinAngle);
         void (*SetPwmCentValue)(struct servo_ctrl *self,uint16_t value);
 

@@ -35,13 +35,13 @@ typedef struct
       float _Bias;
       float Bias;            /*实际中线偏差*/
 
-      sint16_t Actual_Speed; /*实际速度*/
+      float Actual_Speed; /*实际速度*/
 
       uint16_t SPwmValue;
 
+      float Speed;        /*速度*/
+      float Angle;        /*角度*/
 
-      sint16_t Speed;        /*速度*/
-      sint16_t Angle;        /*角度*/
       uint ElementType;  /*赛道元素类型*/
 
       uint16_t LADC_Value[MAX_LESENSOR_NUM]; /*ADC值*/
@@ -61,6 +61,14 @@ typedef struct
       uint8_t ReportMotorData;
 
       uint8_t ReportServoData;
+
+
+      /*For Debug.*/
+
+      float TSpeed;
+      float ASpeed;
+      uint16_t MPwmValue;
+
 }data_t;
 
 typedef struct

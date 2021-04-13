@@ -22,9 +22,9 @@ typedef struct
         float    *NSADC;        /*短前瞻电感值(归一化)*/
 
         /*电机部分*/
-        sint16_t *Speed;         /*要设置的电机转速(原数据)*/
+        float    *Speed;         /*要设置的电机转速(原数据)*/
         float    *NSpeed;        /*要设置的电机转速(归一化)*/
-        sint16_t *Actual_Speed;  /*电机的实际速度(原数据)*/
+        float    *Actual_Speed;  /*电机的实际速度(原数据)*/
         float    *NActual_Speed; /*电机的实际速度(归一化)*/
 
         float    *MPID_Kp;       /*电机PID参数*/
@@ -35,7 +35,7 @@ typedef struct
         uint16_t *M_PwmDuty;     /*电机占空比*/
 
         /*舵机部分*/
-        sint16_t *Angle;         /*要设置的舵机角度(原数据)*/
+        float    *Angle;         /*要设置的舵机角度(原数据)*/
         float    *NAngle;        /*要设置的舵机角度(归一化)*/
 
         float    *Bias;          /*中线偏差*/

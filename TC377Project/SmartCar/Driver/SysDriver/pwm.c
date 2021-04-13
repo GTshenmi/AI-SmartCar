@@ -72,13 +72,29 @@ uint8_t PWMx_Init(pwmx_t *pwm)
     }
     else
         return 0;
+
+    if(pwm->MaxUseDuty < pwm->MinUseDuty)
+        return 1;
+
+    if(pwm->MaxUseDuty > PWMx.MaxPwmDuty)
+        pwm->MaxUseDuty = PWMx.MaxPwmDuty;
+
+    if(pwm->MinUseDuty <= PWMx.MinPwmDuty)
+        pwm->MinUseDuty = PWMx.MinPwmDuty;
+
+
     return 0;
 }
 uint8_t PWMx_Write(pwmx_t *pwm,unsigned long duty)
 {
-    if(duty > PWMx.MaxPwmDuty)
-        duty = PWMx.MaxPwmDuty;
-    else if(duty < PWMx.MinPwmDuty)
+//    if(duty > PWMx.MaxPwmDuty)
+//        duty = PWMx.MaxPwmDuty;
+//    else if(duty < PWMx.MinPwmDuty)
+//        duty = PWMx.MinPwmDuty;
+
+    if(duty > pwm->MaxUseDuty)
+        duty = pwm->MaxUseDuty;
+    else if(duty <= PWMx.MinPwmDuty)
         duty = PWMx.MinPwmDuty;
 
     pwm->Duty = duty;

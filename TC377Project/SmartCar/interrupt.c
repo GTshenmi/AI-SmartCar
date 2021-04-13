@@ -6,7 +6,7 @@
  */
 #include "include.h"
 
-void STM0_CH1_IRQHandler(void)
+void STM0_CH1_IRQHandler(void) /*Motor Control.*/
 {
     /* 开启CPU中断  否则中断不可嵌套 */
     IfxCpu_enableInterrupts();
@@ -17,15 +17,23 @@ void STM0_CH1_IRQHandler(void)
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM0, g_StmCompareConfig[1].comparator, g_StmCompareConfig[1].ticks);
 
-    /* 用户代码 */
-    //LED_Ctrl(LED1,RVS);        //电平翻转,LED闪烁
+    data_t *data = &Data[data_pointer];
 
+    float formatedSpeed = 0.0;
+
+    data->Speed = 3500.0;
+
+    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
+
+    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+    Motor.SetSpeed(Motor.Self,formatedSpeed);
+
+    Motor.Update(Motor.Self);
 }
 
-void STM1_CH0_IRQHandler(void)
+void STM1_CH0_IRQHandler(void)  /*Servo Control.*/
 {
-   // uint32_t SystimeNow = os.time.getTimems();
-
     /* 开启CPU中断  否则中断不可嵌套 */
     IfxCpu_enableInterrupts();
 
@@ -36,37 +44,6 @@ void STM1_CH0_IRQHandler(void)
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[2].comparator, g_StmCompareConfig[2].ticks);
 
     data_t *data = &Data[data_pointer];
-//
-//    for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
-//        data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
-//    for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
-//        data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
-//
-//    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
-//
-//    /*归一化*/
-//    for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
-//        data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
-//    for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
-//        data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
-//
-//    static float Kb[33] = {
-//       0.004310506862, 0.006396806333,-0.008907295763,-0.006022877526,  0.01509535592,
-//       0.002957194578, -0.02246881649,  0.00418050494,   0.0303422641, -0.01742442511,
-//       -0.03784247488,  0.04116194695,  0.04404707253, -0.09106717259, -0.04814339057,
-//         0.3107235134,    0.545322597,   0.3107235134, -0.04814339057, -0.09106717259,
-//        0.04404707253,  0.04116194695, -0.03784247488, -0.01742442511,   0.0303422641,
-//        0.00418050494, -0.02246881649, 0.002957194578,  0.01509535592,-0.006022877526,
-//      -0.008907295763, 0.006396806333, 0.004310506862
-//    };
-//
-//    static float dis[33] = {0.0};
-//
-//    data->_Bias = 100.0 * CalculateDistance(data);
-//
-//    data->Bias = FIR_Filter(Kb,dis,data->_Bias,33);
-
-    //data->Bias = 100.0 * CalculateDistance(data);
 
     if(fabs(data->Bias) >= 20.0)
         data->S_PID.Kp = 2.0 + data->Bias * data->Bias * 0.00372; //待调
@@ -83,21 +60,12 @@ void STM1_CH0_IRQHandler(void)
 
     data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
-    data->Speed = 3500;
-
     Servo.SetAngle(Servo.Self,data->Angle);
 
-    Motor.SetSpeed(Motor.Self,data->Speed);
-
-    Motor.Update(Motor.Self);
     Servo.Update(Servo.Self);
-
-    //uint32_t dt = os.time.getTimems() - SystimeNow;
-
-    //Console.WriteLine("Time = %ld",dt);
 }
 
-void STM1_CH1_IRQHandler(void)
+void STM1_CH1_IRQHandler(void)          /*Calculate Bias.*/
 {
     /* 开启CPU中断  否则中断不可嵌套 */
     IfxCpu_enableInterrupts();
@@ -111,46 +79,17 @@ void STM1_CH1_IRQHandler(void)
     data_t *data = &Data[data_pointer];
 
     for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
-            data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
+        data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
     for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
-            data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
-
-    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+        data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
 
     /*归一化*/
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
         data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
     for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
         data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
-//
-//        static float Kb[33] = {
-//           0.004310506862, 0.006396806333,-0.008907295763,-0.006022877526,  0.01509535592,
-//           0.002957194578, -0.02246881649,  0.00418050494,   0.0303422641, -0.01742442511,
-//           -0.03784247488,  0.04116194695,  0.04404707253, -0.09106717259, -0.04814339057,
-//             0.3107235134,    0.545322597,   0.3107235134, -0.04814339057, -0.09106717259,
-//            0.04404707253,  0.04116194695, -0.03784247488, -0.01742442511,   0.0303422641,
-//            0.00418050494, -0.02246881649, 0.002957194578,  0.01509535592,-0.006022877526,
-//          -0.008907295763, 0.006396806333, 0.004310506862
-//        };
-//
-//        static float dis[33] = {0.0};
-//
+
      data->Bias = 100.0 * CalculateDistance(data);
-
-        //data->Bias = FIR_Filter(Kb,dis,data->_Bias,33);
-
-
-
-
-    /* 用户代码 */
-    //    SSU.Run(SSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-    //    MSU.Run(MSU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-    //
-    //    MDU.Run(MDU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-    //    SDU.Run(SDU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-    //
-    //    SEU.Run(SEU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
-    //    MEU.Run(MEU.Self,&Data[data_pointer],sizeof(Data[data_pointer]));
 }
 
 void CCU60_CH0_IRQHandler (void)

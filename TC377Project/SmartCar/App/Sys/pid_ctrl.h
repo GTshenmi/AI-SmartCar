@@ -30,6 +30,9 @@ typedef struct
 	 float MaxIntegralValue;
 	
 	 float Result;
+
+	 float MaxResultValue;
+	 float MinResultValue;
 	
 	 pid_gain_t Gain;
 	

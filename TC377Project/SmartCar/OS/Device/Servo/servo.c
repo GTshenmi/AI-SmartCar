@@ -47,7 +47,7 @@ uint16_t Servo_Update(struct servo_ctrl *self)
     return self->PwmValue;
 }
 
-uint16_t Servo_SetAngle(struct servo_ctrl *self,float angle)
+float Servo_SetAngle(struct servo_ctrl *self,float angle)
 {
     if(angle > self->MaxAngle)
         angle = self->MaxAngle;

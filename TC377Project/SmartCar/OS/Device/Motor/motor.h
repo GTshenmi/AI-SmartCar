@@ -19,7 +19,7 @@
 
 struct motor_ctrl;
 
-typedef sint16_t (*motor_ctrlcallback)(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc);
+typedef sint16_t (*motor_ctrlcallback)(struct motor_ctrl *self,float target_speed,float actual_speed,void *argv,uint16_t argc);
 
 typedef enum
 {
@@ -62,9 +62,9 @@ typedef struct motor_ctrl
 
         motor_state_t State;
 
-        sint16_t TargetSpeed;
+        float TargetSpeed;
 
-        sint16_t SpeedCache;
+        float SpeedCache;
 
         uint32_t StallingTime;
 
@@ -72,8 +72,8 @@ typedef struct motor_ctrl
         uint16_t Argc;
         motor_ctrlcallback CtrlStrategy;
 
-        sint16_t MaxSpeed;
-        sint16_t MinSpeed;
+        float MaxSpeed;
+        float MinSpeed;
 
         void (*SetState)(struct motor_ctrl *self,motor_state_t state);
         void (*SetPwmValue)(struct motor_ctrl *self,sint16_t value);  /*不使用闭环，直接给占空比驱动*/
@@ -87,7 +87,7 @@ typedef struct motor_ctrl
 
         void (*Connect)(struct motor_ctrl *self,motor_ctrlcallback ctrlstrategy,void *argv,uint16_t argc);
 
-        void (*Protect)(struct motor_ctrl *self,sint16_t speed,void *argv,uint16_t argc);/*Motor Protect,Can Re-Definition*/
+        void (*Protect)(struct motor_ctrl *self,float speed,void *argv,uint16_t argc);/*Motor Protect,Can Re-Definition*/
 
         void (*Sleep)(struct motor_ctrl *self); /*Disable CtrlStrategy*/
         void (*WakeUp)(struct motor_ctrl *self);/*Enable CtrlStrategy*/
@@ -95,13 +95,15 @@ typedef struct motor_ctrl
         void (*Start)(struct motor_ctrl *self);/*Start Motor*/
         void (*Break)(struct motor_ctrl *self);/*Force Stop Motor:PwmValue = 0*/
 
-        uint16_t (*SetSpeed)(struct motor_ctrl *self,sint16_t speed);
-        void (*SetSpeedLimit)(struct motor_ctrl *self,sint16_t MaxSpeed,sint16_t MinSpeed);
+        float (*SetSpeed)(struct motor_ctrl *self,float speed);
 
-        sint16_t (*GetSpeed)(struct motor_ctrl *self);              /*Read Speed From ENC,it will ReWrite SpeedCache*/
-        sint16_t (*GetSpeedFromCache)(struct motor_ctrl *self);     /*Read Speed From SpeedCache,it will not ReWrite SpeedCache*/
-        sint16_t (*GetMaxSpeed)(struct motor_ctrl *self);
-        sint16_t (*GetMinSpeed)(struct motor_ctrl *self);
+        void (*SetSpeedLimit)(struct motor_ctrl *self,float MaxSpeed,float MinSpeed);
+
+        float (*GetSpeed)(struct motor_ctrl *self);              /*Read Speed From ENC,it will ReWrite SpeedCache*/
+        float (*GetSpeedFromCache)(struct motor_ctrl *self);     /*Read Speed From SpeedCache,it will not ReWrite SpeedCache*/
+        float (*GetMaxSpeed)(struct motor_ctrl *self);
+        float (*GetMinSpeed)(struct motor_ctrl *self);
+
         uint16_t (*GetPwmValue)(struct motor_ctrl *self);
         motor_state_t (*GetState)(struct motor_ctrl *self);
 

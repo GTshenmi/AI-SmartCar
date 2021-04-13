@@ -192,15 +192,15 @@ gpio_resource_t GPIO_Resources[25] =
 pwm_resource_t PWM_Resources[3] =
 {
         [0] = {
-               .PWMN = {(void *)&IfxGtm_ATOM0_1_TOUT54_P21_3_OUT,13000,0,ATOM},
+               .PWMN = {(void *)&IfxGtm_ATOM0_1_TOUT54_P21_3_OUT,13000,0,ATOM,0,6000},
                .Description = "Motor PH"
         },
         [1] = {
-               .PWMN = {(void *)&IfxGtm_ATOM0_2_TOUT55_P21_4_OUT,13000,0,ATOM},
+               .PWMN = {(void *)&IfxGtm_ATOM0_2_TOUT55_P21_4_OUT,13000,0,ATOM,0,6000},
                .Description = "Motor EN"
         },
         [2] = {
-               .PWMN = {(void *)&IfxGtm_ATOM2_5_TOUT35_P33_13_OUT,50,0,ATOM},
+               .PWMN = {(void *)&IfxGtm_ATOM2_5_TOUT35_P33_13_OUT,50,0,ATOM,0,10000},
                .Description = "Servo"
         },
 };
@@ -225,6 +225,10 @@ tim_resource_t TIM_Resources[8] =
         },
         [2] = {
                .TIMN = {STM1,STM_Channel_1,2000,true,true,STM},
+               .Description = "Interrupt Timer."
+        },
+        [3] = {
+               .TIMN = {STM0,STM_Channel_1,2000,true,true,STM},
                .Description = "Interrupt Timer."
         },
 

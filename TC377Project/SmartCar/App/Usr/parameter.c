@@ -45,8 +45,15 @@ void ParameterInit(void *data)
     data_t *pdata = (data_t *)data;
 
     /*Set Servo And Motor PID Value.*/
-    PID_SetValue(&pdata->M_PID,PIDValue(1.0,0.0,0.0));
+    PID_SetValue(&pdata->M_PID,PIDValue(3.3,0.2,0.0));
+
+    pdata->M_PID.MaxIntegralValue = 100.0;
+
     PID_SetValue(&pdata->S_PID,PIDValue(3.2,0.0,1.0));
+
+    PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
+
+    PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,100.0));
 }
 
 char *GetCarState(uint index)
@@ -82,7 +89,7 @@ data_t Data[MAX_DATA_LEN] =
         [1] = {
                 .Cache = 0,
                 .CarMode = AutoBoot_Mode,
-                .ReportMotorData = 0,
+                .ReportMotorData = 1,
                 .ReportSensorData = 0,
                 .ReportServoData = 0,
                 .AI_State = AI_Free,

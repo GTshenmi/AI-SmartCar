@@ -104,14 +104,21 @@ void Core0_Main()
 {
     TIMx.Init(&TIM_Resources[1].TIMN);
     TIMx.Init(&TIM_Resources[2].TIMN);
+    TIMx.Init(&TIM_Resources[3].TIMN);
+
+
+    data_t *data = &Data[data_pointer];
 
     while(1)
     {
         GLED.Toggle(GLED.Self);
 
-        Core0_CheckStatus();
+        Console.WriteLine("M_PID:%.6f,%.6f,%.6f",data->TSpeed,data->ASpeed,data->MPwmValue * 1.0);
 
-        os.time.delay(1.0,s);
+        os.time.delay(0.02,s);
+        //Core0_CheckStatus();
+
+        //os.time.delay(1.0,s);
     }
 }
 

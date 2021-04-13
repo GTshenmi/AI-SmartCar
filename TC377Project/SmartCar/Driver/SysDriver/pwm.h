@@ -36,6 +36,9 @@ typedef struct
         uint32_t Freq;
         uint32_t Duty;
         pwm_source_t pwm_source;
+
+        uint32_t MinUseDuty;
+        uint32_t MaxUseDuty;
 }pwmx_t;
 
 typedef struct

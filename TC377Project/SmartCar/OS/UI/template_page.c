@@ -154,7 +154,7 @@ void UIPagesInit (void)
 
     UIPages[3].secondaryTargetData = UIData.Bias;
 
-    UIPages[4].primaryTargetData = UIData.Angle;
+    UIPages[4].secondaryTargetData = UIData.Angle;
     //UIPages[4].secondaryTargetData = UIData.NAngle;
 
     UIPages[5].secondaryTargetData = UIData.SPID_Result;
@@ -164,11 +164,14 @@ void UIPagesInit (void)
     UIPages[9].secondaryTargetData = UIData.SPID_Kd;
 
 
-    UIPages[10].primaryTargetData = UIData.Speed;
-    UIPages[10].secondaryTargetData = UIData.NSpeed;
+    UIPages[10].secondaryTargetData = UIData.Speed;
+    //UIPages[10].secondaryTargetData = UIData.NSpeed;
 
-    UIPages[12].primaryTargetData = UIData.Actual_Speed;
-    UIPages[12].secondaryTargetData = UIData.NActual_Speed;
+    UIPages[11].secondaryTargetData = UIData.Speed;
+    //UIPages[11].secondaryTargetData = UIData.NSpeed;
+
+    UIPages[12].secondaryTargetData = UIData.Actual_Speed;
+    //UIPages[12].secondaryTargetData = UIData.NActual_Speed;
 
     UIPages[13].secondaryTargetData = UIData.MPID_Result;
     UIPages[14].primaryTargetData = UIData.M_PwmDuty;
@@ -236,7 +239,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .displayData = displayDataAlone,
              .Self = &UIPages[4],
              .lineLength = 1,
-             .targetDataType = INTEGER,
+             .targetDataType = FLOAT,
              .confirmAction = changeDisplayType,
 
      },
@@ -290,7 +293,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .displayData = displayDataAlone,
             .Self = &UIPages[10],
             .lineLength = 1,
-            .targetDataType = INTEGER,
+            .targetDataType = FLOAT,
             .confirmAction = changeDisplayType,
     },
     [11] = {
@@ -298,7 +301,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .displayData = displayDataAlone,
             .Self = &UIPages[11],
             .lineLength = 1,
-            .targetDataType = INTEGER,
+            .targetDataType = FLOAT,
             .confirmAction = openSettingPage,
     },
     [12] = {
@@ -306,7 +309,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .displayData = displayDataAlone,
             .Self = &UIPages[12],
             .lineLength = 1,
-            .targetDataType = INTEGER,
+            .targetDataType = FLOAT,
             .confirmAction = changeDisplayType,
     },
     [13] = {

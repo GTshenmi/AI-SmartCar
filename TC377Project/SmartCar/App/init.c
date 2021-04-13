@@ -24,7 +24,9 @@ void Core0_HardWareInit()
     /*Init Motor.*/
     Motor.Init(Motor.Self);
     Motor.Connect(Motor.Self,MotorCtrlStrategy,&Data[data_pointer],sizeof(data_t));
-    Motor.SetSpeedLimit(Motor.Self,10000,-10000);
+
+    Motor.SetSpeedLimit(Motor.Self,250,-250);
+
     Motor.Start(Motor.Self);
 
     /*Init Servo.*/
@@ -83,8 +85,6 @@ void Core0_SoftWareInit()
     /*Init PID Controller.*/
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
-    PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
-    PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,1.0));
 
     /*Init Data Save System.*/
     DataSaveSysInit("1.xls","1.txt");

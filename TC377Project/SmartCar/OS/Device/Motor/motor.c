@@ -10,7 +10,7 @@
 sint16_t Motor_Update(struct motor_ctrl *self)
 {
     /*读取反馈值*/
-    sint16_t actual_speed = self->SpeedCache;
+    float actual_speed = self->SpeedCache;
 
     self->Protect(self,self->TargetSpeed,self->Argv,self->Argc);
 
@@ -27,7 +27,7 @@ sint16_t Motor_Update(struct motor_ctrl *self)
             break;
 
         case Motor_Normal_Stopping:
-            PwmValue = self->CtrlStrategy(self,0,actual_speed,self->Argv,self->Argc);
+            PwmValue = self->CtrlStrategy(self,0.0,actual_speed,self->Argv,self->Argc);
             if(self->SpeedCache == 0)
                 self->State = Motor_Stopped;
             break;
@@ -50,7 +50,7 @@ sint16_t Motor_Update(struct motor_ctrl *self)
     return self->PwmValue;
 }
 
-uint16_t Motor_SetSpeed(struct motor_ctrl *self,sint16_t speed)
+float Motor_SetSpeed(struct motor_ctrl *self,float speed)
 {
     /*传参检查*/
     if(speed > self->MaxSpeed)
@@ -63,9 +63,9 @@ uint16_t Motor_SetSpeed(struct motor_ctrl *self,sint16_t speed)
     return self->TargetSpeed;
 }
 
-sint16_t Motor_GetSpeed(struct motor_ctrl *self)
+float Motor_GetSpeed(struct motor_ctrl *self)
 {
-    sint16_t speed = ENCx.Read(self->Encn);
+    float speed = ENCx.Read(self->Encn) * 1.0;
 
     if(speed > self->MaxSpeed)
       speed = self->MaxSpeed;
@@ -75,7 +75,7 @@ sint16_t Motor_GetSpeed(struct motor_ctrl *self)
     return self->SpeedCache = speed;
 }
 
-sint16_t Motor_GetSpeedFromCache(struct motor_ctrl *self)
+float Motor_GetSpeedFromCache(struct motor_ctrl *self)
 {
     return self->SpeedCache;
 }
@@ -123,18 +123,18 @@ void Motor_Connect(struct motor_ctrl *self,motor_ctrlcallback ctrlstrategy,void 
     self->Argc = argc;
 }
 
-void Motor_SetSpeedLimit(struct motor_ctrl *self,sint16_t MaxSpeed,sint16_t MinSpeed)
+void Motor_SetSpeedLimit(struct motor_ctrl *self,float MaxSpeed,float MinSpeed)
 {
     self->MaxSpeed = MaxSpeed;
     self->MinSpeed = MinSpeed;
 }
 
-sint16_t Motor_GetMaxSpeed(struct motor_ctrl *self)
+float Motor_GetMaxSpeed(struct motor_ctrl *self)
 {
     return self->MaxSpeed;
 }
 
-sint16_t Motor_GetMinSpeed(struct motor_ctrl *self)
+float Motor_GetMinSpeed(struct motor_ctrl *self)
 {
     return self->MinSpeed;
 }
@@ -144,7 +144,7 @@ uint16_t Motor_GetPwmValue(struct motor_ctrl *self)
     return self->PwmValue;
 }
 
-void Motor_DefaultProtect(struct motor_ctrl *self,sint16_t speed,void *argv,uint16_t argc)
+void Motor_DefaultProtect(struct motor_ctrl *self,float speed,void *argv,uint16_t argc)
 {
 //    if(self->SpeedCache < 5 && speed != 0)
 //        self->StallingTime ++;
@@ -157,9 +157,11 @@ void Motor_DefaultProtect(struct motor_ctrl *self,sint16_t speed,void *argv,uint
 //    }
 }
 
-sint16_t Motor_DefaultCtrlStrategy(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc)
+sint16_t Motor_DefaultCtrlStrategy(struct motor_ctrl *self,float target_speed,float actual_speed,void *argv,uint16_t argc)
 {
-    return abs(target_speed);
+    sint16_t PwmValue = (sint16_t)target_speed;
+
+    return abs(PwmValue);
 }
 
 void Motor_SetPwmValue(struct motor_ctrl *self,sint16_t value)
@@ -217,9 +219,12 @@ uint8_t Motor_Init(struct motor_ctrl *self)
     ENCx.Init(self->Encn);
 
     self->State = Motor_Stopped;
-    self->MaxSpeed = 10000;
-    self->MinSpeed = -10000;
-    self->SpeedCache = 0;
+
+    self->MaxSpeed = 10000.0;
+    self->MinSpeed = -10000.0;
+    self->SpeedCache = 0.0;
+    self->TargetSpeed = 0.0;
+
     self->PwmValue = 0;
 
     self->SetSpeed = Motor_SetSpeed;
@@ -248,7 +253,6 @@ uint8_t Motor_Init(struct motor_ctrl *self)
     self->SetState = Motor_SetState;
     self->Driver = Motor_Driver;
     self->Update = Motor_Update;
-    self->TargetSpeed = 0;
 
     self->Connect(self,Motor_DefaultCtrlStrategy,NULL,0);
 
