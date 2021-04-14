@@ -6,21 +6,41 @@
 C_SRCS += \
 ../App/Usr/NeuralNetwork/NNLib.c \
 ../App/Usr/NeuralNetwork/NNParameter.c \
+../App/Usr/NeuralNetwork/cmsis_nncommon.c \
+../App/Usr/NeuralNetwork/cmsis_nntable.c \
+../App/Usr/NeuralNetwork/cmsisnn.c \
+../App/Usr/NeuralNetwork/model_smartcar_ad_run.c \
+../App/Usr/NeuralNetwork/model_smartcar_ad_weit.c \
 ../App/Usr/NeuralNetwork/neuralnetwork.c 
 
 OBJS += \
 ./App/Usr/NeuralNetwork/NNLib.o \
 ./App/Usr/NeuralNetwork/NNParameter.o \
+./App/Usr/NeuralNetwork/cmsis_nncommon.o \
+./App/Usr/NeuralNetwork/cmsis_nntable.o \
+./App/Usr/NeuralNetwork/cmsisnn.o \
+./App/Usr/NeuralNetwork/model_smartcar_ad_run.o \
+./App/Usr/NeuralNetwork/model_smartcar_ad_weit.o \
 ./App/Usr/NeuralNetwork/neuralnetwork.o 
 
 COMPILED_SRCS += \
 ./App/Usr/NeuralNetwork/NNLib.src \
 ./App/Usr/NeuralNetwork/NNParameter.src \
+./App/Usr/NeuralNetwork/cmsis_nncommon.src \
+./App/Usr/NeuralNetwork/cmsis_nntable.src \
+./App/Usr/NeuralNetwork/cmsisnn.src \
+./App/Usr/NeuralNetwork/model_smartcar_ad_run.src \
+./App/Usr/NeuralNetwork/model_smartcar_ad_weit.src \
 ./App/Usr/NeuralNetwork/neuralnetwork.src 
 
 C_DEPS += \
 ./App/Usr/NeuralNetwork/NNLib.d \
 ./App/Usr/NeuralNetwork/NNParameter.d \
+./App/Usr/NeuralNetwork/cmsis_nncommon.d \
+./App/Usr/NeuralNetwork/cmsis_nntable.d \
+./App/Usr/NeuralNetwork/cmsisnn.d \
+./App/Usr/NeuralNetwork/model_smartcar_ad_run.d \
+./App/Usr/NeuralNetwork/model_smartcar_ad_weit.d \
 ./App/Usr/NeuralNetwork/neuralnetwork.d 
 
 
