@@ -2,6 +2,8 @@ neuralnetwork.o :	../App/Usr/NeuralNetwork/neuralnetwork.c
 ../App/Usr/NeuralNetwork/neuralnetwork.c :
 neuralnetwork.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
+neuralnetwork.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
 neuralnetwork.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 neuralnetwork.o :	../OS/os.h
@@ -204,12 +206,16 @@ neuralnetwork.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 neuralnetwork.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
-neuralnetwork.o :	../App/Usr/NeuralNetwork/NNLib.h
-../App/Usr/NeuralNetwork/NNLib.h :
+neuralnetwork.o :	../App/Usr/NeuralNetwork/nn_parameter.h
+../App/Usr/NeuralNetwork/nn_parameter.h :
+neuralnetwork.o :	../App/Usr/NeuralNetwork/tricore_nn.h
+../App/Usr/NeuralNetwork/tricore_nn.h :
+neuralnetwork.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
+../App/Usr/NeuralNetwork/tricore_nn_common.h :
+neuralnetwork.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
+../App/Usr/NeuralNetwork/tricore_nn_table.h :
 neuralnetwork.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-neuralnetwork.o :	../App/Usr/NeuralNetwork/NNParameter.h
-../App/Usr/NeuralNetwork/NNParameter.h :
 neuralnetwork.o :	../App/include.h
 ../App/include.h :
 neuralnetwork.o :	../OS/os.h

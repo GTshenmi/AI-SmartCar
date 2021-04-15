@@ -4,7 +4,7 @@
  *  Created on: 2021年3月27日
  *      Author: 936305695
  */
-#include "NNLib.h"
+#include <nn_library.h>
 
 double Layer0OutVal[140];
 
@@ -95,8 +95,16 @@ void NNInit(NNLayer_t* model)
  *  @Parameter: input:
  *  @Return:    result
  */
-float NNForWardReasoning(NNLayer_t* model,double* input,uint32_t layer_num)
+void *NNForWardReasoning(NNLayer_t* model,void* input,uint32_t layer_num)
 {
+#if USING_NNCU
+
+    void* RunModel(const void *in_buf);
+
+    return RunModel(input);
+
+
+#else
     int _indexW,_indexX,_indexLayer;
 
     for(_indexLayer = 0 ; _indexLayer < layer_num ; _indexLayer++)  //遍历每一层
@@ -109,7 +117,7 @@ float NNForWardReasoning(NNLayer_t* model,double* input,uint32_t layer_num)
             {
                 if(_indexLayer == 0)
                 {
-                    model[_indexLayer].outVal[_indexW] += (double)(input[_indexX] * _getWeight((double *)model[_indexLayer].weight,_indexX,model[_indexLayer].outDim,_indexW));
+                    model[_indexLayer].outVal[_indexW] += (double)(((double *)input)[_indexX] * _getWeight((double *)model[_indexLayer].weight,_indexX,model[_indexLayer].outDim,_indexW));
                 }
                 else
                 {
@@ -124,9 +132,10 @@ float NNForWardReasoning(NNLayer_t* model,double* input,uint32_t layer_num)
         }
     }
 
-    return model[_indexLayer - 1].outVal[_indexW - 1]; //Output
+    return &model[_indexLayer - 1].outVal[_indexW - 1]; //Output
 
     //return Layer3OutVal[0];
+#endif
 }
 
 

@@ -226,14 +226,20 @@ test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 test.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
+test.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
 test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-test.o :	../App/Usr/NeuralNetwork/NNLib.h
-../App/Usr/NeuralNetwork/NNLib.h :
+test.o :	../App/Usr/NeuralNetwork/nn_parameter.h
+../App/Usr/NeuralNetwork/nn_parameter.h :
+test.o :	../App/Usr/NeuralNetwork/tricore_nn.h
+../App/Usr/NeuralNetwork/tricore_nn.h :
+test.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
+../App/Usr/NeuralNetwork/tricore_nn_common.h :
+test.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
+../App/Usr/NeuralNetwork/tricore_nn_table.h :
 test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-test.o :	../App/Usr/NeuralNetwork/NNParameter.h
-../App/Usr/NeuralNetwork/NNParameter.h :
 test.o :	../App/foo.h
 ../App/foo.h :
 test.o :	../OS/os.h

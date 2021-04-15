@@ -4,7 +4,7 @@
  *  Created on: 2021Äê4ÔÂ14ÈÕ
  *      Author: 936305695
  */
-#include "cmsis_nntable.h"
+#include <tricore_nn_table.h>
 
 const q7_t sigmoidTable_q7[256] = {
     0x40, 0x42, 0x44, 0x46, 0x48, 0x4a, 0x4c, 0x4e,

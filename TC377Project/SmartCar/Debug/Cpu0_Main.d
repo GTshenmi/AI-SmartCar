@@ -226,14 +226,20 @@ Cpu0_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 Cpu0_Main.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
+Cpu0_Main.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
 Cpu0_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-Cpu0_Main.o :	../App/Usr/NeuralNetwork/NNLib.h
-../App/Usr/NeuralNetwork/NNLib.h :
+Cpu0_Main.o :	../App/Usr/NeuralNetwork/nn_parameter.h
+../App/Usr/NeuralNetwork/nn_parameter.h :
+Cpu0_Main.o :	../App/Usr/NeuralNetwork/tricore_nn.h
+../App/Usr/NeuralNetwork/tricore_nn.h :
+Cpu0_Main.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
+../App/Usr/NeuralNetwork/tricore_nn_common.h :
+Cpu0_Main.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
+../App/Usr/NeuralNetwork/tricore_nn_table.h :
 Cpu0_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-Cpu0_Main.o :	../App/Usr/NeuralNetwork/NNParameter.h
-../App/Usr/NeuralNetwork/NNParameter.h :
 Cpu0_Main.o :	../App/foo.h
 ../App/foo.h :
 Cpu0_Main.o :	../OS/os.h

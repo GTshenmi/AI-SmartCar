@@ -8,8 +8,8 @@
 #ifndef APP_USR_NEURALNETWORK_NEURALNETWORK_H_
 #define APP_USR_NEURALNETWORK_NEURALNETWORK_H_
 
+#include "nn_library.h"
 #include "sys.h"
-#include "NNLib.h"
 
 void NeuralNetworkInit(void *data);
 void NeuralNetworkReasoning(void *data);

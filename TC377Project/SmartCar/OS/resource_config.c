@@ -39,41 +39,41 @@ adc_resource_t ADC_Resources[20] =
 
         [7] = {
                .ADCN = {ADC27,10000},
-               .Description = "Reversed."
+               .Description = "Short ESensor[7]->AD8"
         },
 
 
         [8] = {
                .ADCN = {ADC1,10000},
-               .Description = "Long ESensor[0]"
+               .Description = "Long ESensor[0]->AD9"
         },
         [9] = {
                .ADCN = {ADC0,10000},
-               .Description = "Long ESensor[1]"
+               .Description = "Long ESensor[1]->AD10"
         },
         [10] = {
                .ADCN = {ADC4,10000},
-               .Description = "Long ESensor[2]"
+               .Description = "Long ESensor[2]->AD11"
         },
         [11] = {
                .ADCN = {ADC2,10000},
-               .Description = "Long ESensor[3]"
+               .Description = "Long ESensor[3]->AD12"
         },
         [12] = {
                .ADCN = {ADC7,10000},
-               .Description = "Long ESensor[4]"
+               .Description = "Long ESensor[4]->AD13"
         },
         [13] = {
                .ADCN = {ADC5,10000},
-               .Description = "Reversed."
+               .Description = "Long ESensor[5]->AD14"
         },
         [14] = {
                .ADCN = {ADC8,10000},
-               .Description = "Reversed."
+               .Description = "Long ESensor[6]->AD15"
         },
         [15] = {
                .ADCN = {ADC3,10000},
-               .Description = "Reversed."
+               .Description = "Reversed.->AD16"
         },
 
 };
@@ -145,7 +145,7 @@ gpio_resource_t GPIO_Resources[25] =
                .Description = "KEY 1 Cursor Down."
         },
         [14] = {
-               .GPION = {P33_10, PIN_MODE_INPUT,1,false,false},//该按键硬件GPIO有问题
+               .GPION = {P33_10, PIN_MODE_INPUT,1,false,false},
                .Description = "Key 2 Cancel."
         },
         [15] = {

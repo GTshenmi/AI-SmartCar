@@ -230,14 +230,20 @@ foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 foo.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
+foo.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-foo.o :	../App/Usr/NeuralNetwork/NNLib.h
-../App/Usr/NeuralNetwork/NNLib.h :
+foo.o :	../App/Usr/NeuralNetwork/nn_parameter.h
+../App/Usr/NeuralNetwork/nn_parameter.h :
+foo.o :	../App/Usr/NeuralNetwork/tricore_nn.h
+../App/Usr/NeuralNetwork/tricore_nn.h :
+foo.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
+../App/Usr/NeuralNetwork/tricore_nn_common.h :
+foo.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
+../App/Usr/NeuralNetwork/tricore_nn_table.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-foo.o :	../App/Usr/NeuralNetwork/NNParameter.h
-../App/Usr/NeuralNetwork/NNParameter.h :
 foo.o :	../App/foo.h
 ../App/foo.h :
 foo.o :	../App/init.h

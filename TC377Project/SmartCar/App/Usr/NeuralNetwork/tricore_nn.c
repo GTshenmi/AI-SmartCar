@@ -4,7 +4,7 @@
  *  Created on: 2021Äê4ÔÂ14ÈÕ
  *      Author: 936305695
  */
-#include <cmsisnn.h>
+#include <tricore_nn.h>
 
 
 /**

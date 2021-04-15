@@ -228,14 +228,20 @@ dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 dataprocess.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
+dataprocess.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-dataprocess.o :	../App/Usr/NeuralNetwork/NNLib.h
-../App/Usr/NeuralNetwork/NNLib.h :
+dataprocess.o :	../App/Usr/NeuralNetwork/nn_parameter.h
+../App/Usr/NeuralNetwork/nn_parameter.h :
+dataprocess.o :	../App/Usr/NeuralNetwork/tricore_nn.h
+../App/Usr/NeuralNetwork/tricore_nn.h :
+dataprocess.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
+../App/Usr/NeuralNetwork/tricore_nn_common.h :
+dataprocess.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
+../App/Usr/NeuralNetwork/tricore_nn_table.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-dataprocess.o :	../App/Usr/NeuralNetwork/NNParameter.h
-../App/Usr/NeuralNetwork/NNParameter.h :
 dataprocess.o :	../App/foo.h
 ../App/foo.h :
 dataprocess.o :	../OS/os.h

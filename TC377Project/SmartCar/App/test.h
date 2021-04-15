@@ -15,6 +15,7 @@ void SPIx_Test(spix_t *spi);
 void MotorTest(struct motor_ctrl *self);
 void ServoTest(struct servo_ctrl *self);
 
-void NNTest(void);
+void NN_Test(void);
+void NNCU_Test(void);
 
 #endif /* APP_TEST_H_ */

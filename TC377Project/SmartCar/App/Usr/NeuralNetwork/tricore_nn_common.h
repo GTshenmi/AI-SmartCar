@@ -5,8 +5,8 @@
  *      Author: 936305695
  */
 
-#ifndef APP_USR_NEURALNETWORK_CMSIS_NNCOMMON_H_
-#define APP_USR_NEURALNETWORK_CMSIS_NNCOMMON_H_
+#ifndef APP_USR_NEURALNETWORK_TRICORE_NN_COMMON_H_
+#define APP_USR_NEURALNETWORK_TRICORE_NN_COMMON_H_
 
 
 #include "platform.h"
@@ -66,4 +66,4 @@ static inline int __USAT_GUN(signed long int VAL, signed long int BITPOS) //Д§бщ
 #define __USAT(VAL, BITPOS) __USAT_GUN(VAL,BITPOS)
 
 
-#endif /* APP_USR_NEURALNETWORK_CMSIS_NNCOMMON_H_ */
+#endif /* APP_USR_NEURALNETWORK_TRICORE_NN_COMMON_H_ */

@@ -226,14 +226,20 @@ ctrlsys.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 ctrlsys.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
 ctrlsys.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-ctrlsys.o :	../App/Usr/NeuralNetwork/NNLib.h
-../App/Usr/NeuralNetwork/NNLib.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/nn_parameter.h
+../App/Usr/NeuralNetwork/nn_parameter.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/tricore_nn.h
+../App/Usr/NeuralNetwork/tricore_nn.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
+../App/Usr/NeuralNetwork/tricore_nn_common.h :
+ctrlsys.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
+../App/Usr/NeuralNetwork/tricore_nn_table.h :
 ctrlsys.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
-ctrlsys.o :	../App/Usr/NeuralNetwork/NNParameter.h
-../App/Usr/NeuralNetwork/NNParameter.h :
 ctrlsys.o :	../App/foo.h
 ../App/foo.h :
 ctrlsys.o :	../OS/os.h
