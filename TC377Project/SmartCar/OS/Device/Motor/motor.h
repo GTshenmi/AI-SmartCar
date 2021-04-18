@@ -28,31 +28,6 @@ typedef enum
 
 typedef struct motor_ctrl
 {
-/*
- * How To Use
- * 1. Let UsrData Point to You Own Data Struct used for Close Loop Ctrl.if not have Data Struct,Let Motor->UsrData = NULL;
- *    and do not use it in CallBack Function.
- *    For Example,
- *      musr_t MUsr(global);
- *      Motor.BindUsrData(Motor.Self,(void *)MUsr);
- * 2. Write CallBack Function:(not necessary,it has default callback function) CtrlStrategy,Protect;
- *    For Example:
- *     uint16_t MyCtrlStrategy(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *usr)
- *     {
- *          uint16_t PwmValue = 0;
- *          musr_t musr = (musr_t *)usr;
- *          ...
- *          ...
- *          return PwmValue;
- *     }
- * 3. Motor.Init(Motor.Self);
- * 4. Config Parameter.
- *    Motor.SetSpeedLimit(Motor.Self,10000,-10000);
- * 5. Call Motor.GetSpeed(Motor.Self) in n-ms Interrupt;
- * 6. Motor.Start(Motor.Self);
- * 7. Finish.
- *
- * */
     private
 
         void *Pwmn[2];

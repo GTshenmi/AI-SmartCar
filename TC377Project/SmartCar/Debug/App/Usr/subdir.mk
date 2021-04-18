@@ -4,24 +4,28 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../App/Usr/attitude.c \
 ../App/Usr/control.c \
 ../App/Usr/dataprocess.c \
 ../App/Usr/element.c \
 ../App/Usr/parameter.c 
 
 OBJS += \
+./App/Usr/attitude.o \
 ./App/Usr/control.o \
 ./App/Usr/dataprocess.o \
 ./App/Usr/element.o \
 ./App/Usr/parameter.o 
 
 COMPILED_SRCS += \
+./App/Usr/attitude.src \
 ./App/Usr/control.src \
 ./App/Usr/dataprocess.src \
 ./App/Usr/element.src \
 ./App/Usr/parameter.src 
 
 C_DEPS += \
+./App/Usr/attitude.d \
 ./App/Usr/control.d \
 ./App/Usr/dataprocess.d \
 ./App/Usr/element.d \

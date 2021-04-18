@@ -106,23 +106,29 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-    data_t *data = &Data[data_pointer];
+    //data_t *data = &Data[data_pointer];
 
-    NNCU_Test();
+    //NNCU_Test();
+
     //NN_Test();
 
+    data_t *data = &Data[data_pointer];
+
+    sint16_t angle = (sint16_t)data->Angle;
+
+    SaveParameterSD(data->LADC_Value,data->SADC_Value,&angle);
 
     while(1)
     {
-//        GLED.Toggle(GLED.Self);
-//
+        GLED.Toggle(GLED.Self);
+
 //        Console.WriteLine("M_PID:%.6f,%.6f,%.6f",data->TSpeed,data->ASpeed,data->MPwmValue * 1.0);
 //
 //        os.time.delay(0.02,s);
 
-        //Core0_CheckStatus();
+        Core0_CheckStatus();
 
-        //os.time.delay(1.0,s);
+        os.time.delay(1.0,s);
     }
 }
 
@@ -135,14 +141,14 @@ void Core1_Main()
 
     while(1)
     {
-//        os.task.UiUpdate(&UIData,sizeof(UIData));
-//
-//        Core1_CheckStatus();
+        os.task.UiUpdate(&UIData,sizeof(UIData));
+
+        Core1_CheckStatus();
     }
 }
 
 /*
- * @Brief:CPU2 Main Func 暂时不用 可能会供电不足
+ * @Brief:CPU2 Main Func
  *  This Core is for Debug.
  * */
 void Core2_Main()
@@ -155,18 +161,18 @@ void Core2_Main()
 
     while(1)
     {
-//        times++;
-//
-//        if(!(times% 50))
-//        {
-//            BLED.Toggle(BLED.Self);
-//            Core2_CheckStatus();
-//        }
-//
-//        os.task.KeyScan(NULL,0);
-//        os.task.SoftTimerUpdate(NULL,0);
-//        os.task.DebugConsole(NULL,0);
-//
-//        os.time.delay(0.02,s);
+        times++;
+
+        if(!(times% 50))
+        {
+            BLED.Toggle(BLED.Self);
+            Core2_CheckStatus();
+        }
+
+        os.task.KeyScan(NULL,0);
+        os.task.SoftTimerUpdate(NULL,0);
+        os.task.DebugConsole(NULL,0);
+
+        os.time.delay(0.02,s);
     }
 }

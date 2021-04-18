@@ -15,7 +15,7 @@ int core1_main (void)
 
     // 等待CPU0 初始化完成
     IfxCpu_emitEvent(&g_cpuSyncEvent);
-    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFF);
+    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFFFFFF);
 
     IfxCpu_enableInterrupts();
 

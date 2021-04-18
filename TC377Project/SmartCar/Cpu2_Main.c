@@ -13,7 +13,7 @@ void core2_main(void)
     Core2_SoftWareInit();
 
     IfxCpu_emitEvent(&g_cpuSyncEvent);
-    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFF);
+    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFFFFFF);
     enableInterrupts();
 
 #if defined(Debug)

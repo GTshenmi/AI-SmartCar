@@ -17,11 +17,40 @@ void BeepOffTimerCallBack(void *argc,unsigned short argv)
     BEEP.OFF(BEEP.Self);
 }
 
+uint16_t line = 0;
+
 void Core0_HardWareInit()
 {
+    uint8_t res = 0;
+
     data_pointer = CarMode;
 
+    /*Init Debug Console.*/
+
+    Console.Init();
+
+    /*Init User Interface.*/
+
+    UIParameterInit();
+
+    UI_Init();
+
+
+    /*Init LED And BEEP.*/
+
+    Screen.WriteXLine(Screen.Self,line,"Init LED...........");
+    GLED.Init(GLED.Self);
+    BLED.Init(BLED.Self);
+
+    Screen.WriteXLine(Screen.Self,line,"Init LED...........OK");
+
+    Screen.WriteXLine(Screen.Self,line+=2,"Init BEEP..........");
+    BEEP.Init(BEEP.Self);
+    Screen.WriteXLine(Screen.Self,line,"Init BEEP..........OK");
+
     /*Init Motor.*/
+    Screen.WriteXLine(Screen.Self,line+=2,"Init Motor.........");
+
     Motor.Init(Motor.Self);
     Motor.Connect(Motor.Self,MotorCtrlStrategy,&Data[data_pointer],sizeof(data_t));
 
@@ -29,7 +58,12 @@ void Core0_HardWareInit()
 
     Motor.Start(Motor.Self);
 
+    Screen.WriteXLine(Screen.Self,line,"Init Motor.........OK");
+
     /*Init Servo.*/
+
+    Screen.WriteXLine(Screen.Self,line+=2,"Init Servo.........");
+
     Servo.Init(Servo.Self);
     Servo.Connect(Servo.Self,ServoCtrlStrategy,&Data[data_pointer],sizeof(data_t));
     Servo.SetAngleLimit(Servo.Self,200.0,-200.0);
@@ -38,7 +72,12 @@ void Core0_HardWareInit()
     Servo.SetAngle(Servo.Self,0);
     Servo.Update(Servo.Self);
 
+    Screen.WriteXLine(Screen.Self,line,"Init Servo.........OK");
+
     /*Init Sensor.*/
+
+    Screen.WriteXLine(Screen.Self,line+=2,"Init ESensor.......");
+
     for(int i = 0;i<CData.MaxLADCDeviceNum;i++)
     {
         LESensor[i].Init(LESensor[i].Self);
@@ -50,21 +89,20 @@ void Core0_HardWareInit()
         SESensor[i].EnableFilter(SESensor[i].Self,true);
     }
 
-    /*Init LED And BEEP.*/
-    GLED.Init(GLED.Self);
-    BLED.Init(BLED.Self);
+    Screen.WriteXLine(Screen.Self,line,"Init ESensor.......OK");
 
-    BEEP.Init(BEEP.Self);
+    /*Init SD Card And File System.*/
+    Screen.WriteXLine(Screen.Self,line+=2,"Init File Sys....");
 
-    /*Init Debug Console.*/
+    res = SD.init();
 
-    Console.Init();
-
-    /*Init User Interface.*/
-
-    UIParameterInit();
-
-    UI_Init();
+    if(res)
+    {
+        Screen.WriteXLine(Screen.Self,line++,"Init File Sys....Fail");
+        Screen.WriteXLine(Screen.Self,line,"Error Code : %u",res);
+    }
+    else
+        Screen.WriteXLine(Screen.Self,line,"Init File Sys......OK");
 
     /* System Init Finished,BEEP ON */
     BEEP.ON(BEEP.Self);
@@ -85,18 +123,24 @@ void Core0_SoftWareInit()
     /*Init PID Controller.*/
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
-
-    /*Init Data Save System.*/
-    DataSaveSysInit("1.xls","1.txt");
-
     /*Init Debug System.*/
-    ANO.Init();
 
     /*Init NerualNetWork.*/
     NeuralNetworkInit(NULL);
 
     /*Init Parameter.*/
     ParameterInit(&Data[data_pointer]);
+
+    Screen.WriteXLine(Screen.Self,line+=2,"System Init Finished.");
+
+    os.time.delay(2.0,s);
+
+    Screen.Clear(Screen.Self,WHITE);
+
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2),"  ---System Start---  ");
+
+    os.time.delay(2.0,s);
+    Screen.Clear(Screen.Self,WHITE);
 
 #if defined(Debug)
     Console.WriteLine("SoftWare System Init Finished.");

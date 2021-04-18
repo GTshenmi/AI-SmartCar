@@ -1,6 +1,6 @@
 #include <sd.h>
 
-#include "devices_config.h"
+//#include "devices_config.h"
 
 uint8_t  SD_Type=0;//SD卡的类型
 uint8_t SD_WaitReady(void);                         //等待SD卡准备

@@ -28,29 +28,6 @@ typedef enum
 
 typedef struct servo_ctrl
 {
-/*
- *
- * How To Use
- * 1. Let UsrData Point to You Own Data Struct used for Close Loop Ctrl.if not have Data Struct,Let Servo->UsrData = NULL;
- *    and do not use it in CallBack Function.
- *    For Example,susr_t SUsr(global); Servo.UsrData = (void *)SUsr;
- * 2. Write CallBack Function:(not necessary,it has default callback function) ReadData CtrlStrategy,DataProcess,Protect,GetAngle;
- *    Do Not Write and Use Those Function if MPU6050 or other Angle Sensor Not Exist.
- *    For Example:
- *     uint16_t MyCtrlStrategy(struct servo_ctrl *self,sint16_t target_angle,sint16_t actual_angle,void *usr)
- *     {
- *          uint32_t PwmValue = 0;
- *          susr_t susr = (susr_t *)usr;
- *          ...
- *          ...
- *          return PwmValue;
- *     }
- * 3. Servo.Init(Servo.Self);
- * 4. Call Servo.GetAngle(Servo.Self) in n-ms Interrupt if step 2 if Done.
- * 5. Servo.Start(Servo.Self);
- * 6. Finish.
- *
- * */
     private
 
         void *Pwmn;

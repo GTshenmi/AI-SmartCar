@@ -40,7 +40,7 @@ int core0_main (void)
 #endif
 
     IfxCpu_emitEvent(&g_cpuSyncEvent);
-    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFF);
+    IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFFFFFF);
 
     // ¿ªÆôCPU×ÜÖÐ¶Ï
     IfxCpu_enableInterrupts();
