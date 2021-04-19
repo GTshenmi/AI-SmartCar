@@ -82,3 +82,27 @@ float ConstrainFloat(float value,float min,float max)
 
     return value;
 }
+
+double Sigmoid(double input)
+{
+    return 1.0/(1.0 + exp(-input));
+}
+
+double Tanh(double input)
+{
+    return (exp(input) - exp(-input))/(exp(input) + exp(-input));
+}
+
+double Rule(double input)
+{
+    return max(0,input);
+}
+
+double Rule8(double input)
+{
+    double res = max(0,input);
+
+    res = ConstrainFloat(res,0.0,8.0);
+
+    return res;
+}

@@ -116,25 +116,26 @@ uint FileSys_Read(FIL *fp,sint8_t *buf,uint n)
 
 uint FileSys_FastWrite (sint8_t *path, sint8_t *str)
 {
-    FIL fp;
+    static _Bool firstOpen = 0;
+    static FIL fp;
 
-    uint8_t res = f_open(&fp, path, FA_READ | FA_WRITE | FA_CREATE_ALWAYS); //...
-    if(res)
-        return 0;
+    if(!firstOpen){
+        uint8_t res = f_open(&fp,path,FA_WRITE | FA_CREATE_NEW);
+        if(res)
+            res = f_open(&fp,path,FA_WRITE);
+        if(res)
+            return 0;
+    }
 
-    sint8_t *p = str;
-    uint slen = 0;
+    if(!firstOpen)
+        f_lseek(&fp,fp.fsize);
 
-    while (*p++)
-        slen++;
+    uint result = f_puts(str,&fp);
 
-    uint wlen = 0;
+    f_sync(&fp);
 
-    f_write(&fp, str, slen, &wlen);
-
-    f_close(&fp);
-
-    return wlen;
+    firstOpen = 1;
+    return result;
 }
 
 uint FileSys_FastRead(sint8_t *path,sint8_t *buf,uint n)

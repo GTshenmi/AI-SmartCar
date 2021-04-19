@@ -30,26 +30,22 @@ double _getWeight(double* arr,int r,int rNum,int c)
 
 double SigmoidActiveFunc(double input)
 {
-    return 1/(1 + exp(-input));
+    return Sigmoid(input);
 }
 
 double TanhActiveFunc(double input)
 {
-    return (exp(input) - exp(-input))/(exp(input) + exp(-input));
+    return Tanh(input);
 }
 
 double ReluActiveFunc(double input)
 {
-    return max(0,input);
+    return Rule(input);
 }
 
 double ReluActiveFuncLimit8(double input)
 {
-    double res = max(0,input);
-
-    res = ConstrainFloat(res,0.0,8.0);
-
-    return res;
+    return Rule8(input);
 }
 
 /*
@@ -102,7 +98,6 @@ void *NNForWardReasoning(NNLayer_t* model,void* input,uint32_t layer_num)
     void* RunModel(const void *in_buf);
 
     return RunModel(input);
-
 
 #else
     int _indexW,_indexX,_indexLayer;

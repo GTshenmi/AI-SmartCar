@@ -10,6 +10,142 @@
 #include <app.h>
 #include "include.h"
 
+void SmartCarSysStateUpdate(void *data);
+void Core0_CheckStatus();
+void Core1_CheckStatus();
+void Core2_CheckStatus();
+
+void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc);
+
+void SmartCarSysDataReport(void *data)
+{
+    data_t *pdata = (data_t *)data;
+
+    //Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
+}
+
+
+/*
+ * @Brief:CPU0 Main Func
+ *  This Core is for Control and Data Process.
+ * */
+void Core0_Main()
+{
+    TIMx.Init(&TIM_Resources[1].TIMN);
+    TIMx.Init(&TIM_Resources[2].TIMN);
+    TIMx.Init(&TIM_Resources[3].TIMN);
+
+    //NNCU_Test();
+
+    //NN_Test();
+
+    data_t *data = &Data[data_pointer];
+
+    sint16_t angle = (sint16_t)data->Angle;
+
+    while(1)
+    {
+        GLED.Toggle(GLED.Self);
+
+//        SaveParameterSD(data->LADC_Value,data->SADC_Value,&angle);
+
+        Core0_CheckStatus();
+
+        os.time.delay(1.0,s);
+    }
+}
+
+/*
+ * @Brief:CPU1 Main Func
+ *  This Core is for Nerual Network.
+ * */
+void Core1_Main()
+{
+    while(1)
+    {
+        os.task.UiUpdate(&UIData,sizeof(UIData));
+
+        Core1_CheckStatus();
+    }
+}
+
+/*
+ * @Brief:CPU2 Main Func
+ *  This Core is for Debug.
+ * */
+void Core2_Main()
+{
+    BEEP.ON(BEEP.Self);
+
+    BEEP.OFF(BEEP.Self);
+
+    uint32_t times = 0;
+
+    data_t *pdata = &Data[data_pointer];
+
+    while(1)
+    {
+        times++;
+
+        if(!(times% 50))
+        {
+            BLED.Toggle(BLED.Self);
+            Core2_CheckStatus();
+        }
+
+        os.task.KeyScan(NULL,0);
+        os.task.SoftTimerUpdate(NULL,0);
+        os.task.DebugConsole(NULL,0);
+
+        SmartCarSysDataReport(pdata);
+        SmartCarSysStateUpdate(pdata);
+
+        os.time.delay(0.02,s);
+    }
+}
+
+
+
+void SmartCarSysStateUpdate(void *data)
+{
+    data_t *pdata = (data_t *)data;
+
+    if(pdata->CarState == true)
+    {
+        Motor.Start(Motor.Self);
+        Servo.Start(Servo.Self);
+    }
+    else
+    {
+        Motor.Stop(Motor.Self);
+        Servo.Stop(Servo.Self);
+    }
+
+    if(pdata->ReportMotorData)
+    {
+
+    }
+
+    if(pdata->ReportSensorData)
+    {
+
+    }
+
+    if(pdata->ReportServoData)
+    {
+
+    }
+}
+
+void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
+{
+    for(int i = 0 ; i < 6 ; i++)
+    {
+        if(self == KEY[i].Self)
+            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
+    }
+}
+
 void Core0_CheckStatus()
 {
     static uint times = 0;
@@ -86,93 +222,4 @@ void Core2_CheckStatus()
 #if defined(Debug)
     Console.WriteLine("Core2 Running...");
 #endif
-}
-void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
-{
-    for(int i = 0 ; i < 6 ; i++)
-    {
-        if(self == KEY[i].Self)
-            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
-    }
-}
-
-/*
- * @Brief:CPU0 Main Func
- *  This Core is for Control and Data Process.
- * */
-void Core0_Main()
-{
-    TIMx.Init(&TIM_Resources[1].TIMN);
-    TIMx.Init(&TIM_Resources[2].TIMN);
-    TIMx.Init(&TIM_Resources[3].TIMN);
-
-    //data_t *data = &Data[data_pointer];
-
-    //NNCU_Test();
-
-    //NN_Test();
-
-    data_t *data = &Data[data_pointer];
-
-    sint16_t angle = (sint16_t)data->Angle;
-
-    SaveParameterSD(data->LADC_Value,data->SADC_Value,&angle);
-
-    while(1)
-    {
-        GLED.Toggle(GLED.Self);
-
-//        Console.WriteLine("M_PID:%.6f,%.6f,%.6f",data->TSpeed,data->ASpeed,data->MPwmValue * 1.0);
-//
-//        os.time.delay(0.02,s);
-
-        Core0_CheckStatus();
-
-        os.time.delay(1.0,s);
-    }
-}
-
-/*
- * @Brief:CPU1 Main Func
- *  This Core is for Nerual Network.
- * */
-void Core1_Main()
-{
-
-    while(1)
-    {
-        os.task.UiUpdate(&UIData,sizeof(UIData));
-
-        Core1_CheckStatus();
-    }
-}
-
-/*
- * @Brief:CPU2 Main Func
- *  This Core is for Debug.
- * */
-void Core2_Main()
-{
-    BEEP.ON(BEEP.Self);
-
-    BEEP.OFF(BEEP.Self);
-
-    uint32_t times = 0;
-
-    while(1)
-    {
-        times++;
-
-        if(!(times% 50))
-        {
-            BLED.Toggle(BLED.Self);
-            Core2_CheckStatus();
-        }
-
-        os.task.KeyScan(NULL,0);
-        os.task.SoftTimerUpdate(NULL,0);
-        os.task.DebugConsole(NULL,0);
-
-        os.time.delay(0.02,s);
-    }
 }

@@ -21,7 +21,7 @@ uint16_t line = 0;
 
 void Core0_HardWareInit()
 {
-    uint8_t res = 0;
+    uint8_t res = 1;
 
     data_pointer = CarMode;
 
@@ -56,8 +56,6 @@ void Core0_HardWareInit()
 
     Motor.SetSpeedLimit(Motor.Self,250,-250);
 
-    Motor.Start(Motor.Self);
-
     Screen.WriteXLine(Screen.Self,line,"Init Motor.........OK");
 
     /*Init Servo.*/
@@ -71,6 +69,7 @@ void Core0_HardWareInit()
     Servo.Start(Servo.Self);
     Servo.SetAngle(Servo.Self,0);
     Servo.Update(Servo.Self);
+    Servo.Stop(Servo.Self);
 
     Screen.WriteXLine(Screen.Self,line,"Init Servo.........OK");
 
@@ -94,7 +93,8 @@ void Core0_HardWareInit()
     /*Init SD Card And File System.*/
     Screen.WriteXLine(Screen.Self,line+=2,"Init File Sys....");
 
-    res = SD.init();
+    if(DIPSwitch.Read(DIPSwitch.Self) == 0x01)
+        res = SD.init();
 
     if(res)
     {
