@@ -11,11 +11,14 @@
 #define PM 2.0
 #define PL 3.0
 
-extern float fuzzyRuleKp[7][7];
-extern float fuzzyRuleKi[7][7];
-extern float fuzzyRuleKd[7][7];
+typedef struct
+{
+    float e[2];
+    float ec;
+    float U;
 
-pid_ctrl_t fuzzy(float e,float ec);
+
+}fuzzy_ctrl_t;
 
 
 #endif
