@@ -204,6 +204,10 @@ dataprocess.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 dataprocess.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+dataprocess.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+dataprocess.o :	../OS/os.h
+../OS/os.h :
 dataprocess.o :	../App/include.h
 ../App/include.h :
 dataprocess.o :	../OS/os.h

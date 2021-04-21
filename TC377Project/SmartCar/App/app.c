@@ -11,9 +11,9 @@
 #include "include.h"
 
 void SmartCarSysStateUpdate(void *data);
-void Core0_CheckStatus();
-void Core1_CheckStatus();
-void Core2_CheckStatus();
+void Core0_CheckStatus(void);
+void Core1_CheckStatus(void);
+void Core2_CheckStatus(void);
 
 void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc);
 
@@ -21,7 +21,7 @@ void SmartCarSysDataReport(void *data)
 {
     data_t *pdata = (data_t *)data;
 
-    //Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
+    Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
 }
 
 
@@ -39,9 +39,9 @@ void Core0_Main()
 
     //NN_Test();
 
-    data_t *data = &Data[data_pointer];
+    //data_t *data = &Data[data_pointer];
 
-    sint16_t angle = (sint16_t)data->Angle;
+    //sint16_t angle = (sint16_t)data->Angle;
 
     while(1)
     {

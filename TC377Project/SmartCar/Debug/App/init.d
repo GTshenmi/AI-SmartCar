@@ -208,6 +208,10 @@ init.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 init.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+init.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+init.o :	../OS/os.h
+../OS/os.h :
 init.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 init.o :	../App/Usr/parameter.h

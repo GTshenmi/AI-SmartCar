@@ -8,6 +8,7 @@ C_SRCS += \
 ../App/Usr/control.c \
 ../App/Usr/dataprocess.c \
 ../App/Usr/element.c \
+../App/Usr/fuzzycontrol.c \
 ../App/Usr/parameter.c 
 
 OBJS += \
@@ -15,6 +16,7 @@ OBJS += \
 ./App/Usr/control.o \
 ./App/Usr/dataprocess.o \
 ./App/Usr/element.o \
+./App/Usr/fuzzycontrol.o \
 ./App/Usr/parameter.o 
 
 COMPILED_SRCS += \
@@ -22,6 +24,7 @@ COMPILED_SRCS += \
 ./App/Usr/control.src \
 ./App/Usr/dataprocess.src \
 ./App/Usr/element.src \
+./App/Usr/fuzzycontrol.src \
 ./App/Usr/parameter.src 
 
 C_DEPS += \
@@ -29,6 +32,7 @@ C_DEPS += \
 ./App/Usr/control.d \
 ./App/Usr/dataprocess.d \
 ./App/Usr/element.d \
+./App/Usr/fuzzycontrol.d \
 ./App/Usr/parameter.d 
 
 

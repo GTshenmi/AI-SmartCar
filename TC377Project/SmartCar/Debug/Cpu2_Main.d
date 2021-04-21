@@ -206,6 +206,10 @@ Cpu2_Main.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 Cpu2_Main.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+Cpu2_Main.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+Cpu2_Main.o :	../OS/os.h
+../OS/os.h :
 Cpu2_Main.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 Cpu2_Main.o :	../App/Usr/parameter.h

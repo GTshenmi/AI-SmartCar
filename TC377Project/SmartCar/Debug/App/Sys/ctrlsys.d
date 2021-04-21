@@ -206,6 +206,10 @@ ctrlsys.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 ctrlsys.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+ctrlsys.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+ctrlsys.o :	../OS/os.h
+../OS/os.h :
 ctrlsys.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 ctrlsys.o :	../App/Usr/parameter.h

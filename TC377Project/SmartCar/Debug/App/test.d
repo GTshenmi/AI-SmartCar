@@ -206,6 +206,10 @@ test.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 test.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+test.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+test.o :	../OS/os.h
+../OS/os.h :
 test.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 test.o :	../App/Usr/parameter.h

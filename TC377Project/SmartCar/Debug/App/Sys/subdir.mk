@@ -6,6 +6,7 @@
 C_SRCS += \
 ../App/Sys/ctrlsys.c \
 ../App/Sys/filter.c \
+../App/Sys/fuzzy_ctrl.c \
 ../App/Sys/kalman_filter.c \
 ../App/Sys/matrix.c \
 ../App/Sys/pid_ctrl.c \
@@ -15,6 +16,7 @@ C_SRCS += \
 OBJS += \
 ./App/Sys/ctrlsys.o \
 ./App/Sys/filter.o \
+./App/Sys/fuzzy_ctrl.o \
 ./App/Sys/kalman_filter.o \
 ./App/Sys/matrix.o \
 ./App/Sys/pid_ctrl.o \
@@ -24,6 +26,7 @@ OBJS += \
 COMPILED_SRCS += \
 ./App/Sys/ctrlsys.src \
 ./App/Sys/filter.src \
+./App/Sys/fuzzy_ctrl.src \
 ./App/Sys/kalman_filter.src \
 ./App/Sys/matrix.src \
 ./App/Sys/pid_ctrl.src \
@@ -33,6 +36,7 @@ COMPILED_SRCS += \
 C_DEPS += \
 ./App/Sys/ctrlsys.d \
 ./App/Sys/filter.d \
+./App/Sys/fuzzy_ctrl.d \
 ./App/Sys/kalman_filter.d \
 ./App/Sys/matrix.d \
 ./App/Sys/pid_ctrl.d \

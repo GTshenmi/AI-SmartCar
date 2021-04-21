@@ -208,6 +208,10 @@ app.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 app.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+app.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+app.o :	../OS/os.h
+../OS/os.h :
 app.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 app.o :	../App/Usr/parameter.h

@@ -210,6 +210,10 @@ foo.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 foo.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+foo.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+foo.o :	../OS/os.h
+../OS/os.h :
 foo.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 foo.o :	../App/Usr/parameter.h

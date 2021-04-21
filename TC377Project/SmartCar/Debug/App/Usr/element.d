@@ -204,6 +204,10 @@ element.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 element.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+element.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+element.o :	../OS/os.h
+../OS/os.h :
 element.o :	../App/include.h
 ../App/include.h :
 element.o :	../OS/os.h

@@ -206,6 +206,10 @@ interrupt.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 interrupt.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+interrupt.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+interrupt.o :	../OS/os.h
+../OS/os.h :
 interrupt.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 interrupt.o :	../App/Usr/parameter.h

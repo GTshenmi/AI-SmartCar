@@ -204,6 +204,10 @@ control.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 control.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+control.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+control.o :	../OS/os.h
+../OS/os.h :
 control.o :	../App/include.h
 ../App/include.h :
 control.o :	../OS/os.h

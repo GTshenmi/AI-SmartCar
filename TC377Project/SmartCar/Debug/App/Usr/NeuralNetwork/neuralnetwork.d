@@ -206,6 +206,10 @@ neuralnetwork.o :	../App/Sys/matrix.h
 ../App/Sys/matrix.h :
 neuralnetwork.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+neuralnetwork.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+neuralnetwork.o :	../OS/os.h
+../OS/os.h :
 neuralnetwork.o :	../App/Usr/NeuralNetwork/nn_parameter.h
 ../App/Usr/NeuralNetwork/nn_parameter.h :
 neuralnetwork.o :	../App/Usr/NeuralNetwork/tricore_nn.h
