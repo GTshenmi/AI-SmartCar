@@ -12,7 +12,6 @@
 /*
  * @Brief:  电机闭环控制函数(速度环/电流环)
  * @output: PwmValue：[0:10000]
- * @Attention:ALL模式
  * */
 sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actual_speed,void *argv,uint16_t argc)
 {
@@ -54,7 +53,6 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 /*
  * @Brief:  舵机闭环控制函数(角度环)
  * @output: Angle：[-90(左):90(右)]
- * @Attention:ALL模式
  * */
 uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc)
 {

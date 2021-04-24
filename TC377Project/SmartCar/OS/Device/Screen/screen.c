@@ -27,6 +27,8 @@ void Screen_SetEnable(struct screen *self,bool enable)
 {
     if(self->__SetEnable__ != NULL)
     {
+        if(enable == false)
+            self->Clear(self,WHITE);
         self->__SetEnable__(enable);
     }
 }

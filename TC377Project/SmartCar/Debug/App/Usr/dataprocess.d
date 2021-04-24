@@ -112,6 +112,8 @@ dataprocess.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 dataprocess.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+dataprocess.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 dataprocess.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 dataprocess.o :	../Driver/UsrDriver/Camera/camera.h
@@ -246,6 +248,8 @@ dataprocess.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
 ../App/Usr/NeuralNetwork/tricore_nn_table.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+dataprocess.o :	../App/Usr/attitude.h
+../App/Usr/attitude.h :
 dataprocess.o :	../App/foo.h
 ../App/foo.h :
 dataprocess.o :	../OS/os.h

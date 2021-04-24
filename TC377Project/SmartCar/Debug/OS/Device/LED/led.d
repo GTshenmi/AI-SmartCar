@@ -108,6 +108,8 @@ led.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 led.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+led.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 led.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 led.o :	../Driver/UsrDriver/Camera/camera.h

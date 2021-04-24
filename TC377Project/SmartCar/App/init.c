@@ -17,11 +17,13 @@ void BeepOffTimerCallBack(void *argc,unsigned short argv)
     BEEP.OFF(BEEP.Self);
 }
 
+
 uint16_t line = 0;
 
 void Core0_HardWareInit()
 {
-    uint8_t res = 1;
+    sint8_t res = -1;
+    uint32_t bits = 0;
 
     data_pointer = CarMode;
 
@@ -35,10 +37,12 @@ void Core0_HardWareInit()
 
     UI_Init();
 
+    bits = DIPSwitch.Read(DIPSwitch.Self);
 
     /*Init LED And BEEP.*/
 
     Screen.WriteXLine(Screen.Self,line,"Init LED...........");
+
     GLED.Init(GLED.Self);
     BLED.Init(BLED.Self);
 
@@ -93,21 +97,34 @@ void Core0_HardWareInit()
     /*Init SD Card And File System.*/
     Screen.WriteXLine(Screen.Self,line+=2,"Init File Sys....");
 
-    if(DIPSwitch.Read(DIPSwitch.Self) == 0x01)
-        res = SD.init();
+    if(bits & 0x01)
+        res = (sint8_t)SD.init();
 
     if(res)
     {
         Screen.WriteXLine(Screen.Self,line++,"Init File Sys....Fail");
-        Screen.WriteXLine(Screen.Self,line,"Error Code : %u",res);
+        Screen.WriteXLine(Screen.Self,line,"Error Code : %d",res);
     }
     else
         Screen.WriteXLine(Screen.Self,line,"Init File Sys......OK");
 
-    /* System Init Finished,BEEP ON */
-    BEEP.ON(BEEP.Self);
-    /*Set BEEP OFF 1 sec later*/
-    os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
+    /*Init Gyro*/
+
+    res = -1;
+
+    Screen.WriteXLine(Screen.Self,line+=2,"Init Gyro..........");
+
+    if(bits & 0x02)
+        res = ICM20602_Init();
+
+    if(res)
+    {
+        Screen.WriteXLine(Screen.Self,line++,"Init Gyro........Fail");
+        Screen.WriteXLine(Screen.Self,line,"Error Code : %d",res);
+    }
+    else
+        Screen.WriteXLine(Screen.Self,line,"Init Gyro..........OK");
+
 
 #if defined(Debug)
     Console.WriteLine("HardWare System Init Finished.");
@@ -141,6 +158,11 @@ void Core0_SoftWareInit()
 
     os.time.delay(2.0,s);
     Screen.Clear(Screen.Self,WHITE);
+
+    /* System Init Finished,BEEP ON */
+    BEEP.ON(BEEP.Self);
+    /*Set BEEP OFF 1 sec later*/
+    os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
 
 #if defined(Debug)
     Console.WriteLine("SoftWare System Init Finished.");

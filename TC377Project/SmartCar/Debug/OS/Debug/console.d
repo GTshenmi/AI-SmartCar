@@ -146,6 +146,8 @@ console.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 console.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+console.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 console.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 console.o :	../Driver/UsrDriver/Camera/camera.h

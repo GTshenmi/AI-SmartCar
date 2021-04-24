@@ -9,6 +9,7 @@
  */
 #include <app.h>
 #include "include.h"
+#include "fuzzycontrol.h"
 
 void SmartCarSysStateUpdate(void *data);
 void Core0_CheckStatus(void);
@@ -19,9 +20,9 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc);
 
 void SmartCarSysDataReport(void *data)
 {
-    data_t *pdata = (data_t *)data;
+    //data_t *pdata = (data_t *)data;
 
-    Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
+    //Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
 }
 
 
@@ -35,9 +36,12 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-    //NNCU_Test();
+    extern attitude_t attitude;
+    extern float dt;
 
-    //NN_Test();
+    //NNCU_Test();
+    
+    //NN_Test();0
 
     //data_t *data = &Data[data_pointer];
 
@@ -64,7 +68,7 @@ void Core1_Main()
     while(1)
     {
         os.task.UiUpdate(&UIData,sizeof(UIData));
-
+        
         Core1_CheckStatus();
     }
 }
@@ -110,6 +114,8 @@ void SmartCarSysStateUpdate(void *data)
 {
     data_t *pdata = (data_t *)data;
 
+    uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
+
     if(pdata->CarState == true)
     {
         Motor.Start(Motor.Self);
@@ -120,6 +126,12 @@ void SmartCarSysStateUpdate(void *data)
         Motor.Stop(Motor.Self);
         Servo.Stop(Servo.Self);
     }
+
+    if(bits & 0x04)
+        Screen.SetEnable(Screen.Self,true);
+    else
+        Screen.SetEnable(Screen.Self,false);
+    
 
     if(pdata->ReportMotorData)
     {

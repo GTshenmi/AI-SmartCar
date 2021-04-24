@@ -9,51 +9,52 @@
 #include <element.h>
 #include "include.h"
 
-static void SpecialElementCorrection_AIMode(void *data);
-static void SpecialElementCorrection_OtherMode(void *data);
-static void SpecialElementCorrection_DebugMode(void *data);
-static void CycleGet(void *data);
+void LossLine_Handler(data_t *data);
+void Cycle_Handler(data_t *data);
+void Cross_Handler(data_t *data);
+void Normal_Tracking(data_t *data);
+
 /*
  * @Brief:特殊元素处理接口函数
  * */
 void SpecialElementCorrection(void *data)
 {
-    data_t * usr_data = (data_t *) data;
+    //data_t * usr_data = (data_t *) data;
 
-    switch(usr_data->CarMode)
+    if(0)
     {
-        case AI_Mode:
-            SpecialElementCorrection_AIMode(data);
-            break;
-        case AutoBoot_Mode:
-            SpecialElementCorrection_OtherMode(data);
-            break;
-        case ManualBoot_Mode:
-            SpecialElementCorrection_OtherMode(data);
-            break;
-        case DebugMode:
-            SpecialElementCorrection_DebugMode(data);
-            break;
-        default:
-            break;
+        Cycle_Handler(data);
+    }
+    else if(0)
+    {
+        LossLine_Handler(data);
+    }
+    else if(0)
+    {
+        Cross_Handler(data);
+    }
+    else
+    {
+        Normal_Tracking(data);
     }
 }
 
-void SpecialElementCorrection_AIMode(void *data)
+void Normal_Tracking(data_t *data)
+{
+    
+}
+
+void Cross_Handler(data_t *data)
 {
 
 }
 
-void SpecialElementCorrection_OtherMode(void *data)
-{
-    CycleGet(data);
-}
-void CycleGet(void *data)
+void Cycle_Handler(data_t *data)
 {
 
 }
-void SpecialElementCorrection_DebugMode(void *data)
-{
-    SpecialElementCorrection_OtherMode(data);
-}
 
+void LossLine_Handler(data_t *data)
+{
+
+}

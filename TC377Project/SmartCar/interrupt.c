@@ -6,6 +6,10 @@
  */
 #include "include.h"
 
+attitude_t attitude;
+axis_t acc,gyro;
+float dt = 0.0;
+
 void STM0_CH1_IRQHandler(void) /*Motor Control.*/
 {
     /* 开启CPU中断  否则中断不可嵌套 */
@@ -30,6 +34,16 @@ void STM0_CH1_IRQHandler(void) /*Motor Control.*/
     Motor.SetSpeed(Motor.Self,formatedSpeed);
 
     Motor.Update(Motor.Self);
+
+    // //dt = os.time.getTime(ms);
+
+    // ICM20602_ReadAcc(&acc.x,&acc.y,&acc.z);
+
+    // ICM20602_ReadGyro(&gyro.x,&gyro.y,&gyro.z);
+
+    // //dt = os.time.getTime(ms) - dt;
+
+    // AttitudeUpdate(&acc,&gyro,NULL,&attitude);
 }
 
 void STM1_CH0_IRQHandler(void)  /*Servo Control.*/

@@ -133,7 +133,7 @@ gpio_resource_t GPIO_Resources[25] =
                .Description = "Blue LED"
         },
         [11] = {
-               .GPION = {P00_7, PIN_MODE_OUTPUT,1,false,false},
+               .GPION = {P20_13, PIN_MODE_OUTPUT,1,false,false},
                .Description = "BEEP"
         },
         [12] = {
@@ -186,6 +186,10 @@ gpio_resource_t GPIO_Resources[25] =
         [23] = {
                .GPION = {P11_3, PIN_MODE_OUTPUT,1,false,false},
                .Description = "SD MISO"
+        },
+        [24] = {
+               .GPION = {P22_3, PIN_MODE_OUTPUT,1,false,false},
+               .Description = "ICM CS"
         },
 };
 
@@ -243,7 +247,7 @@ uart_resource_t UART_Resources[2] =
         },
 };
 
-spi_resource_t SPI_Resources[2] =
+spi_resource_t SPI_Resources[3] =
 {
         [0] = {
                .SPIN = {SPI2,QSPI2_CLK_P15_8,QSPI2_MISO_P15_7/*not used*/,QSPI2_MOSI_P15_6,QSPI2_CS_P15_2,2,QSPI,32000000},
@@ -252,6 +256,10 @@ spi_resource_t SPI_Resources[2] =
         [1] = {
                 .SPIN = {SPI1,QSPI1_CLK_P11_6,QSPI1_MISO_P11_3,QSPI1_MOSI_P11_9, QSPI1_CS_P33_5,2,QSPI,300000},
                 .Description = "SD Card SPI",
+        },
+        [2] = {
+                .SPIN = {SPI0,QSPI0_CLK_P20_11,QSPI0_MISO_P20_12,QSPI0_MOSI_P20_14,QSPI0_CS_P20_8,3,QSPI,8000000},
+                .Description = "ICM20602",
         },
 };
 

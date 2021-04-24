@@ -108,6 +108,8 @@ screen.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 screen.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+screen.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 screen.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 screen.o :	../Driver/UsrDriver/Camera/camera.h

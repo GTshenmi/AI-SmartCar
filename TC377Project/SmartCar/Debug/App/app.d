@@ -112,6 +112,8 @@ app.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 app.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+app.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 app.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 app.o :	../Driver/UsrDriver/Camera/camera.h
@@ -246,6 +248,8 @@ app.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
 ../App/Usr/NeuralNetwork/tricore_nn_table.h :
 app.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+app.o :	../App/Usr/attitude.h
+../App/Usr/attitude.h :
 app.o :	../App/foo.h
 ../App/foo.h :
 app.o :	../OS/os.h
@@ -254,3 +258,7 @@ app.o :	../App/init.h
 ../App/init.h :
 app.o :	../App/test.h
 ../App/test.h :
+app.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+app.o :	../App/Sys/sys.h
+../App/Sys/sys.h :

@@ -29,20 +29,21 @@ typedef struct
 {
       uint32_t Cache;        /*没啥用*/
 
+      /*For Motor PID*/
+
       PID_TypeDef M_PID;     /*电机速度的PID控制器*/
+
+      float Actual_Speed; /*实际速度*/
+      float Speed;        /*速度*/
+
+      /*For Servo PID*/
       PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
 
       float _Bias;
       float Bias;            /*实际中线偏差*/
 
-      float Actual_Speed; /*实际速度*/
-
       uint16_t SPwmValue;
-
-      float Speed;        /*速度*/
       float Angle;        /*角度*/
-
-      uint ElementType;  /*赛道元素类型*/
 
       uint16_t LADC_Value[MAX_LESENSOR_NUM]; /*ADC值*/
       uint16_t SADC_Value[MAX_SESENSOR_NUM]; /*ADC值*/
@@ -50,20 +51,24 @@ typedef struct
       float N_LADC[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
       float N_SADC[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
 
+      /*For Element*/    
+      uint ElementType;  /*赛道元素类型*/
+
+      /*State*/
+
       uint AI_State;
 
       uint CarState;
 
       const uint CarMode;
 
+      /*For Debug.*/
+
       uint8_t ReportSensorData;
 
       uint8_t ReportMotorData;
 
       uint8_t ReportServoData;
-
-
-      /*For Debug.*/
 
       float TSpeed;
       float ASpeed;

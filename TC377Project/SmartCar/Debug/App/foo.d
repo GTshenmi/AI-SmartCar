@@ -110,6 +110,8 @@ foo.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 foo.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+foo.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 foo.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 foo.o :	../Driver/UsrDriver/Camera/camera.h
@@ -248,6 +250,8 @@ foo.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
 ../App/Usr/NeuralNetwork/tricore_nn_table.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+foo.o :	../App/Usr/attitude.h
+../App/Usr/attitude.h :
 foo.o :	../App/foo.h
 ../App/foo.h :
 foo.o :	../App/init.h

@@ -114,6 +114,8 @@ neuralnetwork.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 neuralnetwork.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+neuralnetwork.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 neuralnetwork.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 neuralnetwork.o :	../Driver/UsrDriver/Camera/camera.h
@@ -246,6 +248,8 @@ neuralnetwork.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 neuralnetwork.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
+neuralnetwork.o :	../App/Usr/attitude.h
+../App/Usr/attitude.h :
 neuralnetwork.o :	../App/foo.h
 ../App/foo.h :
 neuralnetwork.o :	../OS/os.h

@@ -20,6 +20,7 @@ uint8_t FileSys_Init()
 {
     uint8_t res = 0;
     res = f_mount(&fs[0],"0:",1);
+    
     if(res==0X0D)
     {
         res=f_mkfs("0:",1,4096);

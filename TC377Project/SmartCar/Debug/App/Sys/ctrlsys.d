@@ -112,6 +112,8 @@ ctrlsys.o :	../Driver/SysDriver/sys_driver.h
 ../Driver/SysDriver/sys_driver.h :
 ctrlsys.o :	../Driver/UsrDriver/usr_driver.h
 ../Driver/UsrDriver/usr_driver.h :
+ctrlsys.o :	../Driver/UsrDriver/ICM20602/icm20602.h
+../Driver/UsrDriver/ICM20602/icm20602.h :
 ctrlsys.o :	../Driver/UsrDriver/LCD/lcd_driver.h
 ../Driver/UsrDriver/LCD/lcd_driver.h :
 ctrlsys.o :	../Driver/UsrDriver/Camera/camera.h
@@ -244,6 +246,8 @@ ctrlsys.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
 ../App/Usr/NeuralNetwork/tricore_nn_table.h :
 ctrlsys.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/attitude.h
+../App/Usr/attitude.h :
 ctrlsys.o :	../App/foo.h
 ../App/foo.h :
 ctrlsys.o :	../OS/os.h
