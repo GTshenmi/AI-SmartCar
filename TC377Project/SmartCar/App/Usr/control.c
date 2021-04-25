@@ -58,6 +58,6 @@ uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actu
 {
     //data_t *data =(data_t *) argv;
 
-    return target_angle + self->PwmCentValue * 1.0;
+    return target_angle + self->PwmCentValue;
 }
 

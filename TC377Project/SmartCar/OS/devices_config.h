@@ -33,6 +33,8 @@ extern motor_ctrl_t Motor;
 
 extern screen_t Screen;
 
+extern imu_t IMU;
+
 extern memory_t SDCard;
 extern memory_t EEPROM;
 

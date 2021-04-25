@@ -24,6 +24,7 @@
 #include "dipswitch.h"
 #include "bluetooth.h"
 #include "wirelessserial.h"
+#include "imu.h"
 #include "demo.h"
 #include "devices_config.h"
 

@@ -10,7 +10,7 @@ attitude_t attitude;
 axis_t acc,gyro;
 float dt = 0.0;
 
-void STM0_CH1_IRQHandler(void) /*Motor Control.*/
+void STM0_CH1_IRQHandler(void)
 {
     /* 开启CPU中断  否则中断不可嵌套 */
     IfxCpu_enableInterrupts();
@@ -21,19 +21,7 @@ void STM0_CH1_IRQHandler(void) /*Motor Control.*/
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM0, g_StmCompareConfig[1].comparator, g_StmCompareConfig[1].ticks);
 
-    data_t *data = &Data[data_pointer];
-
-    float formatedSpeed = 0.0;
-
-    data->Speed = 3500.0;
-
-    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
-
-    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
-
-    Motor.SetSpeed(Motor.Self,formatedSpeed);
-
-    Motor.Update(Motor.Self);
+    //BEEP.Toggle(BEEP.Self);
 
     // //dt = os.time.getTime(ms);
 
@@ -46,7 +34,7 @@ void STM0_CH1_IRQHandler(void) /*Motor Control.*/
     // AttitudeUpdate(&acc,&gyro,NULL,&attitude);
 }
 
-void STM1_CH0_IRQHandler(void)  /*Servo Control.*/
+void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 {
     /* 开启CPU中断  否则中断不可嵌套 */
     IfxCpu_enableInterrupts();
@@ -56,39 +44,6 @@ void STM1_CH0_IRQHandler(void)  /*Servo Control.*/
 
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[2].comparator, g_StmCompareConfig[2].ticks);
-
-    data_t *data = &Data[data_pointer];
-
-    if(fabs(data->Bias) >= 20.0)
-        data->S_PID.Kp = 2.0 + data->Bias * data->Bias * 0.00372; //待调
-
-    /*动态PID限幅*/
-    if(data->S_PID.Kp > 7.2)        //待调
-        data->S_PID.Kp = 7.2;
-
-    PID_Ctrl(&data->S_PID,0.0,data->Bias);
-
-    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
-
-    static float angle[5] = {0.0};
-
-    data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
-
-    Servo.SetAngle(Servo.Self,data->Angle);
-
-    Servo.Update(Servo.Self);
-}
-
-void STM1_CH1_IRQHandler(void)          /*Calculate Bias.*/
-{
-    /* 开启CPU中断  否则中断不可嵌套 */
-    IfxCpu_enableInterrupts();
-
-    //清除中断标志
-    IfxStm_clearCompareFlag(&MODULE_STM1, g_StmCompareConfig[3].comparator);
-
-    //开启新的中断配置，开始下次中断
-    IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
 
     data_t *data = &Data[data_pointer];
 
@@ -104,9 +59,43 @@ void STM1_CH1_IRQHandler(void)          /*Calculate Bias.*/
         data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
 
      data->Bias = 100.0 * CalculateDistance(data);
+
 }
 
-void CCU60_CH0_IRQHandler (void)
+void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
+{
+    /* 开启CPU中断  否则中断不可嵌套 */
+    IfxCpu_enableInterrupts();
+
+    //清除中断标志
+    IfxStm_clearCompareFlag(&MODULE_STM1, g_StmCompareConfig[3].comparator);
+
+    //开启新的中断配置，开始下次中断
+    IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
+
+     data_t *data = &Data[data_pointer];
+
+     if(fabs(data->Bias) >= 20.0)
+         data->S_PID.Kp = 2.0 + data->Bias * data->Bias * 0.00372; //待调
+
+     /*动态PID限幅*/
+     if(data->S_PID.Kp > 7.2)        //待调
+         data->S_PID.Kp = 7.2;
+
+     PID_Ctrl(&data->S_PID,0.0,data->Bias);
+
+     static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
+
+     static float angle[5] = {0.0};
+
+     data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
+
+     Servo.SetAngle(Servo.Self,data->Angle);
+
+     Servo.Update(Servo.Self);
+}
+
+void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
 {
     /* 开启CPU中断  否则中断不可嵌套 */
     IfxCpu_enableInterrupts();
@@ -116,6 +105,21 @@ void CCU60_CH0_IRQHandler (void)
 
     /* 用户代码 */
 
+    data_t *data = &Data[data_pointer];
+
+    float formatedSpeed = 0.0;
+
+    data->Speed = 3500.0;
+
+    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
+
+    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+    //Motor.SetPwmValue(Motor.Self,3500);
+
+    Motor.SetSpeed(Motor.Self,formatedSpeed);
+
+    Motor.Update(Motor.Self);
 
 }
 

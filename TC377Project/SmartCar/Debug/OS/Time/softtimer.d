@@ -36,6 +36,8 @@ softtimer.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 softtimer.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+softtimer.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 softtimer.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 softtimer.o :	../OS/devices_config.h

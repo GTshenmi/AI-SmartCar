@@ -154,6 +154,8 @@ Cpu2_Main.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 Cpu2_Main.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+Cpu2_Main.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 Cpu2_Main.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 Cpu2_Main.o :	../OS/devices_config.h
@@ -248,6 +250,8 @@ Cpu2_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 Cpu2_Main.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+Cpu2_Main.o :	../OS/os.h
+../OS/os.h :
 Cpu2_Main.o :	../App/foo.h
 ../App/foo.h :
 Cpu2_Main.o :	../OS/os.h

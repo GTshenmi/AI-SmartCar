@@ -38,6 +38,8 @@ settting_page.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 settting_page.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+settting_page.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 settting_page.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 settting_page.o :	../OS/devices_config.h

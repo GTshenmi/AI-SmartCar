@@ -36,6 +36,8 @@ malloc.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 malloc.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+malloc.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 malloc.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 malloc.o :	../OS/devices_config.h

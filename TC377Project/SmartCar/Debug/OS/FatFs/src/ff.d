@@ -42,6 +42,8 @@ ff.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 ff.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+ff.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 ff.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 ff.o :	../OS/devices_config.h

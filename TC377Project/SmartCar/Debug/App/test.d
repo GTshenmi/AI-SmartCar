@@ -154,6 +154,8 @@ test.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 test.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+test.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 test.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 test.o :	../OS/devices_config.h
@@ -248,6 +250,8 @@ test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 test.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+test.o :	../OS/os.h
+../OS/os.h :
 test.o :	../App/foo.h
 ../App/foo.h :
 test.o :	../OS/os.h

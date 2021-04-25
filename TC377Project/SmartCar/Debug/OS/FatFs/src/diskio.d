@@ -38,6 +38,8 @@ diskio.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 diskio.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+diskio.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 diskio.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 diskio.o :	../OS/devices_config.h

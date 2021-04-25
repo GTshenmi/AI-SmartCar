@@ -158,6 +158,8 @@ neuralnetwork.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 neuralnetwork.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+neuralnetwork.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 neuralnetwork.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 neuralnetwork.o :	../OS/devices_config.h
@@ -250,6 +252,8 @@ neuralnetwork.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 neuralnetwork.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+neuralnetwork.o :	../OS/os.h
+../OS/os.h :
 neuralnetwork.o :	../App/foo.h
 ../App/foo.h :
 neuralnetwork.o :	../OS/os.h

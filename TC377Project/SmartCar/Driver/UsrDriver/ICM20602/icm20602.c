@@ -89,9 +89,9 @@
 //  @since      v1.0
 //  Sample usage:
 //-------------------------------------------------------------------------------------------------------------------
-void icm_spi_w_reg_byte(uint8 cmd, uint8 val)
+void icm_spi_w_reg_byte(uint8_t cmd, uint8_t val)
 {
-    uint8 dat[2];
+    uint8_t dat[2];
     ICM20602CS(0);
 
     dat[0] = cmd | ICM20602_SPI_W;
@@ -109,9 +109,9 @@ void icm_spi_w_reg_byte(uint8 cmd, uint8 val)
 //  @since      v1.0
 //  Sample usage:
 //-------------------------------------------------------------------------------------------------------------------
-void icm_spi_r_reg_byte(uint8 cmd, uint8 *val)
+void icm_spi_r_reg_byte(uint8_t cmd, uint8_t *val)
 {
-    uint8 dat[2];
+    uint8_t dat[2];
     ICM20602CS(0);
 
     dat[0] = cmd | ICM20602_SPI_R;
@@ -132,7 +132,7 @@ void icm_spi_r_reg_byte(uint8 cmd, uint8 *val)
 //  @since      v1.0
 //  Sample usage:
 //-------------------------------------------------------------------------------------------------------------------
-void icm_spi_r_reg_bytes(uint8 * val, uint8 num)
+void icm_spi_r_reg_bytes(uint8_t * val, uint8_t num)
 {
     ICM20602CS(0);
     SPIx.ReadWriteBytes(&SPI_Resources[2].SPIN,val,val,num,SPIx.Time_Infinite);
@@ -150,7 +150,7 @@ void icm_spi_r_reg_bytes(uint8 * val, uint8 num)
 uint8_t icm20602_self3_check(void)
 {
     uint8_t res = 0;
-    uint8 dat=0;
+    uint8_t dat=0;
     uint8_t times = 0xff;
     
     while(0x12 != dat && times--)
@@ -173,7 +173,7 @@ uint8_t icm20602_self3_check(void)
  * */
 
 /*初始化*/
-uint8_t ICM20602_Init()
+uint8_t ICM20602_Init(void *config)
 {
     uint8_t res = 0;
     uint8_t times = 0xff;
@@ -214,21 +214,23 @@ uint8_t ICM20602_Init()
 }
 
 /*读取三轴加速度*/
-void ICM20602_ReadAcc(float *x,float *y,float *z)
+uint8_t ICM20602_ReadAcc(float *x,float *y,float *z)
 {
     struct
     {
-        uint8 reg;
-        uint8 dat[6];
+        uint8_t reg;
+        uint8_t dat[6];
     }buf;
 
     buf.reg =  ICM20602_SPI_R | ICM20602_ACCEL_XOUT_H;
 
     icm_spi_r_reg_bytes(&buf.reg, 7);
 
-    *x = (int16_t)(((uint16)buf.dat[0]<<8 | buf.dat[1])) * 1.0f;
-    *y = (int16_t)(((uint16)buf.dat[2]<<8 | buf.dat[3])) * 1.0f;
-    *z = (int16_t)(((uint16)buf.dat[4]<<8 | buf.dat[5])) * 1.0f;
+    *x = (int16_t)(((uint16_t)buf.dat[0]<<8 | buf.dat[1])) * 1.0f;
+    *y = (int16_t)(((uint16_t)buf.dat[2]<<8 | buf.dat[3])) * 1.0f;
+    *z = (int16_t)(((uint16_t)buf.dat[4]<<8 | buf.dat[5])) * 1.0f;
+
+    return 0;
 
 //    *x = (int16_t)(((uint16)buf.dat[0]<<8 | buf.dat[1])) * 1.0f / 4096.0f;
 //    *y = (int16_t)(((uint16)buf.dat[2]<<8 | buf.dat[3])) * 1.0f / 4096.0f;
@@ -236,12 +238,12 @@ void ICM20602_ReadAcc(float *x,float *y,float *z)
 }
 
 /*读取三轴角度*/
-void ICM20602_ReadGyro(float *x,float *y,float *z)
+uint8_t ICM20602_ReadGyro(float *x,float *y,float *z)
 {
     struct
     {
-        uint8 reg;
-        uint8 dat[6];
+        uint8_t reg;
+        uint8_t dat[6];
     }buf;
 
     buf.reg =  ICM20602_SPI_R  | ICM20602_GYRO_XOUT_H;
@@ -249,9 +251,11 @@ void ICM20602_ReadGyro(float *x,float *y,float *z)
     icm_spi_r_reg_bytes(&buf.reg, 7);
 
 
-    *x = (int16_t)(((uint16)buf.dat[0]<<8 | buf.dat[1])) * 1.0f;
-    *y = (int16_t)(((uint16)buf.dat[2]<<8 | buf.dat[3])) * 1.0f;
-    *z = (int16_t)(((uint16)buf.dat[4]<<8 | buf.dat[5])) * 1.0f;
+    *x = (int16_t)(((uint16_t)buf.dat[0]<<8 | buf.dat[1])) * 1.0f;
+    *y = (int16_t)(((uint16_t)buf.dat[2]<<8 | buf.dat[3])) * 1.0f;
+    *z = (int16_t)(((uint16_t)buf.dat[4]<<8 | buf.dat[5])) * 1.0f;
+
+    return 0;
 
 //    *x = (int16_t)(((uint16)buf.dat[0]<<8 | buf.dat[1])) * 1.0f / 16.4f;
 //    *y = (int16_t)(((uint16)buf.dat[2]<<8 | buf.dat[3])) * 1.0f / 16.4f;

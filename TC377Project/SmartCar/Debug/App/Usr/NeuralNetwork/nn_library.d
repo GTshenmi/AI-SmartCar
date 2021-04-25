@@ -156,6 +156,8 @@ nn_library.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 nn_library.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+nn_library.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 nn_library.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 nn_library.o :	../OS/devices_config.h

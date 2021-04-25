@@ -324,51 +324,51 @@ void MotorTest(struct motor_ctrl *self)
 
 void ServoTest(struct servo_ctrl *self)
 {
-    self->SetAngleLimit(self,90,-90);
-    Screen.WriteXLine(Screen.Self,1,"Starting Test Function.");
-    Screen.Clear(Screen.Self,WHITE);
+//    self->SetAngleLimit(self,90,-90);
+//    Screen.WriteXLine(Screen.Self,1,"Starting Test Function.");
+//    Screen.Clear(Screen.Self,WHITE);
 
     sint16_t t = 0;
     sint16_t angle = 0;
 
-    Screen.WriteXLine(Screen.Self,1,"Wait.");
-    self->SetAngle(self,self->MaxAngle);
-    os.time.delayms(2000);
-
-    Screen.WriteXLine(Screen.Self,1,"Start");
-    self->Start(self);
-    self->SetAngle(self,self->MaxAngle);
-    os.time.delayms(2000);
-
-
-    Screen.WriteXLine(Screen.Self,1,"Stop ");
-    self->Stop(self);
-    self->SetAngle(self,self->MaxAngle);
-    os.time.delayms(2000);
-
-    Screen.WriteXLine(Screen.Self,1,"Start");
-    self->Start(self);
-    self->SetAngle(self,self->MaxAngle);
-    os.time.delayms(2000);
-
-    Screen.WriteXLine(Screen.Self,1,"Sleep");
-    self->Sleep(self);
-    self->SetAngle(self,self->MaxAngle);
-    os.time.delayms(2000);
-
-    Screen.WriteXLine(Screen.Self,1,"Break");
-    self->Break(self);
-    self->SetAngle(self,self->MaxAngle);
-    os.time.delayms(2000);
-
-    Screen.WriteXLine(Screen.Self,1,"Starting Test Angle.");
-    Screen.Clear(Screen.Self,WHITE);
+//    Screen.WriteXLine(Screen.Self,1,"Wait.");
+//    self->SetAngle(self,self->MaxAngle);
+//    os.time.delayms(2000);
+//
+//    Screen.WriteXLine(Screen.Self,1,"Start");
+//    self->Start(self);
+//    self->SetAngle(self,self->MaxAngle);
+//    os.time.delayms(2000);
+//
+//
+//    Screen.WriteXLine(Screen.Self,1,"Stop ");
+//    self->Stop(self);
+//    self->SetAngle(self,self->MaxAngle);
+//    os.time.delayms(2000);
+//
+//    Screen.WriteXLine(Screen.Self,1,"Start");
+//    self->Start(self);
+//    self->SetAngle(self,self->MaxAngle);
+//    os.time.delayms(2000);
+//
+//    Screen.WriteXLine(Screen.Self,1,"Sleep");
+//    self->Sleep(self);
+//    self->SetAngle(self,self->MaxAngle);
+//    os.time.delayms(2000);
+//
+//    Screen.WriteXLine(Screen.Self,1,"Break");
+//    self->Break(self);
+//    self->SetAngle(self,self->MaxAngle);
+//    os.time.delayms(2000);
+//
+//    Screen.WriteXLine(Screen.Self,1,"Starting Test Angle.");
+//    Screen.Clear(Screen.Self,WHITE);
 
     self->Start(self);
 
     while(1)
     {
-        t++;
+        t += 10;
 
         if(t >((self->MaxAngle - self->MinAngle) * 2))
             t = 0;
@@ -383,7 +383,9 @@ void ServoTest(struct servo_ctrl *self)
 
 
         self->SetAngle(self,angle);
-        os.time.delayms(20);
+        self->Update(self);
+
+        os.time.delayms(200);
     }
 }
 

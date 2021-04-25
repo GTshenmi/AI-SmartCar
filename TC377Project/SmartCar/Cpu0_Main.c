@@ -30,7 +30,6 @@ int core0_main (void)
     os.softtimer.init();
 
     os.time.delayms(100);
- //   os.file.init();
 
     Core0_HardWareInit();
     Core0_SoftWareInit();

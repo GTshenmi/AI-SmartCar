@@ -156,6 +156,8 @@ fuzzycontrol.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 fuzzycontrol.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+fuzzycontrol.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 fuzzycontrol.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 fuzzycontrol.o :	../OS/devices_config.h

@@ -23,6 +23,7 @@ RM := rm -rf
 -include OS/Device/Memory/subdir.mk
 -include OS/Device/LED/subdir.mk
 -include OS/Device/KEY/subdir.mk
+-include OS/Device/IMU/subdir.mk
 -include OS/Device/ESensor/subdir.mk
 -include OS/Device/Demo/subdir.mk
 -include OS/Device/Communicate/subdir.mk

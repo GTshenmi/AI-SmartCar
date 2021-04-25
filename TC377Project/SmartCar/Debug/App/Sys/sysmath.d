@@ -154,6 +154,8 @@ sysmath.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 sysmath.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+sysmath.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 sysmath.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 sysmath.o :	../OS/devices_config.h

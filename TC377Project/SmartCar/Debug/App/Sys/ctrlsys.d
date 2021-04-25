@@ -156,6 +156,8 @@ ctrlsys.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 ctrlsys.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+ctrlsys.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 ctrlsys.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 ctrlsys.o :	../OS/devices_config.h
@@ -248,6 +250,8 @@ ctrlsys.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 ctrlsys.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+ctrlsys.o :	../OS/os.h
+../OS/os.h :
 ctrlsys.o :	../App/foo.h
 ../App/foo.h :
 ctrlsys.o :	../OS/os.h

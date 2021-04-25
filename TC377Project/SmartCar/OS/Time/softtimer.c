@@ -7,13 +7,13 @@
 #include <softtimer.h>
 #include "systime.h"
 
-static uint32_t softTimerBase;
+static volatile uint32_t softTimerBase = 0;
 const uint32_t softTimerNum = 11;
 static softtimer_t softTimer[11];
 
 void OSTimeCallBack()
 {
-    softTimerBase++;
+    softTimerBase = softTimerBase + 1000;
 }
 
 void SoftTimerInit()

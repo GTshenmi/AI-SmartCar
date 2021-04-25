@@ -29,6 +29,17 @@ bluetooth_t Bluetooth = /*unknow*/
         .Self = &Bluetooth,
 };
 
+imu_t IMU = 
+{
+        .Init = IMU_Init,
+        .Self = &IMU,
+
+        .__Init__ = ICM20602_Init,
+        .__InitConfig__ = NULL,
+        .__ReadAcc__  = ICM20602_ReadAcc,
+        .__ReadGyro__ = ICM20602_ReadGyro,
+        .__ReadMag__ = NULL,
+};
 capture_t Capture = /*unknow*/
 {
         .__Init__ = CameraInit,

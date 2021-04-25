@@ -154,6 +154,8 @@ interrupt.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 interrupt.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+interrupt.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 interrupt.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 interrupt.o :	../OS/devices_config.h
@@ -248,6 +250,8 @@ interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 interrupt.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+interrupt.o :	../OS/os.h
+../OS/os.h :
 interrupt.o :	../App/foo.h
 ../App/foo.h :
 interrupt.o :	../OS/os.h

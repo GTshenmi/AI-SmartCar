@@ -25,7 +25,7 @@
             			
             <storageModule moduleId="cdtBuildSystem" version="4.0.0">
                 				
-                <configuration artifactName="${ProjName}" buildArtefactType="com.infineon.aurix.buildsystem.managed.buildArtefactType.elf" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.infineon.aurix.buildsystem.managed.buildArtefactType.elf,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="com.infineon.aurix.buildsystem.managed.configuration.binary.952285240" name="Debug" parent="com.infineon.aurix.buildsystem.managed.configuration.binary">
+                <configuration artifactName="${ProjName}" buildArtefactType="com.infineon.aurix.buildsystem.managed.buildArtefactType.elf" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.infineon.aurix.buildsystem.managed.buildArtefactType.elf,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" errorParsers="com.infineon.aurix.buildsystem.managed.TaskingErrorParser;org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.CWDLocator" id="com.infineon.aurix.buildsystem.managed.configuration.binary.952285240" name="Debug" parent="com.infineon.aurix.buildsystem.managed.configuration.binary">
                     					
                     <folderInfo id="com.infineon.aurix.buildsystem.managed.configuration.binary.952285240." name="/" resourcePath="">
                         						
@@ -33,7 +33,7 @@
                             							
                             <option id="com.tasking.ctc.cpu.886500829" name="Processor" superClass="com.tasking.ctc.cpu" useByScannerDiscovery="false" value="tc37x" valueType="string"/>
                             							
-                            <targetPlatform archList="all" id="com.infineon.aurix.buildsystem.managed.tasking.targetPlatform.1655596550" isAbstract="false" osList="all" superClass="com.infineon.aurix.buildsystem.managed.tasking.targetPlatform"/>
+                            <targetPlatform archList="all" binaryParser="com.tasking.managedbuilder.TASKING_ELF" id="com.infineon.aurix.buildsystem.managed.tasking.targetPlatform.1655596550" isAbstract="false" osList="all" superClass="com.infineon.aurix.buildsystem.managed.tasking.targetPlatform"/>
                             							
                             <builder buildPath="${workspace_loc:/LQTC377lib}/Debug" id="com.infineon.aurix.buildsystem.managed.tasking.builder.1217133115" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="com.infineon.aurix.buildsystem.managed.tasking.builder"/>
                             							
@@ -334,6 +334,8 @@
                                     <listOptionValue builtIn="false" value="../OS/Time"/>
                                     									
                                     <listOptionValue builtIn="false" value="../OS/FatFs/src/option"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="../OS/Device/IMU"/>
                                     									
                                     <listOptionValue builtIn="false" value="../OS/Device/BEEP"/>
                                     									

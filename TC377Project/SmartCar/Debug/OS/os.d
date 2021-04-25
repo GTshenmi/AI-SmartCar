@@ -152,6 +152,8 @@ os.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 os.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+os.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 os.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 os.o :	../OS/devices_config.h

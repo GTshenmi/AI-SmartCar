@@ -154,6 +154,8 @@ foo.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 foo.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+foo.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 foo.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 foo.o :	../OS/devices_config.h
@@ -252,6 +254,8 @@ foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 foo.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+foo.o :	../OS/os.h
+../OS/os.h :
 foo.o :	../App/foo.h
 ../App/foo.h :
 foo.o :	../App/init.h

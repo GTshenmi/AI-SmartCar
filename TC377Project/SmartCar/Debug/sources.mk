@@ -90,6 +90,7 @@ OS/Device/Capture \
 OS/Device/Communicate \
 OS/Device/Demo \
 OS/Device/ESensor \
+OS/Device/IMU \
 OS/Device/KEY \
 OS/Device/LED \
 OS/Device/Memory \

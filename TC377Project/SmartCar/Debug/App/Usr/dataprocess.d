@@ -156,6 +156,8 @@ dataprocess.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 dataprocess.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+dataprocess.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 dataprocess.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 dataprocess.o :	../OS/devices_config.h
@@ -250,6 +252,8 @@ dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 dataprocess.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+dataprocess.o :	../OS/os.h
+../OS/os.h :
 dataprocess.o :	../App/foo.h
 ../App/foo.h :
 dataprocess.o :	../OS/os.h

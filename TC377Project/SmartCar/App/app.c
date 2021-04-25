@@ -32,24 +32,39 @@ void SmartCarSysDataReport(void *data)
  * */
 void Core0_Main()
 {
-    TIMx.Init(&TIM_Resources[1].TIMN);
-    TIMx.Init(&TIM_Resources[2].TIMN);
-    TIMx.Init(&TIM_Resources[3].TIMN);
+    //TIMx.Init(&TIM_Resources[2].TIMN);
+    //TIMx.Init(&TIM_Resources[3].TIMN);
 
     extern attitude_t attitude;
     extern float dt;
 
+    Motor.SetPwmValue(Motor.Self,5000);
+
     //NNCU_Test();
     
-    //NN_Test();0
+    //NN_Test();
 
     //data_t *data = &Data[data_pointer];
 
     //sint16_t angle = (sint16_t)data->Angle;
 
+    //ServoTest(Servo.Self);
+
+    attitude_t attitude;
+
     while(1)
     {
         GLED.Toggle(GLED.Self);
+//
+//        float dt = os.time.getTime(us);
+//
+//        IMU.AttitudeUpdate(IMU.Self);
+//
+//        attitude = IMU.GetAttitude(IMU.Self);
+//
+//        dt = os.time.getTime(us) - dt;
+
+        //Console.WriteLine("Attitude:%f,%f,%f,%f",attitude.pitch,attitude.roll,attitude.yaw,dt);
 
 //        SaveParameterSD(data->LADC_Value,data->SADC_Value,&angle);
 
@@ -65,10 +80,12 @@ void Core0_Main()
  * */
 void Core1_Main()
 {
+    //TIMx.Init(&TIM_Resources[4].TIMN);
+
     while(1)
     {
         os.task.UiUpdate(&UIData,sizeof(UIData));
-        
+
         Core1_CheckStatus();
     }
 }
@@ -79,10 +96,6 @@ void Core1_Main()
  * */
 void Core2_Main()
 {
-    BEEP.ON(BEEP.Self);
-
-    BEEP.OFF(BEEP.Self);
-
     uint32_t times = 0;
 
     data_t *pdata = &Data[data_pointer];
@@ -101,8 +114,8 @@ void Core2_Main()
         os.task.SoftTimerUpdate(NULL,0);
         os.task.DebugConsole(NULL,0);
 
-        SmartCarSysDataReport(pdata);
-        SmartCarSysStateUpdate(pdata);
+        //SmartCarSysDataReport(pdata);
+        //SmartCarSysStateUpdate(pdata);
 
         os.time.delay(0.02,s);
     }

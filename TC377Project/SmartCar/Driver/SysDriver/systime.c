@@ -8,6 +8,15 @@
 
 void STM0_CH0_IRQHandler()
 {
+    /* 开启CPU中断  否则中断不可嵌套 */
+    IfxCpu_enableInterrupts();
+
+    //清除中断标志
+    IfxStm_clearCompareFlag(&MODULE_STM0, g_StmCompareConfig[0].comparator);
+
+    //开启新的中断配置，开始下次中断
+    IfxStm_increaseCompare(&MODULE_STM0, g_StmCompareConfig[0].comparator, g_StmCompareConfig[0].ticks);
+
     if(Systime.InterruptCallBack != NULL)
     {
          Systime.InterruptCallBack();

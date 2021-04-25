@@ -15,6 +15,8 @@ void UIParameterInit(void);
 void BeepOffTimerCallBack(void *argc,unsigned short argv)
 {
     BEEP.OFF(BEEP.Self);
+    Console.WriteLine("BEEP OFF --- Time = %f",os.time.getTime(ms));
+
 }
 
 
@@ -58,7 +60,9 @@ void Core0_HardWareInit()
     Motor.Init(Motor.Self);
     Motor.Connect(Motor.Self,MotorCtrlStrategy,&Data[data_pointer],sizeof(data_t));
 
-    Motor.SetSpeedLimit(Motor.Self,250,-250);
+    Motor.SetSpeedLimit(Motor.Self,250.0,-250.0);
+
+    Motor.Start(Motor.Self);
 
     Screen.WriteXLine(Screen.Self,line,"Init Motor.........OK");
 
@@ -73,7 +77,7 @@ void Core0_HardWareInit()
     Servo.Start(Servo.Self);
     Servo.SetAngle(Servo.Self,0);
     Servo.Update(Servo.Self);
-    Servo.Stop(Servo.Self);
+//    Servo.Stop(Servo.Self);
 
     Screen.WriteXLine(Screen.Self,line,"Init Servo.........OK");
 
@@ -115,7 +119,7 @@ void Core0_HardWareInit()
     Screen.WriteXLine(Screen.Self,line+=2,"Init Gyro..........");
 
     if(bits & 0x02)
-        res = ICM20602_Init();
+        res = IMU.Init(IMU.Self);
 
     if(res)
     {
@@ -160,7 +164,9 @@ void Core0_SoftWareInit()
     Screen.Clear(Screen.Self,WHITE);
 
     /* System Init Finished,BEEP ON */
-    BEEP.ON(BEEP.Self);
+    Console.WriteLine("BEEP ON --- Time = %f",os.time.getTime(ms));
+
+    //BEEP.ON(BEEP.Self);
     /*Set BEEP OFF 1 sec later*/
     os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
 

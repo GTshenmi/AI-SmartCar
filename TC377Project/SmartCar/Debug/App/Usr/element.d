@@ -156,6 +156,8 @@ element.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 element.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+element.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 element.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 element.o :	../OS/devices_config.h
@@ -250,6 +252,8 @@ element.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 element.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
+element.o :	../OS/os.h
+../OS/os.h :
 element.o :	../App/foo.h
 ../App/foo.h :
 element.o :	../OS/os.h

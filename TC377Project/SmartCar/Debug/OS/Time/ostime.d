@@ -36,6 +36,8 @@ ostime.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 ostime.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+ostime.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 ostime.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 ostime.o :	../OS/devices_config.h

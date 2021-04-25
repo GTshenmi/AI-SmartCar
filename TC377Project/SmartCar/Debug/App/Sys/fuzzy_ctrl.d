@@ -154,6 +154,8 @@ fuzzy_ctrl.o :	../OS/Device/BLE/bluetooth.h
 ../OS/Device/BLE/bluetooth.h :
 fuzzy_ctrl.o :	../OS/Device/WirelessSerial/wirelessserial.h
 ../OS/Device/WirelessSerial/wirelessserial.h :
+fuzzy_ctrl.o :	../OS/Device/IMU/imu.h
+../OS/Device/IMU/imu.h :
 fuzzy_ctrl.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
 fuzzy_ctrl.o :	../OS/devices_config.h
