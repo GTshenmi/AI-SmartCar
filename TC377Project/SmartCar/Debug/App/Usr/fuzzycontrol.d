@@ -212,3 +212,5 @@ fuzzycontrol.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 fuzzycontrol.o :	../OS/os.h
 ../OS/os.h :
+fuzzycontrol.o :	../App/Sys/queue.h
+../App/Sys/queue.h :

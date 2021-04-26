@@ -17,5 +17,6 @@ void ServoTest(struct servo_ctrl *self);
 
 void NN_Test(void);
 void NNCU_Test(void);
+void EQueue_Test(esensor_queue_t *queue);
 
 #endif /* APP_TEST_H_ */

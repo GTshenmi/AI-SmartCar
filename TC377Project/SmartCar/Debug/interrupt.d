@@ -214,6 +214,8 @@ interrupt.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 interrupt.o :	../OS/os.h
 ../OS/os.h :
+interrupt.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 interrupt.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 interrupt.o :	../App/Usr/parameter.h

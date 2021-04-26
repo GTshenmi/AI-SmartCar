@@ -103,6 +103,4 @@ typedef char * string;
     //Cpu_LockMutex(lock);
 #endif
 
-
-
 #endif /* DRIVER_SYSDRIVER_PLATFORM_H_ */

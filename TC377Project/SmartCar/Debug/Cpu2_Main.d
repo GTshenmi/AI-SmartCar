@@ -214,6 +214,8 @@ Cpu2_Main.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 Cpu2_Main.o :	../OS/os.h
 ../OS/os.h :
+Cpu2_Main.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 Cpu2_Main.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 Cpu2_Main.o :	../App/Usr/parameter.h

@@ -34,6 +34,8 @@ os_t os =
                 .delayus = OSTime_Delayus,
                 .delays = OSTime_Delays,
                 .delay  =  OSTime_Delay,
+
+                .getnmsFlag = OSTime_GetnmsFlag,
                 .getTimeus = OSTime_Get_Timeus,
                 .getTimems = OSTime_Get_Timems,
                 .getTimes = OSTime_Get_Times,

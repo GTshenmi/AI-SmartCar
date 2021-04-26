@@ -17,6 +17,7 @@
 #include "matrix.h"
 #include "sysmath.h"
 #include "fuzzy_ctrl.h"
+#include "queue.h"
 
 #define FunctionMode(basename,mode) basename##_##mode
 

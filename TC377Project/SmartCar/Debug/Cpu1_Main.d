@@ -214,6 +214,8 @@ Cpu1_Main.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 Cpu1_Main.o :	../OS/os.h
 ../OS/os.h :
+Cpu1_Main.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 Cpu1_Main.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 Cpu1_Main.o :	../App/Usr/parameter.h

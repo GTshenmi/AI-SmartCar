@@ -218,6 +218,8 @@ foo.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 foo.o :	../OS/os.h
 ../OS/os.h :
+foo.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 foo.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 foo.o :	../App/Usr/parameter.h

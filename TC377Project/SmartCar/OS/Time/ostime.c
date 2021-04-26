@@ -22,6 +22,12 @@ nowtime_t  OSTime_Now()
     nowtime.hour = nowtime.Ticks / 3600000000 % 1000;
     return nowtime;
 }
+
+uint8_t OSTime_GetnmsFlag(uint32_t ms)
+{
+    return OSTime_Get_Timems() % ms ? false : true ;
+}
+
 uint32_t OSTime_Get_Timeus()
 {
     return Systime.Get_Timeus();

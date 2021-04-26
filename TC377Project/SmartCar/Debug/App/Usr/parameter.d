@@ -212,6 +212,8 @@ parameter.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 parameter.o :	../OS/os.h
 ../OS/os.h :
+parameter.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 parameter.o :	../App/include.h
 ../App/include.h :
 parameter.o :	../OS/os.h

@@ -214,6 +214,8 @@ test.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 test.o :	../OS/os.h
 ../OS/os.h :
+test.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 test.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 test.o :	../App/Usr/parameter.h

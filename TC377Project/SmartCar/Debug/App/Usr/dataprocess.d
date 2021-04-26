@@ -212,6 +212,8 @@ dataprocess.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 dataprocess.o :	../OS/os.h
 ../OS/os.h :
+dataprocess.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 dataprocess.o :	../App/include.h
 ../App/include.h :
 dataprocess.o :	../OS/os.h

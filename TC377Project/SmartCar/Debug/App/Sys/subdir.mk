@@ -10,6 +10,7 @@ C_SRCS += \
 ../App/Sys/kalman_filter.c \
 ../App/Sys/matrix.c \
 ../App/Sys/pid_ctrl.c \
+../App/Sys/queue.c \
 ../App/Sys/sort.c \
 ../App/Sys/sysmath.c 
 
@@ -20,6 +21,7 @@ OBJS += \
 ./App/Sys/kalman_filter.o \
 ./App/Sys/matrix.o \
 ./App/Sys/pid_ctrl.o \
+./App/Sys/queue.o \
 ./App/Sys/sort.o \
 ./App/Sys/sysmath.o 
 
@@ -30,6 +32,7 @@ COMPILED_SRCS += \
 ./App/Sys/kalman_filter.src \
 ./App/Sys/matrix.src \
 ./App/Sys/pid_ctrl.src \
+./App/Sys/queue.src \
 ./App/Sys/sort.src \
 ./App/Sys/sysmath.src 
 
@@ -40,6 +43,7 @@ C_DEPS += \
 ./App/Sys/kalman_filter.d \
 ./App/Sys/matrix.d \
 ./App/Sys/pid_ctrl.d \
+./App/Sys/queue.d \
 ./App/Sys/sort.d \
 ./App/Sys/sysmath.d 
 

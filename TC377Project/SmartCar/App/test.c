@@ -120,6 +120,59 @@ void NNCU_Test(void)
 
 }
 
+void EQueue_Test(esensor_queue_t *queue)
+{
+    EQueue.Init(queue);
+
+    float array[7];
+
+    float time = 0.0;
+
+    float input[7];
+
+    while(1)
+    {
+        for(int i = 0 ; i < 47 ; i++)
+        {
+
+            for(int i = 0 ; i < 7 ; i++)
+            {
+                input[i] = time;
+            }
+
+            EQueue.Put(queue,input);
+
+            time += 1.0;
+
+        }
+
+        EQueue.Print(queue);
+
+        Console.WriteLine("\n\n\n");
+
+        EQueue.Get(queue,99,array);
+
+        Console.WriteArray("float",array,7);
+
+        Console.WriteLine("\n\n\n");
+
+        EQueue.Get(queue,101,array);
+
+        Console.WriteArray("float",array,7);
+
+        Console.WriteLine("\n\n\n");
+
+        EQueue.Get(queue,-102,array);
+
+
+        Console.WriteArray("float",array,7);
+
+        Console.WriteLine("\n\n\n");
+
+
+        os.time.delay(5.0,s);
+    }
+}
 void NN_Test(void)
 {
 

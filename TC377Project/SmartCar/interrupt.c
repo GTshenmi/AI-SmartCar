@@ -115,11 +115,11 @@ void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
 
     data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
-    //Motor.SetPwmValue(Motor.Self,3500);
+    //Motor.SetSpeed(Motor.Self,formatedSpeed);
 
-    Motor.SetSpeed(Motor.Self,formatedSpeed);
+    //Motor.Update(Motor.Self);
 
-    Motor.Update(Motor.Self);
+    Motor.SetPwmValue(Motor.Self,3500);
 
 }
 

@@ -43,6 +43,39 @@ uint32_t Console_WriteLine(const char *fmt,...)
     return 0;
 }
 
+uint32_t Console_WriteArray(const char *fmt,void *data,uint32_t len)
+{
+    if(!strcmp(fmt,"float"))
+    {
+        float *array = (float *)data;
+
+        Console.Write("[");
+
+        for(int i = 0; i < len - 1 ; i++)
+        {
+            Console.Write("%f,",array[i]);
+        }
+
+        Console.WriteLine("%f]",array[len - 1]);
+    }
+    else if(!strcmp(fmt,"int"))
+    {
+        int *array = (int *)data;
+
+        Console.Write("[");
+        
+        for(int i = 0; i < len - 1 ; i++)
+        {
+            Console.Write("%d,",array[i]);
+        }
+
+        Console.WriteLine("%d]",array[len - 1]);
+    }
+
+    return 0;
+}
+
+
 uint32_t Console_Read(const char *fmt,...)
 {
     va_list arg;
@@ -140,7 +173,6 @@ int32_t Console_ReadKey(void)
 
 int fputc(int ch, FILE *f)
 {
-    //UARTx.WriteBytes(DebugCom.Communicatorn,(uint8_t)ch,UARTx.Time_Infinite);
     DebugCom.Transmit(DebugCom.Self,(uint8_t *)&ch,1,0);
     return ch;
 }
@@ -159,6 +191,8 @@ console_t Console =
         .Init = Console_Init,
         .Write = Console_Write,
         .WriteLine = Console_WriteLine,
+        .WriteArray = Console_WriteArray,
+        
         .Read = Console_Read,
         .ReadLine = Console_ReadLine,
         .Update = Console_Update,

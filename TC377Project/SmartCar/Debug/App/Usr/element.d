@@ -212,6 +212,8 @@ element.o :	../App/Sys/fuzzy_ctrl.h
 ../App/Sys/fuzzy_ctrl.h :
 element.o :	../OS/os.h
 ../OS/os.h :
+element.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
 element.o :	../App/include.h
 ../App/include.h :
 element.o :	../OS/os.h

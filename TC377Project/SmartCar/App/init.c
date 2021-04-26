@@ -164,11 +164,11 @@ void Core0_SoftWareInit()
     Screen.Clear(Screen.Self,WHITE);
 
     /* System Init Finished,BEEP ON */
-    Console.WriteLine("BEEP ON --- Time = %f",os.time.getTime(ms));
+    //Console.WriteLine("BEEP ON --- Time = %f",os.time.getTime(ms));
 
     //BEEP.ON(BEEP.Self);
     /*Set BEEP OFF 1 sec later*/
-    os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
+    //os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
 
 #if defined(Debug)
     Console.WriteLine("SoftWare System Init Finished.");

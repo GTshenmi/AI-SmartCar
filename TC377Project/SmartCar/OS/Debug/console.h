@@ -17,6 +17,9 @@ typedef struct
     void     (*Init)(void);
     uint32_t (*Write)(const char *fmt,...);
     uint32_t (*WriteLine)(const char *fmt,...);
+    
+    uint32_t (*WriteArray)(const char *fmt,void *array,uint32_t len);
+
     uint32_t (*Read)(const char *fmt,...);
     uint32_t (*ReadLine)(const char *fmt,...);
 

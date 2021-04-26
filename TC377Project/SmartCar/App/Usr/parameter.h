@@ -53,6 +53,8 @@ typedef struct
 
       /*For Element*/    
       uint ElementType;  /*赛道元素类型*/
+      
+      esensor_queue_t Queue;
 
       /*State*/
 
