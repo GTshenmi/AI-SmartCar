@@ -16,8 +16,6 @@ typedef struct
     float e[2];
     float ec;
     float U;
-
-
 }fuzzy_ctrl_t;
 
 

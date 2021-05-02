@@ -76,11 +76,11 @@ void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
      data_t *data = &Data[data_pointer];
 
      if(fabs(data->Bias) >= 20.0)
-         data->S_PID.Kp = 2.0 + data->Bias * data->Bias * 0.00372; //待调
+         data->S_PID.Kp = 1.0 + data->Bias * data->Bias * 0.00372; //待调
 
      /*动态PID限幅*/
-     if(data->S_PID.Kp > 7.2)        //待调
-         data->S_PID.Kp = 7.2;
+     if(data->S_PID.Kp > 7.5)        //待调
+         data->S_PID.Kp = 7.5;
 
      PID_Ctrl(&data->S_PID,0.0,data->Bias);
 
@@ -90,9 +90,17 @@ void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
 
      data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
-     Servo.SetAngle(Servo.Self,data->Angle);
+     if(data->Angle >= Servo.MaxAngle)
+         data->Angle = Servo.MaxAngle;
 
-     Servo.Update(Servo.Self);
+     if(data->Angle <= Servo.MinAngle)
+         data->Angle = Servo.MinAngle;
+
+     Servo.SetPwmValue(Servo.Self,data->SPwmValue);
+
+     //Servo.SetAngle(Servo.Self,data->Angle);
+
+     //Servo.Update(Servo.Self);
 }
 
 void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
@@ -115,12 +123,10 @@ void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
 
     data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
+    Motor.SetPwmValue(Motor.Self,data->Speed);
     //Motor.SetSpeed(Motor.Self,formatedSpeed);
 
     //Motor.Update(Motor.Self);
-
-    Motor.SetPwmValue(Motor.Self,3500);
-
 }
 
 void CCU60_CH1_IRQHandler (void)

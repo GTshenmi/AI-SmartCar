@@ -11,7 +11,7 @@
 
 #include "platform.h"
 
-#define KEY_LONG_DOWN_DELAY (uint8_t)10
+#define KEY_LONG_DOWN_DELAY     (uint8_t)50
 
 #define KEY_BITS_DOWNLEVEL_MASK 0x00000100
 #define KEY_BITS_LEVEL_MASK     0x00000200

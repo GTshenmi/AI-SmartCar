@@ -168,6 +168,8 @@ void Servo_Connect(struct servo_ctrl *self,servo_ctrlcallback ctrlstrategy,void 
 
 uint8_t Servo_Init(struct servo_ctrl *self)
 {
+    //(*((pwmx_t *)(self->Pwmn))).Duty = 750;
+
     PWMx.Init(self->Pwmn);
 
     self->State = Servo_Stopped;
@@ -175,7 +177,7 @@ uint8_t Servo_Init(struct servo_ctrl *self)
     self->MaxAngle = 90;
     self->MinAngle = -90;
     self->MPUn = NULL;
-    self->PwmCentValue = 0;
+    self->PwmCentValue = 750;
     self->PwmValue = 0;
 
     self->SetAngle = Servo_SetAngle;

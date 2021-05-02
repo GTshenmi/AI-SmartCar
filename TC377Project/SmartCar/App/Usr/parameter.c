@@ -13,33 +13,6 @@
 uint16_t CarMode = AutoBoot_Mode;/*运行模式*/
 uint16_t data_pointer = 0;
 
-char *CarStateDictionary[] = {\
-                          "Stop",\
-                          "Running"};
-
-char *CarModeDictionary[] = { \
-                          "AI",\
-                          "Auto Boot",\
-                          "Manual Boot",\
-                          "Debug"\
-};
-
-char *AIStateDictionary[] =\
-{
-    "Free",\
-    "Start",\
-    "Busy",\
-    "Fin"\
-};
-
-char *ElementTypeDictionary[] =\
-{
-    "NULL",\
-    "NULL",\
-    "NULL",\
-    "NULL"\
-};
-
 void ParameterInit(void *data)
 {
     data_t *pdata = (data_t *)data;
@@ -54,26 +27,10 @@ void ParameterInit(void *data)
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
 
     PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,100.0));
-}
 
-char *GetCarState(uint index)
-{
-    return CarStateDictionary[index];
-}
+    PID_SetOutPutLimit(&Data[data_pointer].S_PID,PIDLimit(Servo.MinAngle,Servo.MaxAngle));
 
-char *GetCarMode(uint index)
-{
-    return CarModeDictionary[index];
-}
-
-char *GetAIState(uint index)
-{
-    return AIStateDictionary[index];
-}
-
-char *GetElementType(uint index)
-{
-    return ElementTypeDictionary[index];
+    PID_SetOutPutLimit(&Data[data_pointer].M_PID,PIDLimit(-100.0,100.0));
 }
 
 data_t Data[MAX_DATA_LEN] =
@@ -118,3 +75,5 @@ constdata_t CData =
         .MaxSADCDeviceNum = MAX_SESENSOR_NUM,
         .MaxKEYDeviceNum = MAX_KEY_NUM,
 };
+
+reserved_data_t ReservedData;

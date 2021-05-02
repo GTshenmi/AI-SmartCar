@@ -29,13 +29,6 @@ void (*SaveParameterToSD) (void) = NULL;
  * */
 void UI_Init ()
 {
-    Screen.Init(Screen.Self);
-    for (int i = 0; i < 6; i++)
-    {
-        KEY[i].Init(KEY[i].Self);
-    }
-    DIPSwitch.Init(DIPSwitch.Self);
-
     KEY[0].Connect(KEY[0].Self,cursorDownPressedCallBack,NULL,NULL,0);
     KEY[1].Connect(KEY[1].Self,cursorUpPressedCallBack,NULL,NULL,0);
     KEY[2].Connect(KEY[2].Self,cancelPressedCallBack,NULL,NULL,0);

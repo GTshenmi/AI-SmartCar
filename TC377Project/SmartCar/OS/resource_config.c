@@ -73,7 +73,7 @@ adc_resource_t ADC_Resources[20] =
         },
         [15] = {
                .ADCN = {ADC3,10000},
-               .Description = "Reversed.->AD16"
+               .Description = "Reserved.->AD16"
         },
 
 };
@@ -204,7 +204,7 @@ pwm_resource_t PWM_Resources[3] =
                .Description = "Motor EN"
         },
         [2] = {
-               .PWMN = {(void *)&IfxGtm_ATOM2_5_TOUT35_P33_13_OUT,50,0,ATOM,0,10000},
+               .PWMN = {(void *)&IfxGtm_ATOM2_5_TOUT35_P33_13_OUT,50,750,ATOM,250,1250}, //750 - 500,750 + 500
                .Description = "Servo"
         },
 };

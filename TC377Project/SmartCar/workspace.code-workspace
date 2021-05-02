@@ -11,6 +11,7 @@
 			"include.h": "c",
 			"control.h": "c",
 			"os.h": "c"
-		}
+		},
+		"materialTheme.accent": "Tomato"
 	}
 }

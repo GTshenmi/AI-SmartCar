@@ -81,6 +81,8 @@ float CalculateDistance(void *argv)
         {
             weight = fabs(difference_h)/fabs(difference_v);
 
+            weight = weight * weight * 0.5;
+
             distance = weight * distance_h + (1 - weight) * distance_v;
         }
     }

@@ -124,6 +124,7 @@ void LCD_SetEnable(bool enable)
 uint8_t LCD_Init(void *config)
 {
     uint8_t *type = (uint8_t *)config;
+
 #if !USING_HARDWARE_CONTROLER
 
     GPIOx.Init(LCD_DC_GPIO);

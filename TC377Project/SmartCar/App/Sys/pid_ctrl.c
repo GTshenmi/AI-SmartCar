@@ -55,7 +55,7 @@ PID_TypeDef PID_Init(pid_type_t PID_Type)
     return PID_CtrlStr;
 }
 
-PID_TypeDef PID_SetValue(PID_TypeDef *PID_CtrlStr,pid_ctrl_t PIDValue)
+PID_TypeDef PID_SetValue(PID_TypeDef *PID_CtrlStr,pid_param_t PIDValue)
 {
     PID_CtrlStr->Kp = PIDValue.Kp;
     PID_CtrlStr->Ki = PIDValue.Ki;
@@ -67,6 +67,12 @@ PID_TypeDef PID_SetValue(PID_TypeDef *PID_CtrlStr,pid_ctrl_t PIDValue)
 PID_TypeDef PID_SetGain(PID_TypeDef *PID_CtrlStr,pid_gain_t GainValue)
 {
     PID_CtrlStr->Gain = GainValue;
+    return *PID_CtrlStr;
+}
+
+PID_TypeDef PID_SetOutPutLimit(PID_TypeDef *PID_CtrlStr,pid_limit_t Limit)
+{
+    PID_CtrlStr->OutputLimit = Limit;
     return *PID_CtrlStr;
 }
 
@@ -89,6 +95,8 @@ PID_TypeDef *PID_Ctrl(PID_TypeDef *PID_CtrlStr,float TargetValue,float ActualVal
                                 PID_CtrlStr->Ki * PID_CtrlStr->IntegralValue+\
                                 PID_CtrlStr->Kd * (PID_CtrlStr->PID_Error[2] - PID_CtrlStr->PID_Error[1]);
 
+          result = ConstrainFloat(result,PID_CtrlStr->OutputLimit.Min,PID_CtrlStr->OutputLimit.Max);
+
           PID_CtrlStr->Result = result * PID_CtrlStr->Gain.Output;
     }
     else if(PID_CtrlStr->PID_Type == IncrementalPID)
@@ -100,6 +108,8 @@ PID_TypeDef *PID_Ctrl(PID_TypeDef *PID_CtrlStr,float TargetValue,float ActualVal
                              PID_CtrlStr->Kd * (PID_CtrlStr->PID_Error[2] - 2*PID_CtrlStr->PID_Error[1]+PID_CtrlStr->PID_Error[0]);
 
          PID_CtrlStr->Result += PID_Inc * PID_CtrlStr->Gain.Output;
+
+         PID_CtrlStr->Result = ConstrainFloat(PID_CtrlStr->Result,PID_CtrlStr->OutputLimit.Min * PID_CtrlStr->Gain.Output,PID_CtrlStr->OutputLimit.Max * PID_CtrlStr->Gain.Output);
     }
     else
     {
@@ -110,10 +120,18 @@ PID_TypeDef *PID_Ctrl(PID_TypeDef *PID_CtrlStr,float TargetValue,float ActualVal
     return PID_CtrlStr;
 }
 
-
-pid_ctrl_t PIDValue(float Kp,float Ki,float Kd)
+pid_limit_t PIDLimit(float Min,float Max)
 {
-    pid_ctrl_t PIDValue = {0,0,0};
+    pid_limit_t Limit;
+
+    Limit.Max = Max;
+    Limit.Min = Min;
+
+    return Limit;
+}
+pid_param_t PIDValue(float Kp,float Ki,float Kd)
+{
+    pid_param_t PIDValue = {0,0,0};
 
     PIDValue.Kp = Kp;
     PIDValue.Ki = Ki;

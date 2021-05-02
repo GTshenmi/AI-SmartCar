@@ -41,6 +41,7 @@ void Core0_Main()
         {
             GLED.Toggle(GLED.Self);
             Core0_CheckStatus();
+            Console.WriteLine("SADC[8] = %f",SESensor[7].Read(SESensor[7].Self) * 1.0);
         }
     }
 }
@@ -88,6 +89,8 @@ void Core2_Main()
 
         SmartCarSysDataReport(pdata);
         SmartCarSysStateUpdate(pdata);
+
+        os.time.delay(0.001,s);
     }
 }
 

@@ -79,15 +79,22 @@ uint8_t KEY_Scan(struct key *self)
                     self->State = KEY_NULL;//转入状态0
                     self->Event = KEY_UP;//松开事件
                     self->Event = KEY_NULL;
+
+
+                    //self->Count = 0;//计数器清零
                 }
-                else if((self->Level == 1)&& (++self->Count >= KEY_LONG_DOWN_DELAY)) //超过KEY_LONG_DOWN_DELAY没有释放
+                else if((self->Level == 1)&&(++self->Count >= KEY_LONG_DOWN_DELAY)) //超过KEY_LONG_DOWN_DELAY没有释放
                 {
                     self->Event = KEY_LONG;//长按事件
+
+                    self->Count = KEY_LONG_DOWN_DELAY + 1;
+
                     self->Count = 0;//计数器清零
                 }
                 else
                 {
                     self->Event = KEY_NULL;//空事件
+                    //self->Count = 0;//计数器清零
                 }
                 break;
         }

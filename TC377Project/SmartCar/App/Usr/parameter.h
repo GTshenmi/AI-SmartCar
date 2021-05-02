@@ -86,12 +86,14 @@ typedef struct
 
 }constdata_t;
 
+typedef struct
+{
+     char D[100];
+}reserved_data_t;
+
 void ParameterInit(void *data);
 
-char *GetCarState(uint index);
-char *GetCarMode(uint index);
-char *GetAIState(uint index);
-char *GetElementType(uint index);
+extern reserved_data_t ReservedData;
 
 extern constdata_t CData;
 

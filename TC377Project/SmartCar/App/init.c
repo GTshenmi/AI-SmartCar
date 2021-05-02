@@ -35,6 +35,15 @@ void Core0_HardWareInit()
 
     /*Init User Interface.*/
 
+    Screen.Init(Screen.Self);
+
+    for (int i = 0; i < 6; i++)
+    {
+        KEY[i].Init(KEY[i].Self);
+    }
+
+    DIPSwitch.Init(DIPSwitch.Self);
+
     UIParameterInit();
 
     UI_Init();
@@ -72,12 +81,15 @@ void Core0_HardWareInit()
 
     Servo.Init(Servo.Self);
     Servo.Connect(Servo.Self,ServoCtrlStrategy,&Data[data_pointer],sizeof(data_t));
+
+    //Servo.SetAngleLimit(Servo.Self,1250.0 - 750.0,250.0 - 750.0);
     Servo.SetAngleLimit(Servo.Self,200.0,-200.0);
-    Servo.SetPwmCentValue(Servo.Self,300);
+
+    Servo.SetPwmCentValue(Servo.Self,750);
+
     Servo.Start(Servo.Self);
     Servo.SetAngle(Servo.Self,0);
     Servo.Update(Servo.Self);
-//    Servo.Stop(Servo.Self);
 
     Screen.WriteXLine(Screen.Self,line,"Init Servo.........OK");
 
@@ -138,9 +150,6 @@ void Core0_HardWareInit()
 
 void Core0_SoftWareInit()
 {
-    /*Init Control System.*/
-    ServoCtrlSysInit();
-    MotorCtrlSysInit();
     /*Init PID Controller.*/
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
@@ -198,6 +207,8 @@ void UIParameterInit(void)
 {
 #if EnableUiDataLink
 
+    Data[data_pointer].SPwmValue = 750;
+
     UIData.Actual_Speed = &Data[data_pointer].Actual_Speed;
     UIData.Angle =        &Data[data_pointer].Angle;
     UIData.Bias =         &Data[data_pointer].Bias;
@@ -210,8 +221,13 @@ void UIParameterInit(void)
     UIData.SPID_Ki =      &Data[data_pointer].S_PID.Ki;
     UIData.SPID_Kp =      &Data[data_pointer].S_PID.Kp;
     UIData.SPID_Result =  &Data[data_pointer].S_PID.Result;
-    UIData.S_PwmDuty =    &Servo.PwmValue;
-    //UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
+
+
+    UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
+
+    //UIData.S_PwmDuty =    &Servo.PwmValue;
+
+
     UIData.Speed =        &Data[data_pointer].Speed;
 
     UIData.SADC =          Data[data_pointer].SADC_Value;
@@ -238,74 +254,42 @@ void UIParameterInit(void)
 
 #else
 
-    UIData.Actual_Speed = NULL;
-    UIData.Angle = NULL;
-    UIData.Bias = NULL;
-    UIData.LADC = NULL;
-    UIData.MPID_Kd = NULL;
-    UIData.MPID_Ki = NULL;
-    UIData.MPID_Kp = NULL;
-    UIData.MPID_Result = NULL;
-    UIData.M_PwmDuty = NULL;
-    UIData.NActual_Speed = NULL;
-    UIData.NAngle = NULL;
-    UIData.NLADC  = NULL;
-    UIData.NSADC = NULL;
-    UIData.NSpeed = NULL;
-    UIData.SADC = NULL;
-    UIData.SPID_Kd = NULL;
-    UIData.SPID_Ki = NULL;
-    UIData.SPID_Kp = NULL;
-    UIData.SPID_Result = NULL;
-    UIData.S_PwmDuty = NULL;
-    UIData.Speed = NULL;
+    Data[data_pointer].SPwmValue = 750;
 
-    UIData.CarState =    NULL;
-    UIData.CarMode =     NULL;
-    UIData.AI_State = NULL;
-    UIData.MotorSysState[0] = NULL;
-    UIData.MotorSysState[1] = NULL;
-    UIData.MotorSysState[2] = NULL;
-    UIData.ServoSysState[0] = NULL;
-    UIData.ServoSysState[1] = NULL;
-    UIData.ServoSysState[2] = NULL;
+    UIData.Actual_Speed = (float *)ReservedData.D;
+    UIData.Angle =        (float *)ReservedData.D;
+    UIData.Bias =         (float *)ReservedData.D;
+    UIData.MPID_Kd =      (float *)ReservedData.D;
+    UIData.MPID_Ki =      (float *)ReservedData.D;
+    UIData.MPID_Kp =      (float *)ReservedData.D;
+    UIData.MPID_Result =  (float *)ReservedData.D;
+    UIData.SPID_Kd =      (float *)ReservedData.D;
+    UIData.SPID_Ki =      (float *)ReservedData.D;
+    UIData.SPID_Kp =      (float *)ReservedData.D;
+    UIData.SPID_Result =  (float *)ReservedData.D;
+    UIData.Speed =        (float *)ReservedData.D;
+    UIData.NLADC  =       (float *)ReservedData.D;
+    UIData.NSADC =        (float *)ReservedData.D;
+    UIData.NActual_Speed =(float *)ReservedData.D;
+    UIData.NAngle =       (float *)ReservedData.D;
+    UIData.NSpeed =       (float *)ReservedData.D;
 
-    UIData.Actual_Speed = &Data[4].Actual_Speed;
-    UIData.Angle =        &Data[4].Angle;
-    UIData.Bias =         &Data[4].Bias;
-    UIData.MPID_Kd =      &Data[4].M_PID.Kd;
-    UIData.MPID_Ki =      &Data[4].M_PID.Ki;
-    UIData.MPID_Kp =      &Data[4].M_PID.Kp;
-    UIData.MPID_Result =  &Data[4].M_PID.Result;
-    UIData.M_PwmDuty =    &Data[4].Speed;
-    UIData.SPID_Kd =      &Data[4].S_PID.Kd;
-    UIData.SPID_Ki =      &Data[4].S_PID.Ki;
-    UIData.SPID_Kp =      &Data[4].S_PID.Kp;
-    UIData.SPID_Result =  &Data[4].S_PID.Result;
-    UIData.S_PwmDuty =    &Data[4].Angle;
-    UIData.Speed =        &Data[4].Speed;
+    UIData.S_PwmDuty =    (uint16_t *)ReservedData.D;
+    UIData.M_PwmDuty =    (uint16_t *)ReservedData.D;
+    UIData.SADC =         (uint16_t *)ReservedData.D;
+    UIData.LADC =         (uint16_t *)ReservedData.D;
 
-    UIData.SADC =          Data[4].SADC_Value;
-    UIData.LADC =          Data[4].LADC_Value;
-    UIData.NLADC  =        Data[4].N_LADC;
-    UIData.NSADC =         Data[4].N_SADC;
+    UIData.CarState =    (uint *)ReservedData.D;
+    UIData.CarMode =     (uint *)ReservedData.D;
+    UIData.AI_State =    (uint *)ReservedData.D;
+    UIData.ElementType = (uint *)ReservedData.D;
 
-    UIData.CarState =    (uint *)&Data[4].CarState;
-    UIData.CarMode =     (uint *)&Data[4].CarMode;
-    UIData.AI_State =    (uint *)&Data[4].AI_State;
-    UIData.ElementType = (uint *)&Data[4].ElementType;
-
-    UIData.MotorSysState[0] = (uint *)&Data[4].CarState;
-    UIData.MotorSysState[1] = (uint *)&Data[4].CarState;
-    UIData.MotorSysState[2] = (uint *)&Data[4].CarState;
-    UIData.ServoSysState[0] = (uint *)&Data[4].CarState;
-    UIData.ServoSysState[1] = (uint *)&Data[4].CarState;
-    UIData.ServoSysState[2] = (uint *)&Data[4].CarState;
-
-
-    //UIData.NActual_Speed = &Data[data_pointer].Actual_Speed;
-    //UIData.NAngle = NULL;
-    //UIData.NSpeed = &Data[data_pointer].Speed;
+    UIData.MotorSysState[0] = (uint *)ReservedData.D;
+    UIData.MotorSysState[1] = (uint *)ReservedData.D;
+    UIData.MotorSysState[2] = (uint *)ReservedData.D;
+    UIData.ServoSysState[0] = (uint *)ReservedData.D;
+    UIData.ServoSysState[1] = (uint *)ReservedData.D;
+    UIData.ServoSysState[2] = (uint *)ReservedData.D;
 
 #endif
 }

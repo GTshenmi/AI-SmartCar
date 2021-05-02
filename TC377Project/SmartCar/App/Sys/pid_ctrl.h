@@ -17,7 +17,13 @@ typedef struct
 	 float Kp;
 	 float Ki;
 	 float Kd;
-}pid_ctrl_t;
+}pid_param_t;
+
+typedef struct
+{
+     float Max;
+     float Min;
+}pid_limit_t;
 
 typedef struct
 {
@@ -31,6 +37,8 @@ typedef struct
 	
 	 float Result;
 
+	 pid_limit_t OutputLimit;
+
 	 float MaxResultValue;
 	 float MinResultValue;
 	
@@ -42,13 +50,17 @@ typedef struct
 
 PID_TypeDef PID_Init(pid_type_t PID_Type);
 
-PID_TypeDef PID_SetValue(PID_TypeDef *PID_CtrlStr,pid_ctrl_t PIDValue);
+PID_TypeDef PID_SetValue(PID_TypeDef *PID_CtrlStr,pid_param_t PIDValue);
 
 PID_TypeDef PID_SetGain(PID_TypeDef *PID_CtrlStr,pid_gain_t GainValue);
 
+PID_TypeDef PID_SetOutPutLimit(PID_TypeDef *PID_CtrlStr,pid_limit_t Limit);
+
 PID_TypeDef *PID_Ctrl(PID_TypeDef *PID_CtrlStr,float TargetValue,float ActualValue);
 
-pid_ctrl_t PIDValue(float Kp,float Ki,float Kd);
+pid_limit_t PIDLimit(float Min,float Max);
+
+pid_param_t PIDValue(float Kp,float Ki,float Kd);
 
 pid_gain_t PIDGainValue(float inputgain,float outputgain);
 
