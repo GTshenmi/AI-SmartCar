@@ -10,7 +10,7 @@
 
 #include "sys.h"
 
-#define MAX_DATA_LEN 5
+#define MAX_DATA_LEN 4
 
 typedef enum
 {
@@ -45,11 +45,11 @@ typedef struct
       uint16_t SPwmValue;
       float Angle;        /*角度*/
 
-      uint16_t LADC_Value[MAX_LESENSOR_NUM]; /*ADC值*/
-      uint16_t SADC_Value[MAX_SESENSOR_NUM]; /*ADC值*/
+      uint16_t LESensor_SampleValue[MAX_LESENSOR_NUM]; /*ADC值*/
+      uint16_t SESensor_SampleValue[MAX_SESENSOR_NUM]; /*ADC值*/
 
-      float N_LADC[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
-      float N_SADC[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
+      float LESensor_NormalizedValue[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
+      float SESensor_NormalizedValue[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
 
       /*For Element*/    
       uint ElementType;  /*赛道元素类型*/
@@ -66,16 +66,13 @@ typedef struct
 
       /*For Debug.*/
 
-      uint8_t ReportSensorData;
+      DebugDefine(float,TSpeed);
+      DebugDefine(float,ASpeed);
+      DebugDefine(uint16_t,MPwmValue);
 
-      uint8_t ReportMotorData;
-
-      uint8_t ReportServoData;
-
-      float TSpeed;
-      float ASpeed;
-      uint16_t MPwmValue;
-
+      DebugDefine(float,VBias);
+      DebugDefine(float,HBias);
+      DebugDefine(float,Weight);
 }data_t;
 
 typedef struct

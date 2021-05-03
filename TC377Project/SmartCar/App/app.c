@@ -35,13 +35,16 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
+    DebugDefine(data_t*,pdata) = &Data[data_pointer];
+
     while(1)
     {
         if(os.time.getnmsFlag(1000))
         {
             GLED.Toggle(GLED.Self);
             Core0_CheckStatus();
-            Console.WriteLine("SADC[8] = %f",SESensor[7].Read(SESensor[7].Self) * 1.0);
+
+            Console.WriteLine("(VBias = %f,HBias = %f,Weight = %f,Bias = %f)",pdata->VBias,pdata->HBias,pdata->Weight,pdata->Bias);
         }
     }
 }
@@ -117,22 +120,6 @@ void SmartCarSysStateUpdate(void *data)
         Screen.SetEnable(Screen.Self,true);
     else
         Screen.SetEnable(Screen.Self,false);
-    
-
-    if(pdata->ReportMotorData)
-    {
-
-    }
-
-    if(pdata->ReportSensorData)
-    {
-
-    }
-
-    if(pdata->ReportServoData)
-    {
-
-    }
 }
 
 void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
@@ -164,10 +151,6 @@ void Core0_CheckStatus()
         Screen.ClearLine(Screen.Self,16,WHITE);
         Screen.WriteXLine(Screen.Self,16,"Core0 Running...");
     }
-
-#if defined(Debug)
-    Console.WriteLine("Core0 Running...");
-#endif
 }
 
 void Core1_CheckStatus()
@@ -190,10 +173,6 @@ void Core1_CheckStatus()
         Screen.ClearLine(Screen.Self,17,WHITE);
         Screen.WriteXLine(Screen.Self,17,"Core1 Running...");
     }
-
-#if defined(Debug)
-    Console.WriteLine("Core1 Running...");
-#endif
 }
 
 void Core2_CheckStatus()
@@ -216,8 +195,4 @@ void Core2_CheckStatus()
         Screen.ClearLine(Screen.Self,18,WHITE);
         Screen.WriteXLine(Screen.Self,18,"Core2 Running...");
     }
-
-#if defined(Debug)
-    Console.WriteLine("Core2 Running...");
-#endif
 }

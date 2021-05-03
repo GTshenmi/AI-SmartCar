@@ -87,8 +87,12 @@ void Core0_HardWareInit()
 
     Servo.SetPwmCentValue(Servo.Self,750);
 
+
+
     Servo.Start(Servo.Self);
     Servo.SetAngle(Servo.Self,0);
+    //Servo.SetAngle(Servo.Self,Servo.MinAngle);
+
     Servo.Update(Servo.Self);
 
     Screen.WriteXLine(Screen.Self,line,"Init Servo.........OK");
@@ -140,12 +144,6 @@ void Core0_HardWareInit()
     }
     else
         Screen.WriteXLine(Screen.Self,line,"Init Gyro..........OK");
-
-
-#if defined(Debug)
-    Console.WriteLine("HardWare System Init Finished.");
-#endif
-
 }
 
 void Core0_SoftWareInit()
@@ -178,11 +176,6 @@ void Core0_SoftWareInit()
     //BEEP.ON(BEEP.Self);
     /*Set BEEP OFF 1 sec later*/
     //os.softtimer.start(1,SoftTimer_Mode_OneShot,1000000,0,BeepOffTimerCallBack,NULL,0);
-
-#if defined(Debug)
-    Console.WriteLine("SoftWare System Init Finished.");
-    Console.WriteLine("Wait For Core Sync...");
-#endif
 }
 
 void Core1_HardWareInit()
@@ -230,10 +223,10 @@ void UIParameterInit(void)
 
     UIData.Speed =        &Data[data_pointer].Speed;
 
-    UIData.SADC =          Data[data_pointer].SADC_Value;
-    UIData.LADC =          Data[data_pointer].LADC_Value;
-    UIData.NLADC  =        Data[data_pointer].N_LADC;
-    UIData.NSADC =         Data[data_pointer].N_SADC;
+    UIData.SADC =          Data[data_pointer].SESensor_SampleValue;
+    UIData.LADC =          Data[data_pointer].LESensor_SampleValue;
+    UIData.NLADC  =        Data[data_pointer].LESensor_NormalizedValue;
+    UIData.NSADC =         Data[data_pointer].SESensor_NormalizedValue;
 
     UIData.CarState =    (uint *)&Data[data_pointer].CarState;
     UIData.CarMode =     (uint *)&Data[data_pointer].CarMode;

@@ -22,7 +22,7 @@ void ParameterInit(void *data)
 
     pdata->M_PID.MaxIntegralValue = 100.0;
 
-    PID_SetValue(&pdata->S_PID,PIDValue(3.2,0.0,1.0));
+    PID_SetValue(&pdata->S_PID,PIDValue(3.2,0.0,0.0));
 
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
 
@@ -38,33 +38,21 @@ data_t Data[MAX_DATA_LEN] =
         [0] = {
                 .Cache = 0,
                 .CarMode = AI_Mode,
-                .ReportMotorData = 0,
-                .ReportSensorData = 0,
-                .ReportServoData = 0,
                 .AI_State = AI_Free,
         },
         [1] = {
                 .Cache = 0,
                 .CarMode = AutoBoot_Mode,
-                .ReportMotorData = 1,
-                .ReportSensorData = 0,
-                .ReportServoData = 0,
                 .AI_State = AI_Free,
         },
         [2] = {
                 .Cache = 0,
                 .CarMode = ManualBoot_Mode,
-                .ReportMotorData = 0,
-                .ReportSensorData = 0,
-                .ReportServoData = 0,
                 .AI_State = AI_Free,
         },
         [3] = {
                 .Cache = 0,
                 .CarMode = DebugMode,
-                .ReportMotorData = 0,
-                .ReportSensorData = 0,
-                .ReportServoData = 0,
                 .AI_State = AI_Free,
         },
 };

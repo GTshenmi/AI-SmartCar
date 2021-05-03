@@ -34,19 +34,11 @@ int core0_main (void)
     Core0_HardWareInit();
     Core0_SoftWareInit();
 
-#if defined(Debug)
-    Console.WriteLine("Sync Finished.");
-#endif
-
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFFFFFF);
 
     // ¿ªÆôCPU×ÜÖÐ¶Ï
     IfxCpu_enableInterrupts();
-
-#if defined(Debug)
-    Console.WriteLine("Core0 Run To Main.");
-#endif
 
     Core0_Main();
 

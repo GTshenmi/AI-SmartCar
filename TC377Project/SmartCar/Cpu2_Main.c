@@ -16,10 +16,6 @@ void core2_main(void)
     IfxCpu_waitEvent(&g_cpuSyncEvent, 0xFFFFFFFF);
     enableInterrupts();
 
-#if defined(Debug)
-    Console.WriteLine("Core2 Run To Main.");
-#endif
-
     Core2_Main();
 
     while(1)

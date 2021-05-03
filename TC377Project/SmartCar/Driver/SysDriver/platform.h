@@ -18,7 +18,7 @@
 #include "stdlib.h"
 
 /*Debug Mode: #define Debug.*/
-//#define Debug
+#define Debug
 
 #define TC264 0
 #define TC377 1

@@ -22,6 +22,8 @@
 
 #define min(a,b) ((a) < (b) ? (a) : (b))
 
+#define Is_ApproximatelyEqual(x,y,error)    ((fabs(((x) * 1.0 - (y)) * 1.0) - fabs(error * 1.0)) <= 0.0 ? 1 : 0)
+
 float NormalizeFloat(float value,float min,float max);
 float CalculateDistanceDifDivSum(float L1,float L2);
 uint16_t FindMaxIndex(float *array,uint16_t len);

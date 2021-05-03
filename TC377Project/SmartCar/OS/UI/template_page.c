@@ -40,7 +40,6 @@ void displayDesciption (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginL
 
 void displayDataWithGraph (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
 {
-
     if (Self->targetDataType == INTEGER)
     {
         char stringBuffer[30];
@@ -288,22 +287,22 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .confirmAction = openSettingPage,
 
      },
-    [10] = {
+     [10] = {
             .description = "Speed", //要设置的电机转速(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[10],
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = changeDisplayType,
-    },
-    [11] = {
+     },
+     [11] = {
             .description = "Speed", //要设置的电机转速(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[11],
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = openSettingPage,
-    },
+     },
     [12] = {
             .description = "ASpeed", //电机的实际速度(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,

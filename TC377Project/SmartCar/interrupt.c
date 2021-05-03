@@ -47,19 +47,23 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 
     data_t *data = &Data[data_pointer];
 
+    static float bias[5] = {0.0,0.0,0.0,0.0,0.0};
+    static float Kb[5] = {0.3,0.3,0.2,0.1,0.1};
+
     for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
-        data->LADC_Value[i] = LESensor[i].Read(LESensor[i].Self);
+        data->LESensor_SampleValue[i] = LESensor[i].Read(LESensor[i].Self);
     for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
-        data->SADC_Value[i] = SESensor[i].Read(SESensor[i].Self);
+        data->SESensor_SampleValue[i] = SESensor[i].Read(SESensor[i].Self);
 
     /*归一化*/
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
-        data->N_LADC[i] = 100.0 * NormalizeFloat(data->LADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+        data->LESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->LESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
     for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
-        data->N_SADC[i] = 100.0 * NormalizeFloat(data->SADC_Value[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+        data->SESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->SESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
 
-     data->Bias = 100.0 * CalculateDistance(data);
+    data->Bias = 100.0 * CalculateBias(data);
 
+    //data->Bias = FIR_Filter(Kb,bias,data->_Bias,5);
 }
 
 void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
@@ -73,34 +77,30 @@ void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
 
-     data_t *data = &Data[data_pointer];
+    data_t *data = &Data[data_pointer];
 
-     if(fabs(data->Bias) >= 20.0)
-         data->S_PID.Kp = 1.0 + data->Bias * data->Bias * 0.00372; //待调
+    if(fabs(data->Bias) >= 22.0)
+        data->S_PID.Kp = 1.0 + data->Bias * data->Bias * 0.00025; //待调
 
-     /*动态PID限幅*/
-     if(data->S_PID.Kp > 7.5)        //待调
-         data->S_PID.Kp = 7.5;
+    /*动态PID限幅*/
+    if(data->S_PID.Kp > 3.5)        //待调
+        data->S_PID.Kp = 3.5;
 
-     PID_Ctrl(&data->S_PID,0.0,data->Bias);
+    PID_Ctrl(&data->S_PID,0.0,data->Bias);
 
-     static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
+    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
 
-     static float angle[5] = {0.0};
+    static float angle[5] = {0.0};
 
-     data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
+    data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
-     if(data->Angle >= Servo.MaxAngle)
-         data->Angle = Servo.MaxAngle;
+    data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
 
-     if(data->Angle <= Servo.MinAngle)
-         data->Angle = Servo.MinAngle;
+    //Servo.SetPwmValue(Servo.Self,data->SPwmValue);
 
-     Servo.SetPwmValue(Servo.Self,data->SPwmValue);
+    Servo.SetAngle(Servo.Self,data->Angle);
 
-     //Servo.SetAngle(Servo.Self,data->Angle);
-
-     //Servo.Update(Servo.Self);
+    Servo.Update(Servo.Self);
 }
 
 void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
@@ -124,6 +124,7 @@ void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
     data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
     Motor.SetPwmValue(Motor.Self,data->Speed);
+
     //Motor.SetSpeed(Motor.Self,formatedSpeed);
 
     //Motor.Update(Motor.Self);

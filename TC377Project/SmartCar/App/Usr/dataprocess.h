@@ -10,6 +10,6 @@
 
 #include "sys.h"
 
-float CalculateDistance(void *argv);
+float CalculateBias(void *argv);
 
 #endif /* APP_USR_DATAPROCESS_H_ */
