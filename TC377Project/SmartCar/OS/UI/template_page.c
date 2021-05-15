@@ -25,7 +25,7 @@ void displayDataAlone (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLi
     else if (Self->targetDataType == FLOAT)
     {
         char stringBuffer[30];
-        sprintf(stringBuffer, "%s: %.3f", Self->description, (((float*) (Self->secondaryTargetData))[dataLineTmp]));
+        sprintf(stringBuffer, "%s: %.6f", Self->description, (((float*) (Self->secondaryTargetData))[dataLineTmp]));
         Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
                 cursorSelected(Self));
     }
@@ -184,6 +184,7 @@ void UIPagesInit (void)
     UIPages[24].primaryTargetData = UIData.ServoSysState[0];
     UIPages[25].primaryTargetData = UIData.ServoSysState[1];
     UIPages[26].primaryTargetData = UIData.ServoSysState[2];
+    UIPages[27].secondaryTargetData = UIData.DynamicKp;
 
     UIPages[0].beginLine = 0;
 
@@ -421,6 +422,14 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .lineLength = 1,
             .confirmAction = changeSysStatus,
 
+    },
+    [27] = {
+            .description = "DymKp",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[27],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = openSettingPage,
     },
 };
 

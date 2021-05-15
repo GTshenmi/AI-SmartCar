@@ -25,7 +25,6 @@ void SmartCarSysDataReport(void *data)
     //Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
 }
 
-
 /*
  * @Brief:CPU0 Main Func
  *  This Core is for Servo Control and Data Process.
@@ -101,7 +100,7 @@ void Core2_Main()
 
 void SmartCarSysStateUpdate(void *data)
 {
-    data_t *pdata = (data_t *)data;
+    //data_t *pdata = (data_t *)data;
 
     uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
 

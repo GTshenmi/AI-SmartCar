@@ -73,7 +73,7 @@ void SettingPageDisplay (SettingPageStruct *Self)
         charNumber += strlen(displayString);
 
         char stringBuffer[20];
-        sprintf(stringBuffer, "%.3f", targetData);
+        sprintf(stringBuffer, "%.6f", targetData);
         Screen.ShowString(Screen.Self, ++charNumber * Screen.Font.Width, displayLine * Screen.Font.Hight,
                 (uint8_t*) stringBuffer, BLACK);
         charNumber += strlen(stringBuffer);
@@ -114,12 +114,18 @@ uint8_t SettingPageGetStatus (SettingPageStruct *Self)
 
 float numberCoefficient(uint8_t coefficient){
     switch(coefficient){
-        case 2:
+        case 5:
             return 1.0f;
-        case 1:
+        case 4:
             return 0.1f;
-        case 0:
+        case 3:
             return 0.01f;
+        case 2:
+            return 0.001f;
+        case 1:
+            return 0.0001f;
+        case 0:
+            return 0.00001f;
     }
     return 0.0f;
 }

@@ -10,6 +10,35 @@
 #include <dataprocess.h>
 #include "include.h"
 
+void GetESensorData(void *argv)
+{
+    data_t *data = (data_t *)argv;
+    for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
+        data->LESensor_SampleValue[i] = LESensor[i].Read(LESensor[i].Self);
+    for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
+        data->SESensor_SampleValue[i] = SESensor[i].Read(SESensor[i].Self);
+}
+
+void ESensorDataProcess(void *argv)
+{
+    data_t *data = (data_t *)argv;
+
+    static float bias[5] = {0.0,0.0,0.0,0.0,0.0};
+    static float Kb[5] = {0.3,0.3,0.2,0.1,0.1};
+
+    /*πÈ“ªªØ*/
+    for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
+        data->LESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->LESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+    for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+        data->SESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->SESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
+
+    data->Bias = 100.0 * CalculateBias(data);
+
+    //data->Bias = FIR_Filter(Kb,bias,data->_Bias,5);
+}
+
+
+
 #define LESensor_Min 5.0
 
 float CalculateDistance(float L1,float L2)
@@ -114,11 +143,11 @@ float CalculateBias(void *argv)
         {
             //if(H_ESensorValue[1] > H_ESensorValue[2])
             {
-                if(Is_ApproximatelyEqual(H_ESensorValue[1],0.0,10.0) && Is_ApproximatelyEqual(H_ESensorValue[2],0.0,10.0))
-                {
-                    h_bias = 1.0;
-                }
-                else
+//                if(Is_ApproximatelyEqual(H_ESensorValue[1],0.0,10.0) && Is_ApproximatelyEqual(H_ESensorValue[2],0.0,10.0))
+//                {
+//                    h_bias = 1.0;
+//                }
+//                else
                 {
                     h_bias = CalculateDistance(H_ESensorValue[0],H_ESensorValue[2]);
                 }
@@ -137,11 +166,12 @@ float CalculateBias(void *argv)
         {
             //if(H_ESensorValue[1] > H_ESensorValue[0])
             {
-                if(Is_ApproximatelyEqual(H_ESensorValue[0],0.0,10.0) && Is_ApproximatelyEqual(H_ESensorValue[1],0.0,10.0))
-                {
-                    h_bias = -1.0;
-                }
-                else
+//                if(Is_ApproximatelyEqual(H_ESensorValue[0],0.0,10.0) && Is_ApproximatelyEqual(H_ESensorValue[1],0.0,10.0))
+//                {
+//                    h_bias = -1.0;
+//
+//                }
+//                else
                 {
                     h_bias = CalculateDistance(H_ESensorValue[0],H_ESensorValue[2]);
                 }
@@ -171,10 +201,12 @@ float CalculateBias(void *argv)
 
             h_sum = H_ESensorValue[0] + H_ESensorValue[2];
         }
+
+        //data->Speed = 3000;
     }
     else    //∂™œﬂ
     {
-        
+        //data->Speed = -3000;
     }
     
 
@@ -245,6 +277,10 @@ float CalculateBias(void *argv)
 //        }
     }
 
+    //if()
+    {
+
+    }
     bias = h_bias;
     /*  Debug  */
 

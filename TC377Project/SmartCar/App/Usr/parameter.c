@@ -17,12 +17,15 @@ void ParameterInit(void *data)
 {
     data_t *pdata = (data_t *)data;
 
+    pdata->DynamicKp = 0.000860;
+
+
     /*Set Servo And Motor PID Value.*/
     PID_SetValue(&pdata->M_PID,PIDValue(3.3,0.2,0.0));
 
     pdata->M_PID.MaxIntegralValue = 100.0;
 
-    PID_SetValue(&pdata->S_PID,PIDValue(3.2,0.0,0.0));
+    PID_SetValue(&pdata->S_PID,PIDValue(0.8,0.0,0.0));
 
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
 

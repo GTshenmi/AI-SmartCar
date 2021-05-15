@@ -13,7 +13,7 @@
 #include "ui_utilities.h"
 
 #define INT_PRECISION 4
-#define FLOAT_PRECISION 3
+#define FLOAT_PRECISION 6
 
 typedef struct sSettingPageStruct_t{
         UIPageStruct *targetUIPage;

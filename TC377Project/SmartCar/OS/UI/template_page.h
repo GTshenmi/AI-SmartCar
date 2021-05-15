@@ -12,7 +12,7 @@
 
 #define SCREEN_MAX_LINE 8
 #define SCREEN_MIN_LINE 0
-#define TOTAL_PAGE_NUMBER 27
+#define TOTAL_PAGE_NUMBER 28
 #define ADC_MAX_NUMBER 4096.0
 
 typedef enum{

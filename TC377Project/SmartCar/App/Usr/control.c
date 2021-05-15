@@ -9,6 +9,65 @@
 #include <control.h>
 #include "include.h"
 
+void SpeedControl(void *argv)
+{
+    data_t *data = (data_t *)argv;
+
+    float formatedSpeed = 0.0;
+
+    data->Speed = 3200.0;
+
+    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
+
+    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+    Motor.SetPwmValue(Motor.Self,data->Speed);
+
+    //Motor.SetSpeed(Motor.Self,formatedSpeed);
+
+    //Motor.Update(Motor.Self);
+}
+
+void AngleControl(void *argv)
+{
+    /*Kp = 2.23*/
+
+    /*Kp = 0.9*/
+
+    data_t *data = (data_t *)argv;
+
+    if(fabs(data->Bias) >= 20.0)
+        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp; //待调
+    else
+        data->S_PID.Kp = 0.8;
+
+
+    /*动态PID限幅*/
+    if(data->S_PID.Kp > 2.227)        //待调
+        data->S_PID.Kp = 2.227;
+
+    PID_Ctrl(&data->S_PID,0.0,data->Bias);
+
+    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
+
+    static float angle[5] = {0.0};
+
+    data->Angle = data->S_PID.Result;
+
+    //data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
+
+    data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+
+    //Servo.SetPwmValue(Servo.Self,data->SPwmValue);
+
+    //Servo.SetPwmValue(Servo.Self,750);
+
+    Servo.SetAngle(Servo.Self,data->Angle);
+
+    Servo.Update(Servo.Self);
+}
+
+
 /*
  * @Brief:  电机闭环控制函数(速度环/电流环)
  * @output: PwmValue：[0:10000]

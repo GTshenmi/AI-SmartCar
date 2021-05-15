@@ -37,6 +37,8 @@ typedef struct
       float Speed;        /*速度*/
 
       /*For Servo PID*/
+
+      float DynamicKp;
       PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
 
       float _Bias;

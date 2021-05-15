@@ -40,6 +40,8 @@ typedef struct
 
         float    *Bias;          /*中线偏差*/
 
+        float    *DynamicKp;
+
         float    *SPID_Kp;       /*舵机PID参数*/
         float    *SPID_Ki;       /*舵机PID参数*/
         float    *SPID_Kd;       /*舵机PID参数*/

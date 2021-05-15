@@ -153,8 +153,23 @@ void Servo_SetState(struct servo_ctrl *self,servo_state_t state)
 {
     self->State = state;
 }
+
+#define ServoSign(x) ((x > 0) ? (1) : -(1))
+
 void Servo_Driver(struct servo_ctrl *self,uint16_t value)
 {
+#if defined(Chip) && Chip == TC377 //越野打角有虚位
+
+//    static uint16_t lastValue = 0;
+//    sint16_t dv = value - lastValue;
+//
+//    lastValue = value;
+//
+//    if(abs(dv) < 20)
+//        PWMx.Write(self->Pwmn,value + 20 * ServoSign(dv));
+
+#endif
+
     self->PwmValue = value;
     PWMx.Write(self->Pwmn,self->PwmValue);
 }
@@ -168,8 +183,6 @@ void Servo_Connect(struct servo_ctrl *self,servo_ctrlcallback ctrlstrategy,void 
 
 uint8_t Servo_Init(struct servo_ctrl *self)
 {
-    //(*((pwmx_t *)(self->Pwmn))).Duty = 750;
-
     PWMx.Init(self->Pwmn);
 
     self->State = Servo_Stopped;

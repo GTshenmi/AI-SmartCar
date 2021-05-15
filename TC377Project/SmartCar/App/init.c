@@ -83,9 +83,10 @@ void Core0_HardWareInit()
     Servo.Connect(Servo.Self,ServoCtrlStrategy,&Data[data_pointer],sizeof(data_t));
 
     //Servo.SetAngleLimit(Servo.Self,1250.0 - 750.0,250.0 - 750.0);
-    Servo.SetAngleLimit(Servo.Self,200.0,-200.0);
 
-    Servo.SetPwmCentValue(Servo.Self,750);
+    Servo.SetAngleLimit(Servo.Self,175.0,-175.0);
+
+    Servo.SetPwmCentValue(Servo.Self,725);
 
 
 
@@ -216,9 +217,12 @@ void UIParameterInit(void)
     UIData.SPID_Result =  &Data[data_pointer].S_PID.Result;
 
 
-    UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
+    //UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
 
-    //UIData.S_PwmDuty =    &Servo.PwmValue;
+    UIData.S_PwmDuty =    &Servo.PwmValue;
+
+
+    UIData.DynamicKp = &Data[data_pointer].DynamicKp;
 
 
     UIData.Speed =        &Data[data_pointer].Speed;
