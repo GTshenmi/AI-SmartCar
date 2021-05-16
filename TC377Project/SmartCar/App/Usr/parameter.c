@@ -25,6 +25,8 @@ void ParameterInit(void *data)
 
     pdata->M_PID.MaxIntegralValue = 100.0;
 
+    pdata->Speed = 3200.0;
+
     PID_SetValue(&pdata->S_PID,PIDValue(0.8,0.0,0.0));
 
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));

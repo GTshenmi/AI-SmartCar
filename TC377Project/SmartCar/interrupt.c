@@ -60,7 +60,7 @@ void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
 
-    AngleControl(&Data[data_pointer]);
+    ServoControl(&Data[data_pointer]);
 }
 
 void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
@@ -72,7 +72,7 @@ void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
     IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t12PeriodMatch);
 
     /* 用户代码 */
-    SpeedControl(&Data[data_pointer]);
+    MotorControl(&Data[data_pointer]);
 }
 
 void CCU60_CH1_IRQHandler (void)

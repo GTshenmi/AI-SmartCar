@@ -10,9 +10,13 @@
 
 #include "platform.h"
 
+#define MaxQueueLen 100
+#define MaxDataLen  9
+
+
 typedef struct
 {
-    float Data[100][7];
+    float Data[MaxQueueLen][MaxDataLen];
 
     sint32_t CurrentPos;
     sint32_t ZeroPos;
@@ -27,8 +31,8 @@ typedef struct
     float *(*SearchByIndex)(esensor_queue_t *queue,sint32_t index);
     float *(*SearchByZeroIndex)(esensor_queue_t *queue,sint32_t index);
 
-    void (*Put)(esensor_queue_t *queue,float *data);
-    float *(*Get)(esensor_queue_t *queue,sint32_t index,float *data);
+    void (*Puts)(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end);
+    float *(*Gets)(esensor_queue_t *queue,sint32_t index,float *data,sint32_t start,sint32_t end);
 
     void (*Print)(esensor_queue_t *queue);
 }squeue_m;

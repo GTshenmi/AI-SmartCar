@@ -16,14 +16,14 @@ void EQueue_Init(esensor_queue_t *queue)
 {
     for(int i = 0 ; i < queue->MaxPos ; i++)
     {
-        for(int j = 0 ; j < 7 ; j++)
+        for(int j = 0 ; j < MaxDataLen ; j++)
         {
             queue->Data[i][j] = 0.0;
         }
     }
 
     queue->CurrentPos = 0;
-    queue->MaxPos = 100;
+    queue->MaxPos = MaxQueueLen;
     queue->ZeroPos = 1;
 }
 
@@ -44,7 +44,7 @@ void EQueue_RangeAssert(esensor_queue_t *queue)
 
 float *EQueue_SearchByIndex(esensor_queue_t *queue,sint32_t index)
 {  
-    return index < 0 ? queue->Data[index % 100 + 100] : queue->Data[index % 100];
+    return index < 0 ? queue->Data[index % MaxQueueLen + MaxQueueLen] : queue->Data[index % MaxQueueLen];
 }
 
 float *EQueue_SearchByZeroIndex(esensor_queue_t *queue,sint32_t index)
@@ -52,23 +52,23 @@ float *EQueue_SearchByZeroIndex(esensor_queue_t *queue,sint32_t index)
     return EQueue_SearchByIndex(queue,index + queue->ZeroPos - 1);
 }
 
-float *EQueue_Get(esensor_queue_t *queue,sint32_t index,float *data)
+float *EQueue_Gets(esensor_queue_t *queue,sint32_t index,float *data,sint32_t start,sint32_t end)
 {
     sint32_t currentPos = queue->CurrentPos;
 
     float *srcAddr = EQueue_SearchByIndex(queue,index + currentPos - 1);
 
-    memcpy(data,srcAddr,7 * sizeof(float));
+    if(data != NULL)
+        memcpy(data,srcAddr + start *sizeof(float),(end - start) * sizeof(float));
 
     return srcAddr;
 }
-    
 
-void EQueue_Put(esensor_queue_t *queue,float *data)
+void EQueue_Puts(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end)
 {
     float *dstAddr = EQueue_SearchByIndex(queue,queue->CurrentPos);
 
-    memcpy(dstAddr,data,7 * sizeof(float));
+    memcpy(dstAddr + start *sizeof(float),data,(end - start) * sizeof(float));
 
     queue->CurrentPos++;
     queue->ZeroPos++;
@@ -78,16 +78,16 @@ void EQueue_Put(esensor_queue_t *queue,float *data)
 
 void EQueue_Print(esensor_queue_t *queue)
 {
-    for(int i = 0 ; i < 100 ; i++)
+    for(int i = 0 ; i < MaxQueueLen ; i++)
     {
         printf("[%d]:",i);
 
         printf("[");
-        for(int j = 0; j < 7 ;j++)
+        for(int j = 0; j < MaxDataLen ;j++)
         {
             printf("%f",queue->Data[i][j]);
 
-            if(j == 6)
+            if(j == 7)
             {
 
             }
@@ -103,8 +103,9 @@ void EQueue_Print(esensor_queue_t *queue)
 squeue_m EQueue = 
 {
     .Init = EQueue_Init,
-    .Get = EQueue_Get,
-    .Put = EQueue_Put,
+
+    .Gets = EQueue_Gets,
+    .Puts = EQueue_Puts,
     .Print = EQueue_Print,
 
     .SearchByIndex = EQueue_SearchByIndex,

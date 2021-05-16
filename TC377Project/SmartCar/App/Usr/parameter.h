@@ -12,6 +12,64 @@
 
 #define MAX_DATA_LEN 4
 
+#define Lock(x)  ((x).Lock = 1)
+#define pLock(x) ((x)->Lock == 1)
+#define Unlock(x) ((x).Lock = 0)
+#define pUnlock(x) ((x)->Lock = 0) 
+
+#define IsLocked(x) ((x).Lock)
+
+#define SetValueWLock(x,data,value) \
+    do                              \
+    {                               \
+        if(!Is_Lock(x))             \
+        {                           \
+            x.data = value;         \
+        }                           \
+    }while(0);                      \
+
+
+
+typedef enum
+{
+    LL_Undefined,
+    LL_Wait,
+    LL_Lose,      //丢线
+    LL_SearchLine,//找线
+    LL_Searched   //已找到
+}loseline_state_t;
+
+typedef enum
+{
+    CC_Undefined,
+    CC_Wait,
+    CC_Confirm,
+    CC_In,
+    CC_Tracking,
+    CC_Out,
+}cycle_state_t;
+
+typedef enum
+{
+    LoseLine = 1,               //丢线
+    Normal_Tracking = 2,        //正常寻迹
+}tracking_state_t;
+
+typedef enum
+{
+    RightAngle, //直角弯
+    Cross,      //十字
+    Cycle,
+    None,
+}element_t;
+
+typedef struct
+{
+    element_t Type;
+
+    bool Lock;
+}elementwlock_t;
+
 typedef enum
 {
     AI_Mode = 0,           /*神经网络引导巡线*/
@@ -53,10 +111,30 @@ typedef struct
       float LESensor_NormalizedValue[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
       float SESensor_NormalizedValue[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
 
+      float H_ESensorValue[3];
+      float V_ESensorValue[2];
+      float O_ESensorValue[2];
+
+      float h_difference;
+      float v_difference;
+      float o_difference;
+
+      float h_sum;
+      float v_sum;
+      float o_sum;
+
+      float h_bias;
+      float v_bias;
+      float o_bias;
+
       /*For Element*/    
-      uint ElementType;  /*赛道元素类型*/
+      elementwlock_t Element;  /*赛道元素类型*/
+
+      tracking_state_t HTrackingState;
+      tracking_state_t VTrackingState;
+      tracking_state_t TrackingState;
       
-      esensor_queue_t Queue;
+      esensor_queue_t EQueue;
 
       /*State*/
 

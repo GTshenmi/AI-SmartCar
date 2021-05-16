@@ -9,13 +9,11 @@
 #include <control.h>
 #include "include.h"
 
-void SpeedControl(void *argv)
+void MotorControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
     float formatedSpeed = 0.0;
-
-    data->Speed = 3200.0;
 
     formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
 
@@ -28,7 +26,7 @@ void SpeedControl(void *argv)
     //Motor.Update(Motor.Self);
 }
 
-void AngleControl(void *argv)
+void ServoControl(void *argv)
 {
     /*Kp = 2.23*/
 
