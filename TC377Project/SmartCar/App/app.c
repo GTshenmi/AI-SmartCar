@@ -43,7 +43,6 @@ void Core0_Main()
             GLED.Toggle(GLED.Self);
             Core0_CheckStatus();
 
-            Console.WriteLine("(VBias = %f,HBias = %f,Weight = %f,Bias = %f)",pdata->VBias,pdata->HBias,pdata->Weight,pdata->Bias);
         }
     }
 }

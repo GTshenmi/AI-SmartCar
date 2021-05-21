@@ -23,8 +23,8 @@ void ESensorDataProcess(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    static float bias[5] = {0.0,0.0,0.0,0.0,0.0};
-    static float Kb[5] = {0.3,0.3,0.2,0.1,0.1};
+    //static float bias[5] = {0.0,0.0,0.0,0.0,0.0};
+    //static float Kb[5] = {0.3,0.3,0.2,0.1,0.1};
 
     /*归一化*/
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
@@ -61,19 +61,15 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
 
     static float bias = 0.0;
 
-    EQueue.Puts(&data->EQueue,data->LESensor_NormalizedValue,0,7);
+    data->H_ESensorValue[0] = data->LESensor_NormalizedValue[1];
+    data->H_ESensorValue[1] = data->LESensor_NormalizedValue[3];
+    data->H_ESensorValue[2] = data->LESensor_NormalizedValue[5];
 
-    float *ESensorData = EQueue.Gets(&data->EQueue,0,NULL,0,7);
+    data->V_ESensorValue[0] = data->LESensor_NormalizedValue[0];
+    data->V_ESensorValue[1] = data->LESensor_NormalizedValue[6];
 
-    data->H_ESensorValue[0] = ESensorData[1];
-    data->H_ESensorValue[1] = ESensorData[3];
-    data->H_ESensorValue[2] = ESensorData[5];
-
-    data->V_ESensorValue[0] = ESensorData[0];
-    data->V_ESensorValue[1] = ESensorData[6];
-
-    data->O_ESensorValue[0] = ESensorData[2];
-    data->O_ESensorValue[1] = ESensorData[4];
+    data->O_ESensorValue[0] = data->LESensor_NormalizedValue[2];
+    data->O_ESensorValue[1] = data->LESensor_NormalizedValue[4];
 
     /*for H ESensor:*/
 
@@ -140,7 +136,7 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
         {
 
                 data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
- 
+
                 data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
 
                 data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
@@ -149,11 +145,11 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
 
         if(data->H_ESensorValue[1] > data->H_ESensorValue[2] && data->H_ESensorValue[1] > data->H_ESensorValue[0]) //中电感最大
         {
-            bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
+                data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
 
-            data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
+                data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
 
-            data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
+                data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
         }
         data->HTrackingState = Normal_Tracking;
     }
@@ -162,7 +158,7 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
         data->HTrackingState = LoseLine;
     }
     
-
+    //data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
     /*for V ESensor:*/
 
     /*
@@ -171,20 +167,19 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
 
         bias = (左 - 右) / (左 + 右)
      */
-    if(data->V_ESensorValue[0] < 15.0 && data->V_ESensorValue[1] < 15.0)
+    if(data->V_ESensorValue[0] > LESensor_Min && data->V_ESensorValue[1] > LESensor_Min)
     {
-        data->V_ESensorValue[0] = 0.0;
-        data->V_ESensorValue[1] = 0.0;
         data->VTrackingState = Normal_Tracking;
+        data->v_bias = CalculateDistance(data->V_ESensorValue[0],data->V_ESensorValue[1]);
+        data->v_difference = data->V_ESensorValue[0] - data->V_ESensorValue[1];
+        data->v_sum = data->V_ESensorValue[0] + data->V_ESensorValue[1];
     }
     else
     {
+//        data->V_ESensorValue[0] = 0.0;
+//        data->V_ESensorValue[1] = 0.0;
         data->VTrackingState = LoseLine;
     }
-
-     data->v_bias = CalculateDistance(data->V_ESensorValue[0],data->V_ESensorValue[1]);
-     data->v_difference = data->V_ESensorValue[0] - data->V_ESensorValue[1];
-     data->v_sum = data->V_ESensorValue[0] + data->V_ESensorValue[1];
 
     
     /*for O ESensor:*/
@@ -203,31 +198,31 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
     float weight = 0.0;
 
 
-    if(Is_Zero(data->h_bias) && Is_Zero(data->v_bias))
-    {
-        bias = 0.0;
-    }
-    else
-    {
-        if(fabs(data->h_bias) / fabs(data->v_bias) > 1.2)
-        {
-            weight = fabs(data->v_bias)/fabs(data->h_bias);
-
-            bias = data->h_bias;
-        }
-        else if((data->v_bias) / fabs(data->h_bias) > 1.2)
-        {
-            weight = fabs(data->h_bias)/fabs(data->v_bias);
-
-            weight = weight * weight * 0.5;
-
-            bias = weight * data->h_bias + (1 - weight) * data->v_bias;
-        }
-        else
-        {
-            bias = data->h_bias * 0.7 + data->v_bias * 0.3;
-        }
-    }
+//    if(Is_Zero(data->h_bias) && Is_Zero(data->v_bias))
+//    {
+//        bias = 0.0;
+//    }
+//    else
+//    {
+//        if(fabs(data->h_bias) / fabs(data->v_bias) > 1.2)
+//        {
+//            weight = fabs(data->v_bias)/fabs(data->h_bias);
+//
+//            bias = data->h_bias;
+//        }
+//        else if((data->v_bias) / fabs(data->h_bias) > 2.0)
+//        {
+//            weight = fabs(data->h_bias)/fabs(data->v_bias);
+//
+//            weight = weight * weight * 0.5;
+//
+//            bias = weight * data->h_bias + (1 - weight) * data->v_bias;
+//        }
+//        else
+//        {
+//            bias = data->h_bias;
+//        }
+//    }
 
     /*元素判别*/
     if(data->HTrackingState == LoseLine && data->VTrackingState == LoseLine && data->TrackingState == Normal_Tracking)
@@ -235,16 +230,24 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
         data->TrackingState = LoseLine;
     }
 
-    float trackingState = data->TrackingState * 1.0;
+    bias = data->h_bias;
+//    float trackingState = data->TrackingState * 1.0;
 
-    EQueue.Puts(&data->EQueue,&bias,7,8);
-    EQueue.Puts(&data->EQueue,&trackingState,8,9);
-    
+
+
+//    EQueue.Puts(&data->EQueue,data->LESensor_NormalizedValue,0,7,false);
+//    EQueue.Puts(&data->EQueue,&bias,7,8,false);
+//    EQueue.Puts(&data->EQueue,&trackingState,8,9,true);
+//
+//    float *edata = EQueue.Gets(&data->EQueue,0,NULL,0,7);
+//
+//    Console.WriteArray("float",edata,7);
+
     /*  Debug  */
 
-    DebugCopy(data->VBias,data->v_bias);
-    DebugCopy(data->HBias,data->h_bias);
-    DebugCopy(data->Weight,weight);
+//    DebugCopy(data->VBias,data->v_bias);
+//    DebugCopy(data->HBias,data->h_bias);
+//    DebugCopy(data->Weight,weight);
 
     return bias;
 }
@@ -254,6 +257,7 @@ float CalculateSpeed(void *argv)
 
     return 0.0;
 }
+
 // float CalculateBias(void *argv)
 // {
 // /*

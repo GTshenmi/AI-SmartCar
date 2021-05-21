@@ -10,6 +10,7 @@
 
 #include "sys.h"
 
-void SpecialElementCorrection(void *data);
+void SpecialElementHandler(void *argv);
+float ElementDetermine(void *argv);
 
 #endif /* APP_USR_ELEMENT_H_ */

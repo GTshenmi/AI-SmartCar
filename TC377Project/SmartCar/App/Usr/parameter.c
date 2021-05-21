@@ -19,6 +19,10 @@ void ParameterInit(void *data)
 
     pdata->DynamicKp = 0.000860;
 
+    pdata->TrackingState = Normal_Tracking;
+    pdata->VTrackingState = Normal_Tracking;
+    pdata->HTrackingState = Normal_Tracking;
+
 
     /*Set Servo And Motor PID Value.*/
     PID_SetValue(&pdata->M_PID,PIDValue(3.3,0.2,0.0));
@@ -27,7 +31,7 @@ void ParameterInit(void *data)
 
     pdata->Speed = 3200.0;
 
-    PID_SetValue(&pdata->S_PID,PIDValue(0.8,0.0,0.0));
+    PID_SetValue(&pdata->S_PID,PIDValue(2.227,0.0,0.0));
 
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
 

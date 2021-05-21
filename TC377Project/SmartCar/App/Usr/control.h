@@ -10,8 +10,8 @@
 
 #include "sys.h"
 
-void MotorControl(void *argv);
-void ServoControl(void *argv);
+void SpeedControl(void *argv);
+void AngleControl(void *argv);
 
 sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actual_speed,void *argv,uint16_t argc);
 uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc);

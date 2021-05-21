@@ -19,6 +19,9 @@
 #define DebugDefine(type,param) type param
 #define DebugPrint(format,__VA_ARGS__) Console.WriteLine(format,__VA_ARGS__)
 
+#define DebugBeepOn BEEP.ON(BEEP.Self)
+#define DebugBeepOff BEEP.OFF(BEEP.Self)
+
 #else
 
 #define DebugCopy(x,y)

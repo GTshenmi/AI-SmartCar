@@ -56,7 +56,7 @@ float *EQueue_Gets(esensor_queue_t *queue,sint32_t index,float *data,sint32_t st
 {
     sint32_t currentPos = queue->CurrentPos;
 
-    float *srcAddr = EQueue_SearchByIndex(queue,index + currentPos - 1);
+    float *srcAddr = EQueue_SearchByIndex(queue,index + currentPos);
 
     if(data != NULL)
         memcpy(data,srcAddr + start *sizeof(float),(end - start) * sizeof(float));
@@ -64,14 +64,17 @@ float *EQueue_Gets(esensor_queue_t *queue,sint32_t index,float *data,sint32_t st
     return srcAddr;
 }
 
-void EQueue_Puts(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end)
+void EQueue_Puts(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end,bool is_inc)
 {
     float *dstAddr = EQueue_SearchByIndex(queue,queue->CurrentPos);
 
     memcpy(dstAddr + start *sizeof(float),data,(end - start) * sizeof(float));
 
-    queue->CurrentPos++;
-    queue->ZeroPos++;
+    if(is_inc)
+    {
+        queue->CurrentPos++;
+        queue->ZeroPos++;
+    }
 
     EQueue_RangeAssert(queue);
 }

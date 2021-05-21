@@ -31,7 +31,7 @@ typedef struct
     float *(*SearchByIndex)(esensor_queue_t *queue,sint32_t index);
     float *(*SearchByZeroIndex)(esensor_queue_t *queue,sint32_t index);
 
-    void (*Puts)(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end);
+    void (*Puts)(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end,bool is_inc);
     float *(*Gets)(esensor_queue_t *queue,sint32_t index,float *data,sint32_t start,sint32_t end);
 
     void (*Print)(esensor_queue_t *queue);

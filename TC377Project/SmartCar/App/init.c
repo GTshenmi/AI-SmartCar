@@ -235,7 +235,7 @@ void UIParameterInit(void)
     UIData.CarState =    (uint *)&Data[data_pointer].CarState;
     UIData.CarMode =     (uint *)&Data[data_pointer].CarMode;
     UIData.AI_State =    (uint *)&Data[data_pointer].AI_State;
-    UIData.ElementType = (uint *)&Data[data_pointer].ElementType;
+    UIData.ElementType = (uint *)&Data[data_pointer].Element.Type;
 
     UIData.MotorSysState[0] = (uint *)&MSU.State;
     UIData.MotorSysState[1] = (uint *)&MDU.State;

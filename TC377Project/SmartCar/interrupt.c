@@ -46,7 +46,6 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[2].comparator, g_StmCompareConfig[2].ticks);
 
     GetESensorData(&Data[data_pointer]);
-    ESensorDataProcess(&Data[data_pointer]);
 }
 
 void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
@@ -60,7 +59,13 @@ void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
 
-    ServoControl(&Data[data_pointer]);
+    ESensorDataProcess(&Data[data_pointer]);
+
+    ElementDetermine(&Data[data_pointer]);
+
+    SpecialElementHandler(&Data[data_pointer]);
+
+    AngleControl(&Data[data_pointer]);
 }
 
 void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
@@ -72,7 +77,7 @@ void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
     IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t12PeriodMatch);
 
     /* 用户代码 */
-    MotorControl(&Data[data_pointer]);
+    SpeedControl(&Data[data_pointer]);
 }
 
 void CCU60_CH1_IRQHandler (void)

@@ -140,7 +140,7 @@ void EQueue_Test(esensor_queue_t *queue)
                 input[i] = time;
             }
 
-            EQueue.Put(queue,input);
+            //EQueue.Put(queue,input);
 
             time += 1.0;
 
@@ -150,19 +150,19 @@ void EQueue_Test(esensor_queue_t *queue)
 
         Console.WriteLine("\n\n\n");
 
-        EQueue.Get(queue,99,array);
+        //EQueue.Get(queue,99,array);
 
         Console.WriteArray("float",array,7);
 
         Console.WriteLine("\n\n\n");
 
-        EQueue.Get(queue,101,array);
+        //EQueue.Get(queue,101,array);
 
         Console.WriteArray("float",array,7);
 
         Console.WriteLine("\n\n\n");
 
-        EQueue.Get(queue,-102,array);
+        //EQueue.Get(queue,-102,array);
 
 
         Console.WriteArray("float",array,7);

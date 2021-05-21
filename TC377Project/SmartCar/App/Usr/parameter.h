@@ -22,7 +22,7 @@
 #define SetValueWLock(x,data,value) \
     do                              \
     {                               \
-        if(!Is_Lock(x))             \
+        if(!IsLocked(x))             \
         {                           \
             x.data = value;         \
         }                           \

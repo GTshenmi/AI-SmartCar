@@ -12,21 +12,33 @@
 void LoseLine_Handler(data_t *data);
 void Cycle_Handler(data_t *data);
 void Cross_Handler(data_t *data);
-void Normal_Tracking(data_t *data);
+void RightAngle_Handler(data_t *data);
+
 
 float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if(data->v_difference >= 30.0)
+    if((data->V_ESensorValue[0] >= 30.0 || (data->V_ESensorValue[1] >= 30.0)))
     {
-        SetValueWLock(data->Element,Type,RightAngle);
+        DebugBeepOn;
+        //SetValueWLock(data->Element,Type,RightAngle);
+
+        data->Element.Type = RightAngle;
+    }
+    else
+    {
+        DebugBeepOff;
+        data->Element.Type = None;
     }
 
-    if((data->H_ESensorValue[1] > 2 * data->H_ESensorValue[0]) || (data->H_ESensorValue[1] >= 2 * data->H_ESensorValue[2]) &&  data->H_ESensorValue[1] >= 60.0)
-    {
-        SetValueWLock(data->Element,Type,Cross);
-    }
+//    if(((data->H_ESensorValue[1] > 2 * data->H_ESensorValue[0]) || (data->H_ESensorValue[1] >= 2 * data->H_ESensorValue[2])) &&  (data->H_ESensorValue[1] >= 60.0))
+//    {
+//        SetValueWLock(data->Element,Type,Cross);
+//    }
+
+    return data->Element.Type * 1.0;
+
 }
 
 /*
@@ -36,33 +48,44 @@ void SpecialElementHandler(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if(data->TrackingState == LoseLine)
-    {
-        LoseLine_Handler(data);
-    }
-    else
-    {
-        switch(data->Element.Type)
-        {
-            case RightAngle:
-                RightAngle_Handler(data);
-                break;
-            case Cross:
-                Cross_Handler(data);
-                
 
-                break;
-            
-            default:
-                break;
-        }
+    switch(data->Element.Type)
+    {
+        case RightAngle:
+            RightAngle_Handler(data);
+            break;
+        case Cross:
+            Cross_Handler(data);
+            break;
+        default:
+            break;
     }
+
+
+//    if(data->TrackingState == LoseLine)
+//    {
+//        //LoseLine_Handler(data);
+//    }
+//    else
+//    {
+//        switch(data->Element.Type)
+//        {
+//            case RightAngle:
+//                RightAngle_Handler(data);
+//                break;
+//            case Cross:
+//                Cross_Handler(data);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 }
 
 void Cross_Handler(data_t *data)
 {
-    cycle_state_t cycleState;
+    cycle_state_t cycleState = CC_Wait;
 
     switch(cycleState)
     {
@@ -104,7 +127,7 @@ void Cycle_Handler(data_t *data)
 
 void RightAngle_Handler(data_t *data)
 {
-
+    data->Bias = fsign(data->V_ESensorValue[0] - data->V_ESensorValue[1]) * 100.0;
 }
 
 
@@ -114,7 +137,7 @@ void LoseLine_Handler(data_t *data)
 {
     static loseline_state_t loseLineState = LL_Wait;
 
-    float weight[10] = {0.2,0.2,0.2,0.1,0.1,0.05,0.05,0.04,0.03,0.03};
+    //float weight[10] = {0.2,0.2,0.2,0.1,0.1,0.05,0.05,0.04,0.03,0.03};
 
     float *eSensorData = EQueue.Gets(&data->EQueue,0,NULL,0,7);
 
@@ -125,8 +148,8 @@ void LoseLine_Handler(data_t *data)
     hESensorValue[1] = eSensorData[3];
     hESensorValue[2] = eSensorData[5];
 
-    vESensorValue[0] == eSensorData[0];
-    vESensorValue[1] = eSensorData[6];
+    //vESensorValue[0] == eSensorData[0];
+    //vESensorValue[1] = eSensorData[6];
 
 
     
@@ -144,6 +167,9 @@ void LoseLine_Handler(data_t *data)
             }
             break;
         case LL_Lose:
+
+            DebugBeepOn;
+
             Lock(data->Element);
 
             for(int i = 0 ; i < 10 ;)       //取历史十次数据加权平均
@@ -166,6 +192,7 @@ void LoseLine_Handler(data_t *data)
             {
                 sint32_t rightcount = 0;
                 sint32_t leftcount = 0;
+                sint32_t count = 0;
 
                 for(int i = 0 ; i < 10;)
                 {
@@ -180,14 +207,22 @@ void LoseLine_Handler(data_t *data)
                         }
                         else
                         {
-                                leftcount--;
+                            leftcount--;
                         }
+
+                        i++;
                     }
+                    count++;
+
+                    if(count >= 100)
+                        break;
+
+
                 }
 
                 sint32_t angle = leftcount + rightcount;
 
-                if(fabs(angle) <= 2)
+                if(abs(angle) <= 2)
                 {
                     bias = 0.0;
                 }
@@ -204,6 +239,7 @@ void LoseLine_Handler(data_t *data)
             break;
 
         case LL_SearchLine:
+
             data->Bias = bias * 100.0;
 
             if(vESensorValue[0] <= 20.0 && vESensorValue[1] <= 20.0 && (hESensorValue[0] >= 40.0 || hESensorValue[1] >= 40.0 || hESensorValue[2] >= 40.0))
@@ -218,6 +254,12 @@ void LoseLine_Handler(data_t *data)
             data->TrackingState = Normal_Tracking;
 
             Unlock(data->Element);
+
+            DebugBeepOff;
+
+            break;
+
+        case LL_Undefined:default:
 
             break;
     }
