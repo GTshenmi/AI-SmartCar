@@ -45,7 +45,20 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[2].comparator, g_StmCompareConfig[2].ticks);
 
+    data_t *data = &Data[data_pointer];
+
     GetESensorData(&Data[data_pointer]);
+
+    ESensorDataProcess(&Data[data_pointer]);
+
+    ElementDetermine(&Data[data_pointer]);
+
+    SpecialElementHandler(&Data[data_pointer]);
+
+//    float trackingState = data->TrackingState * 1.0;
+//    EQueue.Puts(&data->EQueue,data->LESensor_NormalizedValue,0,7,false);
+//    EQueue.Puts(&data->EQueue,&data->Bias,7,8,false);
+//    EQueue.Puts(&data->EQueue,&trackingState,8,9,true);
 }
 
 void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
@@ -58,12 +71,6 @@ void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
 
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
-
-    ESensorDataProcess(&Data[data_pointer]);
-
-    ElementDetermine(&Data[data_pointer]);
-
-    SpecialElementHandler(&Data[data_pointer]);
 
     AngleControl(&Data[data_pointer]);
 }

@@ -41,6 +41,17 @@ typedef enum
 
 typedef enum
 {
+    RA_Undefined,
+    RA_Wait,
+    RA_Confirm,
+    RA_In,
+    RA_Tracking,
+    RA_Out,
+
+}rightangle_state_t;
+
+typedef enum
+{
     CC_Undefined,
     CC_Wait,
     CC_Confirm,

@@ -34,15 +34,15 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-    DebugDefine(data_t*,pdata) = &Data[data_pointer];
+    data_t *data = &Data[data_pointer];
 
     while(1)
     {
         if(os.time.getnmsFlag(1000))
         {
-            GLED.Toggle(GLED.Self);
+            //GLED.Toggle(GLED.Self);
             Core0_CheckStatus();
-
+            Console.WriteLine("h_bias = %f,v_bias = %f,bias = %f,weight = %f",data->h_bias,data->v_bias,data->Bias,fabs(data->h_bias)/fabs(data->v_bias));
         }
     }
 }
@@ -84,7 +84,7 @@ void Core2_Main()
 
         if(os.time.getnmsFlag(1000))
         {
-            BLED.Toggle(BLED.Self);
+            //BLED.Toggle(BLED.Self);
             Core2_CheckStatus();
         }
 

@@ -9,6 +9,23 @@
 #include <element.h>
 #include "include.h"
 
+
+/*
+ *       Condition A  Condition B       Y
+ *           0            0             0
+ *           0            1             1
+ *           1            0             1
+ *           1            1             0
+ *
+ *
+ *           Y = A'B + AB' = A B
+ * */
+#define RightAngleJudgeCondition ((data->V_ESensorValue[0] >= 30.0) ^ (data->V_ESensorValue[1] >= 30.0))
+
+#define CrossJudgeCondition      ((data->V_ESensorValue[0] >= 50.0) && (data->V_ESensorValue[1] >= 50.0))
+
+//((data->V_ESensorValue[0] >= 30.0) || (data->V_ESensorValue[1] >= 30.0)) && (!((data->V_ESensorValue[0] >= 30.0) && (data->V_ESensorValue[1] >= 30.0)))
+
 void LoseLine_Handler(data_t *data);
 void Cycle_Handler(data_t *data);
 void Cross_Handler(data_t *data);
@@ -19,17 +36,24 @@ float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if((data->V_ESensorValue[0] >= 30.0 || (data->V_ESensorValue[1] >= 30.0)))
-    {
-        DebugBeepOn;
-        //SetValueWLock(data->Element,Type,RightAngle);
 
-        data->Element.Type = RightAngle;
+    if(CrossJudgeCondition)
+    {
+        data->Element.Type = Cross;
+
+        GLED.ON(GLED.Self);
     }
     else
     {
-        DebugBeepOff;
-        data->Element.Type = None;
+        GLED.OFF(GLED.Self);
+    }
+
+    if(RightAngleJudgeCondition && data->Element.Type != Cross)
+    {
+        //DebugBeepOn;
+        //SetValueWLock(data->Element,Type,RightAngle);
+
+        data->Element.Type = RightAngle;
     }
 
 //    if(((data->H_ESensorValue[1] > 2 * data->H_ESensorValue[0]) || (data->H_ESensorValue[1] >= 2 * data->H_ESensorValue[2])) &&  (data->H_ESensorValue[1] >= 60.0))
@@ -94,6 +118,7 @@ void Cross_Handler(data_t *data)
             if(data->Element.Type == Cycle)
                 cycleState = CC_Confirm;
             break;
+
         case CC_Confirm:    //确认是环岛
             
             
@@ -127,7 +152,57 @@ void Cycle_Handler(data_t *data)
 
 void RightAngle_Handler(data_t *data)
 {
-    data->Bias = fsign(data->V_ESensorValue[0] - data->V_ESensorValue[1]) * 100.0;
+    static rightangle_state_t rightAngleState = RA_Wait;
+
+    static sint32_t rightAngleCount = 0;
+
+    switch(rightAngleState)
+    {
+        case RA_Wait:
+            if(data->Element.Type == RightAngle)
+            {
+                rightAngleState = RA_Confirm;
+            }
+            break;
+
+        case RA_Confirm:
+
+            if(RightAngleJudgeCondition)
+            {
+                rightAngleState = RA_Tracking;
+
+                rightAngleCount = 50;
+
+                DebugBeepOn;
+            }
+
+            break;
+
+        case RA_Tracking:
+
+            data->Bias = fsign(data->V_ESensorValue[0] - data->V_ESensorValue[1]) * 100.0;
+
+            rightAngleCount--;
+
+            if((rightAngleCount <= 0) && (data->V_ESensorValue[0] <=20.0 && data->V_ESensorValue[1] <= 20.0) && (data->H_ESensorValue[0] >=20.0 ||data->H_ESensorValue[1] >=20.0|| data->H_ESensorValue[2] >= 20.0))
+            {
+                rightAngleState = RA_Out;
+            }
+
+            break;
+
+        case RA_Out:
+
+            DebugBeepOff;
+            rightAngleState = RA_Wait;
+            Unlock(data->Element);
+            data->Element.Type = None;
+
+            break;
+
+    }
+
+
 }
 
 

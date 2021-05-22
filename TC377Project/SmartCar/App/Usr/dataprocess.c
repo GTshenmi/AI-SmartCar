@@ -32,7 +32,7 @@ void ESensorDataProcess(void *argv)
     for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
         data->SESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->SESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
 
-    data->Bias = 100.0 * CalculateBias(data);
+    data->Bias = CalculateBias(data);
 
     //data->Bias = FIR_Filter(Kb,bias,data->_Bias,5);
 }
@@ -121,40 +121,20 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
         }
 
      */
+    data->h_bias = 100.0 * CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
+
+    data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
+
+    data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
+
+
     if(data->H_ESensorValue[0] > LESensor_Min && data->H_ESensorValue[1] > LESensor_Min && data->H_ESensorValue[2] > LESensor_Min) //正常巡线
     {
-        if(data->H_ESensorValue[0] > data->H_ESensorValue[1] && data->H_ESensorValue[0] > data->H_ESensorValue[2]) //左电感最大
-        {
-                data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
-
-                data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
-
-                data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
-        }
-
-        if(data->H_ESensorValue[2] > data->H_ESensorValue[1] && data->H_ESensorValue[2] > data->H_ESensorValue[0]) //右电感最大
-        {
-
-                data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
-
-                data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
-
-                data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
-
-        }
-
-        if(data->H_ESensorValue[1] > data->H_ESensorValue[2] && data->H_ESensorValue[1] > data->H_ESensorValue[0]) //中电感最大
-        {
-                data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
-
-                data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
-
-                data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
-        }
         data->HTrackingState = Normal_Tracking;
     }
     else    //丢线
     {
+
         data->HTrackingState = LoseLine;
     }
     
@@ -167,29 +147,30 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
 
         bias = (左 - 右) / (左 + 右)
      */
+
+    data->v_bias = 100.0 * CalculateDistance(data->V_ESensorValue[0],data->V_ESensorValue[1]);
+    data->v_difference = data->V_ESensorValue[0] - data->V_ESensorValue[1];
+    data->v_sum = data->V_ESensorValue[0] + data->V_ESensorValue[1];
+
     if(data->V_ESensorValue[0] > LESensor_Min && data->V_ESensorValue[1] > LESensor_Min)
     {
         data->VTrackingState = Normal_Tracking;
-        data->v_bias = CalculateDistance(data->V_ESensorValue[0],data->V_ESensorValue[1]);
-        data->v_difference = data->V_ESensorValue[0] - data->V_ESensorValue[1];
-        data->v_sum = data->V_ESensorValue[0] + data->V_ESensorValue[1];
     }
     else
     {
-//        data->V_ESensorValue[0] = 0.0;
-//        data->V_ESensorValue[1] = 0.0;
         data->VTrackingState = LoseLine;
     }
 
     
     /*for O ESensor:*/
     /*
+
         斜电感: 
         左  右
 
         bias = (左 - 右) / (左 + 右)
      */
-    data->o_bias = CalculateDistance(data->O_ESensorValue[0],data->O_ESensorValue[1]);
+    data->o_bias = 100.0 * CalculateDistance(data->O_ESensorValue[0],data->O_ESensorValue[1]);
     data->o_difference = data->O_ESensorValue[0] - data->O_ESensorValue[1];
     data->o_sum = data->O_ESensorValue[0] + data->O_ESensorValue[1];
 
@@ -197,27 +178,30 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
 
     float weight = 0.0;
 
-
 //    if(Is_Zero(data->h_bias) && Is_Zero(data->v_bias))
 //    {
 //        bias = 0.0;
 //    }
 //    else
 //    {
-//        if(fabs(data->h_bias) / fabs(data->v_bias) > 1.2)
-//        {
-//            weight = fabs(data->v_bias)/fabs(data->h_bias);
 //
-//            bias = data->h_bias;
-//        }
-//        else if((data->v_bias) / fabs(data->h_bias) > 2.0)
+//
+//        if(((fabs(data->v_bias) / fabs(data->h_bias) > 2.0)&& (fabs(data->v_bias) >= 25.0))|| (fabs(data->v_bias) >= 30.0))
 //        {
 //            weight = fabs(data->h_bias)/fabs(data->v_bias);
 //
-//            weight = weight * weight * 0.5;
+//            //weight = weight * weight * 0.5;
 //
-//            bias = weight * data->h_bias + (1 - weight) * data->v_bias;
+//            bias = weight * data->h_bias + (1.0 - weight) * data->v_bias;
+//
+//            bias = data->v_bias;
 //        }
+////        else if(fabs(data->h_bias) / fabs(data->v_bias) > 1.2)
+////        {
+////            //weight = fabs(data->v_bias)/fabs(data->h_bias);
+////
+////            bias = data->h_bias;
+////        }
 //        else
 //        {
 //            bias = data->h_bias;
@@ -231,6 +215,7 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
     }
 
     bias = data->h_bias;
+
 //    float trackingState = data->TrackingState * 1.0;
 
 
@@ -257,6 +242,35 @@ float CalculateSpeed(void *argv)
 
     return 0.0;
 }
+
+//        if(data->H_ESensorValue[0] > data->H_ESensorValue[1] && data->H_ESensorValue[0] > data->H_ESensorValue[2]) //左电感最大
+//        {
+//                data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
+//
+//                data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
+//
+//                data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
+//        }
+//
+//        if(data->H_ESensorValue[2] > data->H_ESensorValue[1] && data->H_ESensorValue[2] > data->H_ESensorValue[0]) //右电感最大
+//        {
+//
+//                data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
+//
+//                data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
+//
+//                data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
+//
+//        }
+//
+//        if(data->H_ESensorValue[1] > data->H_ESensorValue[2] && data->H_ESensorValue[1] > data->H_ESensorValue[0]) //中电感最大
+//        {
+//                data->h_bias = CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
+//
+//                data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
+//
+//                data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
+//        }
 
 // float CalculateBias(void *argv)
 // {
