@@ -173,7 +173,7 @@ void RightAngle_Handler(data_t *data)
 
                 rightAngleCount = 50;
 
-                DebugBeepOn;
+     //           DebugBeepOn;
             }
 
             break;
@@ -193,7 +193,7 @@ void RightAngle_Handler(data_t *data)
 
         case RA_Out:
 
-            DebugBeepOff;
+  //          DebugBeepOff;
             rightAngleState = RA_Wait;
             Unlock(data->Element);
             data->Element.Type = None;

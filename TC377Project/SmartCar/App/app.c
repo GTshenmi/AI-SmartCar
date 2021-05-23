@@ -58,7 +58,11 @@ void Core1_Main()
     while(1)
     {
 
-        os.task.UiUpdate(&UIData,sizeof(UIData));
+        for(int i = 0 ; i < 8 ; i++)
+        {
+            Screen.WriteXLine(Screen.Self,i,"AD[%d] = %d",i,Data[data_pointer].SESensor_SampleValue[i]);
+        }
+        //os.task.UiUpdate(&UIData,sizeof(UIData));
 
         Core1_CheckStatus();
 
