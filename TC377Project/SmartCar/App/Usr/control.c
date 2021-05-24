@@ -91,12 +91,6 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
         PID_Ctrl(&data->M_PID,tspeed,aspeed);
 
         PwmValue = (sint16_t)ConstrainFloat(data->M_PID.Result,-5000.0,5000.0);
-
-
-        /*For Debug.*/
-        DebugCopy(data->ASpeed,aspeed);
-        DebugCopy(data->TSpeed,tspeed);
-        DebugCopy(data->MPwmValue,PwmValue);
     }
 
     //PwmValue = target_speed;

@@ -12,18 +12,19 @@
      c z                                                         
  */
 
-void EQueue_Init(esensor_queue_t *queue)
+void EQueue_Init(esensor_queue_t *queue,float *data,sint32_t len)
 {
+    queue->MaxDataLen = len;
+
     for(int i = 0 ; i < queue->MaxPos ; i++)
     {
-        for(int j = 0 ; j < MaxDataLen ; j++)
-        {
-            queue->Data[i][j] = 0.0;
-        }
+        queue->Data[i] = (data + i * queue->MaxDataLen);
     }
 
     queue->CurrentPos = 0;
+
     queue->MaxPos = MaxQueueLen;
+
     queue->ZeroPos = 1;
 }
 
@@ -56,7 +57,7 @@ float *EQueue_Gets(esensor_queue_t *queue,sint32_t index,float *data,sint32_t st
 {
     sint32_t currentPos = queue->CurrentPos;
 
-    float *srcAddr = EQueue_SearchByIndex(queue,index + currentPos);
+    float *srcAddr = EQueue_SearchByIndex(queue,index + currentPos - 1);
 
     if(data != NULL)
         memcpy(data,srcAddr + start *sizeof(float),(end - start) * sizeof(float));
@@ -64,17 +65,14 @@ float *EQueue_Gets(esensor_queue_t *queue,sint32_t index,float *data,sint32_t st
     return srcAddr;
 }
 
-void EQueue_Puts(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end,bool is_inc)
+void EQueue_Puts(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end)
 {
     float *dstAddr = EQueue_SearchByIndex(queue,queue->CurrentPos);
 
     memcpy(dstAddr + start *sizeof(float),data,(end - start) * sizeof(float));
 
-    if(is_inc)
-    {
-        queue->CurrentPos++;
-        queue->ZeroPos++;
-    }
+    queue->CurrentPos++;
+    queue->ZeroPos++;
 
     EQueue_RangeAssert(queue);
 }
@@ -86,7 +84,7 @@ void EQueue_Print(esensor_queue_t *queue)
         printf("[%d]:",i);
 
         printf("[");
-        for(int j = 0; j < MaxDataLen ;j++)
+        for(int j = 0; j < queue->MaxDataLen ;j++)
         {
             printf("%f",queue->Data[i][j]);
 

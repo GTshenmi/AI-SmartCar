@@ -122,7 +122,7 @@ void NNCU_Test(void)
 
 void EQueue_Test(esensor_queue_t *queue)
 {
-    EQueue.Init(queue);
+    //EQueue.Init(queue);
 
     float array[7];
 

@@ -176,7 +176,7 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
 
     /*Calculate Bias:*/
 
-    float weight = 0.0;
+    //float weight = 0.0;
 
 //    if(Is_Zero(data->h_bias) && Is_Zero(data->v_bias))
 //    {

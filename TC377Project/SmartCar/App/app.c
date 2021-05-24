@@ -41,7 +41,23 @@ void Core0_Main()
         if(os.time.getnmsFlag(1000))
         {
             //GLED.Toggle(GLED.Self);
+
             Core0_CheckStatus();
+
+//            GetESensorData(&Data[data_pointer]);
+//
+//            ESensorDataProcess(&Data[data_pointer]);
+//
+//            EQueue.Puts(&data->EQueue,data->LESensor_NormalizedValue,0,7);
+//
+//            data->eSensorData = EQueue.Gets(&data->EQueue,0,NULL,0,7);
+//
+//            Console.WriteLine("Raw Data:");
+//            Console.WriteArray("float",data->LESensor_NormalizedValue,7);
+//
+//            Console.WriteLine("Queue Data:");
+//            Console.WriteArray("float",data->eSensorData,7);
+
             Console.WriteLine("h_bias = %f,v_bias = %f,bias = %f,weight = %f",data->h_bias,data->v_bias,data->Bias,fabs(data->h_bias)/fabs(data->v_bias));
         }
     }
@@ -58,11 +74,7 @@ void Core1_Main()
     while(1)
     {
 
-        for(int i = 0 ; i < 8 ; i++)
-        {
-            Screen.WriteXLine(Screen.Self,i,"AD[%d] = %d",i,Data[data_pointer].SESensor_SampleValue[i]);
-        }
-        //os.task.UiUpdate(&UIData,sizeof(UIData));
+        os.task.UiUpdate(&UIData,sizeof(UIData));
 
         Core1_CheckStatus();
 

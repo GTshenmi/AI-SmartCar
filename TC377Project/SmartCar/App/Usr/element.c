@@ -18,13 +18,16 @@
  *           1            1             0
  *
  *
- *           Y = A'B + AB' = A B
+ *           Y = A'B + AB' = A ^ B
  * */
-#define RightAngleJudgeCondition ((data->V_ESensorValue[0] >= 30.0) ^ (data->V_ESensorValue[1] >= 30.0))
+//#define RightAngleJudgeCondition ((data->V_ESensorValue[0] >= 30.0) ^ (data->V_ESensorValue[1] >= 30.0)) //Raw
 
-#define CrossJudgeCondition      ((data->V_ESensorValue[0] >= 50.0) && (data->V_ESensorValue[1] >= 50.0))
+#define RightAngleJudgeCondition (((data->V_ESensorValue[0] >= 30.0) ^ (data->V_ESensorValue[1] >= 30.0)) && (fabs(data->v_bias) >= 15.0))
+#define RightAngleOutCondition   (rightAngleCount <= 0) && (data->V_ESensorValue[0] <=20.0 && data->V_ESensorValue[1] <= 20.0) && (data->H_ESensorValue[0] >=20.0 ||data->H_ESensorValue[1] >=20.0|| data->H_ESensorValue[2] >= 20.0)
 
-//((data->V_ESensorValue[0] >= 30.0) || (data->V_ESensorValue[1] >= 30.0)) && (!((data->V_ESensorValue[0] >= 30.0) && (data->V_ESensorValue[1] >= 30.0)))
+#define CrossJudgeCondition      ((data->V_ESensorValue[0] >= 45.0) || (data->V_ESensorValue[1] >= 45.0))
+
+#define CycleJudgeCondition      0//((data->H_ESensorValue[1] > 2 * data->H_ESensorValue[0]) || (data->H_ESensorValue[1] >= 2 * data->H_ESensorValue[2])) &&  (data->H_ESensorValue[1] >= 70.0)
 
 void LoseLine_Handler(data_t *data);
 void Cycle_Handler(data_t *data);
@@ -36,16 +39,9 @@ float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-
-    if(CrossJudgeCondition)
+    if(CrossJudgeCondition)             //十字
     {
         data->Element.Type = Cross;
-
-        GLED.ON(GLED.Self);
-    }
-    else
-    {
-        GLED.OFF(GLED.Self);
     }
 
     if(RightAngleJudgeCondition && data->Element.Type != Cross)
@@ -56,10 +52,10 @@ float ElementDetermine(void *argv)
         data->Element.Type = RightAngle;
     }
 
-//    if(((data->H_ESensorValue[1] > 2 * data->H_ESensorValue[0]) || (data->H_ESensorValue[1] >= 2 * data->H_ESensorValue[2])) &&  (data->H_ESensorValue[1] >= 60.0))
-//    {
-//        SetValueWLock(data->Element,Type,Cross);
-//    }
+    if(CycleJudgeCondition)
+    {
+        data->Element.Type = Cycle;
+    }
 
     return data->Element.Type * 1.0;
 
@@ -81,64 +77,143 @@ void SpecialElementHandler(void *argv)
         case Cross:
             Cross_Handler(data);
             break;
+        case Cycle:
+            Cycle_Handler(data);
+            break;
         default:
             break;
     }
 
-
-//    if(data->TrackingState == LoseLine)
-//    {
-//        //LoseLine_Handler(data);
-//    }
-//    else
-//    {
-//        switch(data->Element.Type)
-//        {
-//            case RightAngle:
-//                RightAngle_Handler(data);
-//                break;
-//            case Cross:
-//                Cross_Handler(data);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-
+    if(data->TrackingState == LoseLine)
+    {
+        //LoseLine_Handler();
+    }
 }
 
-void Cross_Handler(data_t *data)
+void Cross_Handler(data_t *data) //十字
 {
-    cycle_state_t cycleState = CC_Wait;
+    static cross_state_t crossState = CS_Wait;
 
-    switch(cycleState)
+    static incross_attitude_t inCrossAttitude = CS_UndefinedIn;
+
+    static cross_info_t   crossInfo = CS_UndefinedInfo;
+
+    static sint32_t crossCount = 0;
+
+    static sint32_t crossTurnCount = 0;
+
+
+    switch(crossState)
     {
-        case CC_Wait:
+        case CS_Wait:
 
-            if(data->Element.Type == Cycle)
-                cycleState = CC_Confirm;
+            if(data->Element.Type == Cross)
+                crossState = CS_Confirm;
             break;
 
-        case CC_Confirm:    //确认是环岛
+        case CS_Confirm:    //确认是十字
             
-            
-            Lock(data->Element);
+            if(CrossJudgeCondition)
+            {
+                if(data->o_difference >= 50.0)        //入左十字
+                {
+                    crossInfo = CS_Left;
+                }
+                else if(data->o_difference <= -50.0)   //入右十字
+                {
+                    crossInfo = CS_Right;
+                }
+                else    //偏离过大 or 判断错误
+                {
+                    crossInfo = CS_UndefinedIn;
+                }
+
+                if(data->h_bias >= 30.0)  //右斜入十字
+                {
+                    inCrossAttitude = CS_RightIn;
+                }
+                else if(data->h_bias <= -30.0)  //左斜入十字
+                {
+                    inCrossAttitude = CS_LeftIn;
+                }
+                else    //中入十字
+                {
+                    inCrossAttitude = CS_MidIn;
+                }
+
+                GLED.ON(GLED.Self);
+
+            }
+
+            crossState = CS_In;
 
             break;
 
-        case CC_In:         //打角入环
+        case CS_In: //调整姿态
+
+            crossState = CS_Tracking;
+            crossCount = 300;
 
             break;
 
-        case CC_Tracking:   //环内正常寻迹
+        case CS_Tracking:
+
+            crossCount--;
+
+            if((crossTurnCount <= 0) && ((RightAngleJudgeCondition) || (data->h_bias >= 20.0)))
+            {
+                crossTurnCount = 35;
+                data->Bias = fsign(data->v_difference) * 100.0;
+
+//                if(crossInfo == CS_Right)
+//                {
+//                    data->Bias = 100.0;
+//                }
+//                else
+//                {
+//                    data->Bias = -100.0;
+
+            }
+            if(crossTurnCount >= 0)
+            {
+                crossTurnCount--;
+                data->Bias = fsign(data->v_difference) * 100.0;
+            }
+            else
+            {
+                crossTurnCount = 0;
+            }
+
+            if(CrossJudgeCondition && (crossCount <= 0))
+            {
+                crossState = CS_Out;
+                crossTurnCount = 0;
+            }
+//            if(crossInfo == CS_Right)
+//            {
+//                if((data->O_ESensorValue[0] >= 50.0) || (data->O_ESensorValue[1] >= 50.0))
+//                {
+//                    crossState = CS_Out;
+//                }
+//            }
+//            else
+//            {
+//
+//                if((data->O_ESensorValue[0] >= 50.0) || (data->O_ESensorValue[1] >= 50.0))
+//                {
+//                    crossState = CS_Out;
+//                }
+//            }
 
             break;
-        case CC_Out:        //出环
+        case CS_Out:
 
-            cycleState = CC_Wait;
+            crossState = CS_Wait;
             Unlock(data->Element);
             data->Element.Type = None;
+
             break;
+
         default:
 
             break;
@@ -147,7 +222,46 @@ void Cross_Handler(data_t *data)
 
 void Cycle_Handler(data_t *data)
 {
+    static cycle_state_t cycleState = CC_Undefined;
 
+    switch(cycleState)
+    {
+        case CC_Wait:
+
+            if(data->Element.Type == Cycle)
+                cycleState = CS_Confirm;
+            break;
+
+        case CC_Confirm:    //确认是十字
+
+            if(0)
+            {
+
+            }
+
+            break;
+
+        case CC_In: //调整姿态
+
+
+
+            break;
+
+        case CC_Tracking:
+
+            break;
+        case CS_Out:
+
+            cycleState = CC_Wait;
+            Unlock(data->Element);
+            data->Element.Type = None;
+
+            break;
+
+        default:
+
+            break;
+    }
 }
 
 void RightAngle_Handler(data_t *data)
@@ -171,9 +285,9 @@ void RightAngle_Handler(data_t *data)
             {
                 rightAngleState = RA_Tracking;
 
-                rightAngleCount = 50;
+                rightAngleCount = 300;
 
-     //           DebugBeepOn;
+                DebugBeepOn;
             }
 
             break;
@@ -184,7 +298,7 @@ void RightAngle_Handler(data_t *data)
 
             rightAngleCount--;
 
-            if((rightAngleCount <= 0) && (data->V_ESensorValue[0] <=20.0 && data->V_ESensorValue[1] <= 20.0) && (data->H_ESensorValue[0] >=20.0 ||data->H_ESensorValue[1] >=20.0|| data->H_ESensorValue[2] >= 20.0))
+            if(RightAngleOutCondition)
             {
                 rightAngleState = RA_Out;
             }
@@ -193,13 +307,15 @@ void RightAngle_Handler(data_t *data)
 
         case RA_Out:
 
-  //          DebugBeepOff;
+            DebugBeepOff;
             rightAngleState = RA_Wait;
             Unlock(data->Element);
             data->Element.Type = None;
 
             break;
 
+        case RA_Undefined:default:
+            break;
     }
 
 
@@ -225,9 +341,6 @@ void LoseLine_Handler(data_t *data)
 
     //vESensorValue[0] == eSensorData[0];
     //vESensorValue[1] = eSensorData[6];
-
-
-    
 
     float bias = 0.0;
 
@@ -317,10 +430,16 @@ void LoseLine_Handler(data_t *data)
 
             data->Bias = bias * 100.0;
 
+            if(data->Element.Type == Cross)
+            {
+
+            }
+
             if(vESensorValue[0] <= 20.0 && vESensorValue[1] <= 20.0 && (hESensorValue[0] >= 40.0 || hESensorValue[1] >= 40.0 || hESensorValue[2] >= 40.0))
             {
                 loseLineState = LL_Searched; 
             }
+
             break;
 
         case LL_Searched:
@@ -338,5 +457,7 @@ void LoseLine_Handler(data_t *data)
 
             break;
     }
+
+
 }
 

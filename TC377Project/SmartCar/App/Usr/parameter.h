@@ -29,7 +29,7 @@
     }while(0);                      \
 
 
-
+/* 丢线 Begin*/
 typedef enum
 {
     LL_Undefined,
@@ -38,18 +38,22 @@ typedef enum
     LL_SearchLine,//找线
     LL_Searched   //已找到
 }loseline_state_t;
+/* 丢线 End*/
 
+/* 直角 Begin*/
 typedef enum
 {
     RA_Undefined,
     RA_Wait,
     RA_Confirm,
-    RA_In,
     RA_Tracking,
     RA_Out,
 
-}rightangle_state_t;
+}rightangle_state_t; //直角
+/* 直角 End*/
 
+
+/* 环岛 Begin*/
 typedef enum
 {
     CC_Undefined,
@@ -58,7 +62,36 @@ typedef enum
     CC_In,
     CC_Tracking,
     CC_Out,
-}cycle_state_t;
+}cycle_state_t;   //环岛
+/* 环岛 End*/
+
+/* 十字 Begin*/
+typedef enum
+{
+    CS_Undefined,
+    CS_Wait,
+    CS_Confirm,
+    CS_In,
+    CS_Tracking,
+    CS_Out,
+}cross_state_t;    //十字
+
+typedef enum
+{
+    CS_UndefinedIn,
+    CS_MidIn,
+    CS_LeftIn,
+    CS_RightIn,
+}incross_attitude_t;     //十字
+
+typedef enum
+{
+    CS_UndefinedInfo,
+    CS_Left,
+    CS_Right,
+}cross_info_t;              //十字
+/* 十字 End*/
+
 
 typedef enum
 {
@@ -157,13 +190,8 @@ typedef struct
 
       /*For Debug.*/
 
-      DebugDefine(float,TSpeed);
-      DebugDefine(float,ASpeed);
-      DebugDefine(uint16_t,MPwmValue);
+      float *eSensorData;
 
-      DebugDefine(float,VBias);
-      DebugDefine(float,HBias);
-      DebugDefine(float,Weight);
 }data_t;
 
 typedef struct

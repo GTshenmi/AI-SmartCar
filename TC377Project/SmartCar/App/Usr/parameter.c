@@ -13,25 +13,27 @@
 uint16_t CarMode = AutoBoot_Mode;/*运行模式*/
 uint16_t data_pointer = 0;
 
-void ParameterInit(void *data)
+float ESensorDataQueue[100][8];
+
+void ParameterInit(void *argv)
 {
-    data_t *pdata = (data_t *)data;
+    data_t *data = (data_t *)argv;
 
-    pdata->DynamicKp = 0.000860;
+    data->DynamicKp = 0.000860;
 
-    pdata->TrackingState = Normal_Tracking;
-    pdata->VTrackingState = Normal_Tracking;
-    pdata->HTrackingState = Normal_Tracking;
+    data->TrackingState = Normal_Tracking;
+    data->VTrackingState = Normal_Tracking;
+    data->HTrackingState = Normal_Tracking;
 
 
     /*Set Servo And Motor PID Value.*/
-    PID_SetValue(&pdata->M_PID,PIDValue(3.3,0.2,0.0));
+    PID_SetValue(&data->M_PID,PIDValue(3.3,0.2,0.0));
 
-    pdata->M_PID.MaxIntegralValue = 100.0;
+    data->M_PID.MaxIntegralValue = 100.0;
 
-    pdata->Speed = 3200.0;
+    data->Speed = 3200.0;
 
-    PID_SetValue(&pdata->S_PID,PIDValue(2.227,0.0,0.0));
+    PID_SetValue(&data->S_PID,PIDValue(2.227,0.0,0.0));
 
     PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
 
@@ -40,6 +42,8 @@ void ParameterInit(void *data)
     PID_SetOutPutLimit(&Data[data_pointer].S_PID,PIDLimit(Servo.MinAngle,Servo.MaxAngle));
 
     PID_SetOutPutLimit(&Data[data_pointer].M_PID,PIDLimit(-100.0,100.0));
+
+    EQueue.Init(&data->EQueue,&ESensorDataQueue[0][0],8);
 }
 
 data_t Data[MAX_DATA_LEN] =
