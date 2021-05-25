@@ -63,6 +63,16 @@ typedef struct
 
         uint *CarMode;           /*小车运行模式 AI_Mode = 0,   AutoBoot_Mode = 1,  ManualBoot_Mode = 2,   DebugMode = 3,  */
 
+        float *h_bias;
+        float *h_difference;
+        float *h_sum;
+        float *v_bias;
+        float *v_difference;
+        float *v_sum;
+        float *o_bias;
+        float *o_difference;
+        float *o_sum;
+
 }ui_data_pkg_t;
 
 extern ui_data_pkg_t UIData;

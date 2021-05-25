@@ -186,6 +186,18 @@ void UIPagesInit (void)
     UIPages[26].primaryTargetData = UIData.ServoSysState[2];
     UIPages[27].secondaryTargetData = UIData.DynamicKp;
 
+    UIPages[28].secondaryTargetData = UIData.o_difference;
+    UIPages[29].secondaryTargetData = UIData.h_difference;
+    UIPages[30].secondaryTargetData = UIData.v_difference;
+
+    UIPages[31].secondaryTargetData = UIData.o_sum;
+    UIPages[32].secondaryTargetData = UIData.h_sum;
+    UIPages[33].secondaryTargetData = UIData.v_sum;
+
+    UIPages[34].secondaryTargetData = UIData.o_bias;
+    UIPages[35].secondaryTargetData = UIData.h_bias;
+    UIPages[36].secondaryTargetData = UIData.v_bias;
+
     UIPages[0].beginLine = 0;
 
     for (uint8_t i = 1; i < TOTAL_PAGE_NUMBER; i++)
@@ -430,6 +442,78 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = openSettingPage,
+    },
+    [28] = {
+            .description = "o-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[28],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [29] = {
+            .description = "h-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[29],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [30] = {
+            .description = "v-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[30],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [31] = {
+            .description = "o-sum",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[31],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [32] = {
+            .description = "h-sum",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[32],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [33] = {
+            .description = "v-sum",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[33],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [34] = {
+            .description = "o-bias",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[34],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [35] = {
+            .description = "h-bias",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[35],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [36] = {
+            .description = "v-bias",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[36],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
     },
 };
 

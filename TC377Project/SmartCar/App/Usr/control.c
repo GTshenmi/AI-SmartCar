@@ -34,14 +34,16 @@ void AngleControl(void *argv)
 
     data_t *data = (data_t *)argv;
 
-//    if(fabs(data->Bias) >= 20.0)
+//    if(fabs(data->h_bias) >= 20.0 || data->v_bias >= 30.0)
 //        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp; //待调
 //    else
 //        data->S_PID.Kp = 0.8;
 //
-//
 //    /*动态PID限幅*/
 //    if(data->S_PID.Kp > 2.227)        //待调
+//        data->S_PID.Kp = 2.227;
+//
+//    if(data->Element.Type != None)
 //        data->S_PID.Kp = 2.227;
 
     PID_Ctrl(&data->S_PID,0.0,data->Bias);

@@ -244,6 +244,18 @@ void UIParameterInit(void)
     UIData.ServoSysState[1] = (uint *)&SDU.State;
     UIData.ServoSysState[2] = (uint *)&SEU.State;
 
+    UIData.o_difference= &Data[data_pointer].o_difference;
+    UIData.h_difference = &Data[data_pointer].h_difference;
+    UIData.v_difference = &Data[data_pointer].v_difference;
+
+    UIData.o_sum = &Data[data_pointer].o_sum;
+    UIData.h_sum = &Data[data_pointer].h_sum;
+    UIData.v_sum = &Data[data_pointer].v_sum;
+
+    UIData.o_bias = &Data[data_pointer].o_bias;
+    UIData.h_bias = &Data[data_pointer].h_bias;
+    UIData.v_bias = &Data[data_pointer].v_bias;
+
 
     //UIData.NActual_Speed = &Data[data_pointer].Actual_Speed;
     //UIData.NAngle = NULL;
