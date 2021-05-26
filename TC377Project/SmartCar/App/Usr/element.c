@@ -30,7 +30,12 @@
 
 #define CrossJudgeCondition      ((fabs(data->o_difference >= 65.0)) && (fabs((data->v_sum >= 80.0))) && (fabs(data->o_sum >= 100.0)))
 #define CrossOutJudgeCondition   ((fabs(data->o_difference >= 65.0) && fabs(data->v_sum >= 80.0)
+
+
 #define CycleJudgeCondition      0//((data->H_ESensorValue[1] > 2 * data->H_ESensorValue[0]) || (data->H_ESensorValue[1] >= 2 * data->H_ESensorValue[2])) &&  (data->H_ESensorValue[1] >= 70.0)
+
+#define LoseLineSearchedLineCondition (data->V_ESensorValue[0] <= 20.0 && data->V_ESensorValue[1] <= 20.0 && (data->H_ESensorValue[0] >= 40.0 || data->H_ESensorValue[1] >= 40.0 || data->H_ESensorValue[2] >= 40.0))
+//#define LoseLineSearchedLineCondition (data->TrackingState == Normal_Tracking)
 
 void LoseLine_Handler(data_t *data);
 void Cycle_Handler(data_t *data);
@@ -42,10 +47,10 @@ float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if(CrossJudgeCondition)             //十字
-    {
-        data->Element.Type = Cross;
-    }
+//    if(CrossJudgeCondition)             //十字
+//    {
+//        data->Element.Type = Cross;
+//    }
 
     if(RightAngleJudgeCondition && data->Element.Type != Cross)
     {
@@ -75,7 +80,7 @@ void SpecialElementHandler(void *argv)
             RightAngle_Handler(data);
             break;
         case Cross:
-            Cross_Handler(data);
+            //Cross_Handler(data);
             break;
         case Cycle:
             Cycle_Handler(data);
@@ -84,9 +89,16 @@ void SpecialElementHandler(void *argv)
             break;
     }
 
+    LoseLine_Handler(data);
+
     if(data->TrackingState == LoseLine)
     {
-        LoseLine_Handler(data);
+        DebugBeepOn;
+
+    }
+    else
+    {
+        DebugBeepOff;
     }
 }
 
@@ -201,7 +213,6 @@ void Cross_Handler(data_t *data) //十字
         case CS_Out:
 
             crossState = CS_Wait;
-            Unlock(data->Element);
             data->Element.Type = None;
 
             break;
@@ -224,7 +235,7 @@ void Cycle_Handler(data_t *data)
                 cycleState = CS_Confirm;
             break;
 
-        case CC_Confirm:    //确认是十字
+        case CC_Confirm:
 
             if(0)
             {
@@ -233,7 +244,7 @@ void Cycle_Handler(data_t *data)
 
             break;
 
-        case CC_In: //调整姿态
+        case CC_In:
 
 
 
@@ -283,21 +294,13 @@ void RightAngle_Handler(data_t *data)
 
                 rightAngleCount = 50;
 
-                DebugBeepOn;
+                GLED.ON(GLED.Self);
+                //DebugBeepOn;
             }
 
             break;
 
         case RA_Tracking:
-
-//            if(data->V_ESensorValue[0] <= 10.0 && data->V_ESensorValue[1] <= 10.0)
-//            {
-//                data->Bias = fsign(data->h_bias) * 100.0;
-//            }
-//            else
-//            {
-//                data->Bias = fsign(data->v_bias) * 100.0;
-//            }
 
             data->Bias = fsign(data->v_difference) * 100.0;
 
@@ -312,9 +315,9 @@ void RightAngle_Handler(data_t *data)
 
         case RA_Out:
 
-            DebugBeepOff;
+            //DebugBeepOff;
+            GLED.OFF(GLED.Self);
             rightAngleState = RA_Wait;
-            Unlock(data->Element);
             data->Element.Type = None;
 
             break;
@@ -327,178 +330,43 @@ void RightAngle_Handler(data_t *data)
 }
 
 
-void LoseLine_Handler(data_t *data)
-{
-    static loseline_state_t loseLineState = LL_Wait;
-
-    int lossLineCount = 0;
-
-    static float lastBias = 0.0;
-
-    switch(loseLineState)
-    {
-        case LL_Wait:
-
-            if(data->TrackingState == LoseLine)
-            {
-                loseLineState = LL_Lose;
-            }
-
-            break;
-        case LL_Lose:
-
-            loseLineState = LL_SearchLine;
-
-            break;
-
-        case LL_SearchLine:
-
-            if(data->Element.Type == Cross)
-            {
-
-            }
-
-            if(data->Element.Type == RightAngle)
-            {
-                data->Bias = lastBias;
-            }
-
-            if(data->V_ESensorValue[0] <= 20.0 && data->V_ESensorValue[1] <= 20.0 && (data->H_ESensorValue[0] >= 40.0 || data->H_ESensorValue[1] >= 40.0 || data->H_ESensorValue[2] >= 40.0))
-            {
-                loseLineState = LL_Searched;
-            }
-
-            break;
-
-        case LL_Searched:
-
-            loseLineState = LL_Wait;
-            data->TrackingState = Normal_Tracking;
-
-            break;
-
-        case LL_Undefined:default:
-
-            break;
-    }
-
-    lastBias = data->Bias;
-
-
-}
-
 //void LoseLine_Handler(data_t *data)
 //{
 //    static loseline_state_t loseLineState = LL_Wait;
 //
-//    //float weight[10] = {0.2,0.2,0.2,0.1,0.1,0.05,0.05,0.04,0.03,0.03};
-//
-//    float *eSensorData = EQueue.Gets(&data->EQueue,0,NULL,0,7);
-//
-//    float hESensorValue[3];
-//    float vESensorValue[2];
-//
-//    hESensorValue[0] = eSensorData[1];
-//    hESensorValue[1] = eSensorData[3];
-//    hESensorValue[2] = eSensorData[5];
-//
-//    //vESensorValue[0] == eSensorData[0];
-//    //vESensorValue[1] = eSensorData[6];
-//
-//    float bias = 0.0;
-//
 //    int lossLineCount = 0;
+//
+//    static float lastBias = 0.0;
 //
 //    switch(loseLineState)
 //    {
 //        case LL_Wait:
+//
 //            if(data->TrackingState == LoseLine)
 //            {
 //                loseLineState = LL_Lose;
 //            }
+//
 //            break;
 //        case LL_Lose:
 //
-//            DebugBeepOn;
-//
-//            Lock(data->Element);
-//
-//            for(int i = 0 ; i < 10 ;)       //取历史十次数据加权平均
-//            {
-//                float *_bias = EQueue.Gets(&data->EQueue,-i,NULL,7,8);
-//                float *_trackState = EQueue.Gets(&data->EQueue,-i,NULL,8,9);
-//
-//                if(*_trackState == (float)LoseLine)
-//                {
-//                    lossLineCount++;
-//                }
-//                else
-//                {
-//                    bias += *_bias;
-//                    i++;
-//                }
-//            }
-//
-//            if(lossLineCount >= 10) //丢线超过10个点
-//            {
-//                sint32_t rightcount = 0;
-//                sint32_t leftcount = 0;
-//                sint32_t count = 0;
-//
-//                for(int i = 0 ; i < 10;)
-//                {
-//                    float *_bias = EQueue.Gets(&data->EQueue,-i,NULL,7,8);
-//                    float *_trackState = EQueue.Gets(&data->EQueue,-i,NULL,8,9);
-//
-//                    if(*_trackState != (float)LoseLine)
-//                    {
-//                        if(*_bias >= 0.0)
-//                        {
-//                            rightcount++;
-//                        }
-//                        else
-//                        {
-//                            leftcount--;
-//                        }
-//
-//                        i++;
-//                    }
-//                    count++;
-//
-//                    if(count >= 100)
-//                        break;
-//
-//
-//                }
-//
-//                sint32_t angle = leftcount + rightcount;
-//
-//                if(abs(angle) <= 2)
-//                {
-//                    bias = 0.0;
-//                }
-//                else
-//                {
-//                    bias = fsign(angle);
-//                }
-//            }
-//            else
-//            {
-//                bias /= 10.0;
-//            }
+//            loseLineState = LL_SearchLine;
 //
 //            break;
 //
 //        case LL_SearchLine:
-//
-//            data->Bias = bias * 100.0;
 //
 //            if(data->Element.Type == Cross)
 //            {
 //
 //            }
 //
-//            if(vESensorValue[0] <= 20.0 && vESensorValue[1] <= 20.0 && (hESensorValue[0] >= 40.0 || hESensorValue[1] >= 40.0 || hESensorValue[2] >= 40.0))
+//            if(data->Element.Type == RightAngle)
+//            {
+//                data->Bias = lastBias;
+//            }
+//
+//            if(data->V_ESensorValue[0] <= 20.0 && data->V_ESensorValue[1] <= 20.0 && (data->H_ESensorValue[0] >= 40.0 || data->H_ESensorValue[1] >= 40.0 || data->H_ESensorValue[2] >= 40.0))
 //            {
 //                loseLineState = LL_Searched;
 //            }
@@ -510,10 +378,6 @@ void LoseLine_Handler(data_t *data)
 //            loseLineState = LL_Wait;
 //            data->TrackingState = Normal_Tracking;
 //
-//            Unlock(data->Element);
-//
-//            DebugBeepOff;
-//
 //            break;
 //
 //        case LL_Undefined:default:
@@ -521,6 +385,122 @@ void LoseLine_Handler(data_t *data)
 //            break;
 //    }
 //
+//    lastBias = data->Bias;
+//
 //
 //}
+
+
+void LoseLine_Handler(data_t *data)
+{
+    static loseline_state_t loseLineState = LL_Wait;
+
+    static float bias = 0.0;
+
+    int index = 0;
+
+//    if(data->TrackingState == Normal_Tracking)
+//    {
+//        loseLineState = LL_Wait;
+//        //bias = 0.0;
+//    }
+
+    switch(loseLineState)
+    {
+        case LL_Wait:
+            if(data->TrackingState == LoseLine)
+            {
+                loseLineState = LL_Lose;
+            }
+            break;
+        case LL_Lose:
+
+            //DebugBeepOn;
+
+            for(index = 1 ; index < 10 ; index++)
+            {
+                float *_eType = Queue.Gets(&data->ElementTypeQueue,-index,NULL,0,1);
+                float *_trackingState = Queue.Gets(&data->TrackingQueue,-index,NULL,0,1);
+
+                if(FIs_Equal(*_eType,data->Element.Type * 1.0) && (!FIs_Equal(*_trackingState,LoseLine * 1.0)))
+                {
+                    float *_bias = NULL;
+
+                    if(data->Element.Type == None)
+                        _bias = Queue.Gets(&data->RawBiasQueue,-index,NULL,0,1);
+                    else
+                        _bias = Queue.Gets(&data->ElementBiasQueue,-index,NULL,0,1);
+                    bias = *_bias;
+
+                    BLED.ON(BLED.Self);
+
+                    break;
+                }
+                else
+                {
+                    if(!FIs_Equal(*_eType,data->Element.Type * 1.0))
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if(index >= 10)
+            {
+                //data->NeedToBack = true;
+            }
+            else
+            {
+                //bias /= index;
+            }
+
+            if(data->NeedToBack)
+            {
+                data->Bias = 0.0;
+                //BLED.ON(BLED.Self);
+
+            }
+            else
+            {
+                loseLineState = LL_SearchLine;
+            }
+
+
+
+            break;
+
+        case LL_SearchLine:
+
+            if(data->NeedToBack)
+            {
+
+            }
+            else
+            {
+                data->Bias = fsign(bias) * 100.0;
+            }
+
+            if(LoseLineSearchedLineCondition)
+            {
+                loseLineState = LL_Searched;
+            }
+
+            break;
+
+        case LL_Searched:
+
+            loseLineState = LL_Wait;
+            data->TrackingState = Normal_Tracking;
+
+            //DebugBeepOff;
+
+            break;
+
+        case LL_Undefined:default:
+
+            break;
+    }
+
+
+}
 

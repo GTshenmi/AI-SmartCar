@@ -13,6 +13,25 @@ void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    if(data->TrackingState == Normal_Tracking)
+    {
+        data->Speed = 3200;
+    }
+
+    if(data->NeedToBack)
+    {
+        data->Speed = -3500;
+    }
+    else
+    {
+        data->Speed = 3200;
+    }
+
+//    if(data->Element.Type == RightAngle)
+//    {
+//        data->Speed = 2500;
+//    }
+
     float formatedSpeed = 0.0;
 
     formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;

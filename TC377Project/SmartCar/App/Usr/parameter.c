@@ -14,6 +14,10 @@ uint16_t CarMode = AutoBoot_Mode;/*运行模式*/
 uint16_t data_pointer = 0;
 
 float ESensorDataQueue[100][8];
+float RBiasDataQueue[100];
+float EBiasDataQueue[100];
+float TrackingDataQueue[100];
+float ElementDataQueue[100];
 
 void ParameterInit(void *argv)
 {
@@ -43,7 +47,11 @@ void ParameterInit(void *argv)
 
     PID_SetOutPutLimit(&Data[data_pointer].M_PID,PIDLimit(-100.0,100.0));
 
-    EQueue.Init(&data->EQueue,&ESensorDataQueue[0][0],8);
+    Queue.Init(&data->ESensorQueue,&ESensorDataQueue[0][0],8);
+    Queue.Init(&data->RawBiasQueue,&RBiasDataQueue[0],8);
+    Queue.Init(&data->ElementBiasQueue,&EBiasDataQueue[0],8);
+    Queue.Init(&data->TrackingQueue,&TrackingDataQueue[0],8);
+    Queue.Init(&data->ElementTypeQueue,&TrackingDataQueue[0],8);
 }
 
 data_t Data[MAX_DATA_LEN] =

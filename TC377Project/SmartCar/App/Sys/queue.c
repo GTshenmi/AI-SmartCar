@@ -12,9 +12,11 @@
      c z                                                         
  */
 
-void EQueue_Init(esensor_queue_t *queue,float *data,sint32_t len)
+void Queue_Init(queue_t *queue,float *data,sint32_t len)
 {
     queue->MaxDataLen = len;
+
+    queue->MaxPos = MaxQueueLen;
 
     for(int i = 0 ; i < queue->MaxPos ; i++)
     {
@@ -28,7 +30,7 @@ void EQueue_Init(esensor_queue_t *queue,float *data,sint32_t len)
     queue->ZeroPos = 1;
 }
 
-void EQueue_RangeAssert(esensor_queue_t *queue)
+void Queue_RangeAssert(queue_t *queue)
 {
     if(queue->CurrentPos >= queue->MaxPos)
         queue->CurrentPos = 0;
@@ -43,21 +45,21 @@ void EQueue_RangeAssert(esensor_queue_t *queue)
         queue->ZeroPos = queue->MaxPos - 1;
 }
 
-float *EQueue_SearchByIndex(esensor_queue_t *queue,sint32_t index)
+float *Queue_SearchByIndex(queue_t *queue,sint32_t index)
 {  
     return index < 0 ? queue->Data[index % MaxQueueLen + MaxQueueLen] : queue->Data[index % MaxQueueLen];
 }
 
-float *EQueue_SearchByZeroIndex(esensor_queue_t *queue,sint32_t index)
+float *Queue_SearchByZeroIndex(queue_t *queue,sint32_t index)
 {
-    return EQueue_SearchByIndex(queue,index + queue->ZeroPos - 1);
+    return Queue_SearchByIndex(queue,index + queue->ZeroPos - 1);
 }
 
-float *EQueue_Gets(esensor_queue_t *queue,sint32_t index,float *data,sint32_t start,sint32_t end)
+float *Queue_Gets(queue_t *queue,sint32_t index,float *data,sint32_t start,sint32_t end)
 {
     sint32_t currentPos = queue->CurrentPos;
 
-    float *srcAddr = EQueue_SearchByIndex(queue,index + currentPos - 1);
+    float *srcAddr = Queue_SearchByIndex(queue,index + currentPos - 1);
 
     if(data != NULL)
         memcpy(data,srcAddr + start *sizeof(float),(end - start) * sizeof(float));
@@ -65,19 +67,19 @@ float *EQueue_Gets(esensor_queue_t *queue,sint32_t index,float *data,sint32_t st
     return srcAddr;
 }
 
-void EQueue_Puts(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end)
+void Queue_Puts(queue_t *queue,float *data,sint32_t start,sint32_t end)
 {
-    float *dstAddr = EQueue_SearchByIndex(queue,queue->CurrentPos);
+    float *dstAddr = Queue_SearchByIndex(queue,queue->CurrentPos);
 
     memcpy(dstAddr + start *sizeof(float),data,(end - start) * sizeof(float));
 
     queue->CurrentPos++;
     queue->ZeroPos++;
 
-    EQueue_RangeAssert(queue);
+    Queue_RangeAssert(queue);
 }
 
-void EQueue_Print(esensor_queue_t *queue)
+void Queue_Print(queue_t *queue)
 {
     for(int i = 0 ; i < MaxQueueLen ; i++)
     {
@@ -101,14 +103,14 @@ void EQueue_Print(esensor_queue_t *queue)
     }
 }
 
-squeue_m EQueue = 
+squeue_m Queue =
 {
-    .Init = EQueue_Init,
+    .Init = Queue_Init,
 
-    .Gets = EQueue_Gets,
-    .Puts = EQueue_Puts,
-    .Print = EQueue_Print,
+    .Gets = Queue_Gets,
+    .Puts = Queue_Puts,
+    .Print = Queue_Print,
 
-    .SearchByIndex = EQueue_SearchByIndex,
-    .SearchByZeroIndex = EQueue_SearchByZeroIndex,  
+    .SearchByIndex = Queue_SearchByIndex,
+    .SearchByZeroIndex = Queue_SearchByZeroIndex,
 };

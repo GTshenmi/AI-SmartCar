@@ -16,6 +16,8 @@
 
 #define Is_Zero(x) ((fabs(x)) < Zero)
 
+#define FIs_Equal(x,y) (fabs((x) - (y)) < Zero)
+
 #define fsign(x) ((x) > 0.0 ?  1.0 : -1.0 )
 
 #define max(a,b) ((a) > (b) ? (a) : (b))

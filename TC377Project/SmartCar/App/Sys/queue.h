@@ -24,21 +24,21 @@ typedef struct
     sint32_t ZeroPos;
 
     sint32_t MaxPos;
-}esensor_queue_t;
+}queue_t;
 
 typedef struct
 {
-    void (*Init)(esensor_queue_t *queue,float *data,sint32_t len);
+    void (*Init)(queue_t *queue,float *data,sint32_t len);
 
-    float *(*SearchByIndex)(esensor_queue_t *queue,sint32_t index);
-    float *(*SearchByZeroIndex)(esensor_queue_t *queue,sint32_t index);
+    float *(*SearchByIndex)(queue_t *queue,sint32_t index);
+    float *(*SearchByZeroIndex)(queue_t *queue,sint32_t index);
 
-    void (*Puts)(esensor_queue_t *queue,float *data,sint32_t start,sint32_t end);
-    float *(*Gets)(esensor_queue_t *queue,sint32_t index,float *data,sint32_t start,sint32_t end);
+    void (*Puts)(queue_t *queue,float *data,sint32_t start,sint32_t end);
+    float *(*Gets)(queue_t *queue,sint32_t index,float *data,sint32_t start,sint32_t end);
 
-    void (*Print)(esensor_queue_t *queue);
+    void (*Print)(queue_t *queue);
 }squeue_m;
 
-extern squeue_m EQueue;
+extern squeue_m Queue;
 
 #endif /* APP_SYS_QUEUE_H_ */

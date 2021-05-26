@@ -120,7 +120,7 @@ void NNCU_Test(void)
 
 }
 
-void EQueue_Test(esensor_queue_t *queue)
+void Queue_Test(queue_t *queue)
 {
     //EQueue.Init(queue);
 
@@ -146,7 +146,7 @@ void EQueue_Test(esensor_queue_t *queue)
 
         }
 
-        EQueue.Print(queue);
+        Queue.Print(queue);
 
         Console.WriteLine("\n\n\n");
 

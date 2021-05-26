@@ -34,7 +34,7 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-    data_t *data = &Data[data_pointer];
+    //data_t *data = &Data[data_pointer];
 
     while(1)
     {
@@ -48,17 +48,24 @@ void Core0_Main()
 //
 //            ESensorDataProcess(&Data[data_pointer]);
 //
-//            EQueue.Puts(&data->EQueue,data->LESensor_NormalizedValue,0,7);
+//            Queue.Puts(&data->EQueue,data->LESensor_NormalizedValue,0,7);
+//            Queue.Puts(&data->BQueue,&data->Bias,0,1);
 //
-//            data->eSensorData = EQueue.Gets(&data->EQueue,0,NULL,0,7);
+//            data->eSensorData = Queue.Gets(&data->EQueue,0,NULL,0,7);
+//
+//            float *bias = Queue.Gets(&data->BQueue,0,NULL,0,1);
 //
 //            Console.WriteLine("Raw Data:");
 //            Console.WriteArray("float",data->LESensor_NormalizedValue,7);
 //
 //            Console.WriteLine("Queue Data:");
 //            Console.WriteArray("float",data->eSensorData,7);
+//
+//            Console.WriteLine("Raw Bias:%f",data->Bias);
+//            Console.WriteLine("Queue Bias:%f",*bias);
 
-            Console.WriteLine("h_bias = %f,v_bias = %f,bias = %f,weight = %f",data->h_bias,data->v_bias,data->Bias,fabs(data->h_bias)/fabs(data->v_bias));
+
+            //Console.WriteLine("h_bias = %f,v_bias = %f,bias = %f,weight = %f",data->h_bias,data->v_bias,data->Bias,fabs(data->h_bias)/fabs(data->v_bias));
         }
     }
 }

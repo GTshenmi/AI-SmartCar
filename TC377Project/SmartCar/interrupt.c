@@ -51,9 +51,20 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 
     ESensorDataProcess(data);
 
+    Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
+    Queue.Puts(&data->RawBiasQueue,&data->Bias,0,1);
+    float trackingState = data->TrackingState;
+    Queue.Puts(&data->TrackingQueue,&trackingState,0,1);
+
     ElementDetermine(data);
 
+    float eType = data->Element.Type * 1.0;
+    Queue.Puts(&data->ElementTypeQueue,&eType,0,1);
+
     SpecialElementHandler(data);
+
+    Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
+
 }
 
 void STM1_CH1_IRQHandler(void)       /*Servo Control.*/

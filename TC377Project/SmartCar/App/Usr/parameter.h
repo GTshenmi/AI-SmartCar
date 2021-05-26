@@ -178,9 +178,14 @@ typedef struct
       tracking_state_t VTrackingState;
       tracking_state_t TrackingState;
       
-      esensor_queue_t EQueue;
-
+      queue_t ESensorQueue;//ESensor
+      queue_t RawBiasQueue;//Raw Bias
+      queue_t ElementBiasQueue;//Element Bias
+      queue_t TrackingQueue;//LoseLine
+      queue_t ElementTypeQueue;//Element
       /*State*/
+
+      bool NeedToBack;
 
       uint AI_State;
 
