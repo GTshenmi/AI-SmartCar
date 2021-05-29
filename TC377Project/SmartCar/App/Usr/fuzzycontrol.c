@@ -1,14 +1,5 @@
 #include "fuzzycontrol.h"
 
-/*
- *
- *
- * @TODO:Íê³ÉÁ¬ĞøÂÛÓòµÄÄ£ºı¿ØÖÆ
- *
- * 
- * 
- */
-
 float EFF[13] = {-100.0,-80.0,-60.0,-40.0,-20.0,-10.0,0.0,10.0,20.0,40.0,60.0,80.0,100.0};  
 
 float DFF[13] = {-20.0,-15.0,-10.0,-5.0,-2.0,-1.0,0.0,1.0,2.0,5.0,10.0,15.0,20.0}; 
@@ -73,7 +64,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
     {
         for(int i = 1 ; i <= 12 ; i++)
         {
-            if(fuzzy->e[1] <= EFF[i] && fuzzy->e[1] >= EFF[i - 1]) //ÓĞ2Ìõ¹æÔòÉúĞ§
+            if(fuzzy->e[1] <= EFF[i] && fuzzy->e[1] >= EFF[i - 1]) //æœ‰2æ¡è§„åˆ™ç”Ÿæ•ˆ
             {
                 En = i - 1 - 6;
 
@@ -101,7 +92,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
     {
         for(int i = 1 ; i <= 12 ; i++)
         {
-            if(fuzzy->ec <= DFF[i] && fuzzy->ec >= DFF[i - 1]) //ÓĞ2Ìõ¹æÔòÉúĞ§
+            if(fuzzy->ec <= DFF[i] && fuzzy->ec >= DFF[i - 1]) //æœ‰2æ¡è§„åˆ™ç”Ÿæ•ˆ
             {
                 En = i - 1 - 6;
 
@@ -114,7 +105,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 
     /*Fuzzy Reasoning.*/
     
-    Un[0] = FuzzyRule[En + 6][Dn + 6] + 6;      //2*2 = 4Ìõ¹æÔòÉúĞ§
+    Un[0] = FuzzyRule[En + 6][Dn + 6] + 6;      //2*2 = 4æ¡è§„åˆ™ç”Ÿæ•ˆ
 
     UF[0] = min(EF[0],DF[0]);
 
@@ -127,7 +118,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
     Un[3] = FuzzyRule[En + 6 + 1][Dn + 6 + 1] + 6;
     UF[3] = min(EF[1],DF[1]);
 
-    if(Un[0] == Un[1])    //Í¬Á¥Êô¶ÈÓïÑÔÈ¡´ó
+    if(Un[0] == Un[1])    //åŒéš¶å±åº¦è¯­è¨€å–å¤§
     {
         if(UF[0] > UF[1])
             UF[1] = 0;
@@ -311,11 +302,11 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 
 //       uint32_t k = 0;
 
-//       for(int i = 0 ; i < 13 ; i++)                   //¼ÆËãÄ£ºı¼¯ºÏ E_MemberShip[13] ºÍ EC_MemberShip[13] µÄ µÑ¿¨¶û»ı£¬²¢×ª³É1Î¬¾ØÕóECC[169]¡£
+//       for(int i = 0 ; i < 13 ; i++)                   //ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ E_MemberShip[13] ï¿½ï¿½ EC_MemberShip[13] ï¿½ï¿½ ï¿½Ñ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½1Î¬ï¿½ï¿½ï¿½ï¿½ECC[169]ï¿½ï¿½
 //       {
 //           for(int j = 0 ; j < 13 ; j++)
 //           {
-//               if(E_MemberShip[i] < EC_MemberShip[j])  //È¡Ğ¡ÔËËã
+//               if(E_MemberShip[i] < EC_MemberShip[j])  //È¡Ğ¡ï¿½ï¿½ï¿½ï¿½
 //                   EEC[k] = E_MemberShip[i];         
 //               else
 //                   EEC[k] = EC_MemberShip[j];
@@ -332,7 +323,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 //       /*Calculate ECC[169] X R[169][13]*/  
 //       for(int i = 0 ; i < 169 ;i++)         
 //       {
-//           for(int j = 0 ; j < 13;j++)   //*È¡Ğ¡ +È¡´ó
+//           for(int j = 0 ; j < 13;j++)   //*È¡Ğ¡ +È¡ï¿½ï¿½
 //           {
 //               if(EEC[i] > R[i][j])
 //                 temp = R[i][j];
@@ -344,7 +335,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 //           }
 //       }
 
-//       /*·´Ä£ºı(ÖØĞÄ·¨)*/
+//       /*ï¿½ï¿½Ä£ï¿½ï¿½(ï¿½ï¿½ï¿½Ä·ï¿½)*/
 
 //       fuzzy->U = 0.0;
 

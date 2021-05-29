@@ -9,37 +9,45 @@
 adc_resource_t ADC_Resources[20] =
 {
         [0] = {
+               //.ADCN = {ADC6,10000},
                .ADCN = {ADC6,10000},
-               .Description = "Short ESensor[0]->AD1"
+               .Description = "Short ESensor[0]->Reversed..."        //x dui
         },
         [1] = {
-               .ADCN = {ADC11,10000},
+               //.ADCN = {ADC11,10000},
+               .ADCN = {ADC29,10000},
                .Description = "Short ESensor[1]->AD2"
         },
         [2] = {
-               .ADCN = {ADC10,10000},
-               .Description = "Short ESensor[2]->AD3"
+               //.ADCN = {ADC10,10000},
+               .ADCN = {ADC26,10000},
+               .Description = "Short ESensor[2]->AD3-"
         },
         [3] = {
-               .ADCN = {ADC21,10000},
-               .Description = "Short ESensor[3]->AD4"
+               //.ADCN = {ADC21,10000},
+               .ADCN = {ADC25,10000},
+               .Description = "Short ESensor[3]->AD4"       //x  dui
         },
         [4] = {
-               .ADCN = {ADC12,10000},
+               //.ADCN = {ADC12,10000},
+               .ADCN = {ADC28,10000},
                .Description = "Short ESensor[4]->AD5"
         },
         [5] = {
-               .ADCN = {ADC26,10000},
+               //.ADCN = {ADC26,10000},
+               .ADCN = {ADC12,10000},
                .Description = "Short ESensor[5]->AD6"
         },
         [6] = {
-               .ADCN = {ADC24,10000},
-               .Description = "Short ESensor[6]->AD7"
+               //.ADCN = {ADC24,10000},
+               .ADCN = {ADC11,10000},
+               .Description = "Short ESensor[6]->AD7-"      //x
         },
 
         [7] = {
-               .ADCN = {ADC27,10000},
-               .Description = "Short ESensor[7]->AD8"
+               //.ADCN = {ADC27,10000},
+               .ADCN = {ADC10,10000},
+               .Description = "Short ESensor[7]->AD8-"      //x
         },
 
 

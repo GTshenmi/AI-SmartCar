@@ -234,6 +234,8 @@ interrupt.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+interrupt.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 interrupt.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 interrupt.o :	../App/Usr/NeuralNetwork/nn_library.h

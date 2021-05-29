@@ -234,6 +234,8 @@ ctrlsys.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 ctrlsys.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 ctrlsys.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 ctrlsys.o :	../App/Usr/NeuralNetwork/nn_library.h

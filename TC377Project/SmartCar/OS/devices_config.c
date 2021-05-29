@@ -105,42 +105,42 @@ esensor_t SESensor[MAX_SESENSOR_NUM] = /*ok*/  /*1 - 8 Right*/
     [0] = {
             .Init = ESensor_Init,
             .Self = &SESensor[0],
-            .ADCn = &ADC_Resources[7].ADCN,//AD8
+            .ADCn = &ADC_Resources[7].ADCN,//AD8  x
     },
     [1] = {
             .Init = ESensor_Init,
             .Self = &SESensor[1],
-            .ADCn = &ADC_Resources[5].ADCN,//AD6
+            .ADCn = &ADC_Resources[5].ADCN,//AD6  .
     },
     [2] = {
             .Init = ESensor_Init,
             .Self = &SESensor[2],
-            .ADCn = &ADC_Resources[6].ADCN,//AD7
+            .ADCn = &ADC_Resources[6].ADCN,//AD7  x
     },
     [3] = {
             .Init = ESensor_Init,
             .Self = &SESensor[3],
-            .ADCn = &ADC_Resources[3].ADCN,//AD4
+            .ADCn = &ADC_Resources[3].ADCN,//AD4  x
     },
     [4] = {
             .Init = ESensor_Init,
             .Self = &SESensor[4],
-            .ADCn = &ADC_Resources[4].ADCN,//AD5
+            .ADCn = &ADC_Resources[4].ADCN,//AD5 .
     },
     [5] = {
             .Init = ESensor_Init,
             .Self = &SESensor[5],
-            .ADCn = &ADC_Resources[1].ADCN,//AD2
+            .ADCn = &ADC_Resources[1].ADCN,//AD2 .
     },
     [6] = {
             .Init = ESensor_Init,
             .Self = &SESensor[6],
-            .ADCn = &ADC_Resources[2].ADCN,//AD3
+            .ADCn = &ADC_Resources[2].ADCN,//AD3 .
     },
     [7] = {
             .Init = ESensor_Init,
             .Self = &SESensor[7],
-            .ADCn = &ADC_Resources[0].ADCN,//AD1
+            .ADCn = &ADC_Resources[0].ADCN,//AD1  x
     },
 };
 

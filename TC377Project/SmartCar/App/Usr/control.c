@@ -13,24 +13,10 @@ void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if(data->TrackingState == Normal_Tracking)
+    if(!data->Is_AdjustSpeed)
     {
         data->Speed = 3200;
     }
-
-    if(data->NeedToBack)
-    {
-        data->Speed = -3500;
-    }
-    else
-    {
-        data->Speed = 3200;
-    }
-
-//    if(data->Element.Type == RightAngle)
-//    {
-//        data->Speed = 2500;
-//    }
 
     float formatedSpeed = 0.0;
 
@@ -54,12 +40,12 @@ void AngleControl(void *argv)
     data_t *data = (data_t *)argv;
 
 //    if(fabs(data->h_bias) >= 20.0 || data->v_bias >= 30.0)
-//        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp; //待调
+//        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp;
 //    else
 //        data->S_PID.Kp = 0.8;
 //
-//    /*动态PID限幅*/
-//    if(data->S_PID.Kp > 2.227)        //待调
+//
+//    if(data->S_PID.Kp > 2.227)
 //        data->S_PID.Kp = 2.227;
 //
 //    if(data->Element.Type != None)

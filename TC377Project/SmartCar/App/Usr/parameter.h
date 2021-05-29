@@ -35,6 +35,7 @@ typedef enum
     LL_Undefined,
     LL_Wait,
     LL_Lose,      //丢线
+    LL_BackSearchLine,
     LL_SearchLine,//找线
     LL_Searched   //已找到
 }loseline_state_t;
@@ -48,12 +49,18 @@ typedef enum
     RA_Confirm,
     RA_Tracking,
     RA_Out,
-
-}rightangle_state_t; //直角
+}rightangle_state_t;
 /* 直角 End*/
 
 
 /* 环岛 Begin*/
+typedef enum
+{
+    CC_DirUndefined,
+    CC_DirLeft,
+    CC_DirRight,
+}cycle_dir_t;
+
 typedef enum
 {
     CC_Undefined,
@@ -62,8 +69,8 @@ typedef enum
     CC_In,
     CC_Tracking,
     CC_Out,
-}cycle_state_t;   //环岛
-/* 环岛 End*/
+}cycle_state_t;
+/* 环岛 Begin*/
 
 /* 十字 Begin*/
 typedef enum
@@ -74,7 +81,7 @@ typedef enum
     CS_In,
     CS_Tracking,
     CS_Out,
-}cross_state_t;    //十字
+}cross_state_t;
 
 typedef enum
 {
@@ -82,15 +89,15 @@ typedef enum
     CS_MidIn,
     CS_LeftIn,
     CS_RightIn,
-}incross_attitude_t;     //十字
+}incross_attitude_t;
 
 typedef enum
 {
     CS_UndefinedInfo,
     CS_Left,
     CS_Right,
-}cross_info_t;              //十字
-/* 十字 End*/
+}cross_info_t;
+/* 十字 Begin*/
 
 
 typedef enum
@@ -129,14 +136,13 @@ typedef enum
 
 typedef struct
 {
-      uint32_t Cache;        /*没啥用*/
-
       /*For Motor PID*/
 
       PID_TypeDef M_PID;     /*电机速度的PID控制器*/
 
       float Actual_Speed; /*实际速度*/
       float Speed;        /*速度*/
+      bool  Is_AdjustSpeed;
 
       /*For Servo PID*/
 
@@ -172,10 +178,9 @@ typedef struct
       float o_bias;
 
       /*For Element*/    
+
       elementwlock_t Element;  /*赛道元素类型*/
 
-      tracking_state_t HTrackingState;
-      tracking_state_t VTrackingState;
       tracking_state_t TrackingState;
       
       queue_t ESensorQueue;//ESensor
@@ -183,6 +188,7 @@ typedef struct
       queue_t ElementBiasQueue;//Element Bias
       queue_t TrackingQueue;//LoseLine
       queue_t ElementTypeQueue;//Element
+
       /*State*/
 
       bool NeedToBack;

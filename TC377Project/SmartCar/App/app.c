@@ -78,10 +78,21 @@ void Core1_Main()
 {
     TIMx.Init(&TIM_Resources[4].TIMN);
 
+    ADCx.Init(&ADC_Resources[15].ADCN);
+
     while(1)
     {
 
-        os.task.UiUpdate(&UIData,sizeof(UIData));
+        //os.task.UiUpdate(&UIData,sizeof(UIData));
+        Screen.Clear(Screen.Self,WHITE);
+        uint16_t value = ADCx.Read(&ADC_Resources[15].ADCN);
+
+        Screen.WriteXLine(Screen.Self,1,"%u",value);
+
+//        for(int i = 0 ; i < 8 ;i++)
+//        {
+//            Screen.WriteXLine(Screen.Self,i,"AD[%d] = %.3f",i,Data[data_pointer].SESensor_NormalizedValue[i]);
+//        }
 
         Core1_CheckStatus();
 

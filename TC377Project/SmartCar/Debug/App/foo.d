@@ -238,6 +238,8 @@ foo.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+foo.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 foo.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 foo.o :	../App/Usr/NeuralNetwork/nn_library.h

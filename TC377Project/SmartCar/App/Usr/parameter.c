@@ -1,7 +1,7 @@
 /*
  * parameter.c
  *
- *  Created on: 2020年12月6日
+ *  Created on: 2020-12-06
  *      Author: 936305695
  *
  *  @Brief:
@@ -10,7 +10,7 @@
 #include <parameter.h>
 #include "include.h"
 
-uint16_t CarMode = AutoBoot_Mode;/*运行模式*/
+uint16_t CarMode = AutoBoot_Mode;/*运行状态*/
 uint16_t data_pointer = 0;
 
 float ESensorDataQueue[100][8];
@@ -26,9 +26,6 @@ void ParameterInit(void *argv)
     data->DynamicKp = 0.000860;
 
     data->TrackingState = Normal_Tracking;
-    data->VTrackingState = Normal_Tracking;
-    data->HTrackingState = Normal_Tracking;
-
 
     /*Set Servo And Motor PID Value.*/
     PID_SetValue(&data->M_PID,PIDValue(3.3,0.2,0.0));
@@ -57,22 +54,18 @@ void ParameterInit(void *argv)
 data_t Data[MAX_DATA_LEN] =
 {
         [0] = {
-                .Cache = 0,
                 .CarMode = AI_Mode,
                 .AI_State = AI_Free,
         },
         [1] = {
-                .Cache = 0,
                 .CarMode = AutoBoot_Mode,
                 .AI_State = AI_Free,
         },
         [2] = {
-                .Cache = 0,
                 .CarMode = ManualBoot_Mode,
                 .AI_State = AI_Free,
         },
         [3] = {
-                .Cache = 0,
                 .CarMode = DebugMode,
                 .AI_State = AI_Free,
         },

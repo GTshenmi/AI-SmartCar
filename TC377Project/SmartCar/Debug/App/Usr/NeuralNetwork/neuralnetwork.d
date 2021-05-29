@@ -250,6 +250,8 @@ neuralnetwork.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 neuralnetwork.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+neuralnetwork.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 neuralnetwork.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 neuralnetwork.o :	../App/Usr/attitude.h

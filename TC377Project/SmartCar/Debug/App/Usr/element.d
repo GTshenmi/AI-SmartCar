@@ -214,6 +214,10 @@ element.o :	../OS/os.h
 ../OS/os.h :
 element.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+element.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
+element.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 element.o :	../App/include.h
 ../App/include.h :
 element.o :	../OS/os.h
@@ -224,8 +228,6 @@ element.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 element.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
-element.o :	../App/Sys/sys.h
-../App/Sys/sys.h :
 element.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 element.o :	../App/Sys/sys.h

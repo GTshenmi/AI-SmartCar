@@ -236,6 +236,8 @@ dataprocess.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+dataprocess.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 dataprocess.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 dataprocess.o :	../App/Usr/NeuralNetwork/nn_library.h

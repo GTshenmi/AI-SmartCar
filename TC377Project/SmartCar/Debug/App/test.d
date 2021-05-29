@@ -234,6 +234,8 @@ test.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+test.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 test.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 test.o :	../App/Usr/NeuralNetwork/nn_library.h

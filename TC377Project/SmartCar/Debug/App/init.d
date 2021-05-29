@@ -236,6 +236,8 @@ init.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 init.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+init.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 init.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 init.o :	../App/Usr/NeuralNetwork/nn_library.h

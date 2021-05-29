@@ -236,6 +236,8 @@ parameter.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 parameter.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+parameter.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 parameter.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 parameter.o :	../App/Usr/NeuralNetwork/nn_library.h

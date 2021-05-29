@@ -234,6 +234,8 @@ Cpu2_Main.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 Cpu2_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+Cpu2_Main.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 Cpu2_Main.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 Cpu2_Main.o :	../App/Usr/NeuralNetwork/nn_library.h

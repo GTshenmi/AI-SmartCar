@@ -236,6 +236,8 @@ control.o :	../App/Usr/element.h
 ../App/Usr/element.h :
 control.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+control.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 control.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
 ../App/Usr/NeuralNetwork/neuralnetwork.h :
 control.o :	../App/Usr/NeuralNetwork/nn_library.h
