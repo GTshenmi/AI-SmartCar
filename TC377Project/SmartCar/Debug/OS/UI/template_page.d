@@ -64,3 +64,5 @@ template_page.o :	../OS/UI/ui_utilities.h
 ../OS/UI/ui_utilities.h :
 template_page.o :	../OS/UI/ui_utilities.h
 ../OS/UI/ui_utilities.h :
+template_page.o :	../OS/UI/matrix_page.h
+../OS/UI/matrix_page.h :

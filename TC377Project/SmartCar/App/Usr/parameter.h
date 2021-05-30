@@ -108,15 +108,15 @@ typedef enum
 
 typedef enum
 {
+    None = 0,
     RightAngle, //Ö±½ÇÍä
     Cross,      //Ê®×Ö
     Cycle,
-    None,
 }element_t;
 
 typedef struct
 {
-    element_t Type;
+    uint Type;
 
     bool Lock;
 }elementwlock_t;

@@ -35,6 +35,9 @@ typedef struct
         uint16_t *M_PwmDuty;     /*电机占空比*/
 
         /*舵机部分*/
+
+        //uint *ElementType;
+
         float    *Angle;         /*要设置的舵机角度(原数据)*/
         float    *NAngle;        /*要设置的舵机角度(归一化)*/
 

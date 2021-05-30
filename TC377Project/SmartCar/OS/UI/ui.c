@@ -8,6 +8,7 @@
 #include "ui.h"
 #include "info_page.h"
 #include "ui_utilities.h"
+#include "matrix_page.h"
 
 ui_data_pkg_t UIData;
 
@@ -29,46 +30,51 @@ void (*SaveParameterToSD) (void) = NULL;
  * */
 void UI_Init ()
 {
-    KEY[0].Connect(KEY[0].Self,cursorDownPressedCallBack,NULL,NULL,0);
-    KEY[1].Connect(KEY[1].Self,cursorUpPressedCallBack,NULL,NULL,0);
-    KEY[2].Connect(KEY[2].Self,cancelPressedCallBack,NULL,NULL,0);
-    KEY[3].Connect(KEY[3].Self,confirmPressedCallBack,NULL,NULL,0);
-    KEY[4].Connect(KEY[4].Self,pageUpPressedCallBack,pageUpLongPressedCallBack,NULL,0);
-    KEY[5].Connect(KEY[5].Self,pageDownPressedCallBack,pageDownLongPressedCallBack,NULL,0);
+    KEY[0].Connect(KEY[0].Self, cursorDownPressedCallBack, NULL, NULL, 0);
+    KEY[1].Connect(KEY[1].Self, cursorUpPressedCallBack, NULL, NULL, 0);
+    KEY[2].Connect(KEY[2].Self, cancelPressedCallBack, NULL, NULL, 0);
+    KEY[3].Connect(KEY[3].Self, confirmPressedCallBack, NULL, NULL, 0);
+    KEY[4].Connect(KEY[4].Self, pageUpPressedCallBack, pageUpLongPressedCallBack, NULL, 0);
+    KEY[5].Connect(KEY[5].Self, pageDownPressedCallBack, pageDownLongPressedCallBack, NULL, 0);
 
     UIPagesInit();
 }
 
 void UI_Update (void *argv, uint16_t argc)
 {
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    if (Cpu_AcquireMutex(&UIMutexLock))
+    ExecuteClearScreen();
+    //ui_data_pkg_t *data = (ui_data_pkg_t *)argv;
+    if (SettingPage.GetStatus(SettingPage.Self))
     {
-#endif
-        //ui_data_pkg_t *data = (ui_data_pkg_t *)argv;
-        if (SettingPage.GetStatus(SettingPage.Self))
+        SettingPage.Display(SettingPage.Self);
+    }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.Display(MatrixPage.Self);
+    }
+    else
+    {
+        for (uint8_t i = 0; i < TOTAL_PAGE_NUMBER; i++)
         {
-            SettingPage.Display(SettingPage.Self);
-        }
-        else
-        {
-            for (uint8_t i = 0; i < TOTAL_PAGE_NUMBER; i++)
-            {
-                UIPageDisplay(UIPages[i].Self);
-            }
-
+            UIPageDisplay(UIPages[i].Self);
         }
 
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-        Cpu_ReleaseMutex(&UIMutexLock);
     }
 
-#endif
 }
 
 void cursorUpPressedCallBack (key_t *self, void *argv, uint16_t argc) // ¹â±êÉÏÉý
 {
-    if(!SettingPage.GetStatus(SettingPage.Self)){
+    if (SettingPage.GetStatus(SettingPage.Self))
+    {
+
+    }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.RightPressed(MatrixPage.Self);
+    }
+    else
+    {
         uint8_t i = 0;
         while (!UIPages[i].cursorSelected && i <= TOTAL_PAGE_NUMBER)
         {
@@ -89,12 +95,21 @@ void cursorUpPressedCallBack (key_t *self, void *argv, uint16_t argc) // ¹â±êÉÏÉ
             UIPages[i].cursorSelected = 1;
         }
     }
-    Screen.ShowNum(Screen.Self,Screen.Width - Screen.Font.Width,0,9,BLACK);
+    Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 9, BLACK);
 }
 
-void cursorDownPressedCallBack (key_t *self, void *argv, uint16_t argc) // TODO test: ¸ü¸Ä¹â±êÖ¸Ïò ÏÂ½µ
+void cursorDownPressedCallBack (key_t *self, void *argv, uint16_t argc) //¹â±êÏÂ½µ
 {
-    if(!SettingPage.GetStatus(SettingPage.Self)){
+    if (SettingPage.GetStatus(SettingPage.Self))
+    {
+
+    }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.LeftPressed(MatrixPage.Self);
+    }
+    else
+    {
         uint8_t i = 0;
         while (!UIPages[i].cursorSelected && i <= TOTAL_PAGE_NUMBER)
         {
@@ -115,7 +130,7 @@ void cursorDownPressedCallBack (key_t *self, void *argv, uint16_t argc) // TODO 
             UIPages[i].cursorSelected = 1;
         }
     }
-    Screen.ShowNum(Screen.Self,Screen.Width - Screen.Font.Width,0,1,BLACK);
+    Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 1, BLACK);
 }
 
 void confirmPressedCallBack (key_t *self, void *argv, uint16_t argc) // È·¶¨°´¼ü
@@ -124,7 +139,10 @@ void confirmPressedCallBack (key_t *self, void *argv, uint16_t argc) // È·¶¨°´¼ü
     {
         SettingPage.Confirm(SettingPage.Self);
     }
-
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.ConfirmPressed(MatrixPage.Self);
+    }
     else
     {
         uint8_t i = 0;
@@ -134,7 +152,7 @@ void confirmPressedCallBack (key_t *self, void *argv, uint16_t argc) // È·¶¨°´¼ü
         }
         UIPages[i].confirmAction(UIPages[i].Self);
     }
-    Screen.ShowNum(Screen.Self,Screen.Width - Screen.Font.Width,0,2,BLACK);
+    Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 2, BLACK);
 }
 
 void pageUpPressedCallBack (key_t *self, void *argv, uint16_t argc) // Ð¡up
@@ -142,6 +160,10 @@ void pageUpPressedCallBack (key_t *self, void *argv, uint16_t argc) // Ð¡up
     if (SettingPage.GetStatus(SettingPage.Self))
     {
         SettingPage.Add(SettingPage.Self);
+    }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.UpPressed(MatrixPage.Self);
     }
     else
     {
@@ -153,9 +175,7 @@ void pageUpPressedCallBack (key_t *self, void *argv, uint16_t argc) // Ð¡up
         changeCursorLocation();
 
     }
-    UI_Update(NULL, 0);
-
-    Screen.ShowNum(Screen.Self,Screen.Width - Screen.Font.Width,0,3,BLACK);
+    Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 3, BLACK);
 }
 
 void pageDownPressedCallBack (key_t *self, void *argv, uint16_t argc) // Ð¡down
@@ -163,6 +183,10 @@ void pageDownPressedCallBack (key_t *self, void *argv, uint16_t argc) // Ð¡down
     if (SettingPage.GetStatus(SettingPage.Self))
     {
         SettingPage.Minus(SettingPage.Self);
+    }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.DownPressed(MatrixPage.Self);
     }
     else
     {
@@ -173,19 +197,29 @@ void pageDownPressedCallBack (key_t *self, void *argv, uint16_t argc) // Ð¡down
         }
         changeCursorLocation();
     }
-    Screen.ShowNum(Screen.Self,Screen.Width - Screen.Font.Width,0,4,BLACK);
+    Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 4, BLACK);
 }
 
-void pageDownLongPressedCallBack(key_t *self, void *argv, uint16_t argc){
+void pageDownLongPressedCallBack (key_t *self, void *argv, uint16_t argc)
+{
     if (SettingPage.GetStatus(SettingPage.Self))
     {
         SettingPage.Minus(SettingPage.Self);
     }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.DownPressed(MatrixPage.Self);
+    }
 }
-void pageUpLongPressedCallBack (key_t *self, void *argv, uint16_t argc){
+void pageUpLongPressedCallBack (key_t *self, void *argv, uint16_t argc)
+{
     if (SettingPage.GetStatus(SettingPage.Self))
     {
         SettingPage.Add(SettingPage.Self);
+    }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.UpPressed(MatrixPage.Self);
     }
 }
 
@@ -196,8 +230,11 @@ void cancelPressedCallBack (key_t *self, void *argv, uint16_t argc) // // È¡Ïû°´
         SettingPage.Cancel(SettingPage.Self);
         ClearScreen();
     }
+    else if (MatrixPage.GetStatus(MatrixPage.Self))
+    {
+        MatrixPage.CancelPressed(MatrixPage.Self);
+    }
 
-    Screen.ShowNum(Screen.Self,Screen.Width - Screen.Font.Width,0,5,BLACK);
+    Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 5, BLACK);
 }
-
 

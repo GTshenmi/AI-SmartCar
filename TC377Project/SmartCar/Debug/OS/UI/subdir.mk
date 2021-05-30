@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../OS/UI/info_page.c \
+../OS/UI/matrix_page.c \
 ../OS/UI/settting_page.c \
 ../OS/UI/template_page.c \
 ../OS/UI/ui.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 
 OBJS += \
 ./OS/UI/info_page.o \
+./OS/UI/matrix_page.o \
 ./OS/UI/settting_page.o \
 ./OS/UI/template_page.o \
 ./OS/UI/ui.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 COMPILED_SRCS += \
 ./OS/UI/info_page.src \
+./OS/UI/matrix_page.src \
 ./OS/UI/settting_page.src \
 ./OS/UI/template_page.src \
 ./OS/UI/ui.src \
@@ -26,6 +29,7 @@ COMPILED_SRCS += \
 
 C_DEPS += \
 ./OS/UI/info_page.d \
+./OS/UI/matrix_page.d \
 ./OS/UI/settting_page.d \
 ./OS/UI/template_page.d \
 ./OS/UI/ui.d \

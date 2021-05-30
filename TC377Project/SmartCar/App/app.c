@@ -82,12 +82,11 @@ void Core1_Main()
 
     while(1)
     {
-
-        //os.task.UiUpdate(&UIData,sizeof(UIData));
-        Screen.Clear(Screen.Self,WHITE);
-        uint16_t value = ADCx.Read(&ADC_Resources[15].ADCN);
-
-        Screen.WriteXLine(Screen.Self,1,"%u",value);
+        os.task.UiUpdate(&UIData,sizeof(UIData));
+//        Screen.Clear(Screen.Self,WHITE);
+//        uint16_t value = ADCx.Read(&ADC_Resources[15].ADCN);
+//
+//        Screen.WriteXLine(Screen.Self,1,"%u",value);
 
 //        for(int i = 0 ; i < 8 ;i++)
 //        {

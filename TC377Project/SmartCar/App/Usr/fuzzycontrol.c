@@ -1,8 +1,8 @@
 #include "fuzzycontrol.h"
 
-float EFF[13] = {-100.0,-80.0,-60.0,-40.0,-20.0,-10.0,0.0,10.0,20.0,40.0,60.0,80.0,100.0};  
+float EFF[7] = {-75.0,-50.0,-25.0,0.0,25.0,50.0,75.0};
 
-float DFF[13] = {-20.0,-15.0,-10.0,-5.0,-2.0,-1.0,0.0,1.0,2.0,5.0,10.0,15.0,20.0}; 
+float DFF[7] = {-20.0,-10.0,-5.0,0.0,5.0,10.0,20.0};
 
 float UFF[13] = {-1.0,-0.8,-0.6,-0.4,-0.2,-0.1,0.0,0.1,0.2,0.4,0.6,0.8,1.0}; 
 
@@ -62,11 +62,11 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
     }
     else
     {
-        for(int i = 1 ; i <= 12 ; i++)
+        for(int i = 1 ; i <= 6 ; i++)
         {
             if(fuzzy->e[1] <= EFF[i] && fuzzy->e[1] >= EFF[i - 1]) //有2条规则生效
             {
-                En = i - 1 - 6;
+                En = i - 1 - 3;
 
                 EF[0] = -(fuzzy->e[1] - EFF[i])/(EFF[i] - EFF[i - 1]);
 
@@ -90,11 +90,11 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
     }
     else
     {
-        for(int i = 1 ; i <= 12 ; i++)
+        for(int i = 1 ; i <= 6 ; i++)
         {
             if(fuzzy->ec <= DFF[i] && fuzzy->ec >= DFF[i - 1]) //有2条规则生效
             {
-                En = i - 1 - 6;
+                En = i - 1 - 3;
 
                 DF[0] = -(fuzzy->e[1] - DFF[i])/(DFF[i] - DFF[i - 1]);
 
@@ -105,17 +105,17 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 
     /*Fuzzy Reasoning.*/
     
-    Un[0] = FuzzyRule[En + 6][Dn + 6] + 6;      //2*2 = 4条规则生效
+    Un[0] = FuzzyRule[En + 3][Dn + 3] + 6;      //2*2 = 4条规则生效
 
     UF[0] = min(EF[0],DF[0]);
 
-    Un[1] = FuzzyRule[En + 6 + 1][Dn + 6] + 6;
+    Un[1] = FuzzyRule[En + 3 + 1][Dn + 3] + 6;
     UF[1] = min(EF[1],DF[0]);
 
-    Un[2] = FuzzyRule[En + 6][Dn + 6 + 1] + 6;
+    Un[2] = FuzzyRule[En + 3][Dn + 3 + 1] + 6;
     UF[2] = min(EF[0],DF[1]);
 
-    Un[3] = FuzzyRule[En + 6 + 1][Dn + 6 + 1] + 6;
+    Un[3] = FuzzyRule[En + 3 + 1][Dn + 3 + 1] + 6;
     UF[3] = min(EF[1],DF[1]);
 
     if(Un[0] == Un[1])    //同隶属度语言取大

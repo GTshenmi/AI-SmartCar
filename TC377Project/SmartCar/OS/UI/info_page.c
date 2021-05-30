@@ -25,22 +25,22 @@ char* getStatus (char *String, uint *targetData)
 void displayAIInfo (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
 {
 
-    char stringBuffer[30];
-    sprintf(stringBuffer, "AI:");
-    switch (*UIData.AI_State)
-    {
-        case 0 :
-            strcpy(&stringBuffer[strlen(stringBuffer)], "Free ");
-            break;
-        case 1 :
-            strcpy(&stringBuffer[strlen(stringBuffer)], "Start");
-            break;
-        case 2 :
-            strcpy(&stringBuffer[strlen(stringBuffer)], "Busy ");
-            break;
-    }
-    Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
-            cursorSelected(Self));
+//    char stringBuffer[30];
+//    sprintf(stringBuffer, "AI:");
+//    switch (*UIData.AI_State)
+//    {
+//        case 0 :
+//            strcpy(&stringBuffer[strlen(stringBuffer)], "Free ");
+//            break;
+//        case 1 :
+//            strcpy(&stringBuffer[strlen(stringBuffer)], "Start");
+//            break;
+//        case 2 :
+//            strcpy(&stringBuffer[strlen(stringBuffer)], "Busy ");
+//            break;
+//    }
+//    Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
+//            cursorSelected(Self));
 
 }
 

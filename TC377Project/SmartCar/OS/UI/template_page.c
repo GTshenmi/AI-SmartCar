@@ -9,7 +9,7 @@
 #include "info_page.h"
 #include "setting_page.h"
 #include "ui_utilities.h"
-
+#include "matrix_page.h"
 
 
 void displayDataAlone (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
@@ -38,6 +38,27 @@ void displayDesciption (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginL
             cursorSelected(Self));
 }
 
+void displayElement (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
+{
+    char stringBuffer[30];
+    switch(*UIData.ElementType){
+        case 0:
+            sprintf(stringBuffer,"%s: None",Self->description);
+            break;
+        case 1:
+            sprintf(stringBuffer,"%s: RightAngle",Self->description);
+            break;
+        case 2:
+            sprintf(stringBuffer,"%s: Cross",Self->description);
+            break;
+        case 3:
+            sprintf(stringBuffer,"%s: Cycle",Self->description);
+            break;
+    }
+    Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
+            cursorSelected(Self));
+}
+
 void displayDataWithGraph (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
 {
     if (Self->targetDataType == INTEGER)
@@ -51,45 +72,48 @@ void displayDataWithGraph (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beg
                 (beginLineTmp * 2 + 1) * Screen.Font.Hight, BLACK);
         uint16_t lengthToFill = (uint16_t) Screen.Width / 2.0
                 * (((int16_t*) (Self->primaryTargetData))[dataLineTmp] / ADC_MAX_NUMBER);
-        Screen.Fill(Screen.Self, Screen.Width / 2, beginLineTmp * Screen.Font.Hight * 2,
+        Screen.Fill(Screen.Self, Screen.Width / 2, beginLineTmp * Screen.Font.Hight * 2 + 1,
                 Screen.Width / 2 + lengthToFill, (beginLineTmp * 2 + 1) * Screen.Font.Hight, BLACK);
+        Screen.Fill(Screen.Self, Screen.Width / 2 + lengthToFill + 1, beginLineTmp * Screen.Font.Hight * 2 + 1,
+                Screen.Width - 1, (beginLineTmp * 2 + 1) * Screen.Font.Hight, WHITE);
     }
     else if (Self->targetDataType == FLOAT)
     {
         char stringBuffer[30];
-        sprintf(stringBuffer, "%s: %.3f", Self->description, (((float*) (Self->secondaryTargetData))[dataLineTmp]));
+        sprintf(stringBuffer, "%s:%.2f", Self->description, (((float*) (Self->secondaryTargetData))[dataLineTmp]));
         Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
                 cursorSelected(Self));
 
         Screen.DrawSqr(Screen.Self, Screen.Width / 2, beginLineTmp * Screen.Font.Hight * 2, Screen.Width - 1,
                 (beginLineTmp * 2 + 1) * Screen.Font.Hight, BLACK);
         uint16_t lengthToFill = (uint16_t) Screen.Width / 2.0
-                * (((float*) (Self->secondaryTargetData))[dataLineTmp] / ADC_MAX_NUMBER);
+                * (((float*) (Self->secondaryTargetData))[dataLineTmp] / 100.0f);
         Screen.Fill(Screen.Self, Screen.Width / 2, beginLineTmp * Screen.Font.Hight * 2,
                 Screen.Width / 2 + lengthToFill, (beginLineTmp * 2 + 1) * Screen.Font.Hight, BLACK);
+        Screen.Fill(Screen.Self, Screen.Width / 2 + lengthToFill + 1, beginLineTmp * Screen.Font.Hight * 2 + 1,
+                Screen.Width - 1, (beginLineTmp * 2 + 1) * Screen.Font.Hight, WHITE);
 
     }
 
 }
 
-
-
-
-void loadFromSD(UIPageStruct *Self){
+void loadFromSD (UIPageStruct *Self)
+{
     LoadParameterFromSD();
 }
 
-void saveToSD(UIPageStruct *Self){
+void saveToSD (UIPageStruct *Self)
+{
     SaveParameterToSD();
 }
 
 void changeDisplayType (UIPageStruct *Self) // ÊÇ·ñ¹éÒ»»¯
 {
-    if (Self->targetDataType == INTEGER &&  Self->secondaryTargetData != NULL)
+    if (Self->targetDataType == INTEGER && Self->secondaryTargetData != NULL)
     {
         Self->targetDataType = FLOAT;
     }
-    else if(Self->targetDataType == FLOAT && Self->secondaryTargetData != NULL)
+    else if (Self->targetDataType == FLOAT && Self->secondaryTargetData != NULL)
     {
         Self->targetDataType = INTEGER;
     }
@@ -101,8 +125,14 @@ void emptyConfirmAction (UIPageStruct *Self)
 {
 }
 
-void openSettingPage(UIPageStruct *Self){
-    SettingPage.Open(SettingPage.Self,Self);
+void openSettingPage (UIPageStruct *Self)
+{
+    SettingPage.Open(SettingPage.Self, Self);
+}
+
+void openMatrixPage (UIPageStruct *Self)
+{
+    MatrixPage.Open(MatrixPage.Self, Self);
 }
 
 //    UIPages[0].primaryTargetData = UIData.LADC;
@@ -178,25 +208,19 @@ void UIPagesInit (void)
     UIPages[16].secondaryTargetData = UIData.MPID_Ki;
     UIPages[17].secondaryTargetData = UIData.MPID_Kd;
 
-    UIPages[21].primaryTargetData = UIData.MotorSysState[0];
-    UIPages[22].primaryTargetData = UIData.MotorSysState[1];
-    UIPages[23].primaryTargetData = UIData.MotorSysState[2];
-    UIPages[24].primaryTargetData = UIData.ServoSysState[0];
-    UIPages[25].primaryTargetData = UIData.ServoSysState[1];
-    UIPages[26].primaryTargetData = UIData.ServoSysState[2];
-    UIPages[27].secondaryTargetData = UIData.DynamicKp;
+    UIPages[21].secondaryTargetData = UIData.DynamicKp;
 
-    UIPages[28].secondaryTargetData = UIData.o_difference;
-    UIPages[29].secondaryTargetData = UIData.h_difference;
-    UIPages[30].secondaryTargetData = UIData.v_difference;
+    UIPages[22].secondaryTargetData = UIData.o_difference;
+    UIPages[23].secondaryTargetData = UIData.h_difference;
+    UIPages[24].secondaryTargetData = UIData.v_difference;
 
-    UIPages[31].secondaryTargetData = UIData.o_sum;
-    UIPages[32].secondaryTargetData = UIData.h_sum;
-    UIPages[33].secondaryTargetData = UIData.v_sum;
+    UIPages[25].secondaryTargetData = UIData.o_sum;
+    UIPages[26].secondaryTargetData = UIData.h_sum;
+    UIPages[27].secondaryTargetData = UIData.v_sum;
 
-    UIPages[34].secondaryTargetData = UIData.o_bias;
-    UIPages[35].secondaryTargetData = UIData.h_bias;
-    UIPages[36].secondaryTargetData = UIData.v_bias;
+    UIPages[28].secondaryTargetData = UIData.o_bias;
+    UIPages[29].secondaryTargetData = UIData.h_bias;
+    UIPages[30].secondaryTargetData = UIData.v_bias;
 
     UIPages[0].beginLine = 0;
 
@@ -388,63 +412,63 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
 
     },
     [21] = {
-            .description = "MSU",
-            .displayData = displaySysInfo,
-            .Self = &UIPages[21],
-            .lineLength = 1,
-            .confirmAction = changeSysStatus,
-    },
-    [22] = {
-            .description = "MDU",
-            .displayData = displaySysInfo,
-            .Self = &UIPages[22],
-            .lineLength = 1,
-            .confirmAction = changeSysStatus,
-
-    },
-    [23] = {
-            .description = "MEU",
-            .displayData = displaySysInfo,
-            .Self = &UIPages[23],
-            .lineLength = 1,
-            .confirmAction = changeSysStatus,
-
-    },
-    [24] = {
-            .description = "SSU",
-            .displayData = displaySysInfo,
-            .Self = &UIPages[24],
-            .lineLength = 1,
-            .confirmAction = changeSysStatus,
-
-    },
-    [25] = {
-            .description = "SDU",
-            .displayData = displaySysInfo,
-            .Self = &UIPages[25],
-            .lineLength = 1,
-            .confirmAction = changeSysStatus,
-
-
-    },
-    [26] = {
-            .description = "SEU",
-            .displayData = displaySysInfo,
-            .Self = &UIPages[26],
-            .lineLength = 1,
-            .confirmAction = changeSysStatus,
-
-    },
-    [27] = {
             .description = "DymKp",
             .displayData = displayDataAlone,
-            .Self = &UIPages[27],
+            .Self = &UIPages[21],
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = openSettingPage,
     },
-    [28] = {
+    [22] = {
             .description = "o-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[22],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [23] = {
+            .description = "h-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[23],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [24] = {
+            .description = "v-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[24],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [25] = {
+            .description = "o-sum",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[25],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [26] = {
+            .description = "h-sum",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[26],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [27] = {
+            .description = "v-sum",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[27],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [28] = {
+            .description = "o-bias",
             .displayData = displayDataAlone,
             .Self = &UIPages[28],
             .lineLength = 1,
@@ -452,7 +476,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [29] = {
-            .description = "h-diff",
+            .description = "h-bias",
             .displayData = displayDataAlone,
             .Self = &UIPages[29],
             .lineLength = 1,
@@ -460,7 +484,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [30] = {
-            .description = "v-diff",
+            .description = "v-bias",
             .displayData = displayDataAlone,
             .Self = &UIPages[30],
             .lineLength = 1,
@@ -468,51 +492,17 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [31] = {
-            .description = "o-sum",
-            .displayData = displayDataAlone,
+            .description = "FuzzyCtrl",
+            .displayData = displayDesciption,
             .Self = &UIPages[31],
             .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
+            .confirmAction = openMatrixPage,
     },
     [32] = {
-            .description = "h-sum",
-            .displayData = displayDataAlone,
+            .description = "Element",
+            .displayData = displayElement,
             .Self = &UIPages[32],
             .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
-    },
-    [33] = {
-            .description = "v-sum",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[33],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
-    },
-    [34] = {
-            .description = "o-bias",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[34],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
-    },
-    [35] = {
-            .description = "h-bias",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[35],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
-    },
-    [36] = {
-            .description = "v-bias",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[36],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },
 };

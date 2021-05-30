@@ -7,23 +7,20 @@
 
 #include "ui_utilities.h"
 
-#if defined(Chip) && (Chip == TC264 || Chip == TC377)
-Cpu_MutexLock UIMutexLock;
-#endif
+static _Bool needClearScreen;
 
-void ClearScreen(void){
+void ClearScreen (void)
+{
+    needClearScreen = 1;
+}
 
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    while(!Cpu_AcquireMutex(&UIMutexLock));
-#endif
-
-    Screen.Fill(Screen.Self, 0, 0, Screen.Width, Screen.Font.Hight * 17 - 1,
-            WHITE);
-
-#if defined(Chip) && Chip == TC377 || Chip == TC264
-    Cpu_ReleaseMutex(&UIMutexLock);
-#endif
-
+void ExecuteClearScreen (void)
+{
+    if (needClearScreen)
+    {
+        Screen.Fill(Screen.Self, 0, 0, Screen.Width, Screen.Font.Hight * 17 - 1, WHITE);
+        needClearScreen = 0;
+    }
 }
 
 uint8_t cursorSelected (UIPageStruct *Self)

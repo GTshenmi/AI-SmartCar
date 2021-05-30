@@ -256,6 +256,10 @@ void UIParameterInit(void)
     UIData.h_bias = &Data[data_pointer].h_bias;
     UIData.v_bias = &Data[data_pointer].v_bias;
 
+    //UIData.ElementType = &Data[data_pointer].Element.Type;
+
+
+
 
     //UIData.NActual_Speed = &Data[data_pointer].Actual_Speed;
     //UIData.NAngle = NULL;

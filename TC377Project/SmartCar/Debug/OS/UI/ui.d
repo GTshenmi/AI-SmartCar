@@ -64,3 +64,5 @@ ui.o :	../OS/UI/ui_utilities.h
 ../OS/UI/ui_utilities.h :
 ui.o :	../OS/UI/ui_utilities.h
 ../OS/UI/ui_utilities.h :
+ui.o :	../OS/UI/matrix_page.h
+../OS/UI/matrix_page.h :
