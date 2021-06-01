@@ -38,7 +38,7 @@ typedef sint32_t q31_t;
 
 #define NN_ROUND1(out_shift) ( 0x1 << (out_shift - 1) )
 
-static inline int __SSAT_GUN(signed long int VAL, signed long int BITPOS)
+static inline int __SSAT_GNU(signed long int VAL, signed long int BITPOS)//ARM 有符号饱和指令
 {
     signed long int min = -(1<<(BITPOS-1));
     signed long int max = (1<<(BITPOS-1)) - 1;
@@ -49,9 +49,9 @@ static inline int __SSAT_GUN(signed long int VAL, signed long int BITPOS)
     else
         return VAL;
 }
-#define __SSAT(VAL, BITPOS) __SSAT_GUN(VAL,BITPOS)
+#define __SSAT(VAL, BITPOS) __SSAT_GNU(VAL,BITPOS)
 
-static inline int __USAT_GUN(signed long int VAL, signed long int BITPOS) //待验证 ARM 无符号饱和
+static inline int __USAT_GNU(signed long int VAL, signed long int BITPOS) //待验证 ARM 无符号饱和指令
 {
     signed long int min = 0;
     signed long int max = (1<<(BITPOS)) - 1;
@@ -63,7 +63,7 @@ static inline int __USAT_GUN(signed long int VAL, signed long int BITPOS) //待验
     else
         return VAL;
 }
-#define __USAT(VAL, BITPOS) __USAT_GUN(VAL,BITPOS)
+#define __USAT(VAL, BITPOS) __USAT_GNU(VAL,BITPOS)
 
 
 #endif /* APP_USR_NEURALNETWORK_TRICORE_NN_COMMON_H_ */

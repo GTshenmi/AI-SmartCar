@@ -13,22 +13,41 @@ void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if(!data->Is_AdjustSpeed)
+
+    if(data->CarMode == AI_Mode)            //目前匀速，可以不改
     {
-        data->Speed = 3200;
+        if(!data->Is_AdjustSpeed)
+        {
+            data->Speed = 3200;
+        }
+
+        float formatedSpeed = 0.0;
+
+        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
+
+        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+        Motor.SetPwmValue(Motor.Self,data->Speed);
     }
+    else
+    {
+        if(!data->Is_AdjustSpeed)
+        {
+            data->Speed = 3200;
+        }
 
-    float formatedSpeed = 0.0;
+        float formatedSpeed = 0.0;
 
-    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
+        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
 
-    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
-    Motor.SetPwmValue(Motor.Self,data->Speed);
+        Motor.SetPwmValue(Motor.Self,data->Speed);
 
-    //Motor.SetSpeed(Motor.Self,formatedSpeed);
+        //Motor.SetSpeed(Motor.Self,formatedSpeed);
 
-    //Motor.Update(Motor.Self);
+        //Motor.Update(Motor.Self);        
+    }
 }
 
 void AngleControl(void *argv)
@@ -39,37 +58,51 @@ void AngleControl(void *argv)
 
     data_t *data = (data_t *)argv;
 
-//    if(fabs(data->h_bias) >= 20.0 || data->v_bias >= 30.0)
-//        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp;
-//    else
-//        data->S_PID.Kp = 0.8;
-//
-//
-//    if(data->S_PID.Kp > 2.227)
-//        data->S_PID.Kp = 2.227;
-//
-//    if(data->Element.Type != None)
-//        data->S_PID.Kp = 2.227;
+    if(data->CarMode == AI_Mode)
+    {
+        /*神经网络计算角度(范围(Servo.MinAngle,Servo.MaxAngle) --- (-175,175)) Angle < 0:左  Angle > 0:右*/
 
-    PID_Ctrl(&data->S_PID,0.0,data->Bias);
+        data->Angle = NeuralNetworkReasoning(data); 
+        
+        /*舵机设置角度*/
+        Servo.SetAngle(Servo.Self,data->Angle);         
 
-//    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
-//
-//    static float angle[5] = {0.0};
+        Servo.Update(Servo.Self);
+    }
+    else if(data->CarMode == AutoBoot_Mode)
+    {
+    //    if(fabs(data->h_bias) >= 20.0 || data->v_bias >= 30.0)
+    //        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp;
+    //    else
+    //        data->S_PID.Kp = 0.8;
+    //
+    //
+    //    if(data->S_PID.Kp > 2.227)
+    //        data->S_PID.Kp = 2.227;
+    //
+    //    if(data->Element.Type != None)
+    //        data->S_PID.Kp = 2.227;
 
-    data->Angle = data->S_PID.Result;
+        PID_Ctrl(&data->S_PID,0.0,data->Bias);
 
-    //data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
+    //    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
+    //
+    //    static float angle[5] = {0.0};
 
-    data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+        data->Angle = data->S_PID.Result;
 
-    //Servo.SetPwmValue(Servo.Self,data->SPwmValue);
+        //data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
-    //Servo.SetPwmValue(Servo.Self,750);
+        data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
 
-    Servo.SetAngle(Servo.Self,data->Angle);
+        //Servo.SetPwmValue(Servo.Self,data->SPwmValue);
 
-    Servo.Update(Servo.Self);
+        //Servo.SetPwmValue(Servo.Self,750);
+
+        Servo.SetAngle(Servo.Self,data->Angle);
+
+        Servo.Update(Servo.Self);
+    }
 }
 
 

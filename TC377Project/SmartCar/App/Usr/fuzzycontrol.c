@@ -54,7 +54,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 
         En = -6;
     }
-    else if(fuzzy->e[1] > EFF[12])
+    else if(fuzzy->e[1] > EFF[6])
     {
         EF[0] = 0.0;  
         EF[1] = 1.0;  
@@ -82,7 +82,7 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 
         Dn = -6;
     }
-    else if(fuzzy->ec > DFF[12])
+    else if(fuzzy->ec > DFF[6])
     {
         DF[0] = 0.0;  
         DF[1] = 1.0;  

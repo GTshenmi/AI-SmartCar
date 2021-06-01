@@ -47,23 +47,32 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 
     data_t *data = &Data[data_pointer];
 
-    GetESensorData(data);
+    if(data->CarMode == AI_Mode)
+    {
+        GetESensorData(data);               //获取电感原数据
 
-    ESensorDataProcess(data);
+        ESensorDataProcess(data);           //获取电感归一化数据
+    }
+    else if(data->CarMode == AutoBoot_Mode)
+    {
+        GetESensorData(data);
 
-    Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
-    Queue.Puts(&data->RawBiasQueue,&data->Bias,0,1);
-    float trackingState = data->TrackingState;
-    Queue.Puts(&data->TrackingQueue,&trackingState,0,1);
+        ESensorDataProcess(data);
 
-    ElementDetermine(data);
+        Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
+        Queue.Puts(&data->RawBiasQueue,&data->Bias,0,1);
+        float trackingState = data->TrackingState;
+        Queue.Puts(&data->TrackingQueue,&trackingState,0,1);
 
-    float eType = data->Element.Type * 1.0;
-    Queue.Puts(&data->ElementTypeQueue,&eType,0,1);
+        ElementDetermine(data);
 
-    SpecialElementHandler(data);
+        float eType = data->Element.Type * 1.0;
+        Queue.Puts(&data->ElementTypeQueue,&eType,0,1);
 
-    Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
+        SpecialElementHandler(data);
+
+        Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
+    }
 
 }
 
@@ -78,7 +87,7 @@ void STM1_CH1_IRQHandler(void)       /*Servo Control.*/
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[3].comparator, g_StmCompareConfig[3].ticks);
 
-    AngleControl(&Data[data_pointer]);
+    AngleControl(&Data[data_pointer]);  //角度控制
 }
 
 void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
@@ -90,7 +99,7 @@ void CCU60_CH0_IRQHandler (void) /*Motor Control.*/
     IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t12PeriodMatch);
 
     /* 用户代码 */
-    SpeedControl(&Data[data_pointer]);
+    SpeedControl(&Data[data_pointer]);  //速度控制
 }
 
 void CCU60_CH1_IRQHandler (void)

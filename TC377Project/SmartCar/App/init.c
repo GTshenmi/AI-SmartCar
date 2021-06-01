@@ -155,7 +155,7 @@ void Core0_SoftWareInit()
     /*Init Debug System.*/
 
     /*Init NerualNetWork.*/
-    NeuralNetworkInit(NULL);
+    NeuralNetworkInit(&Data[data_pointer]);
 
     /*Init Parameter.*/
     ParameterInit(&Data[data_pointer]);

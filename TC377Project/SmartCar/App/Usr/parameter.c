@@ -10,7 +10,9 @@
 #include <parameter.h>
 #include "include.h"
 
-uint16_t CarMode = AutoBoot_Mode;/*运行状态*/
+//uint16_t CarMode = AutoBoot_Mode;/*运行状态*/
+uint16_t CarMode = AI_Mode; //调AI 换成此状态
+
 uint16_t data_pointer = 0;
 
 float ESensorDataQueue[100][8];

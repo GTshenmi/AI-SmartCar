@@ -11,7 +11,7 @@
 #include "nn_library.h"
 #include "sys.h"
 
-void NeuralNetworkInit(void *data);
-void NeuralNetworkReasoning(void *data);
+void NeuralNetworkInit(void *argv);
+float NeuralNetworkReasoning(void *argv);
 
 #endif /* APP_USR_NEURALNETWORK_NEURALNETWORK_H_ */

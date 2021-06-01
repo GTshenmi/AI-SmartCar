@@ -28,7 +28,6 @@
         }                           \
     }while(0);                      \
 
-
 /* ¶ªÏß Begin*/
 typedef enum
 {

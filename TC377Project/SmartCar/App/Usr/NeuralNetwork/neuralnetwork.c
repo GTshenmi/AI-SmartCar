@@ -10,21 +10,39 @@
 #include "include.h"
 
 
-void NeuralNetworkInit(void *data)
+void NeuralNetworkInit(void *argv)
 {
-    NNInit(TestModel);
+    //NNInit(TestModel);
 }
+
+
+float NeuralNetworkCalAngle(void *argv)
+{
+    data_t *data = (data_t *)argv;
+
+    uint16_t *angle = NNForWardReasoning(NULL,data->SESensor_SampleValue,0);
+
+    return (*angle) * 1.0;
+}
+
 /*
  * @Brief:神经网络推理接口函数
  * */
-void NeuralNetworkReasoning(void *data)
+float NeuralNetworkReasoning(void *argv)
 {
-    data_t *usrdata = (data_t *)data;
+    data_t *data = (data_t *)argv;
 
-    if(usrdata->AI_State == AI_Start)
-    {
-        usrdata->AI_State = AI_Busy;
+    /*
+        data->SESensor_SampleValue[i];     短前瞻电感原数据;
+        data->SESensor_NormalizedValue[i]; 短前瞻电感归一化数据;
+        data->Angle;                       舵机最终角度
+        data->Element.Type;                赛道元素类型;
+        data->Speed;                       电机最终速度;
+     */
 
-        usrdata->AI_State = AI_Fin;
-    }
+    float angle;
+
+    angle = NeuralNetworkCalAngle(data);
+
+    return angle;
 }
