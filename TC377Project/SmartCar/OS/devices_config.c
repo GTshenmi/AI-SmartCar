@@ -66,38 +66,38 @@ esensor_t LESensor[MAX_LESENSOR_NUM] =/*ok*/ /*9 - 16 Left*/
     [0] = {
             .Init = ESensor_Init,
             .Self = &LESensor[0],
-            .ADCn = &ADC_Resources[8].ADCN,
+            .ADCn = &ADC_Resources[7].ADCN, //AD7
     },
     [1] = {
             .Init = ESensor_Init,
             .Self = &LESensor[1],
-            .ADCn = &ADC_Resources[9].ADCN,
+            .ADCn = &ADC_Resources[6].ADCN, //AD6
     },
     [2] = {
             .Init = ESensor_Init,
             .Self = &LESensor[2],
-            .ADCn = &ADC_Resources[10].ADCN,
+            .ADCn = &ADC_Resources[5].ADCN, //AD5
     },
     [3] = {
             .Init = ESensor_Init,
             .Self = &LESensor[3],
-            .ADCn = &ADC_Resources[11].ADCN,
+            .ADCn = &ADC_Resources[4].ADCN, //AD4
     },
     [4] = {
             .Init = ESensor_Init,
             .Self = &LESensor[4],
-            .ADCn = &ADC_Resources[12].ADCN,
+            .ADCn = &ADC_Resources[3].ADCN, //AD3
     },
 
     [5] = {
             .Init = ESensor_Init,
             .Self = &LESensor[5],
-            .ADCn = &ADC_Resources[13].ADCN,
+            .ADCn = &ADC_Resources[2].ADCN, //AD2
     },
     [6] = {
             .Init = ESensor_Init,
             .Self = &LESensor[6],
-            .ADCn = &ADC_Resources[14].ADCN,
+            .ADCn = &ADC_Resources[1].ADCN, //AD1
     },
 };
 esensor_t SESensor[MAX_SESENSOR_NUM] = /*ok*/  /*1 - 8 Right*/
@@ -105,42 +105,42 @@ esensor_t SESensor[MAX_SESENSOR_NUM] = /*ok*/  /*1 - 8 Right*/
     [0] = {
             .Init = ESensor_Init,
             .Self = &SESensor[0],
-            .ADCn = &ADC_Resources[7].ADCN,//AD8  x
+            .ADCn = &ADC_Resources[8].ADCN,//AD8
     },
     [1] = {
             .Init = ESensor_Init,
             .Self = &SESensor[1],
-            .ADCn = &ADC_Resources[5].ADCN,//AD6  .
+            .ADCn = &ADC_Resources[9].ADCN,//AD9
     },
     [2] = {
             .Init = ESensor_Init,
             .Self = &SESensor[2],
-            .ADCn = &ADC_Resources[6].ADCN,//AD7  x
+            .ADCn = &ADC_Resources[10].ADCN,//AD10
     },
     [3] = {
             .Init = ESensor_Init,
             .Self = &SESensor[3],
-            .ADCn = &ADC_Resources[3].ADCN,//AD4  x
+            .ADCn = &ADC_Resources[11].ADCN,//AD11
     },
     [4] = {
             .Init = ESensor_Init,
             .Self = &SESensor[4],
-            .ADCn = &ADC_Resources[4].ADCN,//AD5 .
+            .ADCn = &ADC_Resources[12].ADCN,//AD12
     },
     [5] = {
             .Init = ESensor_Init,
             .Self = &SESensor[5],
-            .ADCn = &ADC_Resources[1].ADCN,//AD2 .
+            .ADCn = &ADC_Resources[13].ADCN,//AD13
     },
     [6] = {
             .Init = ESensor_Init,
             .Self = &SESensor[6],
-            .ADCn = &ADC_Resources[2].ADCN,//AD3 .
+            .ADCn = &ADC_Resources[14].ADCN,//AD14
     },
     [7] = {
             .Init = ESensor_Init,
             .Self = &SESensor[7],
-            .ADCn = &ADC_Resources[0].ADCN,//AD1  x
+            .ADCn = &ADC_Resources[15].ADCN,//AD15
     },
 };
 

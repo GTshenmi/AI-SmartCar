@@ -42,6 +42,7 @@ void Core0_Main()
         {
             //GLED.Toggle(GLED.Self);
 
+
             Core0_CheckStatus();
 
 //            GetESensorData(&Data[data_pointer]);
@@ -78,20 +79,9 @@ void Core1_Main()
 {
     TIMx.Init(&TIM_Resources[4].TIMN);
 
-    ADCx.Init(&ADC_Resources[15].ADCN);
-
     while(1)
     {
         os.task.UiUpdate(&UIData,sizeof(UIData));
-//        Screen.Clear(Screen.Self,WHITE);
-//        uint16_t value = ADCx.Read(&ADC_Resources[15].ADCN);
-//
-//        Screen.WriteXLine(Screen.Self,1,"%u",value);
-
-//        for(int i = 0 ; i < 8 ;i++)
-//        {
-//            Screen.WriteXLine(Screen.Self,i,"AD[%d] = %.3f",i,Data[data_pointer].SESensor_NormalizedValue[i]);
-//        }
 
         Core1_CheckStatus();
 
@@ -121,8 +111,8 @@ void Core2_Main()
             Core2_CheckStatus();
         }
 
-        SmartCarSysDataReport(pdata);
-        SmartCarSysStateUpdate(pdata);
+        //SmartCarSysDataReport(pdata);
+        //SmartCarSysStateUpdate(pdata);
 
         os.time.delay(0.001,s);
     }
