@@ -222,6 +222,10 @@ interrupt.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+interrupt.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+interrupt.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 interrupt.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 interrupt.o :	../App/Sys/sys.h

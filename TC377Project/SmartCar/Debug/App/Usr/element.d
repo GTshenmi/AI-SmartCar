@@ -218,6 +218,10 @@ element.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 element.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+element.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+element.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 element.o :	../App/include.h
 ../App/include.h :
 element.o :	../OS/os.h

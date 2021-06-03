@@ -14,15 +14,18 @@
 
 inline bool Is_RightAngle(data_t *data)
 {
-    return ((fabs(data->v_difference) >= 30.0 &&\
+    return ((fabs(data->v_difference) >= 35.0 &&\
              fabs(data->o_difference) <= 30.0));
 }
 
-inline bool Is_RightAngleOut(data_t *data,uint32_t rightAngleCount)
+inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 {
+    float sum_h = data->H_ESensorValue[0] + data->H_ESensorValue[2] >=35.0 + data->H_ESensorValue[1];
+
     return ((rightAngleCount <= 0) &&\
-            (data->V_ESensorValue[0] <=20.0 && data->V_ESensorValue[1] <= 20.0) &&\
-            (data->H_ESensorValue[0] >=20.0 || data->H_ESensorValue[1] >=20.0 || data->H_ESensorValue[2] >= 20.0));
+            (data->V_ESensorValue[0] <=10.0 && data->V_ESensorValue[1] <= 10.0) &&\
+            (sum_h >= 60.0) && \
+            (fabs(data->h_bias) <= 40.0));
 }
 
 inline bool Is_RightAngleBackToStraight(data_t *data)
@@ -64,11 +67,13 @@ inline bool Is_CrossOut(data_t *data)
 
 inline bool Is_LoseLine(data_t *data)
 {
-    return ((data->H_ESensorValue[0] <= LoseLineGateValue) &&\
-            (data->H_ESensorValue[1] <= LoseLineGateValue) &&\
-            (data->H_ESensorValue[2] <= LoseLineGateValue) &&\
-            (data->V_ESensorValue[0] <= LoseLineGateValue) &&\
-            (data->H_ESensorValue[1] <= LoseLineGateValue));
+//    return ((data->H_ESensorValue[0] <= LoseLineGateValue) &&\
+//            (data->H_ESensorValue[1] <= LoseLineGateValue) &&\
+//            (data->H_ESensorValue[2] <= LoseLineGateValue) &&\
+//            (data->V_ESensorValue[0] <= LoseLineGateValue) &&\
+//            (data->H_ESensorValue[1] <= LoseLineGateValue));
+
+    return 0;
 }
 
 inline bool Is_LLBiasVaild(float *eSensorValue,float bias)

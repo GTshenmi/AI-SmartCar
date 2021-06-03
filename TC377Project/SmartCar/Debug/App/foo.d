@@ -226,6 +226,10 @@ foo.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+foo.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+foo.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 foo.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 foo.o :	../App/Sys/sys.h

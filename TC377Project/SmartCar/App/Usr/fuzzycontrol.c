@@ -6,34 +6,33 @@ float DFF[7] = {-20.0,-10.0,-5.0,0.0,5.0,10.0,20.0};
 
 float UFF[13] = {-1.0,-0.8,-0.6,-0.4,-0.2,-0.1,0.0,0.1,0.2,0.4,0.6,0.8,1.0}; 
 
-//uint32_t FuzzyRule[13][13];
-
-uint32_t FuzzyRule[7][7];
-
-///*ec -3   -2   -1    0    1    2    3*/
-//{                                        /* e*/
-//  {   3,   3,   3,   2,   2,   2,   1},  /*-3*/
-//  {   3,   3,   2,   2,   2,   1,   1},  /*-2*/
-//  {   3,   2,   2,   2,   1,   1,   0},  /*-1*/
-//  {   2,   2,   2,   1,   1,   0,   0},  /* 0*/
-//  {   0,  -1,  -1,  -2,  -2,  -2,  -3},  /* 1*/
-//  {  -1,  -1,  -2,  -2,  -2,  -3,  -3},  /* 2*/
-//  {  -1,  -2,  -2,  -2,  -3,  -3,  -3},  /* 3*/
-//};
-
-float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
+sint32_t FuzzyRule[7][7] =
 {
-    float EF[2],DF[2];
+        /*ec-----------------*/ /*e*/
+        {-6,-6,-6,-6,-5,-5,-4,},/*|*/
+        {-5,-5,-5,-4,-4,-3,-1,},/*|*/
+        {-4,-4,-3,-1, 0, 1, 2,},/*|*/
+        {-4,-3,-1, 0, 1, 3, 4,},/*|*/
+        {-2,-1, 0, 1, 3, 4, 4,},/*|*/
+        { 1, 3, 4, 4, 5, 5, 5,},/*|*/
+        { 4, 5, 5, 6, 6, 6, 6}, /*|*/
+};
 
-    uint32_t En = 0,Dn = 0;
+float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual)
+{
+    float EF[2] = { 0.0,0.0 }, DF[2] = {0.0,0.0};
 
-    uint32_t Un[4];
+    int i = 0;
+
+    int En = 0, Dn = 0;
+
+    sint32_t Un[4];
 
     float UF[13];
 
     float U[13];
 
-    for(int i = 0 ; i < 13 ;i++)
+    for (i = 0; i < 13; i++)
     {
         U[i] = 0.0;
     }
@@ -42,145 +41,148 @@ float FuzzyControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
 
     fuzzy->e[0] = fuzzy->e[1];
     fuzzy->e[1] = target - actual;
-      
+
     fuzzy->ec = fuzzy->e[1] - fuzzy->e[0];
 
     /*Calculate Membership.*/
 
-    if(fuzzy->e[1] < EFF[0])
+    if (fuzzy->e[1] < EFF[0])
     {
         EF[0] = 1.0;
-        EF[1] = 0.0;    
+        EF[1] = 0.0;
 
-        En = -6;
+        En = -3;
     }
-    else if(fuzzy->e[1] > EFF[6])
+    else if (fuzzy->e[1] > EFF[6])
     {
-        EF[0] = 0.0;  
-        EF[1] = 1.0;  
-        En = 6;
+        EF[0] = 0.0;
+        EF[1] = 1.0;
+        En = 3;
     }
     else
     {
-        for(int i = 1 ; i <= 6 ; i++)
+        for (i = 1; i <= 6; i++)
         {
-            if(fuzzy->e[1] <= EFF[i] && fuzzy->e[1] >= EFF[i - 1]) //有2条规则生效
+            if ((fuzzy->e[1] < EFF[i]) && (fuzzy->e[1] >= EFF[i - 1])) //ÓÐ2Ìõ¹æÔòÉúÐ§
             {
                 En = i - 1 - 3;
 
-                EF[0] = -(fuzzy->e[1] - EFF[i])/(EFF[i] - EFF[i - 1]);
+                EF[0] = -(fuzzy->e[1] - EFF[i]) / (EFF[i] - EFF[i - 1]);
 
-                EF[1] = (fuzzy->e[1] - EFF[i - 1])/(EFF[i] - EFF[i - 1]);
+                EF[1] = (fuzzy->e[1] - EFF[i - 1]) / (EFF[i] - EFF[i - 1]);
             }
-        }         
+        }
     }
 
-    if(fuzzy->ec < DFF[0])
+    if (fuzzy->ec < DFF[0])
     {
         DF[0] = 1.0;
-        DF[1] = 0.0;    
+        DF[1] = 0.0;
 
-        Dn = -6;
+        Dn = -3;
     }
-    else if(fuzzy->ec > DFF[6])
+    else if (fuzzy->ec > DFF[6])
     {
-        DF[0] = 0.0;  
-        DF[1] = 1.0;  
-        Dn = 5;
+        DF[0] = 0.0;
+        DF[1] = 1.0;
+        Dn = 3;
     }
     else
     {
-        for(int i = 1 ; i <= 6 ; i++)
+        for (i = 1; i <= 6; i++)
         {
-            if(fuzzy->ec <= DFF[i] && fuzzy->ec >= DFF[i - 1]) //有2条规则生效
+            if (fuzzy->ec < DFF[i] && fuzzy->ec >= DFF[i - 1]) //ÓÐ2Ìõ¹æÔòÉúÐ§
             {
-                En = i - 1 - 3;
+                Dn = i - 1 - 3;
 
-                DF[0] = -(fuzzy->e[1] - DFF[i])/(DFF[i] - DFF[i - 1]);
+                DF[0] = -(fuzzy->ec - DFF[i]) / (DFF[i] - DFF[i - 1]);
 
-                DF[1] = (fuzzy->e[1] - DFF[i - 1])/(DFF[i] - DFF[i - 1]);
+                DF[1] = (fuzzy->ec - DFF[i - 1]) / (DFF[i] - DFF[i - 1]);
             }
-        }         
+        }
     }
 
     /*Fuzzy Reasoning.*/
-    
-    Un[0] = FuzzyRule[En + 3][Dn + 3] + 6;      //2*2 = 4条规则生效
 
-    UF[0] = min(EF[0],DF[0]);
+    Un[0] = FuzzyRule[En + 3][Dn + 3] + 6;      //2*2 = 4Ìõ¹æÔòÉúÐ§
+
+    UF[0] = min(EF[0], DF[0]);
 
     Un[1] = FuzzyRule[En + 3 + 1][Dn + 3] + 6;
-    UF[1] = min(EF[1],DF[0]);
+    UF[1] = min(EF[1], DF[0]);
 
     Un[2] = FuzzyRule[En + 3][Dn + 3 + 1] + 6;
-    UF[2] = min(EF[0],DF[1]);
+    UF[2] = 1.0 * min(EF[0], DF[1]);
 
     Un[3] = FuzzyRule[En + 3 + 1][Dn + 3 + 1] + 6;
-    UF[3] = min(EF[1],DF[1]);
+    UF[3] = 1.0 * min(EF[1], DF[1]);
 
-    if(Un[0] == Un[1])    //同隶属度语言取大
+    if (Un[0] == Un[1])    //Í¬Á¥Êô¶ÈÓïÑÔÈ¡´ó
     {
-        if(UF[0] > UF[1])
+        if (UF[0] > UF[1])
             UF[1] = 0;
         else
             UF[0] = 0;
     }
-    if(Un[0] == Un[2])
+    if (Un[0] == Un[2])
     {
-        if(UF[0] > UF[2])
+        if (UF[0] > UF[2])
             UF[2] = 0;
         else
             UF[0] = 0;
     }
-    if(Un[0] == Un[3])
+    if (Un[0] == Un[3])
     {
-        if(UF[0] > UF[3])
+        if (UF[0] > UF[3])
             UF[3] = 0;
         else
             UF[0] = 0;
     }
 
-    if(Un[1] == Un[2])
+    if (Un[1] == Un[2])
     {
-        if(UF[1] > UF[2])
+        if (UF[1] > UF[2])
             UF[2] = 0;
         else
             UF[1] = 0;
     }
-    if(Un[1] == Un[3])
+    if (Un[1] == Un[3])
     {
-        if(UF[1] > UF[3])
+        if (UF[1] > UF[3])
             UF[3] = 0;
         else
             UF[1] = 0;
     }
 
-    if(Un[2] == Un[3])
+    if (Un[2] == Un[3])
     {
-        if(UF[2] > UF[3])
+        if (UF[2] > UF[3])
             UF[3] = 0;
         else
             UF[2] = 0;
     }
 
-    for(int i = 0 ; i < 4 ;i++)
+    for (i = 0; i < 4; i++)
     {
         U[Un[i]] += UF[i];
-    }   
+    }
 
     /*Anti Fuzzy(Gravity Method)*/
 
     float sum0 = 0.0;
     float sum1 = 0.0;
 
-    for(int i = 0 ; i < 4 ;i++)
+    for (i = 0; i < 13; i++)
     {
         sum0 += U[i] * UFF[i];
 
         sum1 += U[i];
     }
 
-    fuzzy->U = sum0/sum1;
+    if (fabs(sum1) < 1e-6)
+        fuzzy->U = 0.0;
+    else
+        fuzzy->U = sum0 / sum1;
 
     return fuzzy->U;
 }

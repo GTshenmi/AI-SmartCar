@@ -226,6 +226,10 @@ control.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 control.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+control.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+control.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 control.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 control.o :	../App/Usr/dataprocess.h

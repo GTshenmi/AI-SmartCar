@@ -222,6 +222,10 @@ Cpu2_Main.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 Cpu2_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+Cpu2_Main.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+Cpu2_Main.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 Cpu2_Main.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 Cpu2_Main.o :	../App/Sys/sys.h

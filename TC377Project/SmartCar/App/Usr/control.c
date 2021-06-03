@@ -13,7 +13,6 @@ void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-
     if(data->CarMode == AI_Mode)            //目前匀速，可以不改
     {
         if(!data->Is_AdjustSpeed)
@@ -33,7 +32,7 @@ void SpeedControl(void *argv)
     {
         if(!data->Is_AdjustSpeed)
         {
-            data->Speed = 3200;
+            data->Speed = 3500;
         }
 
         float formatedSpeed = 0.0;
@@ -43,6 +42,8 @@ void SpeedControl(void *argv)
         data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
         Motor.SetPwmValue(Motor.Self,data->Speed);
+
+        //Motor.SetPwmValue(Motor.Self,6000);
 
         //Motor.SetSpeed(Motor.Self,formatedSpeed);
 
@@ -83,13 +84,16 @@ void AngleControl(void *argv)
     //    if(data->Element.Type != None)
     //        data->S_PID.Kp = 2.227;
 
-        PID_Ctrl(&data->S_PID,0.0,data->Bias);
+        //PID_Ctrl(&data->S_PID,0.0,data->Bias);
+
+        data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
+
 
     //    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
     //
     //    static float angle[5] = {0.0};
 
-        data->Angle = data->S_PID.Result;
+        //data->Angle = data->S_PID.Result;
 
         //data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 

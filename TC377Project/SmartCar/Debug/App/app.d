@@ -224,6 +224,10 @@ app.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 app.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+app.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+app.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 app.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 app.o :	../App/Sys/sys.h
@@ -268,5 +272,3 @@ app.o :	../App/test.h
 ../App/test.h :
 app.o :	../App/Usr/fuzzycontrol.h
 ../App/Usr/fuzzycontrol.h :
-app.o :	../App/Sys/sys.h
-../App/Sys/sys.h :

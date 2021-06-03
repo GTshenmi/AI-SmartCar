@@ -222,6 +222,10 @@ ctrlsys.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 ctrlsys.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+ctrlsys.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+ctrlsys.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 ctrlsys.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 ctrlsys.o :	../App/Sys/sys.h

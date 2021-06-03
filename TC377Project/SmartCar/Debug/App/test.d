@@ -222,6 +222,10 @@ test.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+test.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+test.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 test.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 test.o :	../App/Sys/sys.h

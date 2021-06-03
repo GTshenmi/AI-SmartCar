@@ -226,6 +226,10 @@ dataprocess.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+dataprocess.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+dataprocess.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 dataprocess.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 dataprocess.o :	../App/Sys/sys.h

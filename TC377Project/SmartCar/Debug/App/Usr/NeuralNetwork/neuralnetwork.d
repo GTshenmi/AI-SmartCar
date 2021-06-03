@@ -238,6 +238,10 @@ neuralnetwork.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 neuralnetwork.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+neuralnetwork.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+neuralnetwork.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 neuralnetwork.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 neuralnetwork.o :	../App/Sys/sys.h

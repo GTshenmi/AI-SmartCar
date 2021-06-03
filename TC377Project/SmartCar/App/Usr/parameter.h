@@ -9,6 +9,7 @@
 #define APP_USR_PARAMETER_H_
 
 #include "sys.h"
+#include "fuzzycontrol.h"
 
 #define MAX_DATA_LEN 4
 
@@ -147,6 +148,8 @@ typedef struct
 
       float DynamicKp;
       PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
+
+      fuzzy_ctrl_t S_Fuzzy;
 
       float _Bias;
       float Bias;            /*实际中线偏差*/

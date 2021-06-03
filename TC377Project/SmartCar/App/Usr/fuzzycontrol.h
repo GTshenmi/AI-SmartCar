@@ -18,5 +18,6 @@ typedef struct
     float U;
 }fuzzy_ctrl_t;
 
+float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual);
 
 #endif

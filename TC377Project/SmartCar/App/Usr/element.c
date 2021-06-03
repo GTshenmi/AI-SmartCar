@@ -183,13 +183,14 @@ void RightAngle_Handler(data_t *data)
 
             if(Is_RightAngle(data))
             {
-                rightAngleState = RA_Tracking;
 
                 rightAngleCount = 50;
 
                 GLED.ON(GLED.Self);    
 
                 bias = fsign(data->v_difference) * 100.0;
+
+                rightAngleState = RA_Tracking;
             }
 
             break;

@@ -40,33 +40,8 @@ void Core0_Main()
     {
         if(os.time.getnmsFlag(1000))
         {
-            //GLED.Toggle(GLED.Self);
-
-
             Core0_CheckStatus();
 
-//            GetESensorData(&Data[data_pointer]);
-//
-//            ESensorDataProcess(&Data[data_pointer]);
-//
-//            Queue.Puts(&data->EQueue,data->LESensor_NormalizedValue,0,7);
-//            Queue.Puts(&data->BQueue,&data->Bias,0,1);
-//
-//            data->eSensorData = Queue.Gets(&data->EQueue,0,NULL,0,7);
-//
-//            float *bias = Queue.Gets(&data->BQueue,0,NULL,0,1);
-//
-//            Console.WriteLine("Raw Data:");
-//            Console.WriteArray("float",data->LESensor_NormalizedValue,7);
-//
-//            Console.WriteLine("Queue Data:");
-//            Console.WriteArray("float",data->eSensorData,7);
-//
-//            Console.WriteLine("Raw Bias:%f",data->Bias);
-//            Console.WriteLine("Queue Bias:%f",*bias);
-
-
-            //Console.WriteLine("h_bias = %f,v_bias = %f,bias = %f,weight = %f",data->h_bias,data->v_bias,data->Bias,fabs(data->h_bias)/fabs(data->v_bias));
         }
     }
 }
@@ -81,7 +56,7 @@ void Core1_Main()
 
     while(1)
     {
-        os.task.UiUpdate(&UIData,sizeof(UIData));
+        //os.task.UiUpdate(&UIData,sizeof(UIData));
 
         Core1_CheckStatus();
 
@@ -100,7 +75,7 @@ void Core2_Main()
     {
         if(os.time.getnmsFlag(20))
         {
-            os.task.KeyScan(NULL,0);
+           // os.task.KeyScan(NULL,0);
             os.task.SoftTimerUpdate(NULL,0);
             os.task.DebugConsole(NULL,0);
         }
