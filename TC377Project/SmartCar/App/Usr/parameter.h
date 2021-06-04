@@ -66,6 +66,8 @@ typedef enum
     CC_Undefined,
     CC_Wait,
     CC_Confirm,
+    CC_WaitIn,
+
     CC_In,
     CC_Tracking,
     CC_Out,
@@ -78,6 +80,8 @@ typedef enum
     CS_Undefined,
     CS_Wait,
     CS_Confirm,
+
+
     CS_In,
     CS_Tracking,
     CS_Out,

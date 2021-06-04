@@ -88,7 +88,6 @@ void AngleControl(void *argv)
 
         data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
 
-
     //    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
     //
     //    static float angle[5] = {0.0};

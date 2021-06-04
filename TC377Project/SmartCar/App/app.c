@@ -34,15 +34,24 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-    //data_t *data = &Data[data_pointer];
+    //BEEP.ON(BEEP.Self);
+
+    data_t *data = &Data[data_pointer];
 
     while(1)
     {
-        if(os.time.getnmsFlag(1000))
+        //if(os.time.getnmsFlag(20))
         {
-            Core0_CheckStatus();
-
+            Console.WriteLine("esensor:%f,%f,%f",data->O_ESensorValue[0],data->H_ESensorValue[1],data->O_ESensorValue[1]);
         }
+
+        os.time.delay(0.002,s);
+
+//        if(os.time.getnmsFlag(1000))
+//        {
+//            Core0_CheckStatus();
+//
+//        }
     }
 }
 
@@ -56,7 +65,7 @@ void Core1_Main()
 
     while(1)
     {
-        //os.task.UiUpdate(&UIData,sizeof(UIData));
+        os.task.UiUpdate(&UIData,sizeof(UIData));
 
         Core1_CheckStatus();
 
@@ -75,7 +84,7 @@ void Core2_Main()
     {
         if(os.time.getnmsFlag(20))
         {
-           // os.task.KeyScan(NULL,0);
+            os.task.KeyScan(NULL,0);
             os.task.SoftTimerUpdate(NULL,0);
             os.task.DebugConsole(NULL,0);
         }
@@ -89,7 +98,7 @@ void Core2_Main()
         //SmartCarSysDataReport(pdata);
         //SmartCarSysStateUpdate(pdata);
 
-        os.time.delay(0.001,s);
+        //os.time.delay(0.001,s);
     }
 }
 

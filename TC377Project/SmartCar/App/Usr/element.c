@@ -75,25 +75,34 @@ void SpecialElementHandler(void *argv)
 
 void Cycle_Handler(data_t *data)
 {
-    static cycle_state_t cycleState = CC_Undefined;
+    static cycle_state_t cycleState = CC_Wait;
     static cycle_dir_t   cycleDir = CC_DirUndefined;
 
     static float bias = 0.0;
 
-    static uint32_t cycleCnt;
+    static sint32_t cycleOutCnt;
+
+    static sint32_t cycleInCnt = 0;
+
+    static bool isMidESensorMaxValue = false;
 
     switch(cycleState)
     {
         case CC_Wait:
 
             if(data->Element.Type == Cycle)
-                cycleState = CS_Confirm;
+                cycleState = CC_Confirm;
             break;
 
         case CC_Confirm:
 
+
             if(Is_Cycle(data))
             {
+                cycleInCnt = 130;
+
+                BLED.ON(BLED.Self);
+
                 if(data->H_ESensorValue[0] >= data->H_ESensorValue[2])
                 {
                     cycleDir = CC_DirLeft;
@@ -104,50 +113,96 @@ void Cycle_Handler(data_t *data)
                     cycleDir = CC_DirRight;
                     bias = -100.0;
                 }
-                
-                cycleState = CC_In;
+
+                cycleState = CC_WaitIn;
             }
 
             break;
+
+        case CC_WaitIn:
+
+            if(cycleDir == CC_DirLeft)
+            {
+                if(data->O_ESensorValue[0] >= 60.0)
+                {
+                    isMidESensorMaxValue = true;
+                }
+
+                if(isMidESensorMaxValue)
+                {
+                    if(data->O_ESensorValue[0] <= 50.0)
+                    {
+                        cycleState = CC_In;
+                        isMidESensorMaxValue = false;
+                    }
+                }
+
+            }
+            else
+            {
+                if(data->O_ESensorValue[1] >= 60.0)
+                {
+                    isMidESensorMaxValue = true;
+                }
+
+                if(data->O_ESensorValue[1] <= 50.0)
+                {
+                    cycleState = CC_In;
+                    isMidESensorMaxValue = false;
+                }
+            }
+
+            break;
+
 
         case CC_In:
 
             data->Bias = bias;
 
-            if(data->h_bias <= 10.0)
+            cycleInCnt--;
+
+            if(data->h_bias <= 10.0 && cycleInCnt <= 0)
             {
                 cycleState = CC_Tracking;
             }
-            
+
             break;
+
         case CC_Tracking:
             
-            cycleCnt++;
+            cycleOutCnt++;
 
-            if(data->v_difference >= 30.0)
-            {
-                data->Bias = data->h_bias * 0.3 + data->v_bias * 0.7;
-            }
-            else
-            {
-                data->Bias = data->h_bias;
-            }
+//            if(data->v_difference >= 20.0)
+//            {
+//                data->Bias = data->h_bias * 0.3 + data->v_bias * 0.7;
+//            }
+//            else
+//            {
+//                data->Bias = data->h_bias;
+//            }
             
-            if(Is_CycleOut(data) || cycleCnt >= 6000)
-            {
-                cycleState = CC_Out;
-            }
+//            if(Is_CycleOut(data) || cycleOutCnt >= 6000)
+//            {
+//                cycleState = CC_Out;
+//            }
 
             break;
 
         case CC_Out:
 
-            data->Bias = -bias;
+            //data->Bias = -bias;
 
-            if(Is_CycleBackToStraight(data) || cycleCnt >= 6000)
+
+
+            if(Is_CycleBackToStraight(data) || cycleOutCnt >= 6000)
             {
                 cycleState = CC_Wait;
                 data->Element.Type = None;
+
+
+
+                BLED.OFF(BLED.Self);
+                //DebugBeepOff;
             }
             
             break;
@@ -269,7 +324,7 @@ void LoseLine_Handler(data_t *data)
 
                     bias = *_bias;
 
-                    BLED.ON(BLED.Self);
+                    //BLED.ON(BLED.Self);
 
                     if(Is_LLBiasVaild(_eSensorValue,bias))
                     {

@@ -14,17 +14,18 @@
 
 inline bool Is_RightAngle(data_t *data)
 {
-    return ((fabs(data->v_difference) >= 35.0 &&\
-             fabs(data->o_difference) <= 30.0));
+    return 0;
+    //return ((fabs(data->v_difference) >= 35.0 &&\
+    //         fabs(data->o_difference) <= 30.0));
 }
 
 inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 {
-    float sum_h = data->H_ESensorValue[0] + data->H_ESensorValue[2] >=35.0 + data->H_ESensorValue[1];
+    float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
 
     return ((rightAngleCount <= 0) &&\
             (data->V_ESensorValue[0] <=10.0 && data->V_ESensorValue[1] <= 10.0) &&\
-            (sum_h >= 60.0) && \
+            (h_sum >= 60.0) && \
             (fabs(data->h_bias) <= 40.0));
 }
 
@@ -35,8 +36,10 @@ inline bool Is_RightAngleBackToStraight(data_t *data)
 
 inline bool Is_Cycle(data_t *data)
 {
-    return 0;
-    //return ((data->H_ESensorValue[1] > 2 * data->H_ESensorValue[0]) || (data->H_ESensorValue[1] >= 2 * data->H_ESensorValue[2])) &&  (data->H_ESensorValue[1] >= 70.0);
+    //return 0;
+    float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
+
+    return (h_sum >= 200);
 }
 
 inline bool Is_CycleOut(data_t *data)
