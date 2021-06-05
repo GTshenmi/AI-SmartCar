@@ -31,6 +31,8 @@ void SmartCarSysDataReport(void *data)
  * */
 void Core0_Main()
 {
+    extern float dt;
+
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
@@ -41,17 +43,42 @@ void Core0_Main()
     while(1)
     {
         //if(os.time.getnmsFlag(20))
-        {
-            Console.WriteLine("esensor:%f,%f,%f",data->O_ESensorValue[0],data->H_ESensorValue[1],data->O_ESensorValue[1]);
-        }
+       // {
+            //Console.WriteLine("esensor:%f,%f,%f",data->O_ESensorValue[0],data->H_ESensorValue[1],data->O_ESensorValue[1]);
+      //  }
+
+        //Console.WriteArray("float",data->Ke,7);
+        //Console.WriteLine("Time = %u us\n",dt);
+
+//        Screen.Clear(Screen.Self,WHITE);
+//        Screen.WriteXLine(Screen.Self,10,"Time = %u us",dt);
+
+        //os.time.delay(0.02,s);
+
+//        char stringBuffer[30];
+//
+//        if(UIData.CarState)
+//        {
+//            sprintf(stringBuffer, "CarState:%-4s ", (*UIData.CarState ? "Run" : "Stop"));
+//            Screen.ShowString(Screen.Self, 0, 0 * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
+//                    BLUE);
+//        }
+//        else
+//        {
+//            Screen.ShowString(Screen.Self, 0, 0 * Screen.Font.Hight * 2, (uint8_t*) "ERROR",
+//                    BLUE);
+//        }
+
+        //Core1_CheckStatus();
+
+        Console.WriteLine("Ke:%.3f,%.3f,%.3f",data->Ke[2],data->Ke[3],data->Ke[4]);
 
         os.time.delay(0.002,s);
 
-//        if(os.time.getnmsFlag(1000))
-//        {
-//            Core0_CheckStatus();
-//
-//        }
+        if(os.time.getnmsFlag(1000))
+        {
+            Core0_CheckStatus();
+        }
     }
 }
 
@@ -66,7 +93,6 @@ void Core1_Main()
     while(1)
     {
         os.task.UiUpdate(&UIData,sizeof(UIData));
-
         Core1_CheckStatus();
 
     }
@@ -91,12 +117,8 @@ void Core2_Main()
 
         if(os.time.getnmsFlag(1000))
         {
-            //BLED.Toggle(BLED.Self);
             Core2_CheckStatus();
         }
-
-        //SmartCarSysDataReport(pdata);
-        //SmartCarSysStateUpdate(pdata);
 
         //os.time.delay(0.001,s);
     }

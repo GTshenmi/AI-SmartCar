@@ -25,7 +25,14 @@ void displayDataAlone (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLi
     else if (Self->targetDataType == FLOAT)
     {
         char stringBuffer[30];
-        sprintf(stringBuffer, "%s: %.6f", Self->description, (((float*) (Self->secondaryTargetData))[dataLineTmp]));
+        if (dataLineTmp >= 1)
+        {
+            sprintf(stringBuffer, "%s%d: %.6f", Self->description, dataLineTmp+1,(((float*) (Self->secondaryTargetData))[dataLineTmp]));
+        }
+        else
+        {
+            sprintf(stringBuffer, "%s: %.6f", Self->description, (((float*) (Self->secondaryTargetData))[dataLineTmp]));
+        }
         Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
                 cursorSelected(Self));
     }
@@ -41,22 +48,31 @@ void displayDesciption (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginL
 void displayElement (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
 {
     char stringBuffer[30];
-    switch(*UIData.ElementType){
-        case 0:
-            sprintf(stringBuffer,"%s: None",Self->description);
-            break;
-        case 1:
-            sprintf(stringBuffer,"%s: RightAngle",Self->description);
-            break;
-        case 2:
-            sprintf(stringBuffer,"%s: Cross",Self->description);
-            break;
-        case 3:
-            sprintf(stringBuffer,"%s: Cycle",Self->description);
-            break;
+
+    if(UIData.ElementType)
+    {
+        switch(*UIData.ElementType){
+            case 0:
+                sprintf(stringBuffer,"%s: None",Self->description);
+                break;
+            case 1:
+                sprintf(stringBuffer,"%s: RightAngle",Self->description);
+                break;
+            case 2:
+                sprintf(stringBuffer,"%s: Cross",Self->description);
+                break;
+            case 3:
+                sprintf(stringBuffer,"%s: Cycle",Self->description);
+                break;
+        }
+        Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
+                cursorSelected(Self));
     }
-    Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
-            cursorSelected(Self));
+    else
+    {
+        Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) "ERROR",
+                cursorSelected(Self));
+    }
 }
 
 void displayDataWithGraph (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
@@ -221,6 +237,8 @@ void UIPagesInit (void)
     UIPages[28].secondaryTargetData = UIData.o_bias;
     UIPages[29].secondaryTargetData = UIData.h_bias;
     UIPages[30].secondaryTargetData = UIData.v_bias;
+
+     UIPages[33].secondaryTargetData = UIData.Ke;
 
     UIPages[0].beginLine = 0;
 
@@ -503,6 +521,14 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .displayData = displayElement,
             .Self = &UIPages[32],
             .lineLength = 1,
+            .confirmAction = emptyConfirmAction,
+    },
+    [33] = {
+            .description = "Ke",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[33],
+            .lineLength = 7,
+            .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },
 };

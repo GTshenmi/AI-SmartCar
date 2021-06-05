@@ -171,6 +171,8 @@ typedef struct
       float V_ESensorValue[2];
       float O_ESensorValue[2];
 
+      float Ke[MAX_LESENSOR_NUM];
+
       float h_difference;
       float v_difference;
       float o_difference;

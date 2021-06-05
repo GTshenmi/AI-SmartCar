@@ -41,6 +41,8 @@ typedef struct
         float    *Angle;         /*要设置的舵机角度(原数据)*/
         float    *NAngle;        /*要设置的舵机角度(归一化)*/
 
+        float    *Ke;
+
         float    *Bias;          /*中线偏差*/
 
         float    *DynamicKp;
@@ -78,7 +80,7 @@ typedef struct
 
 }ui_data_pkg_t;
 
-extern ui_data_pkg_t UIData;
+extern volatile ui_data_pkg_t UIData;
 
 void UI_Update(void *argv,uint16_t argc);
 

@@ -10,7 +10,7 @@
 #include "ui_utilities.h"
 #include "matrix_page.h"
 
-ui_data_pkg_t UIData;
+volatile ui_data_pkg_t UIData;
 
 void cursorUpPressedCallBack (key_t *self, void *argv, uint16_t argc);
 void cursorDownPressedCallBack (key_t *self, void *argv, uint16_t argc);

@@ -8,7 +8,7 @@
 
 attitude_t attitude;
 axis_t acc,gyro;
-float dt = 0.0;
+//float dt = 0.0;
 
 void STM0_CH1_IRQHandler(void)
 {
@@ -34,6 +34,9 @@ void STM0_CH1_IRQHandler(void)
     // AttitudeUpdate(&acc,&gyro,NULL,&attitude);
 }
 
+
+uint32_t dt = 0.0;
+
 void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 {
     /* 开启CPU中断  否则中断不可嵌套 */
@@ -44,6 +47,8 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM1, g_StmCompareConfig[2].comparator, g_StmCompareConfig[2].ticks);
+
+    //uint32_t sTime = os.time.getTimeus();
 
     data_t *data = &Data[data_pointer];
 
@@ -61,18 +66,22 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 
         Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
         Queue.Puts(&data->RawBiasQueue,&data->Bias,0,1);
-        float trackingState = data->TrackingState;
-        Queue.Puts(&data->TrackingQueue,&trackingState,0,1);
+
+        //float trackingState = data->TrackingState;
+        //Queue.Puts(&data->TrackingQueue,&trackingState,0,1);
 
         ElementDetermine(data);
 
-        float eType = data->Element.Type * 1.0;
-        Queue.Puts(&data->ElementTypeQueue,&eType,0,1);
+        //float eType = data->Element.Type * 1.0;
+        //Queue.Puts(&data->ElementTypeQueue,&eType,0,1);
 
         SpecialElementHandler(data);
 
-        Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
+        //Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
     }
+
+    //dt = os.time.getTimeus() - sTime;
+    
 
 }
 

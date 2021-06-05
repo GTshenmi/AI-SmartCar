@@ -401,6 +401,8 @@
                                     								
                                 </option>
                                 								
+                                <option id="com.infineon.aurix.buildsystem.managed.c.compiler.tasking.optimization.tradeoff.1209068628" name="Trade-off between speed and size:" superClass="com.infineon.aurix.buildsystem.managed.c.compiler.tasking.optimization.tradeoff" useByScannerDiscovery="false" value="com.infineon.aurix.buildsystem.managed.c.compiler.tasking.optimization.tradeoff.0" valueType="enumerated"/>
+                                								
                                 <inputType id="com.infineon.aurix.buildsystem.managed.tool.c.compiler.tasking.input.cpp.605012866" name="C++" superClass="com.infineon.aurix.buildsystem.managed.tool.c.compiler.tasking.input.cpp"/>
                                 								
                                 <inputType id="com.infineon.aurix.buildsystem.managed.tool.c.compiler.tasking.input.1322038367" name="C" superClass="com.infineon.aurix.buildsystem.managed.tool.c.compiler.tasking.input"/>

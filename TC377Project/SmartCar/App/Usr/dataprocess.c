@@ -34,6 +34,39 @@ void ESensorDataProcess(void *argv)
 
     data->Bias = CalculateBias(data);
 
+    float sumXY[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    float sumX2[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    float aveX[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    float aveY[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+    float *(eSensorData)[10];
+
+    eSensorData[0] = data->LESensor_NormalizedValue;
+
+    for(int i = 1 ; i < 10;i++)
+    {
+        eSensorData[i] = Queue.Gets(&data->ESensorQueue,-i,NULL,0,7);
+    }
+
+    for (int i = 0; i < 7; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            aveX[i] += j;
+            aveY[i] += eSensorData[j][i];
+            sumXY[i] += j * eSensorData[j][i];
+            sumX2[i] += j * j;
+        }
+
+        aveX[i] /= 10.0;
+        aveY[i] /= 10.0;
+    }
+
+    for (int i = 0; i < 7; i++)
+    {
+        data->Ke[i] = fdiv((sumXY[i] - 10 * aveX[i] * aveY[i]),(sumX2[i] - 10 * square(aveX[i])));
+    }
+
     //data->Bias = FIR_Filter(Kb,bias,data->_Bias,5);
 }
 
@@ -56,7 +89,7 @@ float CalculateBias(void *argv)     /*Calculate Bias And Element Type.*/
   * Problem   : 1.直角切内弯会反方向误判
   *
   * */
-
+    
     data_t *data = (data_t *)argv;
 
     static float bias = 0.0;

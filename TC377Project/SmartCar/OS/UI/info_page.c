@@ -48,9 +48,18 @@ void displayCarInfo (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLine
 {
 
     char stringBuffer[30];
-    sprintf(stringBuffer, "CarState:%-4s ", (*UIData.CarState ? "Run" : "Stop"));
-    Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
-            cursorSelected(Self));
+
+    if(UIData.CarState)
+    {
+        sprintf(stringBuffer, "CarState:%-4s ", (*UIData.CarState ? "Run" : "Stop"));
+        Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
+                cursorSelected(Self));
+    }
+    else
+    {
+        Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) "ERROR",
+                cursorSelected(Self));
+    }
 
 }
 
@@ -78,5 +87,6 @@ void changeSysStatus (UIPageStruct *Self)
 
 void changeCarStatus (UIPageStruct *Self)
 {
-    *UIData.CarState = !*UIData.CarState;
+    if(UIData.CarState)
+        *UIData.CarState = !*UIData.CarState;
 }

@@ -106,12 +106,16 @@ void Core0_HardWareInit()
     for(int i = 0;i<CData.MaxLADCDeviceNum;i++)
     {
         LESensor[i].Init(LESensor[i].Self);
-        LESensor[i].EnableFilter(LESensor[i].Self,false);
+        LESensor[i].EnableFilter(LESensor[i].Self,true);
+        LESensor[i].SetGain(LESensor[i].Self,1.0);
+        LESensor[i].EnableGain(LESensor[i].Self,false);
     }
     for(int i = 0;i<CData.MaxSADCDeviceNum;i++)
     {
         SESensor[i].Init(SESensor[i].Self);
-        SESensor[i].EnableFilter(SESensor[i].Self,false);
+        SESensor[i].EnableFilter(SESensor[i].Self,true);
+        SESensor[i].SetGain(SESensor[i].Self,1.0);
+        SESensor[i].EnableGain(SESensor[i].Self,false);
     }
 
     Screen.WriteXLine(Screen.Self,line,"Init ESensor.......OK");
@@ -232,18 +236,19 @@ void UIParameterInit(void)
     UIData.LADC =          Data[data_pointer].LESensor_SampleValue;
     UIData.NLADC  =        Data[data_pointer].LESensor_NormalizedValue;
     UIData.NSADC =         Data[data_pointer].SESensor_NormalizedValue;
+    UIData.Ke    =        Data[data_pointer].Ke;
 
-    UIData.CarState =    (uint *)&Data[data_pointer].CarState;
+    UIData.CarState =    &Data[data_pointer].CarState;
     UIData.CarMode =     (uint *)&Data[data_pointer].CarMode;
     UIData.AI_State =    (uint *)&Data[data_pointer].AI_State;
-    UIData.ElementType = (uint *)&Data[data_pointer].Element.Type;
+    UIData.ElementType = &Data[data_pointer].Element.Type;
 
-    UIData.MotorSysState[0] = (uint *)&MSU.State;
-    UIData.MotorSysState[1] = (uint *)&MDU.State;
-    UIData.MotorSysState[2] = (uint *)&MEU.State;
-    UIData.ServoSysState[0] = (uint *)&SSU.State;
-    UIData.ServoSysState[1] = (uint *)&SDU.State;
-    UIData.ServoSysState[2] = (uint *)&SEU.State;
+//    UIData.MotorSysState[0] = (uint *)&MSU.State;
+//    UIData.MotorSysState[1] = (uint *)&MDU.State;
+//    UIData.MotorSysState[2] = (uint *)&MEU.State;
+//    UIData.ServoSysState[0] = (uint *)&SSU.State;
+//    UIData.ServoSysState[1] = (uint *)&SDU.State;
+//    UIData.ServoSysState[2] = (uint *)&SEU.State;
 
     UIData.o_difference= &Data[data_pointer].o_difference;
     UIData.h_difference = &Data[data_pointer].h_difference;

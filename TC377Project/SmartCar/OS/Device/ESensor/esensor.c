@@ -68,6 +68,7 @@ static uint16_t ESensor_SlidingMedianFilter(struct esensor *self,uint16_t *Filte
     FilterBuf[len-1] = new_data;
 
     uint16_t result = 0;
+
     for(sint16_t i = 0;i < len ;i++)
     {
         result += FilterBuf[i];
@@ -131,7 +132,8 @@ uint16_t ESensor_Init(struct esensor *self)
     self->Cache = 0;
     self->Gain = 0.0;
     self->ConfigReg = 0x00000000;
-    self->FilterBufLen = 10;
+    
+    self->FilterBufLen = 5;
 
     //memset(self->FilterBuf,0,sizeof(self->FilterBuf[0]) * self->FilterBufLen);
 

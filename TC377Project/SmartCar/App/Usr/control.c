@@ -39,11 +39,11 @@ void SpeedControl(void *argv)
 
         formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
 
-        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+        //data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
         Motor.SetPwmValue(Motor.Self,data->Speed);
 
-        //Motor.SetPwmValue(Motor.Self,6000);
+        //Motor.SetPwmValue(Motor.Self,7000);
 
         //Motor.SetSpeed(Motor.Self,formatedSpeed);
 
