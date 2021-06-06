@@ -7,6 +7,7 @@
  *      This file is the top file of the whole project.
  *      function in this file is to be executed in the main function or the interrupt function.
  */
+
 #include <app.h>
 #include "include.h"
 #include "fuzzycontrol.h"
@@ -36,44 +37,17 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-    //BEEP.ON(BEEP.Self);
-
     data_t *data = &Data[data_pointer];
 
     while(1)
     {
-        //if(os.time.getnmsFlag(20))
-       // {
-            //Console.WriteLine("esensor:%f,%f,%f",data->O_ESensorValue[0],data->H_ESensorValue[1],data->O_ESensorValue[1]);
-      //  }
+        if(os.time.getnmsFlag(2))
+        {
+            Console.WriteLine("Ke:%.3f,%.3f,%.3f,%.3F",data->Ke[0],data->Ke[6],data->V_ESensorValue[0],data->V_ESensorValue[1]);
+        }
 
-        //Console.WriteArray("float",data->Ke,7);
-        //Console.WriteLine("Time = %u us\n",dt);
 
-//        Screen.Clear(Screen.Self,WHITE);
-//        Screen.WriteXLine(Screen.Self,10,"Time = %u us",dt);
-
-        //os.time.delay(0.02,s);
-
-//        char stringBuffer[30];
-//
-//        if(UIData.CarState)
-//        {
-//            sprintf(stringBuffer, "CarState:%-4s ", (*UIData.CarState ? "Run" : "Stop"));
-//            Screen.ShowString(Screen.Self, 0, 0 * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
-//                    BLUE);
-//        }
-//        else
-//        {
-//            Screen.ShowString(Screen.Self, 0, 0 * Screen.Font.Hight * 2, (uint8_t*) "ERROR",
-//                    BLUE);
-//        }
-
-        //Core1_CheckStatus();
-
-        Console.WriteLine("Ke:%.3f,%.3f,%.3f",data->Ke[2],data->Ke[3],data->Ke[4]);
-
-        os.time.delay(0.002,s);
+        //os.time.delay(0.002,s);
 
         if(os.time.getnmsFlag(1000))
         {
@@ -104,7 +78,7 @@ void Core1_Main()
  * */
 void Core2_Main()
 {
-    data_t *pdata = &Data[data_pointer];
+    //data_t *pdata = &Data[data_pointer];
 
     while(1)
     {

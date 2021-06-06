@@ -77,7 +77,7 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 
         SpecialElementHandler(data);
 
-        //Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
+        Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
     }
 
     //dt = os.time.getTimeus() - sTime;

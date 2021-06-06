@@ -85,6 +85,9 @@ void Cycle_Handler(data_t *data)
     static sint32_t cycleInCnt = 0;
 
     static bool isMidESensorMaxValue = false;
+    static bool isLeftOSensorFall = false;
+    static bool isRightOSensorFall = false;
+    static bool isMidHSensorFall = false;
 
     switch(cycleState)
     {
@@ -121,36 +124,70 @@ void Cycle_Handler(data_t *data)
 
         case CC_WaitIn:
 
-            if(cycleDir == CC_DirLeft)
-            {
-                if(data->O_ESensorValue[0] >= 60.0)
-                {
-                    isMidESensorMaxValue = true;
-                }
+                                if(data->Ke[2] >= 10.0 || data->Ke[4] >= 10.0)
+                                {
+                                    isMidESensorMaxValue = true;
+                                }
 
-                if(isMidESensorMaxValue)
-                {
-                    if(data->O_ESensorValue[0] <= 50.0)
-                    {
-                        cycleState = CC_In;
-                        isMidESensorMaxValue = false;
-                    }
-                }
 
-            }
-            else
-            {
-                if(data->O_ESensorValue[1] >= 60.0)
-                {
-                    isMidESensorMaxValue = true;
-                }
+                                if(isMidESensorMaxValue)
+                                {
+                                    if(data->Ke[2] < 0.0)
+                                    {
+                                        isLeftOSensorFall = true;
+                                        DebugBeepOn;
+                                    }
 
-                if(data->O_ESensorValue[1] <= 50.0)
-                {
-                    cycleState = CC_In;
-                    isMidESensorMaxValue = false;
-                }
-            }
+                                    if(data->Ke[4] < 0.0)               //右入环提前入弯
+                                    {
+                                        isRightOSensorFall = true;
+                                    }
+
+                                    if(data->Ke[3] <= 0)
+                                    {
+                                        isMidHSensorFall = true;
+                                    }
+
+                                    if(isLeftOSensorFall && isRightOSensorFall && isMidHSensorFall)
+                                    {
+                                        cycleState = CC_In;
+                                    }
+
+                                }
+
+
+//            if(cycleDir == CC_DirLeft)
+//            {
+//                if(data->Ke[2] >= 10.0)
+//                {
+//                    isMidESensorMaxValue = true;
+//                }
+//
+//                if(isMidESensorMaxValue)
+//                {
+//                    if(data->Ke[2] < 0.0)
+//                    {
+//                        cycleState = CC_In;
+//                        isMidESensorMaxValue = false;
+//                        DebugBeepOn;
+//                    }
+//                }
+//
+//
+//            }
+//            else
+//            {
+//                if(data->Ke[4] >= 10.0)
+//                {
+//                    isMidESensorMaxValue = true;
+//                }
+//
+//                if(data->Ke[4] < 0.0)
+//                {
+//                    cycleState = CC_In;
+//                    isMidESensorMaxValue = false;
+//                }
+//            }
 
             break;
 

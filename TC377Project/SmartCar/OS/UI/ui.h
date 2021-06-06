@@ -80,7 +80,7 @@ typedef struct
 
 }ui_data_pkg_t;
 
-extern volatile ui_data_pkg_t UIData;
+extern ui_data_pkg_t UIData;
 
 void UI_Update(void *argv,uint16_t argc);
 

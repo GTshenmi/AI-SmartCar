@@ -3,13 +3,13 @@
 
 #include "sys.h"
 
-#define NL -3.0
-#define NM -2.0
-#define NS -1.0
-#define ZE 0.0
-#define PS 1.0
-#define PM 2.0
-#define PL 3.0
+// #define NL -3.0
+// #define NM -2.0
+// #define NS -1.0
+// #define ZE 0.0
+// #define PS 1.0
+// #define PM 2.0
+// #define PL 3.0
 
 typedef struct
 {

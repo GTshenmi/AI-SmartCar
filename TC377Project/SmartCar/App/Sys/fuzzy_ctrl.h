@@ -3,51 +3,54 @@
 
 #include "os.h"
 
+typedef struct
+{
+    uint x;
+    uint y;
 
-// typedef double (*quantization_func)(double input);
+}fuzzy_dim_t;
 
-// typedef struct
-// {
-//     uint32_t x;
-//     uint32_t y;
-// }fuzzy_dim_t;
+typedef struct 
+{
+    float *EFF;
+    uint  EFFLen;
 
-// typedef struct
-// {
-//     double input;
-//     double output;
-// }fuzzy_gain_t;
+    float *DFF;
+    uint  DFFLen;
 
+    float *UFF;
+    uint  UFFLen;
 
-// typedef struct
-// {
-//     double Input;
+    float *UBuf;
 
-//     uint32_t QuantifyDim;      /**/
-
-//     quantization_func Quantify;
-
-//     sint32_t Q;
-
-//     sint32_t Pn;
-
-//     double IF[2];
-
-//     double *IFF;
-
-//     double U;
-
-//     double *UFF;
-    
-//     double *Rule;           /*模糊规则表*/
-
-//     fuzzy_dim_t RuleDim;
-
-//     fuzzy_gain_t Gain;
-
-//     double Result;
-// }fuzzy_ctrl_t;
+    sint32_t *Rule;
+}fuzzy_init_t;
 
 
+typedef struct
+{
+    float e[2];
+    float ec;
+    float U;
+
+    float *EFF;
+    uint  EFFLen;
+
+    float *DFF;
+    uint  DFFLen;
+
+    float *UFF;
+    uint  UFFLen;
+
+    float *UBuf;
+    uint UBufLen;
+
+    sint32_t *Rule;
+    fuzzy_dim_t RuleDim;
+
+}Fuzzy_TypeDef;
+
+float FuzzyInit(Fuzzy_TypeDef *fuzzy,fuzzy_init_t *fuzzyInitStr);
+float FuzzyCtrl(Fuzzy_TypeDef *fuzzy, float target, float actual);
 
 #endif

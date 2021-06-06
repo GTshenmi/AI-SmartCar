@@ -49,7 +49,7 @@ void Core0_HardWareInit()
     UI_Init();
 
     bits = DIPSwitch.Read(DIPSwitch.Self);
-    bits = 0x00;
+    //bits = 0x00;
 
     /*Init LED And BEEP.*/
 
@@ -107,15 +107,15 @@ void Core0_HardWareInit()
     {
         LESensor[i].Init(LESensor[i].Self);
         LESensor[i].EnableFilter(LESensor[i].Self,true);
-        LESensor[i].SetGain(LESensor[i].Self,1.0);
-        LESensor[i].EnableGain(LESensor[i].Self,false);
+//        LESensor[i].SetGain(LESensor[i].Self,1.0);
+//        LESensor[i].EnableGain(LESensor[i].Self,false);
     }
     for(int i = 0;i<CData.MaxSADCDeviceNum;i++)
     {
         SESensor[i].Init(SESensor[i].Self);
         SESensor[i].EnableFilter(SESensor[i].Self,true);
-        SESensor[i].SetGain(SESensor[i].Self,1.0);
-        SESensor[i].EnableGain(SESensor[i].Self,false);
+//        SESensor[i].SetGain(SESensor[i].Self,1.0);
+//        SESensor[i].EnableGain(SESensor[i].Self,false);
     }
 
     Screen.WriteXLine(Screen.Self,line,"Init ESensor.......OK");

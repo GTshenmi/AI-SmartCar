@@ -131,6 +131,7 @@ typedef enum
     AutoBoot_Mode = 1,     /*长前瞻自动巡线模式*/
     ManualBoot_Mode = 2,   /*手动巡线模式*/
     DebugMode = 3,         /*调试*/
+    SAutoBoot_Mode = 4,    /*短前瞻巡线*/
 }car_mode_t;
 
 typedef enum

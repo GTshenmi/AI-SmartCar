@@ -1,12 +1,13 @@
 #include "fuzzycontrol.h"
 
-float EFF[7] = {-75.0,-50.0,-25.0,0.0,25.0,50.0,75.0};
+/*Servo Fuzzy Control*/
+float SEFF[7] = {-75.0,-50.0,-25.0,0.0,25.0,50.0,75.0};                         
 
-float DFF[7] = {-20.0,-10.0,-5.0,0.0,5.0,10.0,20.0};
+float SDFF[7] = {-20.0,-10.0,-5.0,0.0,5.0,10.0,20.0};
 
-float UFF[13] = {-1.0,-0.8,-0.6,-0.4,-0.2,-0.1,0.0,0.1,0.2,0.4,0.6,0.8,1.0}; 
+float SUFF[13] = {-1.0,-0.8,-0.6,-0.4,-0.2,-0.1,0.0,0.1,0.2,0.4,0.6,0.8,1.0}; 
 
-sint32_t FuzzyRule[7][7] =
+sint32_t SFuzzyRule[7][7] =
 {
         /*ec-----------------*/ /*e*/
         {-6,-6,-6,-6,-5,-5,-4,},/*|*/
@@ -18,7 +19,7 @@ sint32_t FuzzyRule[7][7] =
         { 4, 5, 5, 6, 6, 6, 6}, /*|*/
 };
 
-float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual)
+float FuzzyControl(fuzzy_ctrl_t *fuzzy, float target, float actual)
 {
     float EF[2] = { 0.0,0.0 }, DF[2] = {0.0,0.0};
 
@@ -46,14 +47,14 @@ float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual)
 
     /*Calculate Membership.*/
 
-    if (fuzzy->e[1] < EFF[0])
+    if (fuzzy->e[1] < SEFF[0])
     {
         EF[0] = 1.0;
         EF[1] = 0.0;
 
         En = -3;
     }
-    else if (fuzzy->e[1] >= EFF[6])
+    else if (fuzzy->e[1] >= SEFF[6])
     {
         EF[0] = 0.0;
         EF[1] = 1.0;
@@ -64,25 +65,25 @@ float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual)
     {
         for (i = 1; i <= 6; i++)
         {
-            if ((fuzzy->e[1] < EFF[i]) && (fuzzy->e[1] >= EFF[i - 1])) //ÓÐ2Ìõ¹æÔòÉúÐ§
+            if ((fuzzy->e[1] < SEFF[i]) && (fuzzy->e[1] >= SEFF[i - 1])) //ÓÐ2Ìõ¹æÔòÉúÐ§
             {
                 En = i - 1 - 3;
 
-                EF[0] = -(fuzzy->e[1] - EFF[i]) / (EFF[i] - EFF[i - 1]);
+                EF[0] = -(fuzzy->e[1] - SEFF[i]) / (SEFF[i] - SEFF[i - 1]);
 
-                EF[1] = (fuzzy->e[1] - EFF[i - 1]) / (EFF[i] - EFF[i - 1]);
+                EF[1] = (fuzzy->e[1] - SEFF[i - 1]) / (SEFF[i] - SEFF[i - 1]);
             }
         }
     }
 
-    if (fuzzy->ec < DFF[0])
+    if (fuzzy->ec < SDFF[0])
     {
         DF[0] = 1.0;
         DF[1] = 0.0;
 
         Dn = -3;
     }
-    else if (fuzzy->ec >= DFF[6])
+    else if (fuzzy->ec >= SDFF[6])
     {
         DF[0] = 0.0;
         DF[1] = 1.0;
@@ -93,30 +94,30 @@ float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual)
     {
         for (i = 1; i <= 6; i++)
         {
-            if (fuzzy->ec < DFF[i] && fuzzy->ec >= DFF[i - 1]) //ÓÐ2Ìõ¹æÔòÉúÐ§
+            if (fuzzy->ec < SDFF[i] && fuzzy->ec >= SDFF[i - 1]) //ÓÐ2Ìõ¹æÔòÉúÐ§
             {
                 Dn = i - 1 - 3;
 
-                DF[0] = -(fuzzy->ec - DFF[i]) / (DFF[i] - DFF[i - 1]);
+                DF[0] = -(fuzzy->ec - SDFF[i]) / (SDFF[i] - SDFF[i - 1]);
 
-                DF[1] = (fuzzy->ec - DFF[i - 1]) / (DFF[i] - DFF[i - 1]);
+                DF[1] = (fuzzy->ec - SDFF[i - 1]) / (SDFF[i] - SDFF[i - 1]);
             }
         }
     }
 
     /*Fuzzy Reasoning.*/
 
-    Un[0] = FuzzyRule[En + 3][Dn + 3] + 6;      //2*2 = 4Ìõ¹æÔòÉúÐ§
+    Un[0] = SFuzzyRule[En + 3][Dn + 3] + 6;      //2*2 = 4Ìõ¹æÔòÉúÐ§
 
     UF[0] = min(EF[0], DF[0]);
 
-    Un[1] = FuzzyRule[En + 3 + 1][Dn + 3] + 6;
+    Un[1] = SFuzzyRule[En + 3 + 1][Dn + 3] + 6;
     UF[1] = min(EF[1], DF[0]);
 
-    Un[2] = FuzzyRule[En + 3][Dn + 3 + 1] + 6;
+    Un[2] = SFuzzyRule[En + 3][Dn + 3 + 1] + 6;
     UF[2] = 1.0 * min(EF[0], DF[1]);
 
-    Un[3] = FuzzyRule[En + 3 + 1][Dn + 3 + 1] + 6;
+    Un[3] = SFuzzyRule[En + 3 + 1][Dn + 3 + 1] + 6;
     UF[3] = 1.0 * min(EF[1], DF[1]);
 
     if (Un[0] == Un[1])    //Í¬Á¥Êô¶ÈÓïÑÔÈ¡´ó
@@ -176,7 +177,7 @@ float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual)
 
     for (i = 0; i < 13; i++)
     {
-        sum0 += U[i] * UFF[i];
+        sum0 += U[i] * SUFF[i];
 
         sum1 += U[i];
     }
@@ -188,6 +189,128 @@ float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual)
 
     return fuzzy->U;
 }
+
+
+float FuzzySpeedTable[13][13];
+
+float FuzzySpeedControl(fuzzy_ctrl_t *fuzzy,float target,float actual)
+{
+	uint En = 0, Dn = 0;
+
+    fuzzy->e[0] = fuzzy->e[1];
+    fuzzy->e[1] = target - actual;
+
+    fuzzy->ec = fuzzy->e[1] - fuzzy->e[0];
+
+
+    /*
+    
+            ...
+    
+     */
+
+
+
+	if (En > 6)
+		En = 6;
+	else if (En < -6)
+		En = -6;
+
+	if (Dn > 6)
+		Dn = 6;
+	else if (En < -6)
+		Dn = -6;
+
+	return FuzzySpeedTable[En][Dn];
+}
+
+/*Motor Fuzzy Control*/
+float MEFF_Kp[7];
+float MDFF_Kp[7];
+float MUFF_Kp[7];
+sint32_t MFuzzyRule_Kp[7][7] = 
+{
+    {3,3,2,2,1,0,0},
+    {3,3,2,1,1,0,-1},
+    {2,2,2,1,0,-1,-1},
+    {2,2,1,0,-1,-2,-2},
+    {1,1,0,-1,-1,-2,-2},
+    {1,0,-1,-2,-2,-2,-3},
+    {0,0,-2,-2,-2,-3,-3},
+};
+
+float MEFF_Ki[7];
+float MDFF_Ki[7];
+float MUFF_Ki[7];
+sint32_t MFuzzyRule_Ki[7][7] = 
+{
+    {-3,-3,-2,-2,-1,0,0},
+    {-3,-3,-2,-1,-1,0,0},
+    {-3,-2,-1,-1,0,1,1},
+    {-2,-2,-1,0,1,2,2},
+    {-2,-1,0,1,1,2,3},
+    {0,0,1,1,2,3,3},
+    {0,0,1,2,2,3,3},
+};
+
+float MUBuf_Kp[7];
+float MUBuf_Ki[7];
+
+float FuzzyPIDInit(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy)
+{
+    fuzzy_init_t fuzzyInitStr;
+
+    fuzzyInitStr.DFF = MDFF_Kp;
+    fuzzyInitStr.DFFLen = 7;
+    fuzzyInitStr.EFF = MEFF_Kp;
+    fuzzyInitStr.EFFLen = 7;
+    fuzzyInitStr.UBuf = MUBuf_Kp;
+    fuzzyInitStr.UFF = MUFF_Kp;
+    fuzzyInitStr.UFFLen = 7;
+    fuzzyInitStr.Rule = &MFuzzyRule_Kp[0][0];
+
+    FuzzyInit(pFuzzy,&fuzzyInitStr);
+
+    fuzzyInitStr.DFF = MDFF_Ki;
+    fuzzyInitStr.DFFLen = 7;
+    fuzzyInitStr.EFF = MEFF_Ki;
+    fuzzyInitStr.EFFLen = 7;
+    fuzzyInitStr.UBuf = MUBuf_Ki;
+    fuzzyInitStr.UFF = MUFF_Ki;
+    fuzzyInitStr.UFFLen = 7;
+    fuzzyInitStr.Rule = &MFuzzyRule_Ki[0][0];
+
+    FuzzyInit(iFuzzy,&fuzzyInitStr);
+
+    return 0.0;
+}
+
+float FuzzyPID(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy,float target,float actual)
+{
+    FuzzyCtrl(pFuzzy,target,actual);
+    FuzzyCtrl(iFuzzy,target,actual);
+    return 0.0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // void Fuzzy_CalculateMatrixR()
 // {

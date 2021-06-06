@@ -47,10 +47,12 @@ void ParameterInit(void *argv)
     PID_SetOutPutLimit(&Data[data_pointer].M_PID,PIDLimit(-100.0,100.0));
 
     Queue.Init(&data->ESensorQueue,&ESensorDataQueue[0][0],8);
-    Queue.Init(&data->RawBiasQueue,&RBiasDataQueue[0],8);
-    Queue.Init(&data->ElementBiasQueue,&EBiasDataQueue[0],8);
-    Queue.Init(&data->TrackingQueue,&TrackingDataQueue[0],8);
-    Queue.Init(&data->ElementTypeQueue,&TrackingDataQueue[0],8);
+
+    Queue.Init(&data->RawBiasQueue,&RBiasDataQueue[0],1);
+    Queue.Init(&data->ElementBiasQueue,&EBiasDataQueue[0],1);
+    Queue.Init(&data->TrackingQueue,&TrackingDataQueue[0],1);
+    Queue.Init(&data->ElementTypeQueue,&TrackingDataQueue[0],1);
+    
 }
 
 data_t Data[MAX_DATA_LEN] =

@@ -30,7 +30,22 @@
 
 inline float fdiv(float x,float y)
 {
-    return (Is_Zero(y)) ? 0.0 : (x/y);
+    float result = 0.0;
+
+    if(Is_Zero(x) && Is_Zero(y))
+    {
+        result = 0.0;
+    }
+    else if(Is_Zero(y) && !(Is_Zero(x)))
+    {
+        result = 999999.0;
+    }
+    else
+    {
+        result = x/y;
+    }
+
+    return result;
 }
 
 float NormalizeFloat(float value,float min,float max);

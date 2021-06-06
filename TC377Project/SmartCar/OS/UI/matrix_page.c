@@ -8,7 +8,7 @@
 #include "matrix_page.h"
 #include "ui_utilities.h"
 
-extern sint32_t FuzzyRule[7][7];
+extern sint32_t SFuzzyRule[7][7];
 
 void displaySettingPage (MatrixPageStruct *Self)
 {
@@ -24,7 +24,7 @@ void displayChoosePage (MatrixPageStruct *Self)
     {
         for (uint8_t j = 0; j < 7; j++)
         {
-            sprintf(stringBuffer, "%2ld ", FuzzyRule[i][j]);
+            sprintf(stringBuffer, "%2ld ", SFuzzyRule[i][j]);
             Screen.ShowString(Screen.Self, (1 + j * 2) * Screen.Font.Width, (2 + i) * Screen.Font.Hight,
                     (uint8_t*) stringBuffer, (Self->Cursor[i][j] ? BLUE : BLACK));
         }
@@ -192,7 +192,7 @@ void MatrixPage_ConfirmPressed (MatrixPageStruct *Self)
             {
                 if (Self->Cursor[i][j])
                 {
-                    Self->numberToChange = &(FuzzyRule[i][j]);
+                    Self->numberToChange = &(SFuzzyRule[i][j]);
                     Self->choosePageOpened = 0;
                     ClearScreen();
                     return;

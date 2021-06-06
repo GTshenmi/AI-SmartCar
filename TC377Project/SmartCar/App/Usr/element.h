@@ -14,7 +14,9 @@
 
 inline bool Is_RightAngle(data_t *data)
 {
-    return 0;
+    return ((data->Ke[0] >= 25.0) && (fabs(data->Ke[6] <= 5.0)))|| \
+           ((data->Ke[6] >= 25.0) && (fabs(data->Ke[0] <= 5.0)));
+
     //return ((fabs(data->v_difference) >= 35.0 &&\
     //         fabs(data->o_difference) <= 30.0));
 }

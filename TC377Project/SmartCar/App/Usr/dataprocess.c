@@ -19,6 +19,58 @@ void GetESensorData(void *argv)
         data->SESensor_SampleValue[i] = SESensor[i].Read(SESensor[i].Self);
 }
 
+float LineFitLeastSquares(float *data_x, float *data_y, int data_n)
+{
+    float A = 0.0;
+    float B = 0.0;
+    float C = 0.0;
+    float D = 0.0;
+    float E = 0.0;
+    float F = 0.0;
+
+    for (int i=0; i<data_n; i++)
+    {
+        A += data_x[i] * data_x[i];
+        B += data_x[i];
+        C += data_x[i] * data_y[i];
+        D += data_y[i];
+    }
+
+    // 计算斜率a和截距b
+    float a, b, temp = 0;
+
+    temp = (data_n*A - B*B);
+
+    if(fabs(temp) < 1e-6)// 判断分母不为0
+    {
+        a = (data_n*C - B*D) / temp;
+        b = (A*D - B*C) / temp;
+    }
+    else
+    {
+        a = 1;
+        b = 0;
+    }
+
+    // 计算相关系数r
+    float Xmean, Ymean;
+    Xmean = B / data_n;
+    Ymean = D / data_n;
+
+    float tempSumXX = 0.0, tempSumYY = 0.0;
+    for (int i=0; i<data_n; i++)
+    {
+        tempSumXX += (data_x[i] - Xmean) * (data_x[i] - Xmean);
+        tempSumYY += (data_y[i] - Ymean) * (data_y[i] - Ymean);
+        E += (data_x[i] - Xmean) * (data_y[i] - Ymean);
+    }
+    F = sqrt(tempSumXX) * sqrt(tempSumYY);
+
+    float r;
+    r = E / F;
+    return a;
+}
+
 void ESensorDataProcess(void *argv)
 {
     data_t *data = (data_t *)argv;
@@ -39,32 +91,62 @@ void ESensorDataProcess(void *argv)
     float aveX[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
     float aveY[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
-    float *(eSensorData)[10];
+#define PointNum 5
 
-    eSensorData[0] = data->LESensor_NormalizedValue;
+    static float eSensorData[PointNum][7];
 
-    for(int i = 1 ; i < 10;i++)
+    for(int i = 0 ; i < PointNum - 1 ; i++)
     {
-        eSensorData[i] = Queue.Gets(&data->ESensorQueue,-i,NULL,0,7);
+        for(int j = 0 ; j < 7 ;j++)
+        {
+            eSensorData[i][j] = eSensorData[i + 1][j];
+        }
     }
+
+    for(int i = 0 ; i < 7 ;i++)
+    {
+        eSensorData[PointNum - 1][i] = data->LESensor_NormalizedValue[i];
+    }
+
+//    float *(eSensorData)[PointNum];
+//
+//    eSensorData[0] = data->LESensor_NormalizedValue;
+
+//    for(int i = 1 ; i < PointNum;i++)
+//    {
+//        eSensorData[i] = Queue.Gets(&data->ESensorQueue,-i,NULL,0,7);
+//    }
 
     for (int i = 0; i < 7; i++)
     {
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < PointNum; j++)
         {
-            aveX[i] += j;
-            aveY[i] += eSensorData[j][i];
-            sumXY[i] += j * eSensorData[j][i];
-            sumX2[i] += j * j;
+            float x = j * 0.02;
+            float y = eSensorData[j][i] * 1.0;
+
+            aveX[i] += x;
+            aveY[i] += y;
+            sumXY[i] += x * y;
+            sumX2[i] += x * x;
         }
 
-        aveX[i] /= 10.0;
-        aveY[i] /= 10.0;
+        aveX[i] /= (PointNum * 1.0);
+        aveY[i] /= (PointNum * 1.0);
     }
 
     for (int i = 0; i < 7; i++)
     {
-        data->Ke[i] = fdiv((sumXY[i] - 10 * aveX[i] * aveY[i]),(sumX2[i] - 10 * square(aveX[i])));
+        //data->Ke[i] = (sumXY[i] - PointNum * aveX[i] * aveY[i])/(sumX2[i] - PointNum * square(aveX[i]));
+        //data->Ke[i] = LineFitLeastSquares(eSensorData[i]);
+        if(Is_Zero(sumX2[i] - PointNum * square(aveX[i])))
+        {
+            data->Ke[i] = 1.0;
+        }
+        else
+        {
+            data->Ke[i] = (sumXY[i] - PointNum * aveX[i] * aveY[i])/(sumX2[i] - PointNum * square(aveX[i]));
+        }
+        //data->Ke[i] = fdiv((sumXY[i] - PointNum * aveX[i] * aveY[i]),(sumX2[i] - PointNum * square(aveX[i])));
     }
 
     //data->Bias = FIR_Filter(Kb,bias,data->_Bias,5);
