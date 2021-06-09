@@ -46,6 +46,8 @@ void ParameterInit(void *argv)
 
     PID_SetOutPutLimit(&Data[data_pointer].M_PID,PIDLimit(-100.0,100.0));
 
+    FuzzyPIDInit(&data->M_FuzzyKp,&data->M_FuzzyKi);
+
     Queue.Init(&data->ESensorQueue,&ESensorDataQueue[0][0],8);
 
     Queue.Init(&data->RawBiasQueue,&RBiasDataQueue[0],1);

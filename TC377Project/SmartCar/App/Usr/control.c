@@ -39,7 +39,7 @@ void SpeedControl(void *argv)
 
         formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
 
-        //data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
         Motor.SetPwmValue(Motor.Self,data->Speed);
 
@@ -124,6 +124,8 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
     tspeed = 100.0 * NormalizeFloat(target_speed,0.0,self->MaxSpeed);
 
     aspeed = 100.0 * NormalizeFloat(actual_speed,0.0,self->MaxSpeed);
+
+    FuzzyPID(&data->M_FuzzyKp,&data->M_FuzzyKi,target_speed,actual_speed);
 
     if(fabs(data->M_PID.PID_Error[2]) > 100.0)
     {

@@ -277,11 +277,11 @@ gpio_resource_t GPIO_Resources[25] =
 pwm_resource_t PWM_Resources[3] =
 {
         [0] = {
-               .PWMN = {(void *)&IfxGtm_ATOM0_1_TOUT54_P21_3_OUT,13000,0,ATOM,0,6000},
+               .PWMN = {(void *)&IfxGtm_ATOM0_1_TOUT54_P21_3_OUT,13000,0,ATOM,0,10000},
                .Description = "Motor PH"
         },
         [1] = {
-               .PWMN = {(void *)&IfxGtm_ATOM0_2_TOUT55_P21_4_OUT,13000,0,ATOM,0,6000},
+               .PWMN = {(void *)&IfxGtm_ATOM0_2_TOUT55_P21_4_OUT,13000,0,ATOM,0,10000},
                .Description = "Motor EN"
         },
         [2] = {

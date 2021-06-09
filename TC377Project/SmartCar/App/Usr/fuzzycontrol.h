@@ -19,5 +19,7 @@ typedef struct
 }fuzzy_ctrl_t;
 
 float FuzzyControl(fuzzy_ctrl_t* fuzzy, float target, float actual);
+float FuzzyPIDInit(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy);
+float FuzzyPID(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy,float target,float actual);
 
 #endif

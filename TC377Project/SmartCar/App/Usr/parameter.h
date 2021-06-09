@@ -144,6 +144,8 @@ typedef struct
       /*For Motor PID*/
 
       PID_TypeDef M_PID;     /*电机速度的PID控制器*/
+      Fuzzy_TypeDef M_FuzzyKp;
+      Fuzzy_TypeDef M_FuzzyKi;
 
       float Actual_Speed; /*实际速度*/
       float Speed;        /*速度*/

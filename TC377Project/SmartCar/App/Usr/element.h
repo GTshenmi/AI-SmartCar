@@ -14,11 +14,11 @@
 
 inline bool Is_RightAngle(data_t *data)
 {
-    return ((data->Ke[0] >= 25.0) && (fabs(data->Ke[6] <= 5.0)))|| \
-           ((data->Ke[6] >= 25.0) && (fabs(data->Ke[0] <= 5.0)));
+//    return ((data->Ke[0] >= 25.0) && (fabs(data->Ke[6] <= 5.0)))|| \
+//           ((data->Ke[6] >= 25.0) && (fabs(data->Ke[0] <= 5.0)));
 
-    //return ((fabs(data->v_difference) >= 35.0 &&\
-    //         fabs(data->o_difference) <= 30.0));
+    return ((fabs(data->v_difference) >= 35.0 &&\
+             fabs(data->o_difference) <= 30.0));
 }
 
 inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
@@ -46,7 +46,9 @@ inline bool Is_Cycle(data_t *data)
 
 inline bool Is_CycleOut(data_t *data)
 {
-    return (data->H_ESensorValue[1] >= 60.0);
+    float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
+
+    return (h_sum >= 200);
 }
 
 inline bool Is_CycleBackToStraight(data_t *data)
