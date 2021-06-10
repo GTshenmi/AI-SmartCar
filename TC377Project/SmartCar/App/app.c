@@ -33,6 +33,7 @@ void SmartCarSysDataReport(void *data)
 void Core0_Main()
 {
     extern float dt;
+    extern bool RecordFlags;
 
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
@@ -41,10 +42,15 @@ void Core0_Main()
 
     while(1)
     {
-        if(os.time.getnmsFlag(2))
+        if(RecordFlags)
         {
-            Console.WriteLine("Ke:%.3f,%.3f,%.3f,%.3F",data->Ke[0],data->Ke[6],data->V_ESensorValue[0],data->V_ESensorValue[1]);
+            SaveParameterSD(data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
+            RecordFlags = false;
         }
+//        if(os.time.getnmsFlag(2))
+//        {
+//            Console.WriteLine("Ke:%.3f,%.3f,%.3f,%.3F",data->Ke[0],data->Ke[6],data->V_ESensorValue[0],data->V_ESensorValue[1]);
+//        }
 
 
         //os.time.delay(0.002,s);

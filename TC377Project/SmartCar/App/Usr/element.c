@@ -19,12 +19,12 @@ float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if(Is_RightAngle(data))
+    if(Is_RightAngle(data) && data->Element.Type != Cross)
     {
         data->Element.Type = RightAngle;
     }
 
-    if(Is_Cross(data))     
+    if(Is_Cross(data))
     {
         data->Element.Type = Cross;
     }
@@ -32,7 +32,7 @@ float ElementDetermine(void *argv)
     if(Is_Cycle(data))
     {
         data->Element.Type = Cycle;
-        
+
     }
 
     if(Is_LoseLine(data))

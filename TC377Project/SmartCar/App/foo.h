@@ -15,6 +15,6 @@ void DataSaveSysDeInit(FIL *excel_fp,FIL *txt_fp);
 void SaveAutoBootModeDataToExcel(void *data);
 void ReadParameterFromSDCard(void *data);
 void SaveParameterToSDCard(void *data);
-uint SaveParameterSD(uint16_t *LADC_Value,uint16_t *SADC_Value,sint16_t *Angle);
+uint SaveParameterSD(float *LADC_Value,float *SADC_Value,float *Angle);
 
 #endif /* APP_FOO_H_ */

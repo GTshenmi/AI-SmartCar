@@ -128,7 +128,7 @@ typedef struct
 typedef enum
 {
     AI_Mode = 0,           /*神经网络引导巡线*/
-    AutoBoot_Mode = 1,     /*长前瞻自动巡线模式*/
+    LAutoBoot_Mode = 1,     /*长前瞻自动巡线模式*/
     ManualBoot_Mode = 2,   /*手动巡线模式*/
     DebugMode = 3,         /*调试*/
     SAutoBoot_Mode = 4,    /*短前瞻巡线*/
@@ -146,6 +146,8 @@ typedef struct
       PID_TypeDef M_PID;     /*电机速度的PID控制器*/
       Fuzzy_TypeDef M_FuzzyKp;
       Fuzzy_TypeDef M_FuzzyKi;
+
+      Fuzzy_TypeDef FuzzySpeed;
 
       float Actual_Speed; /*实际速度*/
       float Speed;        /*速度*/
@@ -175,6 +177,8 @@ typedef struct
       float O_ESensorValue[2];
 
       float Ke[MAX_LESENSOR_NUM];
+
+      float SKe[MAX_SESENSOR_NUM];
 
       float h_difference;
       float v_difference;

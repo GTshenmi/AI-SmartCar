@@ -30,10 +30,11 @@ void SpeedControl(void *argv)
     }
     else
     {
+
         if(!data->Is_AdjustSpeed)
-        {
             data->Speed = 3500;
-        }
+            //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+
 
         float formatedSpeed = 0.0;
 
@@ -70,7 +71,7 @@ void AngleControl(void *argv)
 
         Servo.Update(Servo.Self);
     }
-    else if(data->CarMode == AutoBoot_Mode)
+    else if(data->CarMode == LAutoBoot_Mode)
     {
     //    if(fabs(data->h_bias) >= 20.0 || data->v_bias >= 30.0)
     //        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp;
@@ -126,6 +127,9 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
     aspeed = 100.0 * NormalizeFloat(actual_speed,0.0,self->MaxSpeed);
 
     FuzzyPID(&data->M_FuzzyKp,&data->M_FuzzyKi,target_speed,actual_speed);
+
+    data->M_PID.Kp += data->M_FuzzyKp.U;
+    data->M_PID.Ki += data->M_FuzzyKi.U;
 
     if(fabs(data->M_PID.PID_Error[2]) > 100.0)
     {

@@ -50,35 +50,7 @@ void STM1_CH0_IRQHandler(void)           /*Calculate Bias.*/
 
     //uint32_t sTime = os.time.getTimeus();
 
-    data_t *data = &Data[data_pointer];
-
-    if(data->CarMode == AI_Mode)
-    {
-        GetESensorData(data);               //获取电感原数据
-
-        ESensorDataProcess(data);           //获取电感归一化数据
-    }
-    else if(data->CarMode == AutoBoot_Mode)
-    {
-        GetESensorData(data);
-
-        ESensorDataProcess(data);
-
-        Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
-        Queue.Puts(&data->RawBiasQueue,&data->Bias,0,1);
-
-        //float trackingState = data->TrackingState;
-        //Queue.Puts(&data->TrackingQueue,&trackingState,0,1);
-
-        ElementDetermine(data);
-
-        //float eType = data->Element.Type * 1.0;
-        //Queue.Puts(&data->ElementTypeQueue,&eType,0,1);
-
-        SpecialElementHandler(data);
-
-        Queue.Puts(&data->ElementBiasQueue,&data->Bias,0,1);
-    }
+    ESensorDataAnalysis(&Data[data_pointer]);
 
     //dt = os.time.getTimeus() - sTime;
     
