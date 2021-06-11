@@ -47,6 +47,8 @@ void Core0_Main()
             SaveParameterSD(data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
             RecordFlags = false;
         }
+
+
 //        if(os.time.getnmsFlag(2))
 //        {
 //            Console.WriteLine("Ke:%.3f,%.3f,%.3f,%.3F",data->Ke[0],data->Ke[6],data->V_ESensorValue[0],data->V_ESensorValue[1]);

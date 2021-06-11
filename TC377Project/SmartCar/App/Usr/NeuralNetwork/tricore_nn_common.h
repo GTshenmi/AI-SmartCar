@@ -11,6 +11,13 @@
 
 #include "platform.h"
 
+#define ARM_TANH TRICORE_TANH
+
+#define arm_fully_connected_q15 tricore_fully_connected_q15
+#define arm_relu_q15 tricore_relu_q15
+
+//#define aia_relu8_q15
+
 typedef enum
 {
     TRICORE_MATH_SUCCESS = 0,                 /**< No error */

@@ -10,7 +10,7 @@
 #include <parameter.h>
 #include "include.h"
 
-uint16_t CarMode = LAutoBoot_Mode;/*运行状态*/
+uint16_t CarMode =SAutoBoot_Mode;/*运行状态*/
 //uint16_t CarMode = AI_Mode; //调AI 换成此状态
 
 uint16_t data_pointer = 0;
@@ -73,6 +73,10 @@ data_t Data[MAX_DATA_LEN] =
         },
         [3] = {
                 .CarMode = DebugMode,
+                .AI_State = AI_Free,
+        },
+        [4] = {
+                .CarMode = SAutoBoot_Mode,
                 .AI_State = AI_Free,
         },
 };

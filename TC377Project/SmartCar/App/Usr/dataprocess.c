@@ -17,6 +17,7 @@ float CalculateDistance(float L1,float L2);
 
 float CalculateBiasLABM(void *argv);
 void LinearFitLABM(void *argv);
+float CalculateBiasSABM(void *argv);
 
 
 void GetESensorData(void *argv)
@@ -67,7 +68,7 @@ void ESensorDataAnalysis(void *argv)
     }
     else if(data->CarMode == SAutoBoot_Mode)
     {
-
+        data->Bias = CalculateBiasSABM(data);
     }
 
     ElementDetermine(data);
@@ -134,6 +135,7 @@ void LinearFitLABM(void *argv)
     }
 }
 
+
 float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
 {
  /*
@@ -186,6 +188,58 @@ float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
     return bias;
 }
 
+
+float CalculateBiasSABM(void *argv)     /*Calculate Bias And Element Type.*/
+{
+ /*
+  * SESensor  : [0]  [1]  [2]  [3]  [4]  [5]  [6]
+  * Direction :  |   ---   \   ---   /   ---   |
+  * ESensor   : (-100.0,100.0)
+  * Distance  : (-1.0,1.0)
+  * Problem   : 1.直角切内弯会反方向误判
+  *
+  * */
+
+    data_t *data = (data_t *)argv;
+
+    static float bias = 0.0;
+
+    data->H_ESensorValue[0] = data->SESensor_NormalizedValue[0];
+    data->H_ESensorValue[1] = data->SESensor_NormalizedValue[4];
+    data->H_ESensorValue[2] = data->SESensor_NormalizedValue[7];
+
+    data->V_ESensorValue[0] = data->SESensor_NormalizedValue[1];
+    data->V_ESensorValue[1] = data->SESensor_NormalizedValue[6];
+
+    data->O_ESensorValue[0] = data->SESensor_NormalizedValue[2];
+    data->O_ESensorValue[1] = data->SESensor_NormalizedValue[5];
+
+    /*for H ESensor:*/
+
+    data->h_bias = 100.0 * CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
+
+    data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
+
+    data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
+
+    /*for V ESensor:*/
+
+    data->v_bias = 100.0 * CalculateDistance(data->V_ESensorValue[0],data->V_ESensorValue[1]);
+    data->v_difference = data->V_ESensorValue[0] - data->V_ESensorValue[1];
+    data->v_sum = data->V_ESensorValue[0] + data->V_ESensorValue[1];
+
+    /*for O ESensor:*/
+
+    data->o_bias = 100.0 * CalculateDistance(data->O_ESensorValue[0],data->O_ESensorValue[1]);
+    data->o_difference = data->O_ESensorValue[0] - data->O_ESensorValue[1];
+    data->o_sum = data->O_ESensorValue[0] + data->O_ESensorValue[1];
+
+    /*Calculate Bias:*/
+
+    bias = data->h_bias;
+
+    return bias;
+}
 
 #define LESensor_Min 10.0
 

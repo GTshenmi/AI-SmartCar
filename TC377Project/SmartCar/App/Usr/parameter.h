@@ -11,7 +11,7 @@
 #include "sys.h"
 #include "fuzzycontrol.h"
 
-#define MAX_DATA_LEN 4
+#define MAX_DATA_LEN 5
 
 #define Lock(x)  ((x).Lock = 1)
 #define pLock(x) ((x)->Lock == 1)

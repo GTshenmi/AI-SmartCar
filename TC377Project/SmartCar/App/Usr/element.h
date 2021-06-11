@@ -38,10 +38,10 @@ inline bool Is_RightAngleBackToStraight(data_t *data)
 
 inline bool Is_Cycle(data_t *data)
 {
-    //return 0;
-    float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
+    return 0;
+    //float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
 
-    return (h_sum >= 200);
+    //return (h_sum >= 200);
 }
 
 inline bool Is_CycleOut(data_t *data)

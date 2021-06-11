@@ -27,8 +27,6 @@ void Core0_HardWareInit()
     sint8_t res = -1;
     uint32_t bits = 0;
 
-    data_pointer = CarMode;
-
     /*Init Debug Console.*/
 
     Console.Init();
@@ -44,12 +42,15 @@ void Core0_HardWareInit()
 
     DIPSwitch.Init(DIPSwitch.Self);
 
+    bits = DIPSwitch.Read(DIPSwitch.Self);
+    //bits = 0x00;
+
+    data_pointer = CarMode;
+
+
     UIParameterInit();
 
     UI_Init();
-
-    bits = DIPSwitch.Read(DIPSwitch.Self);
-    //bits = 0x00;
 
     /*Init LED And BEEP.*/
 
@@ -70,7 +71,9 @@ void Core0_HardWareInit()
     Motor.Init(Motor.Self);
     Motor.Connect(Motor.Self,MotorCtrlStrategy,&Data[data_pointer],sizeof(data_t));
 
-    Motor.SetSpeedLimit(Motor.Self,250.0,-250.0);
+    //Motor.SetSpeedLimit(Motor.Self,250.0,-250.0);
+
+    Motor.SetSpeedLimit(Motor.Self,500.0,-500.0);
 
     Motor.Start(Motor.Self);
 
@@ -85,7 +88,7 @@ void Core0_HardWareInit()
 
     //Servo.SetAngleLimit(Servo.Self,1250.0 - 750.0,250.0 - 750.0);
 
-    Servo.SetAngleLimit(Servo.Self,175.0,-175.0);
+    Servo.SetAngleLimit(Servo.Self,180.0,-180.0);
 
     Servo.SetPwmCentValue(Servo.Self,725);
 
@@ -222,9 +225,9 @@ void UIParameterInit(void)
     UIData.SPID_Result =  &Data[data_pointer].S_PID.Result;
 
 
-    //UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
+    UIData.S_PwmDuty =    &Data[data_pointer].SPwmValue;
 
-    UIData.S_PwmDuty =    &Servo.PwmValue;
+    //UIData.S_PwmDuty =    &Servo.PwmValue;
 
 
     UIData.DynamicKp = &Data[data_pointer].DynamicKp;

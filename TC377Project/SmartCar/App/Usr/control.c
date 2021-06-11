@@ -28,27 +28,48 @@ void SpeedControl(void *argv)
 
         Motor.SetPwmValue(Motor.Self,data->Speed);
     }
+    else if(data->CarMode == SAutoBoot_Mode)
+    {
+        //if(!data->Is_AdjustSpeed)
+        data->Speed = 1500;
+
+        //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+
+        float formatedSpeed = 0.0;
+
+        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
+
+        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+        //Motor.SetPwmValue(Motor.Self,data->Speed);
+
+        //Motor.SetPwmValue(Motor.Self,3500);
+
+        Motor.SetSpeed(Motor.Self,formatedSpeed);
+
+        Motor.Update(Motor.Self);
+    }
     else
     {
 
         if(!data->Is_AdjustSpeed)
-            data->Speed = 3500;
-            //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+            data->Speed = 2000;
 
+        //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
 
         float formatedSpeed = 0.0;
 
-        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
+        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
 
         data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
-        Motor.SetPwmValue(Motor.Self,data->Speed);
+        //Motor.SetPwmValue(Motor.Self,data->Speed);
 
-        //Motor.SetPwmValue(Motor.Self,7000);
+        //Motor.SetPwmValue(Motor.Self,3500);
 
-        //Motor.SetSpeed(Motor.Self,formatedSpeed);
+        Motor.SetSpeed(Motor.Self,formatedSpeed);
 
-        //Motor.Update(Motor.Self);        
+        Motor.Update(Motor.Self);
     }
 }
 
@@ -73,29 +94,23 @@ void AngleControl(void *argv)
     }
     else if(data->CarMode == LAutoBoot_Mode)
     {
+
     //    if(fabs(data->h_bias) >= 20.0 || data->v_bias >= 30.0)
     //        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp;
     //    else
     //        data->S_PID.Kp = 0.8;
-    //
     //
     //    if(data->S_PID.Kp > 2.227)
     //        data->S_PID.Kp = 2.227;
     //
     //    if(data->Element.Type != None)
     //        data->S_PID.Kp = 2.227;
+    //    PID_Ctrl(&data->S_PID,0.0,data->Bias);
 
-        //PID_Ctrl(&data->S_PID,0.0,data->Bias);
+    //    data->Angle = data->S_PID.Result;
+    //    data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
         data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
-
-    //    static float Ka[5] = {0.3,0.3,0.2,0.1,0.1};
-    //
-    //    static float angle[5] = {0.0};
-
-        //data->Angle = data->S_PID.Result;
-
-        //data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
         data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
 
@@ -107,6 +122,16 @@ void AngleControl(void *argv)
 
         Servo.Update(Servo.Self);
     }
+    else if(data->CarMode == SAutoBoot_Mode)
+    {
+        data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
+        data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+
+        Servo.SetAngle(Servo.Self,data->Angle);
+
+        Servo.Update(Servo.Self);
+    }
+
 }
 
 
@@ -126,10 +151,10 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 
     aspeed = 100.0 * NormalizeFloat(actual_speed,0.0,self->MaxSpeed);
 
-    FuzzyPID(&data->M_FuzzyKp,&data->M_FuzzyKi,target_speed,actual_speed);
-
-    data->M_PID.Kp += data->M_FuzzyKp.U;
-    data->M_PID.Ki += data->M_FuzzyKi.U;
+//    FuzzyPID(&data->M_FuzzyKp,&data->M_FuzzyKi,target_speed,actual_speed);
+//
+//    data->M_PID.Kp += data->M_FuzzyKp.U;
+//    data->M_PID.Ki += data->M_FuzzyKi.U;
 
     if(fabs(data->M_PID.PID_Error[2]) > 100.0)
     {
@@ -139,7 +164,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
     {
         PID_Ctrl(&data->M_PID,tspeed,aspeed);
 
-        PwmValue = (sint16_t)ConstrainFloat(data->M_PID.Result,-5000.0,5000.0);
+        PwmValue = (sint16_t)ConstrainFloat(data->M_PID.Result,-10000.0,10000.0);
     }
 
     //PwmValue = target_speed;

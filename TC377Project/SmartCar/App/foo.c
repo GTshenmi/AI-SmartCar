@@ -26,7 +26,7 @@ uint SaveParameterSD(float *LADC_Value,float *SADC_Value,float *Angle){
     }
     //bufferPointer += sprintf(bufferPointer,"\n");
 
-    bufferPointer += sprintf(bufferPointer,"%f E",*Angle);
+    bufferPointer += sprintf(bufferPointer,"%f E\n",*Angle);
     //bufferPointer += sprintf(bufferPointer,"\n");
 
     line++;
