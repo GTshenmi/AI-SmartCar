@@ -53,9 +53,9 @@ void SpeedControl(void *argv)
     {
 
         if(!data->Is_AdjustSpeed)
-            data->Speed = 2000;
+            //data->Speed = 2000;
 
-        //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+            data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
 
         float formatedSpeed = 0.0;
 
@@ -110,7 +110,8 @@ void AngleControl(void *argv)
     //    data->Angle = data->S_PID.Result;
     //    data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
-        data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
+        if(!data->Is_AdjustAngle)
+            data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
 
         data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
 

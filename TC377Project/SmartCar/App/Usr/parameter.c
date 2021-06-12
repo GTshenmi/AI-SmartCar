@@ -10,7 +10,7 @@
 #include <parameter.h>
 #include "include.h"
 
-uint16_t CarMode =SAutoBoot_Mode;/*运行状态*/
+uint16_t CarMode =LAutoBoot_Mode;/*运行状态*/
 //uint16_t CarMode = AI_Mode; //调AI 换成此状态
 
 uint16_t data_pointer = 0;
@@ -28,6 +28,9 @@ void ParameterInit(void *argv)
     data->DynamicKp = 0.000860;
 
     data->TrackingState = Normal_Tracking;
+
+    data->Is_AdjustAngle = false;
+    data->Is_AdjustSpeed = false;
 
     /*Set Servo And Motor PID Value.*/
     PID_SetValue(&data->M_PID,PIDValue(3.3,0.2,0.0));

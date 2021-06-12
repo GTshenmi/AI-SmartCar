@@ -18,7 +18,7 @@
 #define LAYER_1_INDIM       3
 #define LAYER_1_OUTDIM      1
 
-#define USING_NNCU 0
+#define USING_NNCU 1
 
 /*
 *   NNLayer变量定义

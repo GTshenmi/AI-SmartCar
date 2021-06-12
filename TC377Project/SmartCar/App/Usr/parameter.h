@@ -164,6 +164,8 @@ typedef struct
       float Bias;            /*实际中线偏差*/
 
       uint16_t SPwmValue;
+
+      bool Is_AdjustAngle;
       float Angle;        /*角度*/
 
       uint16_t LESensor_SampleValue[MAX_LESENSOR_NUM]; /*ADC值*/
@@ -172,13 +174,11 @@ typedef struct
       float LESensor_NormalizedValue[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
       float SESensor_NormalizedValue[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
 
-      float H_ESensorValue[3];
+      float H_ESensorValue[4];
       float V_ESensorValue[2];
       float O_ESensorValue[2];
 
-      float Ke[MAX_LESENSOR_NUM];
-
-      float SKe[MAX_SESENSOR_NUM];
+      float Ke[MAX_SESENSOR_NUM];
 
       float h_difference;
       float v_difference;

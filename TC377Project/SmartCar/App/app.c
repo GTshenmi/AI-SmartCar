@@ -40,8 +40,11 @@ void Core0_Main()
 
     data_t *data = &Data[data_pointer];
 
+    //NNCU_Test();
+
     while(1)
     {
+
         if(RecordFlags)
         {
             SaveParameterSD(data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);

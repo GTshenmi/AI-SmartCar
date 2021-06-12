@@ -19,14 +19,13 @@ float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    if(Is_RightAngle(data) && data->Element.Type != Cross)
+    if(Is_RightAngle(data))
     {
         data->Element.Type = RightAngle;
-    }
 
-    if(Is_Cross(data))
-    {
-        data->Element.Type = Cross;
+        //data->Is_AdjustSpeed = true;
+
+        //data->Speed = 1500;
     }
 
     if(Is_Cycle(data))
@@ -34,6 +33,12 @@ float ElementDetermine(void *argv)
         data->Element.Type = Cycle;
 
     }
+
+    if(Is_Cross(data))
+    {
+        data->Element.Type = Cross;
+    }
+
 
     if(Is_LoseLine(data))
     {
@@ -55,20 +60,26 @@ void SpecialElementHandler(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    switch(data->Element.Type)
-    {
-        case RightAngle:
-            RightAngle_Handler(data);
-            break;
-        case Cross:
-            Cross_Handler(data);
-            break;
-        case Cycle:
-            Cycle_Handler(data);
-            break;
-        default:
-            break;
-    }
+    RightAngle_Handler(data);
+
+    Cross_Handler(data);
+
+    Cycle_Handler(data);
+
+//    switch(data->Element.Type)
+//    {
+//        case RightAngle:
+//            RightAngle_Handler(data);
+//            break;
+//        case Cross:
+//            Cross_Handler(data);
+//            break;
+//        case Cycle:
+//            Cycle_Handler(data);
+//            break;
+//        default:
+//            break;
+//    }
 
     LoseLine_Handler(data);
 }
@@ -84,6 +95,8 @@ void Cycle_Handler(data_t *data)
 
     static sint32_t cycleInCnt = 0;
 
+    static sint32_t cycleWaitCnt = 0;
+
     static bool isMidESensorMaxValue = false;
     static bool isLeftOSensorFall = false;
     static bool isRightOSensorFall = false;
@@ -93,8 +106,16 @@ void Cycle_Handler(data_t *data)
     {
         case CC_Wait:
 
-            if(data->Element.Type == Cycle)
+            cycleWaitCnt--;
+
+            if(cycleWaitCnt <= 0)
+                cycleWaitCnt = 0;
+
+            if(data->Element.Type == Cycle && cycleWaitCnt <= 0)
+            {
                 cycleState = CC_Confirm;
+            }
+
             break;
 
         case CC_Confirm:
@@ -124,10 +145,10 @@ void Cycle_Handler(data_t *data)
 
         case CC_WaitIn:
 
-                                if(data->Ke[2] >= 10.0 || data->Ke[4] >= 10.0)
-                                {
-                                    isMidESensorMaxValue = true;
-                                }
+             if(data->Ke[2] >= 10.0 || data->Ke[4] >= 10.0)
+             {
+                 isMidESensorMaxValue = true;
+             }
 
 
                                 if(isMidESensorMaxValue)
@@ -218,10 +239,10 @@ void Cycle_Handler(data_t *data)
 //                data->Bias = data->h_bias;
 //            }
             
-//            if(Is_CycleOut(data) || cycleOutCnt >= 6000)
-//            {
-//                cycleState = CC_Out;
-//            }
+            if(Is_CycleOut(data,cycleOutCnt) || cycleOutCnt >= 6000)
+            {
+                cycleState = CC_Out;
+            }
 
             break;
 
@@ -229,17 +250,15 @@ void Cycle_Handler(data_t *data)
 
             //data->Bias = -bias;
 
-
-
             if(Is_CycleBackToStraight(data) || cycleOutCnt >= 6000)
             {
                 cycleState = CC_Wait;
                 data->Element.Type = None;
 
-
+                cycleWaitCnt = 500;
 
                 BLED.OFF(BLED.Self);
-                //DebugBeepOff;
+                DebugBeepOff;
             }
             
             break;
@@ -267,34 +286,57 @@ void RightAngle_Handler(data_t *data)
             if(data->Element.Type == RightAngle)
             {
                 rightAngleState = RA_Confirm;
+
+                goto RA_CONFIRM;
             }
 
             break;
 
         case RA_Confirm:
 
-            if(Is_RightAngle(data))
-            {
+            RA_CONFIRM:
 
-                rightAngleCount = 50;
+            //if(Is_RightAngle(data))
+            {
+                rightAngleCount = 100;
 
                 GLED.ON(GLED.Self);    
 
                 bias = fsign(data->v_difference) * 100.0;
 
                 rightAngleState = RA_Tracking;
+
+                data->Is_AdjustAngle = true;
+                //data->Is_AdjustSpeed = true;
+
+                data->Angle = - fsign(bias) * Servo.MaxAngle;
+
+                Servo.SetAngle(Servo.Self,data->Angle);
+                Servo.Update(Servo.Self);
+
+                goto RA_TRACKING;
             }
 
             break;
 
         case RA_Tracking:
 
+            RA_TRACKING:
+
             data->Bias = bias;
+            data->Angle = - fsign(bias) * Servo.MaxAngle;
+
+            Servo.SetAngle(Servo.Self,data->Angle);
+            Servo.Update(Servo.Self);
 
             rightAngleCount--;
 
             if(Is_RightAngleOut(data,rightAngleCount) || rightAngleCount <= -1000) 
             {
+                data->Is_AdjustAngle = false;
+
+                data->Is_AdjustSpeed = false;
+
                 rightAngleState = RA_Out;
             }
 
@@ -435,6 +477,8 @@ void LoseLine_Handler(data_t *data)
     }
 }
 
+
+
 void Cross_Handler(data_t *data)
 {
     static cross_state_t crossState = CS_Wait;
@@ -452,7 +496,7 @@ void Cross_Handler(data_t *data)
             break;
 
         case CS_Confirm:
-            
+
             if(Is_Cross(data))
             {
                 if(data->o_difference >= 50.0)

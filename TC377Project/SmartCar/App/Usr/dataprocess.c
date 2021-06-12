@@ -13,10 +13,10 @@
 void GetESensorData(void *argv);
 void ESensorNormailze(void *argv);
 float CalculateDistance(float L1,float L2);
+void LinearFit(void *argv,uint16_t argc);
 
 
 float CalculateBiasLABM(void *argv);
-void LinearFitLABM(void *argv);
 float CalculateBiasSABM(void *argv);
 
 
@@ -60,7 +60,7 @@ void ESensorDataAnalysis(void *argv)
     {
         data->Bias = CalculateBiasLABM(data);
 
-        LinearFitLABM(data);
+        LinearFit(data,CData.MaxLADCDeviceNum);
     }
     else if(data->CarMode == DebugMode)
     {
@@ -69,6 +69,8 @@ void ESensorDataAnalysis(void *argv)
     else if(data->CarMode == SAutoBoot_Mode)
     {
         data->Bias = CalculateBiasSABM(data);
+
+        LinearFit(data,CData.MaxSADCDeviceNum);
     }
 
     ElementDetermine(data);
@@ -79,33 +81,35 @@ void ESensorDataAnalysis(void *argv)
         RecordFlags = true;
 }
 
-void LinearFitLABM(void *argv)
+void LinearFit(void *argv,uint16_t argc)
 {
     data_t *data = (data_t *)argv;
 
-    float sumXY[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
-    float sumX2[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
-    float aveX[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
-    float aveY[7] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    uint16_t sensorNum = argc;
+
+    float sumXY[8] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    float sumX2[8] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    float aveX[8] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    float aveY[8] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
 #define PointNum 5
 
-    static float eSensorData[PointNum][7];
+    static float eSensorData[PointNum][8];
 
     for(int i = 0 ; i < PointNum - 1 ; i++)
     {
-        for(int j = 0 ; j < 7 ;j++)
+        for(int j = 0 ; j < sensorNum ;j++)
         {
             eSensorData[i][j] = eSensorData[i + 1][j];
         }
     }
 
-    for(int i = 0 ; i < 7 ;i++)
+    for(int i = 0 ; i < sensorNum ;i++)
     {
         eSensorData[PointNum - 1][i] = data->LESensor_NormalizedValue[i];
     }
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < sensorNum; i++)
     {
         for (int j = 0; j < PointNum; j++)
         {
@@ -122,7 +126,7 @@ void LinearFitLABM(void *argv)
         aveY[i] /= (PointNum * 1.0);
     }
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < sensorNum; i++)
     {
         if(Is_Zero(sumX2[i] - PointNum * square(aveX[i])))
         {
@@ -204,9 +208,10 @@ float CalculateBiasSABM(void *argv)     /*Calculate Bias And Element Type.*/
 
     static float bias = 0.0;
 
-    data->H_ESensorValue[0] = data->SESensor_NormalizedValue[0];
-    data->H_ESensorValue[1] = data->SESensor_NormalizedValue[4];
-    data->H_ESensorValue[2] = data->SESensor_NormalizedValue[7];
+    data->H_ESensorValue[0] = data->LESensor_NormalizedValue[0];
+    data->H_ESensorValue[1] = data->LESensor_NormalizedValue[3];
+    data->H_ESensorValue[2] = data->LESensor_NormalizedValue[4];
+    data->H_ESensorValue[3] = data->LESensor_NormalizedValue[7];
 
     data->V_ESensorValue[0] = data->SESensor_NormalizedValue[1];
     data->V_ESensorValue[1] = data->SESensor_NormalizedValue[6];

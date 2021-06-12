@@ -17,18 +17,19 @@ inline bool Is_RightAngle(data_t *data)
 //    return ((data->Ke[0] >= 25.0) && (fabs(data->Ke[6] <= 5.0)))|| \
 //           ((data->Ke[6] >= 25.0) && (fabs(data->Ke[0] <= 5.0)));
 
-    return ((fabs(data->v_difference) >= 35.0 &&\
-             fabs(data->o_difference) <= 30.0));
+    return ((fabs(data->v_difference) >= 35.0) and (fabs(data->o_difference) <= 30.0) and (fabs(data->v_difference/data->h_difference) >= 1.5))||\
+            ((fabs(data->v_sum) >= 20.0) and (data->v_bias >= 80.0) and (data->h_bias <= 20.0));
 }
 
 inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 {
-    float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
+    //float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
 
-    return ((rightAngleCount <= 0) &&\
-            (data->V_ESensorValue[0] <=10.0 && data->V_ESensorValue[1] <= 10.0) &&\
-            (h_sum >= 60.0) && \
-            (fabs(data->h_bias) <= 40.0));
+    //(data->V_ESensorValue[0] <=10.0 && data->V_ESensorValue[1] <= 10.0) &&
+
+    return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 35.0) || (data->H_ESensorValue[2] >= 35.0));
+            //(h_sum >= 45.0) && );
+            //(fabs(data->h_bias) <= 60.0));
 }
 
 inline bool Is_RightAngleBackToStraight(data_t *data)
@@ -38,22 +39,24 @@ inline bool Is_RightAngleBackToStraight(data_t *data)
 
 inline bool Is_Cycle(data_t *data)
 {
-    return 0;
-    //float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
+    //return 0;
+    float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
 
-    //return (h_sum >= 200);
+    return (h_sum >= 200.0);
 }
 
-inline bool Is_CycleOut(data_t *data)
+inline bool Is_CycleOut(data_t *data,uint32_t cycleOutCnt)
 {
     float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
 
-    return (h_sum >= 200);
+    return (h_sum >= 200.0 && cycleOutCnt >= 1000);
 }
 
 inline bool Is_CycleBackToStraight(data_t *data)
 {
-    return (data->H_ESensorValue[1] <= 50.0);
+    float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
+
+    return (h_sum <= 150.0 && (data->H_ESensorValue[0] <=50.0 && data->H_ESensorValue[2] <= 50.0));
 }
 
 
@@ -68,7 +71,6 @@ inline bool Is_CrossOut(data_t *data)
     return ((fabs(data->o_difference >= 65.0) &&\
              fabs(data->v_sum >= 80.0)));
 }
-
 
 #define LoseLineGateValue 15.0
 
