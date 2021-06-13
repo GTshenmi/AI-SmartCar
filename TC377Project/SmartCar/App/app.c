@@ -45,7 +45,7 @@ void Core0_Main()
     while(1)
     {
 
-        if(RecordFlags)
+        if(RecordFlags && data->CarState)
         {
             SaveParameterSD(data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
             RecordFlags = false;

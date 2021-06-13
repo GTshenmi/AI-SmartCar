@@ -31,7 +31,7 @@ void SpeedControl(void *argv)
     else if(data->CarMode == SAutoBoot_Mode)
     {
         //if(!data->Is_AdjustSpeed)
-        data->Speed = 1500;
+        data->Speed = 1250;
 
         //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
 
@@ -87,6 +87,8 @@ void AngleControl(void *argv)
 
         data->Angle = NeuralNetworkReasoning(data); 
         
+        data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+
         /*¶æ»úÉèÖÃ½Ç¶È*/
         Servo.SetAngle(Servo.Self,data->Angle);         
 

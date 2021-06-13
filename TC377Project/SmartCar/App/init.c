@@ -43,10 +43,43 @@ void Core0_HardWareInit()
     DIPSwitch.Init(DIPSwitch.Self);
 
     bits = DIPSwitch.Read(DIPSwitch.Self);
+
     //bits = 0x00;
 
     data_pointer = CarMode;
 
+    switch(bits >> 2)
+    {
+        case 0x00:
+            data_pointer = CarMode;
+
+
+            Screen.WriteXLine(Screen.Self,line,"Mode:CarMode");
+
+            break;
+        case 0x01:
+            data_pointer = LAutoBoot_Mode;
+
+            Screen.WriteXLine(Screen.Self,line,"Mode:LAutoBoot");
+
+            break;
+
+        case 0x02:
+            data_pointer = SAutoBoot_Mode;
+
+            Screen.WriteXLine(Screen.Self,line,"Mode:SAutoBoot");
+
+            break;
+
+        case 0x03:
+            data_pointer = AI_Mode;
+
+            Screen.WriteXLine(Screen.Self,line,"Mode:AI");
+
+            break;
+    }
+
+    line += 2;
 
     UIParameterInit();
 

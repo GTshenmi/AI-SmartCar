@@ -39,7 +39,6 @@ float ElementDetermine(void *argv)
         data->Element.Type = Cross;
     }
 
-
     if(Is_LoseLine(data))
     {
         data->TrackingState = LoseLine;
@@ -66,21 +65,6 @@ void SpecialElementHandler(void *argv)
 
     Cycle_Handler(data);
 
-//    switch(data->Element.Type)
-//    {
-//        case RightAngle:
-//            RightAngle_Handler(data);
-//            break;
-//        case Cross:
-//            Cross_Handler(data);
-//            break;
-//        case Cycle:
-//            Cycle_Handler(data);
-//            break;
-//        default:
-//            break;
-//    }
-
     LoseLine_Handler(data);
 }
 
@@ -93,6 +77,10 @@ void Cycle_Handler(data_t *data)
 
     static sint32_t cycleOutCnt;
 
+    static sint32_t cycleWaitInCnt = 0;
+
+    static bool is_cycle = false;
+
     static sint32_t cycleInCnt = 0;
 
     static sint32_t cycleWaitCnt = 0;
@@ -101,6 +89,8 @@ void Cycle_Handler(data_t *data)
     static bool isLeftOSensorFall = false;
     static bool isRightOSensorFall = false;
     static bool isMidHSensorFall = false;
+
+
 
     switch(cycleState)
     {
@@ -116,18 +106,66 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_Confirm;
             }
 
+
+
             break;
 
         case CC_Confirm:
 
-
             if(Is_Cycle(data))
             {
-                cycleInCnt = 130;
+                if(data->CarMode == LAutoBoot_Mode)
+                    cycleInCnt = 150;
+                else
+                    cycleInCnt = 270;
+
+                cycleOutCnt = 0; /*have problem. is zero?*/
+
+                //cycleWaitInCnt = 10;
 
                 BLED.ON(BLED.Self);
 
-                if(data->H_ESensorValue[0] >= data->H_ESensorValue[2])
+                float sum_l,sum_r;
+
+                if(data->CarMode == LAutoBoot_Mode)
+                {
+                    sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
+
+                    sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1] + data->O_ESensorValue[1];
+                }
+                else
+                {
+                    sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
+
+                    sum_r = data->H_ESensorValue[3] + data->V_ESensorValue[1] + data->O_ESensorValue[1];
+                }
+
+//                uint index = FindMaxIndex(data->H_ESensorValue,3);
+
+//                switch(index)
+//                {
+//                    case 0:
+//                        cycleDir = CC_DirLeft;
+//                        break;
+//                    case 1:
+//
+//                        if(data->H_ESensorValue[0] > data->H_ESensorValue[1])
+//                        {
+//                            cycleDir = CC_DirLeft;
+//                        }
+//                        else
+//                        {
+//                            cycleDir = CC_DirRight;
+//                        }
+//
+//                        break;
+//
+//                    case 2:
+//                        cycleDir = CC_DirRight;
+//                        break;
+//                }
+
+                if(sum_l > sum_r)
                 {
                     cycleDir = CC_DirLeft;
                     bias =  100.0;
@@ -138,43 +176,108 @@ void Cycle_Handler(data_t *data)
                     bias = -100.0;
                 }
 
+                if(cycleDir == CC_DirLeft)
+                {
+                    bias = 100.0;
+                    cycleWaitInCnt = 0;
+                }
+                else
+                {
+                    bias = -100.0;
+                    cycleWaitInCnt = 220;
+
+
+
+                }
+
                 cycleState = CC_WaitIn;
+
+                is_cycle = true;
+
             }
+
+//            if(is_cycle)
+//                cycleWaitInCnt--;
+//
+//            if(cycleWaitInCnt <= 0)
+//            {
+//                cycleState = CC_WaitIn;
+//            }
 
             break;
 
         case CC_WaitIn:
 
-             if(data->Ke[2] >= 10.0 || data->Ke[4] >= 10.0)
-             {
-                 isMidESensorMaxValue = true;
-             }
+            cycleWaitInCnt--;
+
+            if(data->CarMode == LAutoBoot_Mode)
+            {
+                if(data->Ke[2] >= 10.0 || data->Ke[4] >= 10.0)
+                {
+                    isMidESensorMaxValue = true;
+                }
 
 
-                                if(isMidESensorMaxValue)
-                                {
-                                    if(data->Ke[2] < 0.0)
-                                    {
-                                        isLeftOSensorFall = true;
-                                        DebugBeepOn;
-                                    }
+               if(isMidESensorMaxValue)
+               {
+                   if(data->Ke[2] < 0.0)
+                   {
+                       isLeftOSensorFall = true;
+                       DebugBeepOn;
+                   }
 
-                                    if(data->Ke[4] < 0.0)               //右入环提前入弯
-                                    {
-                                        isRightOSensorFall = true;
-                                    }
+                   if(data->Ke[4] < 0.0)               //右入环提前入弯
+                   {
+                       isRightOSensorFall = true;
+                   }
 
-                                    if(data->Ke[3] <= 0)
-                                    {
-                                        isMidHSensorFall = true;
-                                    }
+                   if(data->Ke[3] <= 0)
+                   {
+                       isMidHSensorFall = true;
+                   }
 
-                                    if(isLeftOSensorFall && isRightOSensorFall && isMidHSensorFall)
-                                    {
-                                        cycleState = CC_In;
-                                    }
+                   if(isLeftOSensorFall && isRightOSensorFall && isMidHSensorFall && (cycleWaitInCnt <= 0))
+                   {
+                       cycleState = CC_In;
+                   }
 
-                                }
+              }
+            }
+            else
+            {
+                if(data->Ke[2] >= 5.0 || data->Ke[5] >= 5.0)
+                {
+                    isMidESensorMaxValue = true;
+
+                    //DebugBeepOn;
+                }
+
+
+                if(isMidESensorMaxValue)
+                {
+                   if(data->Ke[2] < 0.0)
+                   {
+                       isLeftOSensorFall = true;
+                       //DebugBeepOff;
+                   }
+
+                   if(data->Ke[5] < 0.0)               //右入环提前入弯
+                   {
+                       isRightOSensorFall = true;
+                   }
+
+                   if(data->Ke[4] <= 0)
+                   {
+                       isMidHSensorFall = true;
+                   }
+
+                   if((isLeftOSensorFall || isRightOSensorFall || isMidHSensorFall) && (cycleWaitInCnt <= 0))
+                   {
+                       cycleState = CC_In;
+                   }
+
+               }
+            }
 
 
 //            if(cycleDir == CC_DirLeft)
@@ -215,6 +318,8 @@ void Cycle_Handler(data_t *data)
 
         case CC_In:
 
+            DebugBeepOn;
+
             data->Bias = bias;
 
             cycleInCnt--;
@@ -229,15 +334,6 @@ void Cycle_Handler(data_t *data)
         case CC_Tracking:
             
             cycleOutCnt++;
-
-//            if(data->v_difference >= 20.0)
-//            {
-//                data->Bias = data->h_bias * 0.3 + data->v_bias * 0.7;
-//            }
-//            else
-//            {
-//                data->Bias = data->h_bias;
-//            }
             
             if(Is_CycleOut(data,cycleOutCnt) || cycleOutCnt >= 6000)
             {
@@ -247,8 +343,6 @@ void Cycle_Handler(data_t *data)
             break;
 
         case CC_Out:
-
-            //data->Bias = -bias;
 
             if(Is_CycleBackToStraight(data) || cycleOutCnt >= 6000)
             {

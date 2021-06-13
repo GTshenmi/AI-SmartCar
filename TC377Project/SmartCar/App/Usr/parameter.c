@@ -27,6 +27,8 @@ void ParameterInit(void *argv)
 
     data->DynamicKp = 0.000860;
 
+    data->CarState = false;
+
     data->TrackingState = Normal_Tracking;
 
     data->Is_AdjustAngle = false;

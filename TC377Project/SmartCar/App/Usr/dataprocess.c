@@ -77,8 +77,8 @@ void ESensorDataAnalysis(void *argv)
 
     SpecialElementHandler(data);
 
-    if(RecordFlags == false)
-        RecordFlags = true;
+    //if(RecordFlags == false)
+    RecordFlags = true;
 }
 
 void LinearFit(void *argv,uint16_t argc)
@@ -189,6 +189,10 @@ float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
 
     bias = data->h_bias;
 
+    //float weight = ((int)((data->Ke[0] + data->Ke[7]) / 2.0 + 0.5)) * 0.1;
+//
+    //bias = (1 - weight) * data->h_bias + weight * data->v_difference;
+
     return bias;
 }
 
@@ -208,10 +212,10 @@ float CalculateBiasSABM(void *argv)     /*Calculate Bias And Element Type.*/
 
     static float bias = 0.0;
 
-    data->H_ESensorValue[0] = data->LESensor_NormalizedValue[0];
-    data->H_ESensorValue[1] = data->LESensor_NormalizedValue[3];
-    data->H_ESensorValue[2] = data->LESensor_NormalizedValue[4];
-    data->H_ESensorValue[3] = data->LESensor_NormalizedValue[7];
+    data->H_ESensorValue[0] = data->SESensor_NormalizedValue[0];
+    data->H_ESensorValue[1] = data->SESensor_NormalizedValue[3];
+    data->H_ESensorValue[2] = data->SESensor_NormalizedValue[4];
+    data->H_ESensorValue[3] = data->SESensor_NormalizedValue[7];
 
     data->V_ESensorValue[0] = data->SESensor_NormalizedValue[1];
     data->V_ESensorValue[1] = data->SESensor_NormalizedValue[6];
@@ -221,11 +225,11 @@ float CalculateBiasSABM(void *argv)     /*Calculate Bias And Element Type.*/
 
     /*for H ESensor:*/
 
-    data->h_bias = 100.0 * CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[2]);
+    data->h_bias = 100.0 * CalculateDistance(data->H_ESensorValue[0],data->H_ESensorValue[3]);
 
-    data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[2];
+    data->h_difference = data->H_ESensorValue[0] - data->H_ESensorValue[3];
 
-    data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2];
+    data->h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[3];
 
     /*for V ESensor:*/
 

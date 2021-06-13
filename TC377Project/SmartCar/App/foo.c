@@ -9,7 +9,8 @@
 #include "include.h"
 
 uint SaveParameterSD(float *LADC_Value,float *SADC_Value,float *Angle){
-    char buffer[50];
+
+    char buffer[100];
     char* bufferPointer = buffer;
 
     static uint32_t line = 0;

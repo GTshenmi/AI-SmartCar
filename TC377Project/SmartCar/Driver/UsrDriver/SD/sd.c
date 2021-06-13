@@ -46,7 +46,7 @@ void SD_SPI_SpeedLow(void)
 /*SD卡正常工作的时候,可以高速了*/
 void SD_SPI_SpeedHigh(void)
 {
-    SPI_Resources[1].SPIN.BaudRate = 32000000;
+    SPI_Resources[1].SPIN.BaudRate = 8000000;//32000000;
     SPIx.Init(&SPI_Resources[1].SPIN);
 }
 

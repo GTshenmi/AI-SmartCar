@@ -117,25 +117,46 @@ uint FileSys_Read(FIL *fp,sint8_t *buf,uint n)
 
 uint FileSys_FastWrite (sint8_t *path, sint8_t *str)
 {
-    static _Bool firstOpen = 0;
+    static _Bool firstOpen = 1;
     static FIL fp;
+    char finalName[25];
 
-    if(!firstOpen){
-        uint8_t res = f_open(&fp,path,FA_WRITE | FA_CREATE_NEW);
-        if(res)
-            res = f_open(&fp,path,FA_WRITE);
-        if(res)
+    if (firstOpen)
+    {
+        uint8_t test = 100;
+        uint8_t res;
+        char suffix[10];
+        const char * name = path;
+
+        uint8_t counter = 0;
+
+        do
+        {
+            path++;
+        }while (*path != '.');
+        strcpy(suffix, path + 1);
+        *path = '\0';
+
+        do
+        {
+            sprintf(finalName, "%s-%05d.%s", name, counter++, suffix);
+            res = f_open(&fp, finalName, FA_WRITE | FA_CREATE_NEW);
+        }while (test-- && res);
+
+        if (res)
+            res = f_open(&fp, path, FA_WRITE);
+        firstOpen = 0;
+
+        if (res)
             return 0;
+
+        f_lseek(&fp, fp.fsize);
     }
 
-    if(!firstOpen)
-        f_lseek(&fp,fp.fsize);
-
-    uint result = f_puts(str,&fp);
+    uint result = f_puts(str, &fp);
 
     f_sync(&fp);
 
-    firstOpen = 1;
     return result;
 }
 
