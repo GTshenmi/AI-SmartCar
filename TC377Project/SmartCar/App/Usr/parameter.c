@@ -10,7 +10,7 @@
 #include <parameter.h>
 #include "include.h"
 
-uint16_t CarMode =LAutoBoot_Mode;/*运行状态*/
+uint16_t CarMode =DebugMode;/*运行状态*/
 //uint16_t CarMode = AI_Mode; //调AI 换成此状态
 
 uint16_t data_pointer = 0;
@@ -20,6 +20,14 @@ float RBiasDataQueue[100];
 float EBiasDataQueue[100];
 float TrackingDataQueue[100];
 float ElementDataQueue[100];
+
+float HESensorDataQueue[100][4];
+float VESensorDataQueue[100][2];
+float OESensorDataQueue[100][2];
+
+float HBiasQueue[100];
+float VBiasQueue[100];
+float OBiasQueue[100];
 
 void ParameterInit(void *argv)
 {
@@ -60,6 +68,14 @@ void ParameterInit(void *argv)
     Queue.Init(&data->TrackingQueue,&TrackingDataQueue[0],1);
     Queue.Init(&data->ElementTypeQueue,&TrackingDataQueue[0],1);
     
+    Queue.Init(&data->HESensorQueue,&HESensorDataQueue[0][0],4);
+    Queue.Init(&data->VESensorQueue,&VESensorDataQueue[0][0],2);
+    Queue.Init(&data->OESensorQueue,&OESensorDataQueue[0][0],2);
+
+    Queue.Init(&data->HBiasQueue,&HBiasQueue[0],1);
+    Queue.Init(&data->VBiasQueue,&VBiasQueue[0],1);
+    Queue.Init(&data->OBiasQueue,&OBiasQueue[0],1);
+
 }
 
 data_t Data[MAX_DATA_LEN] =

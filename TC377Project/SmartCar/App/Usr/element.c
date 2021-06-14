@@ -19,6 +19,8 @@ float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    //data->Element.Type = None;
+
     if(Is_RightAngle(data))
     {
         data->Element.Type = RightAngle;
@@ -39,7 +41,7 @@ float ElementDetermine(void *argv)
         data->Element.Type = Cross;
     }
 
-    if(Is_LoseLine(data))
+    if(Is_LoseLine(data) && data->Element.Type != RightAngle && data->Element.Type != Cycle)
     {
         data->TrackingState = LoseLine;
     }
@@ -79,8 +81,6 @@ void Cycle_Handler(data_t *data)
 
     static sint32_t cycleWaitInCnt = 0;
 
-    static bool is_cycle = false;
-
     static sint32_t cycleInCnt = 0;
 
     static sint32_t cycleWaitCnt = 0;
@@ -114,56 +114,29 @@ void Cycle_Handler(data_t *data)
 
             if(Is_Cycle(data))
             {
-                if(data->CarMode == LAutoBoot_Mode)
-                    cycleInCnt = 150;
-                else
-                    cycleInCnt = 270;
-
-                cycleOutCnt = 0; /*have problem. is zero?*/
-
-                //cycleWaitInCnt = 10;
-
-                BLED.ON(BLED.Self);
-
                 float sum_l,sum_r;
 
                 if(data->CarMode == LAutoBoot_Mode)
                 {
+                    cycleInCnt = 150;
+                    cycleOutCnt = 0; /*have problem. is zero?*/
+
                     sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
 
                     sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1] + data->O_ESensorValue[1];
                 }
                 else
                 {
+                    cycleInCnt = 270;
+
+                    cycleOutCnt = 0; /*have problem. is zero?*/
+
                     sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
 
                     sum_r = data->H_ESensorValue[3] + data->V_ESensorValue[1] + data->O_ESensorValue[1];
                 }
 
-//                uint index = FindMaxIndex(data->H_ESensorValue,3);
-
-//                switch(index)
-//                {
-//                    case 0:
-//                        cycleDir = CC_DirLeft;
-//                        break;
-//                    case 1:
-//
-//                        if(data->H_ESensorValue[0] > data->H_ESensorValue[1])
-//                        {
-//                            cycleDir = CC_DirLeft;
-//                        }
-//                        else
-//                        {
-//                            cycleDir = CC_DirRight;
-//                        }
-//
-//                        break;
-//
-//                    case 2:
-//                        cycleDir = CC_DirRight;
-//                        break;
-//                }
+                BLED.ON(BLED.Self);
 
                 if(sum_l > sum_r)
                 {
@@ -185,24 +158,10 @@ void Cycle_Handler(data_t *data)
                 {
                     bias = -100.0;
                     cycleWaitInCnt = 220;
-
-
-
                 }
 
                 cycleState = CC_WaitIn;
-
-                is_cycle = true;
-
             }
-
-//            if(is_cycle)
-//                cycleWaitInCnt--;
-//
-//            if(cycleWaitInCnt <= 0)
-//            {
-//                cycleState = CC_WaitIn;
-//            }
 
             break;
 
@@ -223,7 +182,7 @@ void Cycle_Handler(data_t *data)
                    if(data->Ke[2] < 0.0)
                    {
                        isLeftOSensorFall = true;
-                       DebugBeepOn;
+                       //DebugBeepOn;
                    }
 
                    if(data->Ke[4] < 0.0)               //右入环提前入弯
@@ -279,46 +238,12 @@ void Cycle_Handler(data_t *data)
                }
             }
 
-
-//            if(cycleDir == CC_DirLeft)
-//            {
-//                if(data->Ke[2] >= 10.0)
-//                {
-//                    isMidESensorMaxValue = true;
-//                }
-//
-//                if(isMidESensorMaxValue)
-//                {
-//                    if(data->Ke[2] < 0.0)
-//                    {
-//                        cycleState = CC_In;
-//                        isMidESensorMaxValue = false;
-//                        DebugBeepOn;
-//                    }
-//                }
-//
-//
-//            }
-//            else
-//            {
-//                if(data->Ke[4] >= 10.0)
-//                {
-//                    isMidESensorMaxValue = true;
-//                }
-//
-//                if(data->Ke[4] < 0.0)
-//                {
-//                    cycleState = CC_In;
-//                    isMidESensorMaxValue = false;
-//                }
-//            }
-
             break;
 
 
         case CC_In:
 
-            DebugBeepOn;
+            //DebugBeepOn;
 
             data->Bias = bias;
 
@@ -352,7 +277,7 @@ void Cycle_Handler(data_t *data)
                 cycleWaitCnt = 500;
 
                 BLED.OFF(BLED.Self);
-                DebugBeepOff;
+                //DebugBeepOff;
             }
             
             break;
@@ -454,16 +379,28 @@ void RightAngle_Handler(data_t *data)
     lastBias = data->Bias;
 }
 
-
 void LoseLine_Handler(data_t *data)
 {
     static loseline_state_t loseLineState = LL_Wait;
+
+    static float last_bias = 0.0;
 
     static float bias = 0.0;
 
     int index = 0;
 
     bool isFindBias = false;
+
+    //last_bias = bias;
+
+    //bias = data->Bias;
+
+    float *HESensorData;
+
+    if(data->TrackingState == Normal_Tracking)
+    {
+        loseLineState = LL_Wait;
+    }
 
     switch(loseLineState)
     {
@@ -472,86 +409,54 @@ void LoseLine_Handler(data_t *data)
             if(data->TrackingState == LoseLine)
             {
                 loseLineState = LL_Lose;
+
+                DebugBeepOn;
             }
 
             break;
 
         case LL_Lose:
 
-            //DebugBeepOn;
 
-            for(index = 1 ; index < 10 ; index++)
+
+            for(int i = 0 ; i <= 10 ;i++)
             {
-                float *_eType = Queue.Gets(&data->ElementTypeQueue,-index,NULL,0,1);
-                float *_trackingState = Queue.Gets(&data->TrackingQueue,-index,NULL,0,1);
-                float *_eSensorValue = Queue.Gets(&data->ESensorQueue,-index,NULL,0,7);
+                HESensorData = Queue.Gets(&data->HESensorQueue,-i,NULL,0,4);
 
-                if(FIs_Equal(*_eType,data->Element.Type * 1.0) && (!FIs_Equal(*_trackingState,LoseLine * 1.0)))
+                if(HESensorData[0] >= 5.0 || HESensorData[3] >= 5.0)
                 {
-                    float *_bias = NULL;
+                    bias = *Queue.Gets(&data->HBiasQueue,-i,NULL,0,1);
 
-                    if(data->Element.Type == None)
-                        _bias = Queue.Gets(&data->RawBiasQueue,-index,NULL,0,1);
-                    else
-                        _bias = Queue.Gets(&data->ElementBiasQueue,-index,NULL,0,1);
+                    loseLineState = LL_SearchLine;
 
-                    bias = *_bias;
-
-                    //BLED.ON(BLED.Self);
-
-                    if(Is_LLBiasVaild(_eSensorValue,bias))
-                    {
-                        isFindBias = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    if(!FIs_Equal(*_eType,data->Element.Type * 1.0))
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
 
-            if(isFindBias)
+            if(loseLineState == LL_Lose)
             {
-                loseLineState = LL_SearchLine;
-            }
-            else
-            {
-                bias = 0.0;
                 loseLineState = LL_BackSearchLine;
-
-                data->Is_AdjustSpeed = true;
             }
+
+
 
             break;
 
         case LL_BackSearchLine:
 
-            data->Bias = bias;
-
-            data->Speed = -3200;
-
-            if(Is_SearchedLine(data))
-            {
-                loseLineState = LL_Lose;
-                data->Is_AdjustSpeed = false;
-            }
-
+            DebugBeepOff;
             break;
-        
-        
+
+
         case LL_SearchLine:
 
-            data->Bias = fsign(bias) * 100.0;
 
-            data->Is_AdjustSpeed = false;
+            data->Bias = bias;
 
             if(Is_SearchedLine(data))
             {
                 loseLineState = LL_Searched;
+                //data->Is_AdjustSpeed = false;
             }
 
             break;
@@ -561,7 +466,7 @@ void LoseLine_Handler(data_t *data)
             loseLineState = LL_Wait;
             data->TrackingState = Normal_Tracking;
 
-            //DebugBeepOff;
+            DebugBeepOff;
 
             break;
 
@@ -570,6 +475,122 @@ void LoseLine_Handler(data_t *data)
             break;
     }
 }
+
+//void LoseLine_Handler(data_t *data)
+//{
+//    static loseline_state_t loseLineState = LL_Wait;
+//
+//    static float bias = 0.0;
+//
+//    int index = 0;
+//
+//    bool isFindBias = false;
+//
+//    switch(loseLineState)
+//    {
+//        case LL_Wait:
+//
+//            if(data->TrackingState == LoseLine)
+//            {
+//                loseLineState = LL_Lose;
+//            }
+//
+//            break;
+//
+//        case LL_Lose:
+//
+//            //DebugBeepOn;
+//
+//            for(index = 1 ; index < 10 ; index++)
+//            {
+//                float *_eType = Queue.Gets(&data->ElementTypeQueue,-index,NULL,0,1);
+//                float *_trackingState = Queue.Gets(&data->TrackingQueue,-index,NULL,0,1);
+//                float *_eSensorValue = Queue.Gets(&data->ESensorQueue,-index,NULL,0,7);
+//
+//                if(FIs_Equal(*_eType,data->Element.Type * 1.0) && (!FIs_Equal(*_trackingState,LoseLine * 1.0)))
+//                {
+//                    float *_bias = NULL;
+//
+//                    if(data->Element.Type == None)
+//                        _bias = Queue.Gets(&data->RawBiasQueue,-index,NULL,0,1);
+//                    else
+//                        _bias = Queue.Gets(&data->ElementBiasQueue,-index,NULL,0,1);
+//
+//                    bias = *_bias;
+//
+//                    //BLED.ON(BLED.Self);
+//
+//                    if(Is_LLBiasVaild(_eSensorValue,bias))
+//                    {
+//                        isFindBias = true;
+//                        break;
+//                    }
+//                }
+//                else
+//                {
+//                    if(!FIs_Equal(*_eType,data->Element.Type * 1.0))
+//                    {
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            if(isFindBias)
+//            {
+//                loseLineState = LL_SearchLine;
+//            }
+//            else
+//            {
+//                bias = 0.0;
+//                loseLineState = LL_BackSearchLine;
+//
+//                data->Is_AdjustSpeed = true;
+//            }
+//
+//            break;
+//
+//        case LL_BackSearchLine:
+//
+//            data->Bias = bias;
+//
+//            data->Speed = -3200;
+//
+//            if(Is_SearchedLine(data))
+//            {
+//                loseLineState = LL_Lose;
+//                data->Is_AdjustSpeed = false;
+//            }
+//
+//            break;
+//
+//
+//        case LL_SearchLine:
+//
+//            data->Bias = fsign(bias) * 100.0;
+//
+//            data->Is_AdjustSpeed = false;
+//
+//            if(Is_SearchedLine(data))
+//            {
+//                loseLineState = LL_Searched;
+//            }
+//
+//            break;
+//
+//        case LL_Searched:
+//
+//            loseLineState = LL_Wait;
+//            data->TrackingState = Normal_Tracking;
+//
+//            //DebugBeepOff;
+//
+//            break;
+//
+//        case LL_Undefined:default:
+//
+//            break;
+//    }
+//}
 
 
 

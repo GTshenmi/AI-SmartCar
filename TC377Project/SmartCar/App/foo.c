@@ -8,6 +8,27 @@
 #include "foo.h"
 #include "include.h"
 
+uint SaveMotorSystemInfo(float *input,float *output,uint32_t len)
+{
+
+    char buffer[100];
+    char *bufferPointer = buffer;
+    float time = 0.0;
+
+    for(int i = 0 ; i < len ; i++)
+    {
+        bufferPointer = buffer;
+
+        time = i * 0.002;
+
+        bufferPointer += sprintf(bufferPointer,"%f %f %f\n",time,input[i],output[i]);
+
+        SD.fastWrite("MotorSystem.txt",buffer);
+    }
+
+    return 0;
+}
+
 uint SaveParameterSD(float *LADC_Value,float *SADC_Value,float *Angle){
 
     char buffer[100];

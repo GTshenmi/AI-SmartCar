@@ -52,6 +52,8 @@ void ESensorDataAnalysis(void *argv)
 
     ESensorNormailze(data);             //获取电感归一化数据
 
+    //Queue.Puts(data->ESensorQueue,data->LESensor_NormalizedValue,0.7);
+
     if(data->CarMode == AI_Mode)
     {
 
@@ -59,6 +61,8 @@ void ESensorDataAnalysis(void *argv)
     else if(data->CarMode == LAutoBoot_Mode)
     {
         data->Bias = CalculateBiasLABM(data);
+
+        Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
 
         LinearFit(data,CData.MaxLADCDeviceNum);
     }
@@ -70,8 +74,20 @@ void ESensorDataAnalysis(void *argv)
     {
         data->Bias = CalculateBiasSABM(data);
 
+        Queue.Puts(&data->ESensorQueue,data->SESensor_NormalizedValue,0,8);
+
         LinearFit(data,CData.MaxSADCDeviceNum);
     }
+
+    Queue.Puts(&data->RawBiasQueue,&data->Bias,0,1);
+
+    Queue.Puts(&data->HESensorQueue,data->H_ESensorValue,0,4);
+    Queue.Puts(&data->VESensorQueue,data->V_ESensorValue,0,2);
+    Queue.Puts(&data->OESensorQueue,data->O_ESensorValue,0,2);
+
+    Queue.Puts(&data->HBiasQueue,&data->h_bias,0,1);
+    Queue.Puts(&data->VBiasQueue,&data->v_bias,0,1);
+    Queue.Puts(&data->OBiasQueue,&data->o_bias,0,1);
 
     ElementDetermine(data);
 

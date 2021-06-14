@@ -87,17 +87,20 @@ inline bool Is_CrossOut(data_t *data)
              fabs(data->v_sum >= 80.0)));
 }
 
-#define LoseLineGateValue 15.0
+#define LoseLineGateValue 5.0
 
 inline bool Is_LoseLine(data_t *data)
 {
-//    return ((data->H_ESensorValue[0] <= LoseLineGateValue) &&\
-//            (data->H_ESensorValue[1] <= LoseLineGateValue) &&\
-//            (data->H_ESensorValue[2] <= LoseLineGateValue) &&\
-//            (data->V_ESensorValue[0] <= LoseLineGateValue) &&\
-//            (data->H_ESensorValue[1] <= LoseLineGateValue));
+    return ((data->H_ESensorValue[0] <= LoseLineGateValue) &&\
+            (data->H_ESensorValue[1] <= LoseLineGateValue) &&\
+            (data->H_ESensorValue[2] <= LoseLineGateValue) &&\
+            (data->V_ESensorValue[0] <= LoseLineGateValue) &&\
+            (data->V_ESensorValue[1] <= LoseLineGateValue) &&\
+            (data->O_ESensorValue[0] <= LoseLineGateValue) &&\
+            (data->O_ESensorValue[1] <= LoseLineGateValue) &&\
+            (data->H_ESensorValue[3] <= LoseLineGateValue));
 
-    return 0;
+    //return 0;
 }
 
 inline bool Is_LLBiasVaild(float *eSensorValue,float bias)
@@ -109,9 +112,12 @@ inline bool Is_LLBiasVaild(float *eSensorValue,float bias)
 }
 inline bool Is_SearchedLine(data_t *data)
 {
-    return ( data->V_ESensorValue[0] <= 20.0 &&\
-             data->V_ESensorValue[1] <= 20.0 &&\
-            (data->H_ESensorValue[0] >= 40.0 || data->H_ESensorValue[1] >= 40.0 || data->H_ESensorValue[2] >= 40.0));
+    return ((data->H_ESensorValue[0] >= LoseLineGateValue) ||\
+            (data->H_ESensorValue[1] >= LoseLineGateValue) ||\
+            (data->H_ESensorValue[2] >= LoseLineGateValue) ||\
+            (data->V_ESensorValue[0] >= LoseLineGateValue) ||\
+            (data->V_ESensorValue[1] >= LoseLineGateValue) ||\
+            (data->H_ESensorValue[3] >= LoseLineGateValue));
 }
 
 void SpecialElementHandler(void *argv);

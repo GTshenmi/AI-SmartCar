@@ -26,6 +26,59 @@ void SmartCarSysDataReport(void *data)
     //Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
 }
 
+bool StartRecord = false;
+bool FinRecord = false;
+
+float InputPwm[SystemIdeLen];
+float OutputSpeed[SystemIdeLen];
+
+void MotorSystemIdentification()
+{
+
+    data_t *data = &Data[data_pointer];
+
+    float dt = 0.002;
+
+
+    /*Input : Step Singal*/
+    for(int i = 0 ; i < SystemIdeLen/3 ; i++)
+    {
+        InputPwm[i] = 0;
+    }
+    for(int i = 0 ; i < SystemIdeLen/3 ; i++)
+    {
+        InputPwm[i + SystemIdeLen/3] = 5000;
+    }
+    for(int i = 0 ; i < SystemIdeLen/3 ; i++)
+    {
+        InputPwm[i + (SystemIdeLen * 2)/3] = 0;
+    }
+
+
+    StartRecord = true;
+
+    /*Record Response*/
+//    for(int i = 0 ; i < SystemIdeLen ; i ++)
+//    {
+//        Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
+//        //os.time.delayms(2);
+//        OutputSpeed[i] = data->Actual_Speed;
+//    }
+
+    while(!FinRecord);
+
+    GLED.ON(GLED.Self);
+
+    SaveMotorSystemInfo(InputPwm,OutputSpeed,SystemIdeLen);
+
+    BLED.ON(BLED.Self);
+
+    Screen.SetFontColor(Screen.Self,RED);
+
+    Screen.WriteXLine(Screen.Self,5,"Finished.");
+
+    while(1);
+}
 /*
  * @Brief:CPU0 Main Func
  *  This Core is for Servo Control and Data Process.
@@ -39,6 +92,8 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[3].TIMN);
 
     data_t *data = &Data[data_pointer];
+
+    //MotorSystemIdentification();
 
     //NNCU_Test();
 

@@ -204,6 +204,14 @@ typedef struct
       queue_t TrackingQueue;//LoseLine
       queue_t ElementTypeQueue;//Element
 
+      queue_t HESensorQueue;
+      queue_t VESensorQueue;
+      queue_t OESensorQueue;
+
+      queue_t HBiasQueue;
+      queue_t VBiasQueue;
+      queue_t OBiasQueue;
+
       /*State*/
 
       bool NeedToBack;

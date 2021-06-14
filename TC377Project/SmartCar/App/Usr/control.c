@@ -13,25 +13,33 @@ void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    static uint32_t i = 0;
+
     if(data->CarMode == AI_Mode)            //目前匀速，可以不改
     {
         if(!data->Is_AdjustSpeed)
         {
-            data->Speed = 3200;
+            data->Speed = 1250;
         }
 
         float formatedSpeed = 0.0;
 
-        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0;
+        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
 
         data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
-        Motor.SetPwmValue(Motor.Self,data->Speed);
+        //Motor.SetPwmValue(Motor.Self,data->Speed);
+
+        //Motor.SetPwmValue(Motor.Self,3500);
+
+        Motor.SetSpeed(Motor.Self,formatedSpeed);
+
+        Motor.Update(Motor.Self);
     }
     else if(data->CarMode == SAutoBoot_Mode)
     {
         //if(!data->Is_AdjustSpeed)
-        data->Speed = 1250;
+        data->Speed = 1500;
 
         //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
 
@@ -48,6 +56,35 @@ void SpeedControl(void *argv)
         Motor.SetSpeed(Motor.Self,formatedSpeed);
 
         Motor.Update(Motor.Self);
+    }
+    else if(data->CarMode == DebugMode)
+    {
+        extern bool StartRecord;
+
+        extern bool FinRecord;
+
+        if(StartRecord)
+        {
+            i++;
+
+            if(i >= SystemIdeLen)
+            {
+                StartRecord = false;
+                FinRecord = true;
+            }
+
+            extern float InputPwm[SystemIdeLen];
+            extern float OutputSpeed[SystemIdeLen];
+
+            OutputSpeed[i] = Motor.GetSpeed(Motor.Self);
+
+            Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
+
+
+
+        }
+
+
     }
     else
     {

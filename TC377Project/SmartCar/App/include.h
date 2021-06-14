@@ -17,6 +17,9 @@
 #include "app.h"
 #include "test.h"
 
+#define SystemIdeLen 1500
+
+
 extern IFX_ALIGN(4) IfxCpu_mutexLock mutexCpu0InitIsOk;
 extern IFX_ALIGN(4) IfxCpu_syncEvent g_cpuSyncEvent;
 

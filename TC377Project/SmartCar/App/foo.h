@@ -16,5 +16,6 @@ void SaveAutoBootModeDataToExcel(void *data);
 void ReadParameterFromSDCard(void *data);
 void SaveParameterToSDCard(void *data);
 uint SaveParameterSD(float *LADC_Value,float *SADC_Value,float *Angle);
+uint SaveMotorSystemInfo(float *input,float *output,uint32_t len);
 
 #endif /* APP_FOO_H_ */
