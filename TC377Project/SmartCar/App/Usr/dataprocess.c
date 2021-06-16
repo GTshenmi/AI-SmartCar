@@ -39,7 +39,7 @@ void ESensorNormailze(void *argv)
     for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
         data->SESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->SESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
 
-    data->SESensor_NormalizedValue[3] = 0.0;
+    //data->SESensor_NormalizedValue[3] = 0.0;
 }
 
 bool RecordFlags = false;

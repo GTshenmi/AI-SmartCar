@@ -67,7 +67,7 @@ void SpecialElementHandler(void *argv)
 
     Cycle_Handler(data);
 
-    LoseLine_Handler(data);
+    //LoseLine_Handler(data);
 }
 
 void Cycle_Handler(data_t *data)
@@ -77,20 +77,18 @@ void Cycle_Handler(data_t *data)
 
     static float bias = 0.0;
 
-    static sint32_t cycleOutCnt;
+    static sint32_t cycleWaitCnt = 0;
 
     static sint32_t cycleWaitInCnt = 0;
 
     static sint32_t cycleInCnt = 0;
 
-    static sint32_t cycleWaitCnt = 0;
+    static sint32_t cycleOutCnt;
 
     static bool isMidESensorMaxValue = false;
     static bool isLeftOSensorFall = false;
     static bool isRightOSensorFall = false;
     static bool isMidHSensorFall = false;
-
-
 
     switch(cycleState)
     {
@@ -106,8 +104,6 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_Confirm;
             }
 
-
-
             break;
 
         case CC_Confirm:
@@ -118,7 +114,7 @@ void Cycle_Handler(data_t *data)
 
                 if(data->CarMode == LAutoBoot_Mode)
                 {
-                    cycleInCnt = 150;
+                    cycleInCnt = 100;
                     cycleOutCnt = 0; /*have problem. is zero?*/
 
                     sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
@@ -141,18 +137,16 @@ void Cycle_Handler(data_t *data)
                 if(sum_l > sum_r)
                 {
                     cycleDir = CC_DirLeft;
-                    bias =  100.0;
                 }
                 else
                 {
                     cycleDir = CC_DirRight;
-                    bias = -100.0;
                 }
 
                 if(cycleDir == CC_DirLeft)
                 {
                     bias = 100.0;
-                    cycleWaitInCnt = 0;
+                    cycleWaitInCnt = 220;
                 }
                 else
                 {
@@ -179,10 +173,10 @@ void Cycle_Handler(data_t *data)
 
                if(isMidESensorMaxValue)
                {
+
                    if(data->Ke[2] < 0.0)
                    {
                        isLeftOSensorFall = true;
-                       //DebugBeepOn;
                    }
 
                    if(data->Ke[4] < 0.0)               //右入环提前入弯
@@ -196,6 +190,8 @@ void Cycle_Handler(data_t *data)
                    }
 
                    if(isLeftOSensorFall && isRightOSensorFall && isMidHSensorFall && (cycleWaitInCnt <= 0))
+
+                   //if((isLeftOSensorFall || isRightOSensorFall || isMidHSensorFall) && (cycleWaitInCnt <= 0))
                    {
                        cycleState = CC_In;
                    }
@@ -207,8 +203,6 @@ void Cycle_Handler(data_t *data)
                 if(data->Ke[2] >= 5.0 || data->Ke[5] >= 5.0)
                 {
                     isMidESensorMaxValue = true;
-
-                    //DebugBeepOn;
                 }
 
 
@@ -217,7 +211,6 @@ void Cycle_Handler(data_t *data)
                    if(data->Ke[2] < 0.0)
                    {
                        isLeftOSensorFall = true;
-                       //DebugBeepOff;
                    }
 
                    if(data->Ke[5] < 0.0)               //右入环提前入弯
@@ -234,7 +227,6 @@ void Cycle_Handler(data_t *data)
                    {
                        cycleState = CC_In;
                    }
-
                }
             }
 
@@ -243,13 +235,11 @@ void Cycle_Handler(data_t *data)
 
         case CC_In:
 
-            //DebugBeepOn;
-
             data->Bias = bias;
 
             cycleInCnt--;
 
-            if(data->h_bias <= 10.0 && cycleInCnt <= 0)
+            if(data->h_bias <= 20.0 && cycleInCnt <= 0)
             {
                 cycleState = CC_Tracking;
             }
@@ -277,7 +267,6 @@ void Cycle_Handler(data_t *data)
                 cycleWaitCnt = 500;
 
                 BLED.OFF(BLED.Self);
-                //DebugBeepOff;
             }
             
             break;
@@ -383,17 +372,7 @@ void LoseLine_Handler(data_t *data)
 {
     static loseline_state_t loseLineState = LL_Wait;
 
-    static float last_bias = 0.0;
-
     static float bias = 0.0;
-
-    int index = 0;
-
-    bool isFindBias = false;
-
-    //last_bias = bias;
-
-    //bias = data->Bias;
 
     float *HESensorData;
 
@@ -417,21 +396,21 @@ void LoseLine_Handler(data_t *data)
 
         case LL_Lose:
 
+//            for(int i = 0 ; i <= 10 ;i++)
+//            {
+//                HESensorData = Queue.Gets(&data->HESensorQueue,-i,NULL,0,4);
+//
+//                if(HESensorData[0] >= 5.0 || HESensorData[3] >= 5.0)
+//                {
+//                    bias = *Queue.Gets(&data->HBiasQueue,-i,NULL,0,1);
+//
+//                    loseLineState = LL_SearchLine;
+//
+//                    break;
+//                }
+//            }
 
-
-            for(int i = 0 ; i <= 10 ;i++)
-            {
-                HESensorData = Queue.Gets(&data->HESensorQueue,-i,NULL,0,4);
-
-                if(HESensorData[0] >= 5.0 || HESensorData[3] >= 5.0)
-                {
-                    bias = *Queue.Gets(&data->HBiasQueue,-i,NULL,0,1);
-
-                    loseLineState = LL_SearchLine;
-
-                    break;
-                }
-            }
+            bias = *Queue.Gets(&data->HBiasQueue,-1,NULL,0,1);
 
             if(loseLineState == LL_Lose)
             {
@@ -449,7 +428,6 @@ void LoseLine_Handler(data_t *data)
 
 
         case LL_SearchLine:
-
 
             data->Bias = bias;
 

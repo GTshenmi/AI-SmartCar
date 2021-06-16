@@ -13,13 +13,16 @@ void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    static bool is_firstsetspeed = true;
+
     static uint32_t i = 0;
 
     if(data->CarMode == AI_Mode)            //目前匀速，可以不改
     {
-        if(!data->Is_AdjustSpeed)
+        if(!data->Is_AdjustSpeed && is_firstsetspeed)
         {
             data->Speed = 1250;
+            is_firstsetspeed = false;
         }
 
         float formatedSpeed = 0.0;
@@ -38,8 +41,12 @@ void SpeedControl(void *argv)
     }
     else if(data->CarMode == SAutoBoot_Mode)
     {
-        //if(!data->Is_AdjustSpeed)
-        data->Speed = 1500;
+        if(!data->Is_AdjustSpeed && is_firstsetspeed)
+        {
+            data->Speed = 2000;
+            is_firstsetspeed = false;
+        }
+
 
         //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
 
@@ -90,9 +97,14 @@ void SpeedControl(void *argv)
     {
 
         if(!data->Is_AdjustSpeed)
+        {
             //data->Speed = 2000;
 
+            //is_firstsetspeed = false;
+
             data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+        }
+
 
         float formatedSpeed = 0.0;
 
@@ -157,15 +169,21 @@ void AngleControl(void *argv)
         //Servo.SetPwmValue(Servo.Self,data->SPwmValue);
 
         //Servo.SetPwmValue(Servo.Self,750);
-
+//
         Servo.SetAngle(Servo.Self,data->Angle);
-
+//
         Servo.Update(Servo.Self);
     }
     else if(data->CarMode == SAutoBoot_Mode)
     {
         data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
         data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+
+        float Ka[5] = {0.3,0.3,0.2,0.2,0.1};
+
+        static float angle[5];
+
+        data->Angle = (FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
         Servo.SetAngle(Servo.Self,data->Angle);
 

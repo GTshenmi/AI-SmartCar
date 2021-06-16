@@ -121,9 +121,9 @@ void Core0_HardWareInit()
 
     //Servo.SetAngleLimit(Servo.Self,1250.0 - 750.0,250.0 - 750.0);
 
-    Servo.SetAngleLimit(Servo.Self,180.0,-180.0);
+    Servo.SetAngleLimit(Servo.Self,210.0,-210.0);
 
-    Servo.SetPwmCentValue(Servo.Self,725);
+    Servo.SetPwmCentValue(Servo.Self,673);
 
 
 
@@ -193,6 +193,7 @@ void Core0_SoftWareInit()
     /*Init PID Controller.*/
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
+
     /*Init Debug System.*/
 
     /*Init NerualNetWork.*/

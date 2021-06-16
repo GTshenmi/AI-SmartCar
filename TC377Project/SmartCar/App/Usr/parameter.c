@@ -29,6 +29,10 @@ float HBiasQueue[100];
 float VBiasQueue[100];
 float OBiasQueue[100];
 
+void FuzzyControlInit(data_t *data);
+
+
+
 void ParameterInit(void *argv)
 {
     data_t *data = (data_t *)argv;
@@ -61,6 +65,8 @@ void ParameterInit(void *argv)
 
     FuzzyPIDInit(&data->M_FuzzyKp,&data->M_FuzzyKi);
 
+    FuzzyControlInit(&Data[data_pointer]);
+
     Queue.Init(&data->ESensorQueue,&ESensorDataQueue[0][0],8);
 
     Queue.Init(&data->RawBiasQueue,&RBiasDataQueue[0],1);
@@ -76,6 +82,30 @@ void ParameterInit(void *argv)
     Queue.Init(&data->VBiasQueue,&VBiasQueue[0],1);
     Queue.Init(&data->OBiasQueue,&OBiasQueue[0],1);
 
+}
+
+void FuzzyControlInit(data_t *data)
+{
+    if(data->CarMode == LAutoBoot_Mode)
+    {
+        for(int i = 0 ; i < 7 ; i++)
+        {
+            for(int j = 0; j <  7 ; j++)
+            {
+                SFuzzyRule[i][j] = LABMSFuzzyRule[i][j];
+            }
+        }
+    }
+    else
+    {
+        for(int i = 0 ; i < 7 ; i++)
+        {
+            for(int j = 0; j <  7 ; j++)
+            {
+                SFuzzyRule[i][j] = SABMSFuzzyRule[i][j];
+            }
+        }
+    }
 }
 
 data_t Data[MAX_DATA_LEN] =
