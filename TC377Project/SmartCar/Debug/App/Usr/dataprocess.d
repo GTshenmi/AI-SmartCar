@@ -266,6 +266,8 @@ dataprocess.o :	../App/foo.h
 ../App/foo.h :
 dataprocess.o :	../OS/os.h
 ../OS/os.h :
+dataprocess.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 dataprocess.o :	../App/init.h
 ../App/init.h :
 dataprocess.o :	../App/app.h

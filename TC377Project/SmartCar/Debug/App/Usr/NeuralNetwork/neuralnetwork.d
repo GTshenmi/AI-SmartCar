@@ -266,6 +266,8 @@ neuralnetwork.o :	../App/foo.h
 ../App/foo.h :
 neuralnetwork.o :	../OS/os.h
 ../OS/os.h :
+neuralnetwork.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 neuralnetwork.o :	../App/init.h
 ../App/init.h :
 neuralnetwork.o :	../App/app.h

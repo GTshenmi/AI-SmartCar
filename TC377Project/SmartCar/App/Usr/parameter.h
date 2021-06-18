@@ -27,7 +27,7 @@
         {                           \
             x.data = value;         \
         }                           \
-    }while(0);                      \
+    }while(0);
 
 /* ¶ªÏß Begin*/
 typedef enum
@@ -221,6 +221,10 @@ typedef struct
       uint CarState;
 
       const uint CarMode;
+
+      float x;
+
+      float v;
 
       /*For Debug.*/
 

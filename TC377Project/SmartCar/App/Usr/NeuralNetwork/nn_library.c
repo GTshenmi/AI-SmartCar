@@ -99,6 +99,8 @@ void *NNForWardReasoning(NNLayer_t* model,void* input,uint32_t layer_num)
 
     return RunModel(input);
 
+    //return NULL;
+
 #else
     int _indexW,_indexX,_indexLayer;
 

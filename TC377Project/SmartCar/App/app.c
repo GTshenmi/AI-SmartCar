@@ -85,7 +85,6 @@ void MotorSystemIdentification()
  * */
 void Core0_Main()
 {
-    extern float dt;
     extern bool RecordFlags;
 
     TIMx.Init(&TIM_Resources[2].TIMN);
@@ -99,12 +98,26 @@ void Core0_Main()
 
     while(1)
     {
-
         if(RecordFlags && data->CarState)
         {
-            SaveParameterSD(data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
+            //if(data->h_bias >= 20.0 || data->Element.Type == RightAngle || data->Element.Type == Cycle)
+            SaveParameterSD(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
+
             RecordFlags = false;
         }
+
+//        if(data->CarState)
+//        {
+//            startTime = os.time.getTime(s);
+//        }
+//        else
+//        {
+//            endTime = os.time.getTime(s);
+//        }
+//
+//        dt = startTime - endTime;
+//
+//        speed = Length1/dt;
 
 
 //        if(os.time.getnmsFlag(2))

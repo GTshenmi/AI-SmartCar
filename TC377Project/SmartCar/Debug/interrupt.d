@@ -264,6 +264,8 @@ interrupt.o :	../App/foo.h
 ../App/foo.h :
 interrupt.o :	../OS/os.h
 ../OS/os.h :
+interrupt.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 interrupt.o :	../App/init.h
 ../App/init.h :
 interrupt.o :	../App/app.h

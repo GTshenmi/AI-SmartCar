@@ -240,6 +240,8 @@ void UIPagesInit (void)
 
      UIPages[33].secondaryTargetData = UIData.Ke;
 
+     UIPages[34].secondaryTargetData = UIData.x;
+
     UIPages[0].beginLine = 0;
 
     for (uint8_t i = 1; i < TOTAL_PAGE_NUMBER; i++)
@@ -528,6 +530,14 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .displayData = displayDataAlone,
             .Self = &UIPages[33],
             .lineLength = 7,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [34] = {
+            .description = "x",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[34],
+            .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },

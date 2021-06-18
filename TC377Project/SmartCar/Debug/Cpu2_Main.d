@@ -264,6 +264,8 @@ Cpu2_Main.o :	../App/foo.h
 ../App/foo.h :
 Cpu2_Main.o :	../OS/os.h
 ../OS/os.h :
+Cpu2_Main.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 Cpu2_Main.o :	../App/init.h
 ../App/init.h :
 Cpu2_Main.o :	../App/app.h

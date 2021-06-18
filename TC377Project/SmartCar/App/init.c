@@ -104,9 +104,11 @@ void Core0_HardWareInit()
     Motor.Init(Motor.Self);
     Motor.Connect(Motor.Self,MotorCtrlStrategy,&Data[data_pointer],sizeof(data_t));
 
-    //Motor.SetSpeedLimit(Motor.Self,250.0,-250.0);
+    //Motor.SetSpeedLimit(Motor.Self,10000.0,-10000.0);
 
-    Motor.SetSpeedLimit(Motor.Self,500.0,-500.0);
+    Motor.SetSpeedLimit(Motor.Self,550.0,-550.0);
+
+    //Motor.SetSpeedLimit(Motor.Self,550.0,-550.0);
 
     Motor.Start(Motor.Self);
 
@@ -298,6 +300,8 @@ void UIParameterInit(void)
     UIData.o_bias = &Data[data_pointer].o_bias;
     UIData.h_bias = &Data[data_pointer].h_bias;
     UIData.v_bias = &Data[data_pointer].v_bias;
+
+    UIData.x = &Data[data_pointer].x;
 
     //UIData.ElementType = &Data[data_pointer].Element.Type;
 

@@ -44,10 +44,14 @@ float ElementDetermine(void *argv)
     if(Is_LoseLine(data) && data->Element.Type != RightAngle && data->Element.Type != Cycle)
     {
         data->TrackingState = LoseLine;
+
+        //DebugBeepOn;
     }
     else
     {
         data->TrackingState = Normal_Tracking;
+
+        DebugBeepOff;
     }
 
     return data->Element.Type * 1.0;
@@ -67,7 +71,7 @@ void SpecialElementHandler(void *argv)
 
     Cycle_Handler(data);
 
-    //LoseLine_Handler(data);
+    LoseLine_Handler(data);
 }
 
 void Cycle_Handler(data_t *data)
@@ -250,6 +254,13 @@ void Cycle_Handler(data_t *data)
             
             cycleOutCnt++;
             
+            //if(data->Element.Type != RightAngle)
+            //    data->Bias = data->o_bias;
+
+            data->Bias = data->Bias * 1.2;
+
+            data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
+
             if(Is_CycleOut(data,cycleOutCnt) || cycleOutCnt >= 6000)
             {
                 cycleState = CC_Out;
@@ -374,8 +385,6 @@ void LoseLine_Handler(data_t *data)
 
     static float bias = 0.0;
 
-    float *HESensorData;
-
     if(data->TrackingState == Normal_Tracking)
     {
         loseLineState = LL_Wait;
@@ -389,7 +398,7 @@ void LoseLine_Handler(data_t *data)
             {
                 loseLineState = LL_Lose;
 
-                DebugBeepOn;
+                //DebugBeepOn;
             }
 
             break;
@@ -410,12 +419,14 @@ void LoseLine_Handler(data_t *data)
 //                }
 //            }
 
-            bias = *Queue.Gets(&data->HBiasQueue,-1,NULL,0,1);
+            bias = *Queue.Gets(&data->RawBiasQueue,-1,NULL,0,1);
 
-            if(loseLineState == LL_Lose)
-            {
-                loseLineState = LL_BackSearchLine;
-            }
+            loseLineState = LL_SearchLine;
+
+//            if(loseLineState == LL_Lose)
+//            {
+//                loseLineState = LL_BackSearchLine;
+//            }
 
 
 

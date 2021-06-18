@@ -264,6 +264,8 @@ ctrlsys.o :	../App/foo.h
 ../App/foo.h :
 ctrlsys.o :	../OS/os.h
 ../OS/os.h :
+ctrlsys.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 ctrlsys.o :	../App/init.h
 ../App/init.h :
 ctrlsys.o :	../App/app.h

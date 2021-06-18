@@ -266,6 +266,8 @@ control.o :	../App/foo.h
 ../App/foo.h :
 control.o :	../OS/os.h
 ../OS/os.h :
+control.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 control.o :	../App/init.h
 ../App/init.h :
 control.o :	../App/app.h

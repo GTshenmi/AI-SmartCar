@@ -192,10 +192,8 @@ foo.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 foo.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-foo.o :	../App/include.h
-../App/include.h :
-foo.o :	../OS/os.h
-../OS/os.h :
+foo.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 foo.o :	../OS/os.h
@@ -220,16 +218,20 @@ foo.o :	../OS/os.h
 ../OS/os.h :
 foo.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
-foo.o :	../App/Usr/usr.h
-../App/Usr/usr.h :
-foo.o :	../App/Usr/parameter.h
-../App/Usr/parameter.h :
-foo.o :	../App/Sys/sys.h
-../App/Sys/sys.h :
 foo.o :	../App/Usr/fuzzycontrol.h
 ../App/Usr/fuzzycontrol.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+foo.o :	../App/include.h
+../App/include.h :
+foo.o :	../OS/os.h
+../OS/os.h :
+foo.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+foo.o :	../App/Usr/usr.h
+../App/Usr/usr.h :
+foo.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 foo.o :	../App/Usr/control.h
 ../App/Usr/control.h :
 foo.o :	../App/Sys/sys.h

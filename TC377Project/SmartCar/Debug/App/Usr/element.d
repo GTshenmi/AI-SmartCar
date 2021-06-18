@@ -266,6 +266,8 @@ element.o :	../App/foo.h
 ../App/foo.h :
 element.o :	../OS/os.h
 ../OS/os.h :
+element.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 element.o :	../App/init.h
 ../App/init.h :
 element.o :	../App/app.h

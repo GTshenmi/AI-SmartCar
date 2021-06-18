@@ -78,6 +78,8 @@ typedef struct
         float *o_difference;
         float *o_sum;
 
+        float *x;
+
 }ui_data_pkg_t;
 
 extern ui_data_pkg_t UIData;

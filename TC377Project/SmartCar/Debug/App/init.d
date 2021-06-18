@@ -266,6 +266,8 @@ init.o :	../App/foo.h
 ../App/foo.h :
 init.o :	../OS/os.h
 ../OS/os.h :
+init.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
 init.o :	../App/app.h
 ../App/app.h :
 init.o :	../App/test.h

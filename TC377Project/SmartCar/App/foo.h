@@ -9,13 +9,14 @@
 #define APP_FOO_H_
 
 #include "os.h"
+#include "parameter.h"
 
 void DataSaveSysInit(char * excel_filename,char *txt_filename);
 void DataSaveSysDeInit(FIL *excel_fp,FIL *txt_fp);
 void SaveAutoBootModeDataToExcel(void *data);
 void ReadParameterFromSDCard(void *data);
 void SaveParameterToSDCard(void *data);
-uint SaveParameterSD(float *LADC_Value,float *SADC_Value,float *Angle);
+uint SaveParameterSD(data_t *data,float *LADC_Value,float *SADC_Value,float *Angle);
 uint SaveMotorSystemInfo(float *input,float *output,uint32_t len);
 
 #endif /* APP_FOO_H_ */

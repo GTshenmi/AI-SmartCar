@@ -21,7 +21,7 @@ void SpeedControl(void *argv)
     {
         if(!data->Is_AdjustSpeed && is_firstsetspeed)
         {
-            data->Speed = 1250;
+            data->Speed = 2000;
             is_firstsetspeed = false;
         }
 
@@ -87,8 +87,6 @@ void SpeedControl(void *argv)
 
             Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
 
-
-
         }
 
 
@@ -102,7 +100,11 @@ void SpeedControl(void *argv)
 
             //is_firstsetspeed = false;
 
-            data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+//            else if(Is_LoseLine(data))
+//            {
+//                data->Speed = 2000.0;
+//            }
+              data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
         }
 
 
@@ -112,14 +114,91 @@ void SpeedControl(void *argv)
 
         data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
+        data->x += data->Actual_Speed;
+
         //Motor.SetPwmValue(Motor.Self,data->Speed);
 
-        //Motor.SetPwmValue(Motor.Self,3500);
+        //Motor.SetPwmValue(Motor.Self,10000);
 
         Motor.SetSpeed(Motor.Self,formatedSpeed);
 
         Motor.Update(Motor.Self);
     }
+}
+
+
+typedef enum{
+    NormalTrackingStraight,
+    DeviateStraight,
+    ReturnStraight,
+}how_to_name_this_datatype;
+
+void HowToNameThisFunc(data_t *data)
+{
+
+    /*------------------dt1----------------*//*------------------dt2----------------*//*------------------dt3----------------*/
+    /*---------------Running---------------*//*-----------------Sleep---------------*//*----------------WakeUp---------------*/
+
+
+
+
+
+
+    static how_to_name_this_datatype trackingstate;
+
+    static float setTime = 0.0;
+
+    static float deviateTime = 0.0;
+
+    static float normalTime = 0.0;
+
+
+    switch(trackingstate)
+    {
+        case NormalTrackingStraight:
+
+            normalTime = random(0.0,3.0) * 500.0;
+            setTime = normalTime;
+
+            trackingstate = DeviateStraight;
+
+         break;
+
+        case DeviateStraight:
+
+            if(setTime <= 0.0)
+            {
+                deviateTime = random(0.0,3.0) * 500.0;
+                setTime = deviateTime;
+                Servo.Sleep(Servo.Self);
+                trackingstate = ReturnStraight;
+            }
+
+            break;
+
+        case ReturnStraight:
+
+            if(setTime <= 0.0)
+            {
+                Servo.WakeUp(Servo.Self);
+
+                //if(Is_Straight(data))
+                if((data->h_bias <= 20.0 && data->v_sum <= 10.0))
+                {
+                    trackingstate = NormalTrackingStraight;
+                }
+
+            }
+
+            break;
+    }
+
+    if(setTime >= -1.0)
+        setTime -= 1.0;
+
+
+
+
 }
 
 void AngleControl(void *argv)
@@ -161,6 +240,28 @@ void AngleControl(void *argv)
     //    data->Angle = data->S_PID.Result;
     //    data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
 
+//        if(setTime >= -1.0)
+//            setTime -= 1.0;
+
+//        if(Servo.GetState(Servo.Self) == Servo_Sleeping)
+//        {
+//            if(setTime <= 0.0)
+//            {
+//                Servo.WakeUp(Servo.Self);
+//            }
+//        }
+//        else if(Servo.GetState(Servo.Self) == Servo_Running)
+//        {
+//            sleepTime = random(0.0,3.0) * 500.0;
+//
+//            setTime = sleepTime;
+//
+//            Servo.Sleep(Servo.Self);
+//        }
+
+        //HowToNameThisFunc(data);
+
+
         if(!data->Is_AdjustAngle)
             data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
 
@@ -183,7 +284,7 @@ void AngleControl(void *argv)
 
         static float angle[5];
 
-        data->Angle = (FIR_Filter(Ka,angle,data->S_PID.Result,5));
+        data->Angle = (FIR_Filter(Ka,angle,data->Angle,5));
 
         Servo.SetAngle(Servo.Self,data->Angle);
 
