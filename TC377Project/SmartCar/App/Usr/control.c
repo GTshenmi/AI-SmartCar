@@ -96,7 +96,7 @@ void SpeedControl(void *argv)
 
         if(!data->Is_AdjustSpeed)
         {
-            //data->Speed = 2000;
+            data->Speed = 2000;
 
             //is_firstsetspeed = false;
 
@@ -104,7 +104,7 @@ void SpeedControl(void *argv)
 //            {
 //                data->Speed = 2000.0;
 //            }
-              data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+              //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
         }
 
 
@@ -139,11 +139,6 @@ void HowToNameThisFunc(data_t *data)
     /*------------------dt1----------------*//*------------------dt2----------------*//*------------------dt3----------------*/
     /*---------------Running---------------*//*-----------------Sleep---------------*//*----------------WakeUp---------------*/
 
-
-
-
-
-
     static how_to_name_this_datatype trackingstate;
 
     static float setTime = 0.0;
@@ -157,7 +152,7 @@ void HowToNameThisFunc(data_t *data)
     {
         case NormalTrackingStraight:
 
-            normalTime = random(0.0,3.0) * 500.0;
+            normalTime = random(0.0,2.0) * 500.0;
             setTime = normalTime;
 
             trackingstate = DeviateStraight;
@@ -168,8 +163,14 @@ void HowToNameThisFunc(data_t *data)
 
             if(setTime <= 0.0)
             {
-                deviateTime = random(0.0,3.0) * 500.0;
+                deviateTime = random(-1.0,1.0) * 500.0;
                 setTime = deviateTime;
+
+                Servo.SetAngle(Servo.Self,fsign(deviateTime) * Servo.MaxAngle);
+                Servo.Update(Servo.Self);
+
+                deviateTime = fabs(deviateTime);
+
                 Servo.Sleep(Servo.Self);
                 trackingstate = ReturnStraight;
             }
@@ -259,9 +260,6 @@ void AngleControl(void *argv)
 //            Servo.Sleep(Servo.Self);
 //        }
 
-        //HowToNameThisFunc(data);
-
-
         if(!data->Is_AdjustAngle)
             data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
 
@@ -270,9 +268,12 @@ void AngleControl(void *argv)
         //Servo.SetPwmValue(Servo.Self,data->SPwmValue);
 
         //Servo.SetPwmValue(Servo.Self,750);
-//
+
+        if(data->Element.Type != RightAngle)
+            HowToNameThisFunc(data);
+
         Servo.SetAngle(Servo.Self,data->Angle);
-//
+
         Servo.Update(Servo.Self);
     }
     else if(data->CarMode == SAutoBoot_Mode)

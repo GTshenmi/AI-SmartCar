@@ -55,11 +55,13 @@ float frand()
 {
     float result = 0.0;
 
-    uint seed = (uint) os.time.getTime(ms);
+    uint unit = rand() % 3;
+
+    uint seed = (uint) os.time.getTime(__uint16__(unit));
 
     srand(seed);
 
-    result = (rand() * 1.0) / (uintMax);
+    result = (rand() * 1.0) / (intMax);
 
     return result;
 }
