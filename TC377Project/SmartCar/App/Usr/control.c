@@ -96,7 +96,7 @@ void SpeedControl(void *argv)
 
         if(!data->Is_AdjustSpeed)
         {
-            data->Speed = 2000;
+            data->Speed = 2500;
 
             //is_firstsetspeed = false;
 

@@ -37,8 +37,6 @@ float NeuralNetworkCalAngle(void *argv)
  * */
 float NeuralNetworkReasoning(void *argv)
 {
-    data_t *data = (data_t *)argv;
-
     /*
         data->SESensor_SampleValue[i];     短前瞻电感原数据;
         data->SESensor_NormalizedValue[i]; 短前瞻电感归一化数据;
@@ -49,7 +47,7 @@ float NeuralNetworkReasoning(void *argv)
 
     float angle;
 
-    angle = NeuralNetworkCalAngle(data);
+    angle = NeuralNetworkCalAngle(argv);
 
     return angle;
 }

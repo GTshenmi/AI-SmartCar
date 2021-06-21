@@ -47,7 +47,7 @@ void MotorSystemIdentification()
     }
     for(int i = 0 ; i < SystemIdeLen/3 ; i++)
     {
-        InputPwm[i + SystemIdeLen/3] = 5000;
+        InputPwm[i + SystemIdeLen/3] = 10000;
     }
     for(int i = 0 ; i < SystemIdeLen/3 ; i++)
     {
@@ -106,6 +106,7 @@ void Core0_Main()
             RecordFlags = false;
         }
 
+
 //        if(data->CarState)
 //        {
 //            startTime = os.time.getTime(s);
@@ -120,10 +121,11 @@ void Core0_Main()
 //        speed = Length1/dt;
 
 
-//        if(os.time.getnmsFlag(2))
-//        {
-//            Console.WriteLine("Ke:%.3f,%.3f,%.3f,%.3F",data->Ke[0],data->Ke[6],data->V_ESensorValue[0],data->V_ESensorValue[1]);
-//        }
+        if(os.time.getnmsFlag(2))
+        {
+            //Console.WriteLine("Speed:%f",data->Actual_Speed);
+            //Console.WriteLine("Ke:%.3f,%.3f,%.3f,%.3F",data->Ke[0],data->Ke[6],data->V_ESensorValue[0],data->V_ESensorValue[1]);
+        }
 
 
         //os.time.delay(0.002,s);
