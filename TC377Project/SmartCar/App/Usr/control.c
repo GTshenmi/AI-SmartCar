@@ -269,8 +269,8 @@ void AngleControl(void *argv)
 
         //Servo.SetPwmValue(Servo.Self,750);
 
-        if(data->Element.Type != RightAngle)
-            HowToNameThisFunc(data);
+        //if(data->Element.Type != RightAngle)
+        //    HowToNameThisFunc(data);
 
         Servo.SetAngle(Servo.Self,data->Angle);
 
