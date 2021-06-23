@@ -50,7 +50,7 @@ uint SaveParameterSD(data_t *data,float *LADC_Value,float *SADC_Value,float *Ang
 
     //bufferPointer += sprintf(bufferPointer,"%f E\n",*Angle);
 
-    bufferPointer += sprintf(bufferPointer,"%f",*Angle);
+    bufferPointer += sprintf(bufferPointer,"%f ",*Angle);
 
     bufferPointer += sprintf(bufferPointer,"%f E\n",data->Speed);
 

@@ -19,6 +19,9 @@ float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+
+    static uint32_t loseLineCnt = 0;
+
     //data->Element.Type = None;
 
     if(Is_RightAngle(data))
@@ -44,14 +47,21 @@ float ElementDetermine(void *argv)
     if(Is_LoseLine(data) && data->Element.Type != RightAngle && data->Element.Type != Cycle)
     {
         data->TrackingState = LoseLine;
+        loseLineCnt++;
 
         //DebugBeepOn;
     }
     else
     {
         data->TrackingState = Normal_Tracking;
+        loseLineCnt = 0;
 
         DebugBeepOff;
+    }
+
+    if(loseLineCnt >= 1500)
+    {
+        Motor.Break(Motor.Self);
     }
 
     return data->Element.Type * 1.0;
@@ -72,6 +82,11 @@ void SpecialElementHandler(void *argv)
     Cycle_Handler(data);
 
     LoseLine_Handler(data);
+}
+
+void RustAngle_Handler(data_t *data)
+{
+    data->Bias = Servo.GetMaxAngle(Servo.Self);
 }
 
 void Cycle_Handler(data_t *data)
@@ -118,7 +133,7 @@ void Cycle_Handler(data_t *data)
 
                 if(data->CarMode == LAutoBoot_Mode)
                 {
-                    cycleInCnt = 100;
+                    cycleInCnt = 80;
                     cycleOutCnt = 0; /*have problem. is zero?*/
 
                     sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
@@ -241,6 +256,8 @@ void Cycle_Handler(data_t *data)
 
             data->Bias = bias;
 
+            //data->Bias = data->h_bias * 0.5 + data->v_bias * 0.5;
+
             cycleInCnt--;
 
             if(data->h_bias <= 20.0 && cycleInCnt <= 0)
@@ -256,6 +273,7 @@ void Cycle_Handler(data_t *data)
             
             //if(data->Element.Type != RightAngle)
             //    data->Bias = data->o_bias;
+            //data->Bias = ((data->h_difference + data->v_difference - data->o_difference) / data->h_sum) * 100.0;
 
             data->Bias = data->Bias * 1.2;
 
@@ -321,7 +339,8 @@ void RightAngle_Handler(data_t *data)
 
                 GLED.ON(GLED.Self);    
 
-                bias = fsign(data->v_difference) * 100.0;
+                if(data->v_difference >= 20.0)
+                    bias = fsign(data->v_difference) * 100.0;
 
                 rightAngleState = RA_Tracking;
 
@@ -342,7 +361,10 @@ void RightAngle_Handler(data_t *data)
 
             RA_TRACKING:
 
+            bias = fsign(data->v_difference) * 100.0;
+
             data->Bias = bias;
+
             data->Angle = - fsign(bias) * Servo.MaxAngle;
 
             Servo.SetAngle(Servo.Self,data->Angle);

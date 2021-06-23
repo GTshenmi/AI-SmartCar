@@ -3,8 +3,8 @@ space	mpe:tc1:abs18	203	8
 space	mpe:tc1:csa	204	8
 space	mpe:tc2:linear	301	8
 space	mpe:tc2:abs24	302	8
-space	mpe:vtc:abs24	2	8
 space	mpe:vtc:abs18	3	8
+space	mpe:vtc:abs24	2	8
 space	mpe:tc0:abs24	102	8
 space	mpe:tc2:abs18	303	8
 space	mpe:tc2:csa	304	8

@@ -34,11 +34,9 @@ float OutputSpeed[SystemIdeLen];
 
 void MotorSystemIdentification()
 {
-
     data_t *data = &Data[data_pointer];
 
     float dt = 0.002;
-
 
     /*Input : Step Singal*/
     for(int i = 0 ; i < SystemIdeLen/3 ; i++)
@@ -53,7 +51,6 @@ void MotorSystemIdentification()
     {
         InputPwm[i + (SystemIdeLen * 2)/3] = 0;
     }
-
 
     StartRecord = true;
 
@@ -106,7 +103,6 @@ void Core0_Main()
             RecordFlags = false;
         }
 
-
 //        if(data->CarState)
 //        {
 //            startTime = os.time.getTime(s);
@@ -119,7 +115,6 @@ void Core0_Main()
 //        dt = startTime - endTime;
 //
 //        speed = Length1/dt;
-
 
         if(os.time.getnmsFlag(2))
         {
@@ -149,7 +144,6 @@ void Core1_Main()
     {
         os.task.UiUpdate(&UIData,sizeof(UIData));
         Core1_CheckStatus();
-
     }
 }
 

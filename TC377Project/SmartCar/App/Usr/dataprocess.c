@@ -208,13 +208,16 @@ float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
 
     bias = data->h_bias;
 
+    //bias = ((data->h_difference + data->v_difference)/data->h_sum) * 100.0;
+
+
+
     //float weight = ((int)((data->Ke[0] + data->Ke[7]) / 2.0 + 0.5)) * 0.1;
-//
+
     //bias = (1 - weight) * data->h_bias + weight * data->v_difference;
 
     return bias;
 }
-
 
 float CalculateBiasSABM(void *argv)     /*Calculate Bias And Element Type.*/
 {

@@ -86,17 +86,14 @@ void SpeedControl(void *argv)
             OutputSpeed[i] = Motor.GetSpeed(Motor.Self);
 
             Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
-
         }
-
-
     }
     else
     {
 
         if(!data->Is_AdjustSpeed)
         {
-            data->Speed = 2500;
+            data->Speed = 2000;
 
             //is_firstsetspeed = false;
 
@@ -124,6 +121,9 @@ void SpeedControl(void *argv)
 
         Motor.Update(Motor.Self);
     }
+
+
+
 }
 
 
@@ -147,12 +147,21 @@ void HowToNameThisFunc(data_t *data)
 
     static float normalTime = 0.0;
 
+    static float angle = 0.0;
+
+    if(data->Element.Type == RightAngle)
+    {
+        trackingstate = NormalTrackingStraight;
+
+    }
+
 
     switch(trackingstate)
     {
         case NormalTrackingStraight:
 
-            normalTime = random(0.0,2.0) * 500.0;
+            normalTime = random(2.5,3.5) * 50.0;
+
             setTime = normalTime;
 
             trackingstate = DeviateStraight;
@@ -163,15 +172,19 @@ void HowToNameThisFunc(data_t *data)
 
             if(setTime <= 0.0)
             {
-                deviateTime = random(-1.0,1.0) * 500.0;
-                setTime = deviateTime;
+                data->IsAddNoise = true;
+                DebugBeepOn;
 
-                Servo.SetAngle(Servo.Self,fsign(deviateTime) * Servo.MaxAngle);
-                Servo.Update(Servo.Self);
+                float sign = (random(0.0,20.0) - 10) * 100.0;
+                //uint8_t time = os.time.getTimeus() % 10000 / 100;
+                deviateTime = random(0.15,0.25) * 50.0;//time/100.0f*0.7f;//random(0.1,0.7) * 50.0;
+                setTime = deviateTime;
 
                 deviateTime = fabs(deviateTime);
 
-                Servo.Sleep(Servo.Self);
+                angle = fsign(sign) * Servo.MaxAngle;
+                //Servo.Sleep(Servo.Self);
+
                 trackingstate = ReturnStraight;
             }
 
@@ -181,16 +194,23 @@ void HowToNameThisFunc(data_t *data)
 
             if(setTime <= 0.0)
             {
-                Servo.WakeUp(Servo.Self);
+
+                data->IsAddNoise = false;
+                //Servo.WakeUp(Servo.Self);
 
                 //if(Is_Straight(data))
                 if((data->h_bias <= 20.0 && data->v_sum <= 10.0))
                 {
                     trackingstate = NormalTrackingStraight;
+                    DebugBeepOff;
                 }
 
             }
-
+            else
+            {
+                Servo.SetAngle(Servo.Self,angle);
+                Servo.Update(Servo.Self);
+            }
             break;
     }
 

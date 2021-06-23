@@ -48,35 +48,40 @@ void Core0_HardWareInit()
 
     data_pointer = CarMode;
 
-    switch(bits >> 2)
+    switch(((bits >> 2) & 0x00000003))
     {
         case 0x00:
-            data_pointer = CarMode;
 
+            data_pointer = CarMode;
 
             Screen.WriteXLine(Screen.Self,line,"Mode:CarMode");
 
             break;
         case 0x01:
+
             data_pointer = LAutoBoot_Mode;
 
             Screen.WriteXLine(Screen.Self,line,"Mode:LAutoBoot");
 
             break;
-
         case 0x02:
+
             data_pointer = SAutoBoot_Mode;
 
             Screen.WriteXLine(Screen.Self,line,"Mode:SAutoBoot");
 
             break;
-
         case 0x03:
+
             data_pointer = AI_Mode;
 
             Screen.WriteXLine(Screen.Self,line,"Mode:AI");
 
             break;
+
+        default:
+            Screen.WriteXLine(Screen.Self,line,"Mode:ERR");
+
     }
 
     line += 2;
@@ -123,9 +128,11 @@ void Core0_HardWareInit()
 
     //Servo.SetAngleLimit(Servo.Self,1250.0 - 750.0,250.0 - 750.0);
 
-    Servo.SetAngleLimit(Servo.Self,210.0,-210.0);
+    /*1100 825 550*/
 
-    Servo.SetPwmCentValue(Servo.Self,673);
+    Servo.SetAngleLimit(Servo.Self,260.0,-260.0);
+
+    Servo.SetPwmCentValue(Servo.Self,825);
 
 
 
