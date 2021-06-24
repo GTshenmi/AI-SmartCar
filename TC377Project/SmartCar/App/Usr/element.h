@@ -21,10 +21,12 @@ inline bool Is_RightAngle(data_t *data)
 {
 //    return ((data->Ke[0] >= 25.0) && (fabs(data->Ke[6] <= 5.0)))|| \
 //           ((data->Ke[6] >= 25.0) && (fabs(data->Ke[0] <= 5.0)));
+
     if(data->CarMode == LAutoBoot_Mode)
     {
-        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 1.5))||\
-                ((fabs(data->v_sum) >= 20.0) and (data->v_bias >= 80.0) and (data->h_bias <= 10.0) && data->h_sum <= 70.0);
+        //return (((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0))||\
+
+        return ((fabs(data->v_sum) >= 20.0) and (fabs(data->v_difference >= 25.0)) and (fabs(data->o_difference <= 40.0)) and (data->h_sum <= 70.0));
     }
     else
     {
@@ -41,7 +43,7 @@ inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 
     if(data->CarMode == LAutoBoot_Mode)
     {
-        return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0));
+        return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || data->H_ESensorValue[1] >= 30.0 || data->h_sum >= 60.0);
                    //(h_sum >= 45.0) && );
                    //(fabs(data->h_bias) <= 60.0));
     }
@@ -63,9 +65,6 @@ inline bool Is_RightAngleBackToStraight(data_t *data)
 
 inline bool Is_Cycle(data_t *data)
 {
-    //return 0;
-
-
     float h_sum = 0.0;
 
     if(data->CarMode == LAutoBoot_Mode)
@@ -73,7 +72,7 @@ inline bool Is_Cycle(data_t *data)
     else
         h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[3] + data->H_ESensorValue[4];
 
-    return (h_sum >= 200.0);
+    return (h_sum >= 180.0);
 }
 
 inline bool Is_CycleOut(data_t *data,uint32_t cycleOutCnt)

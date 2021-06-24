@@ -40,6 +40,8 @@ console.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 console.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+console.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 console.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 console.o :	../OS/Device/device.h

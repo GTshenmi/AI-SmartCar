@@ -158,6 +158,8 @@ Cpu0_Main.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 Cpu0_Main.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+Cpu0_Main.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 Cpu0_Main.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 Cpu0_Main.o :	../OS/Device/device.h

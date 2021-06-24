@@ -156,6 +156,8 @@ os.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 os.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+os.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 os.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 os.o :	../OS/Device/device.h

@@ -162,6 +162,8 @@ neuralnetwork.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 neuralnetwork.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+neuralnetwork.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 neuralnetwork.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 neuralnetwork.o :	../OS/Device/device.h

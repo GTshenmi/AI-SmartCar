@@ -93,7 +93,7 @@ void SpeedControl(void *argv)
 
         if(!data->Is_AdjustSpeed)
         {
-            data->Speed = 2000;
+            //data->Speed = 2000;
 
             //is_firstsetspeed = false;
 
@@ -101,7 +101,16 @@ void SpeedControl(void *argv)
 //            {
 //                data->Speed = 2000.0;
 //            }
+            if(data->Element.Type == RightAngle)
+              data->Speed = 2000.0;
+            else if(data->Element.Type == Cycle)
+              data->Speed = 2500.0;
+            else
+              data->Speed = 2500.0;
+
               //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+
+
         }
 
 

@@ -158,6 +158,8 @@ test.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 test.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+test.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 test.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 test.o :	../OS/Device/device.h

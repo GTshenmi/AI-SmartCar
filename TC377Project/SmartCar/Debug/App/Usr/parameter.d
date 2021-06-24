@@ -160,6 +160,8 @@ parameter.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 parameter.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+parameter.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 parameter.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 parameter.o :	../OS/Device/device.h

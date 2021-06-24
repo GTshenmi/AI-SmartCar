@@ -158,6 +158,8 @@ foo.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 foo.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+foo.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 foo.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 foo.o :	../OS/Device/device.h

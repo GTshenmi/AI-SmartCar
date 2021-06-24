@@ -42,6 +42,8 @@ template_page.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 template_page.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+template_page.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 template_page.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 template_page.o :	../OS/Device/device.h

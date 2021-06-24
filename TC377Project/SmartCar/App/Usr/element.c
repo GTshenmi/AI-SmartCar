@@ -22,15 +22,9 @@ float ElementDetermine(void *argv)
 
     static uint32_t loseLineCnt = 0;
 
-    //data->Element.Type = None;
-
     if(Is_RightAngle(data))
     {
         data->Element.Type = RightAngle;
-
-        //data->Is_AdjustSpeed = true;
-
-        //data->Speed = 1500;
     }
 
     if(Is_Cycle(data))
@@ -63,6 +57,10 @@ float ElementDetermine(void *argv)
     {
         Motor.Break(Motor.Self);
     }
+//    else
+//    {
+//        Motor.Start(Motor.Self);
+//    }
 
     return data->Element.Type * 1.0;
 
@@ -104,10 +102,15 @@ void Cycle_Handler(data_t *data)
 
     static sint32_t cycleOutCnt;
 
+    static sint32_t cycleFlagCnt = 0;
+
     static bool isMidESensorMaxValue = false;
     static bool isLeftOSensorFall = false;
     static bool isRightOSensorFall = false;
     static bool isMidHSensorFall = false;
+
+    static bool isLeftHSensorFall = false;
+    static bool isRightHSensorFall = false;
 
     switch(cycleState)
     {
@@ -133,7 +136,7 @@ void Cycle_Handler(data_t *data)
 
                 if(data->CarMode == LAutoBoot_Mode)
                 {
-                    cycleInCnt = 80;
+                    cycleInCnt = 100;
                     cycleOutCnt = 0; /*have problem. is zero?*/
 
                     sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
@@ -184,11 +187,10 @@ void Cycle_Handler(data_t *data)
 
             if(data->CarMode == LAutoBoot_Mode)
             {
-                if(data->Ke[2] >= 10.0 || data->Ke[4] >= 10.0)
+                if(data->Ke[2] >= 5.0 || data->Ke[4] >= 5.0)
                 {
                     isMidESensorMaxValue = true;
                 }
-
 
                if(isMidESensorMaxValue)
                {
@@ -196,21 +198,39 @@ void Cycle_Handler(data_t *data)
                    if(data->Ke[2] < 0.0)
                    {
                        isLeftOSensorFall = true;
+
+                       cycleFlagCnt++;
                    }
 
-                   if(data->Ke[4] < 0.0)               //右入环提前入弯
+                   if(data->Ke[4] < 0.0)
                    {
                        isRightOSensorFall = true;
+                       cycleFlagCnt++;
                    }
 
-                   if(data->Ke[3] <= 0)
+                   if(data->Ke[3] <= 0.0)
                    {
                        isMidHSensorFall = true;
+
+                       cycleFlagCnt++;
                    }
 
-                   if(isLeftOSensorFall && isRightOSensorFall && isMidHSensorFall && (cycleWaitInCnt <= 0))
+                   if(data->Ke[1] <= 0.0)
+                   {
+                       isLeftHSensorFall = true;
 
-                   //if((isLeftOSensorFall || isRightOSensorFall || isMidHSensorFall) && (cycleWaitInCnt <= 0))
+                       cycleFlagCnt++;
+
+                   }
+
+                   if(data->Ke[5] <= 0.0)
+                   {
+                       isRightHSensorFall = true;
+
+                       cycleFlagCnt++;
+                   }
+
+                   if((cycleFlagCnt>=2) && (cycleWaitInCnt <= 0))
                    {
                        cycleState = CC_In;
                    }
@@ -263,6 +283,20 @@ void Cycle_Handler(data_t *data)
             if(data->h_bias <= 20.0 && cycleInCnt <= 0)
             {
                 cycleState = CC_Tracking;
+
+                isLeftOSensorFall = false;
+                isRightOSensorFall = false;
+                isMidHSensorFall = false;
+                isRightHSensorFall = false;
+                isLeftHSensorFall = false;
+                isMidESensorMaxValue = false;
+
+                cycleWaitInCnt = 0;
+
+                cycleInCnt = 0;
+
+                cycleFlagCnt = 0;
+
             }
 
             break;
@@ -275,7 +309,7 @@ void Cycle_Handler(data_t *data)
             //    data->Bias = data->o_bias;
             //data->Bias = ((data->h_difference + data->v_difference - data->o_difference) / data->h_sum) * 100.0;
 
-            data->Bias = data->Bias * 1.2;
+            data->Bias = data->Bias * 1.1;
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
 
@@ -339,8 +373,8 @@ void RightAngle_Handler(data_t *data)
 
                 GLED.ON(GLED.Self);    
 
-                if(data->v_difference >= 20.0)
-                    bias = fsign(data->v_difference) * 100.0;
+                //if(data->v_difference >= 25.0)
+                bias = fsign(data->v_difference) * 100.0;
 
                 rightAngleState = RA_Tracking;
 
@@ -361,7 +395,8 @@ void RightAngle_Handler(data_t *data)
 
             RA_TRACKING:
 
-            bias = fsign(data->v_difference) * 100.0;
+            if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
+                bias = fsign(data->v_difference) * 100.0;
 
             data->Bias = bias;
 
@@ -617,45 +652,9 @@ void Cross_Handler(data_t *data)
     {
         case CS_Wait:
 
-            if(data->Element.Type == Cross)
-                crossState = CS_Confirm;
             break;
 
         case CS_Confirm:
-
-            if(Is_Cross(data))
-            {
-                if(data->o_difference >= 50.0)
-                {
-                    crossInfo = CS_Left;
-                }
-                else if(data->o_difference <= -50.0)
-                {
-                    crossInfo = CS_Right;
-                }
-                else
-                {
-                    crossInfo = CS_UndefinedIn;
-                }
-
-                if(data->h_bias >= 30.0)
-                {
-                    inCrossAttitude = CS_RightIn;
-                }
-                else if(data->h_bias <= -30.0)
-                {
-                    inCrossAttitude = CS_LeftIn;
-                }
-                else
-                {
-                    inCrossAttitude = CS_MidIn;
-                }
-
-                GLED.ON(GLED.Self);
-
-            }
-
-            crossState = CS_In;
 
             break;
 

@@ -357,6 +357,8 @@
                                     									
                                     <listOptionValue builtIn="false" value="../OS/FatFs/src"/>
                                     									
+                                    <listOptionValue builtIn="false" value="../OS/Device/DSensor"/>
+                                    									
                                     <listOptionValue builtIn="false" value="../OS/Device/Servo"/>
                                     									
                                     <listOptionValue builtIn="false" value="../App/Usr"/>

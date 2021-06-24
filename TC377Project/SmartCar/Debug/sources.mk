@@ -88,6 +88,7 @@ OS/Device/BEEP \
 OS/Device/BLE \
 OS/Device/Capture \
 OS/Device/Communicate \
+OS/Device/DSensor \
 OS/Device/Demo \
 OS/Device/ESensor \
 OS/Device/IMU \

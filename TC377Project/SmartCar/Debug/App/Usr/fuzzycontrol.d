@@ -160,6 +160,8 @@ fuzzycontrol.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 fuzzycontrol.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+fuzzycontrol.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 fuzzycontrol.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 fuzzycontrol.o :	../OS/Device/device.h

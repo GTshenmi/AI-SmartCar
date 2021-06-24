@@ -40,6 +40,8 @@ ano_dt.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 ano_dt.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+ano_dt.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 ano_dt.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 ano_dt.o :	../OS/Device/device.h

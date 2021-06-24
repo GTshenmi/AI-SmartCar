@@ -40,6 +40,8 @@ devices_config.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 devices_config.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+devices_config.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 devices_config.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 devices_config.o :	../Driver/driver.h

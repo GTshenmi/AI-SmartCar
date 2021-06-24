@@ -158,6 +158,8 @@ interrupt.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 interrupt.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+interrupt.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 interrupt.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 interrupt.o :	../OS/Device/device.h

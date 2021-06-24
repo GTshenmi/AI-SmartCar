@@ -40,6 +40,8 @@ malloc.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 malloc.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+malloc.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 malloc.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 malloc.o :	../OS/Device/device.h

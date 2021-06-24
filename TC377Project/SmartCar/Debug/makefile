@@ -26,6 +26,7 @@ RM := rm -rf
 -include OS/Device/IMU/subdir.mk
 -include OS/Device/ESensor/subdir.mk
 -include OS/Device/Demo/subdir.mk
+-include OS/Device/DSensor/subdir.mk
 -include OS/Device/Communicate/subdir.mk
 -include OS/Device/Capture/subdir.mk
 -include OS/Device/BLE/subdir.mk

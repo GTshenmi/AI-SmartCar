@@ -26,6 +26,7 @@
 #include "wirelessserial.h"
 #include "imu.h"
 #include "demo.h"
+#include "dsensor.h"
 #include "devices_config.h"
 
 #endif /* OS_DEVICE_DEVICE_H_ */

@@ -40,6 +40,8 @@ softtimer.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 softtimer.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+softtimer.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 softtimer.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 softtimer.o :	../OS/Device/device.h

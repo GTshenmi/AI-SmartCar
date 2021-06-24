@@ -160,6 +160,8 @@ ctrlsys.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 ctrlsys.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+ctrlsys.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 ctrlsys.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 ctrlsys.o :	../OS/Device/device.h

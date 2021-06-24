@@ -158,6 +158,8 @@ fuzzy_ctrl.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 fuzzy_ctrl.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+fuzzy_ctrl.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 fuzzy_ctrl.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 fuzzy_ctrl.o :	../OS/Device/device.h

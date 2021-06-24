@@ -40,6 +40,8 @@ ostime.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 ostime.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+ostime.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 ostime.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 ostime.o :	../OS/Device/device.h

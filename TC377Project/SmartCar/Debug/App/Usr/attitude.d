@@ -158,6 +158,8 @@ attitude.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 attitude.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+attitude.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 attitude.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 attitude.o :	../OS/Device/device.h

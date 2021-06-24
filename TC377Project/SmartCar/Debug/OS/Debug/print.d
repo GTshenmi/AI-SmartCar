@@ -40,6 +40,8 @@ print.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 print.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+print.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 print.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 print.o :	../OS/Device/device.h

@@ -42,6 +42,8 @@ ui.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 ui.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+ui.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 ui.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 ui.o :	../OS/Device/device.h

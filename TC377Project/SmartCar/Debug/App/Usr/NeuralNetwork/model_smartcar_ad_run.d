@@ -160,6 +160,8 @@ model_smartcar_ad_run.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 model_smartcar_ad_run.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+model_smartcar_ad_run.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 model_smartcar_ad_run.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 model_smartcar_ad_run.o :	../OS/Device/device.h

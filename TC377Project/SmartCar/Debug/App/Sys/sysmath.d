@@ -158,6 +158,8 @@ sysmath.o :	../OS/Device/IMU/imu.h
 ../OS/Device/IMU/imu.h :
 sysmath.o :	../OS/Device/Demo/demo.h
 ../OS/Device/Demo/demo.h :
+sysmath.o :	../OS/Device/DSensor/dsensor.h
+../OS/Device/DSensor/dsensor.h :
 sysmath.o :	../OS/devices_config.h
 ../OS/devices_config.h :
 sysmath.o :	../OS/Device/device.h
