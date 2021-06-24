@@ -30,7 +30,6 @@ float ElementDetermine(void *argv)
     if(Is_Cycle(data))
     {
         data->Element.Type = Cycle;
-
     }
 
     if(Is_Cross(data))
@@ -307,9 +306,10 @@ void Cycle_Handler(data_t *data)
             
             //if(data->Element.Type != RightAngle)
             //    data->Bias = data->o_bias;
-            //data->Bias = ((data->h_difference + data->v_difference - data->o_difference) / data->h_sum) * 100.0;
 
-            data->Bias = data->Bias * 1.1;
+            data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
+
+            data->Bias = data->Bias * 1.2 + fsign(bias) * 5.0;
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
 

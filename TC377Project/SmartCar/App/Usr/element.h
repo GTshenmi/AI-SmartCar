@@ -24,9 +24,9 @@ inline bool Is_RightAngle(data_t *data)
 
     if(data->CarMode == LAutoBoot_Mode)
     {
-        //return (((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0))||\
+        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and fabs(data->h_sum <= 120.0));
 
-        return ((fabs(data->v_sum) >= 20.0) and (fabs(data->v_difference >= 25.0)) and (fabs(data->o_difference <= 40.0)) and (data->h_sum <= 70.0));
+        //return ((fabs(data->v_sum) >= 20.0) and (fabs(data->v_difference >= 25.0)) and (fabs(data->o_difference <= 40.0)) and (data->h_sum <= 70.0));
     }
     else
     {

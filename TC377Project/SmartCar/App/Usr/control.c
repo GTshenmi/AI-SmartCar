@@ -101,17 +101,28 @@ void SpeedControl(void *argv)
 //            {
 //                data->Speed = 2000.0;
 //            }
-            if(data->Element.Type == RightAngle)
-              data->Speed = 2000.0;
-            else if(data->Element.Type == Cycle)
-              data->Speed = 2500.0;
-            else
-              data->Speed = 2500.0;
 
-              //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
+//            if(data->Element.Type == Cycle)
+//            {
+//                data->Speed = 2000.0;
+//            }
+//            else
+//            {
+//                data->Speed = 2000.0;
+//            }
+
+            data->Speed = 2000.0;
+//            if(data->Element.Type == RightAngle)
+//              data->Speed = 2000.0;
+//            else if(data->Element.Type == Cycle)
+//              data->Speed = 2500.0;
+//            else
+//              data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
 
 
         }
+
+        data->Speed = 2000.0;
 
 
         float formatedSpeed = 0.0;
