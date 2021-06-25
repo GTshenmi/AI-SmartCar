@@ -28,6 +28,6 @@ typedef struct dsensor
         struct dsensor *Self;
 }dsensor_t;
 
-
+uint16_t DSensor_Init(struct dsensor *self);
 
 #endif /* OS_DEVICE_DSENSOR_DSENSOR_H_ */

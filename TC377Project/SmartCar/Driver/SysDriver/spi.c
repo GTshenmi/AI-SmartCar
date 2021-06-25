@@ -30,6 +30,9 @@
  * */
 uint8_t SPIx_Init(spix_t *spi)
 {
+    if(spi == NULL)
+        return 1;
+
     if(spi->Spi_Source == SPI)
     {
         unsigned char spiNum = SPI_GetModule(spi->ClkPin);
@@ -182,6 +185,9 @@ uint8_t SPIx_ReadWriteBytes(spix_t *spi,uint8_t *txData, uint8_t *rxData, uint32
 {
 //    if(time_out == TIME_INFINITE)
 //        time_out = TIME_INFINITE/len;
+
+    if(spi == NULL)
+        return 1;
 
     if(spi->Spi_Source == SPI)
     {

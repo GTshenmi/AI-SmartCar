@@ -8,6 +8,9 @@
 
 uint8_t ENCx_Init(encx_t *enc)
 {
+    if(enc == NULL)
+        return 1;
+
     ENC_InputPin_t InputPin = enc->InputPin;
     ENC_DirPin_t DirPin = enc->DirPin;
 
@@ -101,6 +104,9 @@ uint8_t ENCx_Init(encx_t *enc)
 sint16_t ENCx_Read(encx_t *enc)
 {
     sint16_t value = 0;
+
+    if(enc == NULL)
+        return 1;
 
     switch(ENC_GetTimer(enc->InputPin))
     {

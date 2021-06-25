@@ -11,6 +11,9 @@
 
 uint8_t UARTx_Init(uartx_t *uart)
 {
+    if(uart == NULL)
+        return 1;
+
     int i,j;
     //¹Ø±ÕCPUÖÐ¶Ï
     IfxCpu_disableInterrupts();
@@ -111,6 +114,9 @@ uint8_t UARTx_Init(uartx_t *uart)
 
 uint8_t UARTx_WriteByte(uartx_t *uart,uint8_t byte,sint64_t time_out)
 {
+    if(uart == NULL)
+        return 1;
+
     //Cpu_AcquireAndLockMutex(&uart->MutexLock);
 
     Ifx_SizeT count = 1;
@@ -123,6 +129,9 @@ uint8_t UARTx_WriteByte(uartx_t *uart,uint8_t byte,sint64_t time_out)
 }
 uint8_t UARTx_WriteBytes(uartx_t *uart,uint8_t *bytes,uint32_t len,sint64_t time_out)
 {
+    if(uart == NULL)
+        return 1;
+
     //Cpu_AcquireAndLockMutex(&(uart->MutexLock));
 
     for(int i = 0 ; i < len ; i++)
@@ -138,6 +147,9 @@ uint8_t UARTx_WriteBytes(uartx_t *uart,uint8_t *bytes,uint32_t len,sint64_t time
 
 uint8_t UARTx_ReadByte(uartx_t *uart,sint64_t time_out)
 {
+    if(uart == NULL)
+        return 1;
+
     uint8_t data=0;
     Ifx_SizeT count = 1;
 
@@ -151,6 +163,9 @@ uint8_t UARTx_ReadByte(uartx_t *uart,sint64_t time_out)
 }
 uint8_t UARTx_ReadBytes(uartx_t *uart,uint8_t *bytes,uint32_t len,sint64_t time_out)
 {
+    if(uart == NULL)
+        return 1;
+
     for(int i = 0 ; i < len ; i++)
         bytes[i] = UARTx_ReadByte(uart,time_out);
 

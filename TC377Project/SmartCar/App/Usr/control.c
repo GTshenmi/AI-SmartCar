@@ -122,7 +122,7 @@ void SpeedControl(void *argv)
 
         }
 
-        data->Speed = 2000.0;
+        data->Speed = 2500.0;
 
 
         float formatedSpeed = 0.0;
@@ -193,7 +193,7 @@ void HowToNameThisFunc(data_t *data)
             if(setTime <= 0.0)
             {
                 data->IsAddNoise = true;
-                DebugBeepOn;
+                //DebugBeepOn;
 
                 float sign = (random(0.0,20.0) - 10) * 100.0;
                 //uint8_t time = os.time.getTimeus() % 10000 / 100;
@@ -222,7 +222,7 @@ void HowToNameThisFunc(data_t *data)
                 if((data->h_bias <= 20.0 && data->v_sum <= 10.0))
                 {
                     trackingstate = NormalTrackingStraight;
-                    DebugBeepOff;
+                    //DebugBeepOff;
                 }
 
             }
@@ -343,7 +343,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 {
     sint16_t PwmValue = 0;
 
-    data_t *data =(data_t *) argv;
+    data_t *data =(data_t *)argv;
 
     float tspeed,aspeed = 0.0;
 
@@ -356,11 +356,11 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 //    data->M_PID.Kp += data->M_FuzzyKp.U;
 //    data->M_PID.Ki += data->M_FuzzyKi.U;
 
-    if(fabs(data->M_PID.PID_Error[2]) > 100.0)
-    {
-        PwmValue = (sint16_t)(PWMx.MaxPwmDuty * fsign(data->M_PID.PID_Error[2]) * 0.8);
-    }
-    else
+//    if(fabs(data->M_PID.PID_Error[2]) > 100.0)
+//    {
+//        PwmValue = (sint16_t)(PWMx.MaxPwmDuty * fsign(data->M_PID.PID_Error[2]) * 0.8);
+//    }
+//    else
     {
         PID_Ctrl(&data->M_PID,tspeed,aspeed);
 

@@ -51,6 +51,23 @@ uint16_t FindMaxIndex(float *array,uint16_t len)
      return index;
 }
 
+uint16_t FindMinIndex(float *array,uint16_t len)
+{
+     float min = array[0];
+     uint16_t index = 0;
+
+     for(uint16_t i = 0 ; i < len ;i++)
+     {
+         if(array[i] < min)
+         {
+             min = array[i];
+             index = i;
+         }
+     }
+
+     return index;
+}
+
 float frand()
 {
     float result = 0.0;

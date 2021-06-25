@@ -34,9 +34,9 @@ float OutputSpeed[SystemIdeLen];
 
 void MotorSystemIdentification()
 {
-    data_t *data = &Data[data_pointer];
+    //data_t *data = &Data[data_pointer];
 
-    float dt = 0.002;
+    //float dt = 0.002;
 
     /*Input : Step Singal*/
     for(int i = 0 ; i < SystemIdeLen/3 ; i++)
@@ -101,7 +101,11 @@ void Core0_Main()
             SaveParameterSD(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
 
             RecordFlags = false;
+
+
         }
+
+        //Screen.WriteXLine(Screen.Self,7,"Motor Pwm Value = %d",Motor.GetPwmValue(Motor.Self));
 
 //        if(data->CarState)
 //        {

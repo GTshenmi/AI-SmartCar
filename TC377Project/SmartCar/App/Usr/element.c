@@ -13,14 +13,21 @@ void LoseLine_Handler(data_t *data);
 void Cycle_Handler(data_t *data);
 void Cross_Handler(data_t *data);
 void RightAngle_Handler(data_t *data);
+void Ramp_Handler(data_t *data);
 
 
 float ElementDetermine(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    static uint lastElement = None,Element = None;
 
     static uint32_t loseLineCnt = 0;
+
+    if(Is_Ramp(data))
+    {
+        data->Element.Type = Ramp;
+    }
 
     if(Is_RightAngle(data))
     {
@@ -49,13 +56,30 @@ float ElementDetermine(void *argv)
         data->TrackingState = Normal_Tracking;
         loseLineCnt = 0;
 
-        DebugBeepOff;
+        //DebugBeepOff;
     }
 
     if(loseLineCnt >= 1500)
     {
-        Motor.Break(Motor.Self);
+        //Motor.Break(Motor.Self);
     }
+
+    if(Element == data->Element.Type)
+    {
+        Element = data->Element.Type;
+    }
+    else
+    {
+        lastElement = Element;
+        Element = data->Element.Type;
+        data->LastElement.Type = data->Element.Type;
+    }
+
+
+
+
+    //data->LastElement = data->Element;
+
 //    else
 //    {
 //        Motor.Start(Motor.Self);
@@ -79,6 +103,14 @@ void SpecialElementHandler(void *argv)
     Cycle_Handler(data);
 
     LoseLine_Handler(data);
+
+    Ramp_Handler(data);
+}
+
+/*坡道处理*/
+void Ramp_Handler(data_t *data)
+{
+
 }
 
 void RustAngle_Handler(data_t *data)
@@ -103,6 +135,8 @@ void Cycle_Handler(data_t *data)
 
     static sint32_t cycleFlagCnt = 0;
 
+    static sint32_t exceptionHandlerCnt = 0;
+
     static bool isMidESensorMaxValue = false;
     static bool isLeftOSensorFall = false;
     static bool isRightOSensorFall = false;
@@ -111,14 +145,91 @@ void Cycle_Handler(data_t *data)
     static bool isLeftHSensorFall = false;
     static bool isRightHSensorFall = false;
 
+    float bias_ra = 0.0;
+
+    if(data->Element.Exception.EXT != NoException && data->Element.Type == Cycle)
+    {
+        data->Element.Exception.EXT = NoException;
+
+        data->Element.Exception.CC = CC_SlantIn;
+
+        cycleState = CC_Undefined;
+    }
+
     switch(cycleState)
     {
+        case CC_Undefined:
+
+            cycleState = CC_Exception_Handler;
+
+            if((data->Element.Exception.CC == CC_SlantIn))
+            {
+                bias_ra = data->Element.Exception.Info[RightAngle][Cycle];
+
+                exceptionHandlerCnt = 100;
+
+                //BLED.OFF(BLED.Self);
+
+                BEEP.ON(BEEP.Self);
+            }
+
+            break;
+
+        case CC_Exception_Handler:
+
+            exceptionHandlerCnt --;
+
+//            data->Bias = bias_ra;
+//
+//            data->Bias = data->v_bias;
+
+            if((data->Element.Exception.CC == CC_SlantIn))
+            {
+                //if((Is_CCNormal(data,exceptionHandlerCnt)) || (exceptionHandlerCnt <= -100))
+                {
+                    //data->Bias = data->v_bias;
+                    cycleState = CC_In;
+
+                    //cycleWaitCnt = 0;
+
+                    cycleInCnt = 100;
+
+                    bias = data->v_bias * 1.2;
+
+                    data->Element.Type = None;
+                    //BEEP.OFF(BEEP.Self);
+
+
+                }
+            }
+
+            if(data->Element.Exception.CC == CC_MisJudge)
+            {
+                Console.WriteLine("[Warning]:CC_MisJudge(%f)",data->Element.Exception.Info[Cycle][Cycle]);
+                cycleState = CC_Wait;
+            }
+
+            if(data->Element.Exception.CC == CC_Err)
+            {
+                Console.WriteLine("[Error]:CC_Err(%f)",data->Element.Exception.Info[Cycle][Cycle]);
+                cycleState = CC_Wait;
+            }
+
+            break;
+
         case CC_Wait:
 
             cycleWaitCnt--;
 
             if(cycleWaitCnt <= 0)
                 cycleWaitCnt = 0;
+
+//            if(FindMinIndex(data->H_ESensorValue,3) == 1)
+//            {
+//                cycleState = CC_Undefined;
+//
+//                data->Element.Exception.CC = CC_SlantIn;
+//            }
 
             if(data->Element.Type == Cycle && cycleWaitCnt <= 0)
             {
@@ -129,14 +240,16 @@ void Cycle_Handler(data_t *data)
 
         case CC_Confirm:
 
-            if(Is_Cycle(data))
+            if(1)//Is_Cycle(data))
             {
+                cycleState = CC_WaitIn;
+
                 float sum_l,sum_r;
 
                 if(data->CarMode == LAutoBoot_Mode)
                 {
                     cycleInCnt = 100;
-                    cycleOutCnt = 0; /*have problem. is zero?*/
+                    cycleOutCnt = 0;
 
                     sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
 
@@ -174,8 +287,21 @@ void Cycle_Handler(data_t *data)
                     bias = -100.0;
                     cycleWaitInCnt = 220;
                 }
-
-                cycleState = CC_WaitIn;
+            }
+            else
+            {
+//                if(FindMinIndex(data->H_ESensorValue,3) == 1)
+//                {
+//                    cycleState = CC_Undefined;
+//
+//                    data->Element.Exception.CC = CC_SlantIn;
+//                }
+//                else
+                {
+                    cycleState = CC_Undefined;
+                    data->Element.Exception.CC = CC_MisJudge;
+                    data->Element.Exception.Info[Cycle][Cycle] = CC_Confirm;
+                }
             }
 
             break;
@@ -186,6 +312,8 @@ void Cycle_Handler(data_t *data)
 
             if(data->CarMode == LAutoBoot_Mode)
             {
+
+
                 if(data->Ke[2] >= 5.0 || data->Ke[4] >= 5.0)
                 {
                     isMidESensorMaxValue = true;
@@ -268,6 +396,13 @@ void Cycle_Handler(data_t *data)
                }
             }
 
+            if(cycleWaitInCnt <= -2000)
+            {
+                cycleState = CC_Undefined;
+                data->Element.Exception.CC = CC_MisJudge;
+                data->Element.Exception.Info[Cycle][Cycle] = CC_WaitIn;
+            }
+
             break;
 
 
@@ -275,14 +410,10 @@ void Cycle_Handler(data_t *data)
 
             data->Bias = bias;
 
-            //data->Bias = data->h_bias * 0.5 + data->v_bias * 0.5;
-
             cycleInCnt--;
 
             if(data->h_bias <= 20.0 && cycleInCnt <= 0)
             {
-                cycleState = CC_Tracking;
-
                 isLeftOSensorFall = false;
                 isRightOSensorFall = false;
                 isMidHSensorFall = false;
@@ -296,6 +427,14 @@ void Cycle_Handler(data_t *data)
 
                 cycleFlagCnt = 0;
 
+                cycleState = CC_Tracking;
+            }
+
+            if(cycleInCnt <= -2000)
+            {
+                cycleState = CC_Undefined;
+                data->Element.Exception.CC = CC_Err;
+                data->Element.Exception.Info[Cycle][Cycle] = CC_In;
             }
 
             break;
@@ -303,9 +442,6 @@ void Cycle_Handler(data_t *data)
         case CC_Tracking:
             
             cycleOutCnt++;
-            
-            //if(data->Element.Type != RightAngle)
-            //    data->Bias = data->o_bias;
 
             data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
 
@@ -332,6 +468,13 @@ void Cycle_Handler(data_t *data)
                 BLED.OFF(BLED.Self);
             }
             
+            if(cycleOutCnt >= 6000)
+            {
+                cycleState = CC_Undefined;
+                data->Element.Exception.CC = CC_Err;
+                data->Element.Exception.Info[Cycle][Cycle] = CC_Out;
+            }
+
             break;
 
         default:
@@ -367,19 +510,17 @@ void RightAngle_Handler(data_t *data)
 
             RA_CONFIRM:
 
-            //if(Is_RightAngle(data))
+            if(1)
             {
                 rightAngleCount = 100;
 
                 GLED.ON(GLED.Self);    
 
-                //if(data->v_difference >= 25.0)
                 bias = fsign(data->v_difference) * 100.0;
 
                 rightAngleState = RA_Tracking;
 
                 data->Is_AdjustAngle = true;
-                //data->Is_AdjustSpeed = true;
 
                 data->Angle = - fsign(bias) * Servo.MaxAngle;
 
@@ -409,6 +550,7 @@ void RightAngle_Handler(data_t *data)
 
             if(Is_RightAngleOut(data,rightAngleCount) || rightAngleCount <= -1000) 
             {
+
                 data->Is_AdjustAngle = false;
 
                 data->Is_AdjustSpeed = false;
@@ -427,9 +569,26 @@ void RightAngle_Handler(data_t *data)
                 data->Element.Type = None;
             }
 
+            if(Is_RAToCCException(data))
+            {
+                data->Element.Exception.EXT = RA_To_CC;
+
+                data->Element.Exception.Info[RightAngle][Cycle] = bias;
+            }
+            else
+            {
+                data->Element.Exception.EXT = NoException;
+
+                data->Element.Exception.Info[RightAngle][Cycle] = bias;
+            }
+
             break;
 
-        case RA_Undefined:default:
+        case RA_Undefined:
+
+            break;
+
+        default:
             break;
     }
 
@@ -454,15 +613,13 @@ void LoseLine_Handler(data_t *data)
             if(data->TrackingState == LoseLine)
             {
                 loseLineState = LL_Lose;
-
-                //DebugBeepOn;
             }
 
             break;
 
         case LL_Lose:
 
-//            for(int i = 0 ; i <= 10 ;i++)
+//            for(int i = 0 ; i <= 5 ;i++)
 //            {
 //                HESensorData = Queue.Gets(&data->HESensorQueue,-i,NULL,0,4);
 //
@@ -491,7 +648,7 @@ void LoseLine_Handler(data_t *data)
 
         case LL_BackSearchLine:
 
-            DebugBeepOff;
+            //DebugBeepOff;
             break;
 
 
@@ -512,7 +669,7 @@ void LoseLine_Handler(data_t *data)
             loseLineState = LL_Wait;
             data->TrackingState = Normal_Tracking;
 
-            DebugBeepOff;
+            //DebugBeepOff;
 
             break;
 
@@ -522,131 +679,9 @@ void LoseLine_Handler(data_t *data)
     }
 }
 
-//void LoseLine_Handler(data_t *data)
-//{
-//    static loseline_state_t loseLineState = LL_Wait;
-//
-//    static float bias = 0.0;
-//
-//    int index = 0;
-//
-//    bool isFindBias = false;
-//
-//    switch(loseLineState)
-//    {
-//        case LL_Wait:
-//
-//            if(data->TrackingState == LoseLine)
-//            {
-//                loseLineState = LL_Lose;
-//            }
-//
-//            break;
-//
-//        case LL_Lose:
-//
-//            //DebugBeepOn;
-//
-//            for(index = 1 ; index < 10 ; index++)
-//            {
-//                float *_eType = Queue.Gets(&data->ElementTypeQueue,-index,NULL,0,1);
-//                float *_trackingState = Queue.Gets(&data->TrackingQueue,-index,NULL,0,1);
-//                float *_eSensorValue = Queue.Gets(&data->ESensorQueue,-index,NULL,0,7);
-//
-//                if(FIs_Equal(*_eType,data->Element.Type * 1.0) && (!FIs_Equal(*_trackingState,LoseLine * 1.0)))
-//                {
-//                    float *_bias = NULL;
-//
-//                    if(data->Element.Type == None)
-//                        _bias = Queue.Gets(&data->RawBiasQueue,-index,NULL,0,1);
-//                    else
-//                        _bias = Queue.Gets(&data->ElementBiasQueue,-index,NULL,0,1);
-//
-//                    bias = *_bias;
-//
-//                    //BLED.ON(BLED.Self);
-//
-//                    if(Is_LLBiasVaild(_eSensorValue,bias))
-//                    {
-//                        isFindBias = true;
-//                        break;
-//                    }
-//                }
-//                else
-//                {
-//                    if(!FIs_Equal(*_eType,data->Element.Type * 1.0))
-//                    {
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            if(isFindBias)
-//            {
-//                loseLineState = LL_SearchLine;
-//            }
-//            else
-//            {
-//                bias = 0.0;
-//                loseLineState = LL_BackSearchLine;
-//
-//                data->Is_AdjustSpeed = true;
-//            }
-//
-//            break;
-//
-//        case LL_BackSearchLine:
-//
-//            data->Bias = bias;
-//
-//            data->Speed = -3200;
-//
-//            if(Is_SearchedLine(data))
-//            {
-//                loseLineState = LL_Lose;
-//                data->Is_AdjustSpeed = false;
-//            }
-//
-//            break;
-//
-//
-//        case LL_SearchLine:
-//
-//            data->Bias = fsign(bias) * 100.0;
-//
-//            data->Is_AdjustSpeed = false;
-//
-//            if(Is_SearchedLine(data))
-//            {
-//                loseLineState = LL_Searched;
-//            }
-//
-//            break;
-//
-//        case LL_Searched:
-//
-//            loseLineState = LL_Wait;
-//            data->TrackingState = Normal_Tracking;
-//
-//            //DebugBeepOff;
-//
-//            break;
-//
-//        case LL_Undefined:default:
-//
-//            break;
-//    }
-//}
-
-
-
 void Cross_Handler(data_t *data)
 {
     static cross_state_t crossState = CS_Wait;
-
-    static incross_attitude_t inCrossAttitude = CS_UndefinedIn;
-
-    static cross_info_t   crossInfo = CS_UndefinedInfo;
 
     switch(crossState)
     {

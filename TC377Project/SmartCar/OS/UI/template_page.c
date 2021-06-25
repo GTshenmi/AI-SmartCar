@@ -18,7 +18,7 @@ void displayDataAlone (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLi
     if (Self->targetDataType == INTEGER)
     {
         char stringBuffer[30];
-        sprintf(stringBuffer, "%s: %04d ", Self->description, (((int16_t*) (Self->primaryTargetData))[dataLineTmp]));
+        sprintf(stringBuffer, "%s: %05d ", Self->description, (((int16_t*) (Self->primaryTargetData))[dataLineTmp]));
         Screen.ShowString(Screen.Self, 0, beginLineTmp * Screen.Font.Hight * 2, (uint8_t*) stringBuffer,
                 cursorSelected(Self));
     }

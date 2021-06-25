@@ -170,7 +170,7 @@ float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
   *
   * */
     
-    static float _bias[5] = {0.0,0.0,0.0,0.0,0.0};
+    //static float _bias[5] = {0.0,0.0,0.0,0.0,0.0};
 
     data_t *data = (data_t *)argv;
 

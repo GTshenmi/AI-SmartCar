@@ -8,6 +8,9 @@
 
 uint8_t TIMx_Init(timx_t *timer)
 {
+    if(timer == NULL)
+        return 1;
+
     if(timer->timer_source == STM)
     {
         STM_t Stm = (STM_t)timer->Timer;
@@ -128,6 +131,8 @@ uint8_t TIMx_Init(timx_t *timer)
 }
 uint8_t TIMx_Start(timx_t *timer)
 {
+    if(timer == NULL)
+        return 1;
     timer->Is_Run =true;
     if(timer->timer_source == STM)
     {
@@ -143,6 +148,9 @@ uint8_t TIMx_Start(timx_t *timer)
 }
 uint8_t TIMx_Stop(timx_t *timer)
 {
+    if(timer == NULL)
+        return 1;
+
     timer->Is_Run =false;
     if(timer->timer_source == STM)
     {
@@ -158,6 +166,9 @@ uint8_t TIMx_Stop(timx_t *timer)
 }
 uint8_t TIMx_Delay(timx_t *timer,uint32_t us)
 {
+    if(timer == NULL)
+        return 1;
+
     if(timer->timer_source == STM)
     {
         STM_t Stm = (STM_t )timer->Timer;
@@ -174,6 +185,9 @@ uint8_t TIMx_Delay(timx_t *timer,uint32_t us)
 }
 uint32_t TIMx_GetTime(timx_t *timer)
 {
+    if(timer == NULL)
+        return 1;
+
     if(timer->timer_source == STM)
     {
         STM_t Stm = (STM_t )timer->Timer;
@@ -194,6 +208,9 @@ uint32_t TIMx_GetTime(timx_t *timer)
 }
 uint8_t TIMx_DeInit(timx_t *timer)
 {
+    if(timer == NULL)
+        return 1;
+
     if(timer->timer_source == STM)
     {
         STM_t Stm = (STM_t )timer->Timer;

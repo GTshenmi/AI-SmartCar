@@ -163,6 +163,8 @@ void Core0_HardWareInit()
 //        SESensor[i].EnableGain(SESensor[i].Self,false);
     }
 
+    DSensor.Init(DSensor.Self);
+
     Screen.WriteXLine(Screen.Self,line,"Init ESensor.......OK");
 
     /*Init SD Card And File System.*/
@@ -261,7 +263,7 @@ void UIParameterInit(void)
     UIData.MPID_Ki =      &Data[data_pointer].M_PID.Ki;
     UIData.MPID_Kp =      &Data[data_pointer].M_PID.Kp;
     UIData.MPID_Result =  &Data[data_pointer].M_PID.Result;
-    UIData.M_PwmDuty =    (uint16_t *)&Motor.PwmValue;
+    UIData.M_PwmDuty =    (sint16_t *)&Motor.PwmValue;
     UIData.SPID_Kd =      &Data[data_pointer].S_PID.Kd;
     UIData.SPID_Ki =      &Data[data_pointer].S_PID.Ki;
     UIData.SPID_Kp =      &Data[data_pointer].S_PID.Kp;

@@ -8,6 +8,9 @@
 
 uint8_t ADCx_Init(adcx_t *adc)
 {
+    if(adc == NULL)
+       return 1;
+
     //新建配置
     IfxEvadc_Adc_Config adcConfig;
     //新建通道配置
@@ -82,6 +85,9 @@ uint8_t ADCx_Init(adcx_t *adc)
 uint16_t ADCx_Read(adcx_t *adc)
 {
     uint16_t value = 0;
+
+    if(adc == NULL)
+        return 1;
 
     do{
         conversionResult = IfxEvadc_Adc_getResult(&g_AdcChannel[ADC_GetIndex(adc->Channel)]);

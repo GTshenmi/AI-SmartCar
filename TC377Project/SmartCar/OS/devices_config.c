@@ -9,6 +9,14 @@
 
 #pragma section all "cpu0_dsram"
 
+dsensor_t DSensor =
+{
+       .Init = DSensor_Init,
+       .Self = &DSensor,
+       .ADCn = NULL,
+
+};
+
 led_t GLED = /*ok*/
 {
         .Init = LED_Init,

@@ -45,4 +45,6 @@ extern dip_switch_t DIPSwitch;
 
 extern wireless_serial_t WirelessSerial;
 
+extern dsensor_t DSensor;
+
 #endif /* OS_DEVICES_CONFIG_H_ */

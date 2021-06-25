@@ -12,6 +12,18 @@
 #include "sys.h"
 #include "parameter.h"
 
+/*ÅÐ¶ÏÆÂµÀ*/
+inline bool Is_Ramp(data_t *data)
+{
+    float distance = DSensor.GetDistance(DSensor.Self);
+
+    distance = distance * 1.0;
+
+
+
+    return 0;
+}
+
 inline bool Is_Straight(data_t *data)
 {
     return (data->h_bias <= 20.0 && data->v_sum <= 10.0);
@@ -54,6 +66,11 @@ inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 
 }
 
+inline bool Is_RAToCCException(data_t *data)
+{
+    return (FindMinIndex(data->H_ESensorValue,3) == 1);
+    //return (data->h_bias <= 20.0 && (data->H_ESensorValue[0] >= 30.0) && (data->H_ESensorValue[1] >= 30.0));
+}
 inline bool Is_RightAngleBackToStraight(data_t *data)
 {
     //float sum_h = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
@@ -73,6 +90,11 @@ inline bool Is_Cycle(data_t *data)
         h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[3] + data->H_ESensorValue[4];
 
     return (h_sum >= 180.0);
+}
+
+inline bool Is_CCNormal(data_t *data,sint32_t cnt)
+{
+    return (((FindMaxIndex(data->H_ESensorValue,4) == 1) || (FindMaxIndex(data->H_ESensorValue,4) == 0)) && (cnt <= 0));
 }
 
 inline bool Is_CycleOut(data_t *data,uint32_t cycleOutCnt)
@@ -95,7 +117,7 @@ inline bool Is_CycleBackToStraight(data_t *data)
     if(data->CarMode == LAutoBoot_Mode)
     {
         h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
-        return (h_sum <= 150.0 && (data->H_ESensorValue[0] <=50.0 && data->H_ESensorValue[2] <= 50.0));
+        return (h_sum <= 150.0 || (data->H_ESensorValue[0] <=50.0 && data->H_ESensorValue[2] <= 50.0));
     }
     else
     {

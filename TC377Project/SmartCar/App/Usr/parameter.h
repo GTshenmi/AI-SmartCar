@@ -64,6 +64,8 @@ typedef enum
 typedef enum
 {
     CC_Undefined,
+    CC_Exception_Handler,
+
     CC_Wait,
     CC_Confirm,
     CC_WaitIn,
@@ -116,12 +118,39 @@ typedef enum
     RightAngle, //直角弯
     Cross,      //十字
     Cycle,
+    Ramp,
 }element_t;
+
+typedef enum
+{
+    NoException,
+
+    CC_MisJudge,
+
+    CC_Err,
+
+    CC_SlantIn,
+
+    RA_To_CC,
+
+}element_exception_e;
+
+typedef struct
+{
+    uint EXT;
+
+    uint CC;
+
+    uint RA;
+
+    float Info[10][10];
+
+}element_exception_t;
 
 typedef struct
 {
     uint Type;
-
+    element_exception_t Exception;
     bool Lock;
 }elementwlock_t;
 
@@ -197,6 +226,8 @@ typedef struct
       /*For Element*/    
 
       elementwlock_t Element;  /*赛道元素类型*/
+
+      elementwlock_t LastElement;  /*赛道元素类型*/
 
       tracking_state_t TrackingState;
       

@@ -54,11 +54,11 @@ inline float fdiv(float x,float y)
 
     if(Is_Zero(x) && Is_Zero(y))
     {
-        result = 0.0;
+        result = NAN;
     }
     else if(Is_Zero(y) && !(Is_Zero(x)))
     {
-        result = 999999.0;
+        result = ( y > 0 ) ? 3.4e38 : -1.1e38;
     }
     else
     {
@@ -71,6 +71,7 @@ inline float fdiv(float x,float y)
 float NormalizeFloat(float value,float min,float max);
 float CalculateDistanceDifDivSum(float L1,float L2);
 uint16_t FindMaxIndex(float *array,uint16_t len);
+uint16_t FindMinIndex(float *array,uint16_t len);
 float ConstrainFloat(float value,float min,float max);
 float random(float lower,float upper);
 float frand(void);

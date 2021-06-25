@@ -8,6 +8,9 @@
 
 uint8_t PWMx_Init(pwmx_t *pwm)
 {
+    if(pwm == NULL)
+        return 1;
+
     pwm_source_t pwm_source = pwm->pwm_source;
     if(pwm_source == TOM)
     {
@@ -87,6 +90,9 @@ uint8_t PWMx_Init(pwmx_t *pwm)
 }
 uint8_t PWMx_Write(pwmx_t *pwm,unsigned long duty)
 {
+    if(pwm == NULL)
+        return 1;
+
 //    if(duty > PWMx.MaxPwmDuty)
 //        duty = PWMx.MaxPwmDuty;
 //    else if(duty < PWMx.MinPwmDuty)

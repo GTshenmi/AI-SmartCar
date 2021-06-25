@@ -8,6 +8,9 @@
 
 uint8_t GPIOx_Init(gpiox_t *gpio)
 {
+    if(gpio == NULL)
+        return 1;
+
     if(gpio->Enable_Interrupt)
     {
         //PIN_Exti
@@ -177,6 +180,9 @@ uint8_t GPIOx_Init(gpiox_t *gpio)
 
 uint8_t GPIOx_Read(gpiox_t *gpio)
 {
+    if(gpio == NULL)
+        return 1;
+
     if(!gpio->Is_Shield)
     {
         Ifx_P *port = PIN_GetModule(gpio->Pin);
@@ -190,6 +196,9 @@ uint8_t GPIOx_Read(gpiox_t *gpio)
 }
 uint8_t GPIOx_Write(gpiox_t *gpio,uint8_t state)
 {
+    if(gpio == NULL)
+        return 1;
+
     gpio->State = state;
     if(!gpio->Is_Shield)
     {
@@ -214,6 +223,9 @@ uint8_t GPIOx_Write(gpiox_t *gpio,uint8_t state)
 
 uint8_t GPIOx_Reverse(gpiox_t *gpio)
 {
+    if(gpio == NULL)
+        return 1;
+
     Ifx_P *port = PIN_GetModule(gpio->Pin);
     unsigned char pinIndex = PIN_GetIndex(gpio->Pin);
 
@@ -224,6 +236,9 @@ uint8_t GPIOx_Reverse(gpiox_t *gpio)
 
 uint8_t GPIOx_SetDir(gpiox_t *gpio,gpio_dir_t dir)
 {
+    if(gpio == NULL)
+        return 1;
+
     Ifx_P *port = PIN_GetModule(gpio->Pin);
     unsigned char pinIndex = PIN_GetIndex(gpio->Pin);
 

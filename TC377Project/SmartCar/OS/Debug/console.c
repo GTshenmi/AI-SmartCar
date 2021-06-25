@@ -5,7 +5,19 @@
  *      Author: 936305695
  */
 #include "console.h"
-#include "driver.h"
+#include "device.h"
+
+void ErrorMsg(const char *fmt,...)
+{
+    va_list arg;
+    va_start(arg,fmt);
+
+    vprintf(fmt,arg);
+
+    printf("\n");
+
+    va_end(arg);
+}
 
 void Console_Init(void)
 {
