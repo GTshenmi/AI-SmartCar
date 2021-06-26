@@ -197,10 +197,6 @@ void Cycle_Handler(data_t *data)
                     cycleInCnt = 360;
                 }
                 exceptionHandlerCnt = 50;
-
-                //BLED.OFF(BLED.Self);
-
-                //BEEP.ON(BEEP.Self);
             }
 
             break;
@@ -278,7 +274,7 @@ void Cycle_Handler(data_t *data)
 
                 if(data->CarMode == LAutoBoot_Mode)
                 {
-                    cycleInCnt = 160;
+                    cycleInCnt = 120;
                     cycleOutCnt = 0;
 
                     sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];// + data->O_ESensorValue[0];
@@ -310,11 +306,13 @@ void Cycle_Handler(data_t *data)
                 if(cycleDir == CC_DirLeft)
                 {
                     bias = 100.0;
+                    cycleWaitInCnt = 0;
                     cycleWaitInCnt = 220;
                 }
                 else
                 {
                     bias = -100.0;
+                    cycleWaitInCnt = 0;
                     cycleWaitInCnt = 220;
                 }
             }
@@ -390,24 +388,24 @@ void Cycle_Handler(data_t *data)
                    if((cycleFlagCnt>=2) && (cycleWaitInCnt <= 0))
                    {
 
-                       if(data->Element.Exception.EXT != NoException)
-                       {
-                           //data->Element.Exception.EXT = NoException;
-
-                           data->Element.Exception.CC = CC_SlantIn;
-
-                           cycleState = CC_Undefined;
-                       }
-                       else if(Is_SlantIn)
-                       {
-                           Is_SlantIn = false;
-                           data->Element.Exception.CC = CC_SlantIn;
-
-                           cycleState = CC_Undefined;
-
-                           BEEP.ON(BEEP.Self);
-                       }
-                       else
+//                       if(data->Element.Exception.EXT != NoException)
+//                       {
+//                           //data->Element.Exception.EXT = NoException;
+//
+//                           data->Element.Exception.CC = CC_SlantIn;
+//
+//                           cycleState = CC_Undefined;
+//                       }
+//                       else if(Is_SlantIn)
+//                       {
+//                           Is_SlantIn = false;
+//                           data->Element.Exception.CC = CC_SlantIn;
+//
+//                           cycleState = CC_Undefined;
+//
+//                           BEEP.ON(BEEP.Self);
+//                       }
+                      // else
                        {
                            cycleState = CC_In;
                        }
@@ -495,14 +493,21 @@ void Cycle_Handler(data_t *data)
             
             cycleOutCnt++;
 
+            data->Is_AdjustSpeed = true;
+
+            data->Speed = 2500;
+
             data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
 
-            data->Bias = data->Bias * 1.2 + fsign(bias) * 5.0;
+            data->Bias = data->Bias * 1.05 * 0.95 + fsign(bias) * 100.0 * 0.05;
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
 
             if(Is_CycleOut(data,cycleOutCnt) || cycleOutCnt >= 6000)
             {
+                data->Is_AdjustSpeed = false;
+
+
                 cycleState = CC_Out;
             }
 
@@ -588,8 +593,8 @@ void RightAngle_Handler(data_t *data)
 
             RA_TRACKING:
 
-            //if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
-            if(Is_RightAngle(data))
+            if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
+            //if(Is_RightAngle(data))
                 bias = fsign(data->v_difference) * 100.0;
 
             data->Bias = bias;

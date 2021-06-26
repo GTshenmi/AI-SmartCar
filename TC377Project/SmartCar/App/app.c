@@ -100,7 +100,7 @@ void Core0_Main()
         if(RecordFlags && data->CarState)
         {
             //if(data->h_bias >= 20.0 || data->Element.Type == RightAngle || data->Element.Type == Cycle)
-            //SaveParameterSD(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
+            SaveParameterSD(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
 
             RecordFlags = false;
 

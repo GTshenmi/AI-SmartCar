@@ -210,11 +210,13 @@ float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
 
     bias = data->h_bias;
 
+
+
     //float Ka[5] = {0.3,0.3,0.2,0.2,0.1};
 
     //bias = FIR_Filter(Ka,_bias,((data->h_difference + data->v_difference) / data->h_sum) * 100.0,5);
 
-    //bias = ((data->h_difference + data->v_difference)/data->h_sum) * 100.0;
+    bias = ((data->h_difference + data->v_difference * 0.78)/data->h_sum) * 100.0;
 
     //float weight = ((int)((data->Ke[0] + data->Ke[7]) / 2.0 + 0.5)) * 0.1;
 
