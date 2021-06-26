@@ -61,19 +61,24 @@ float ElementDetermine(void *argv)
 
     if(loseLineCnt >= 1500)
     {
-        //Motor.Break(Motor.Self);
+        Motor.Break(Motor.Self);
+        Servo.Break(Servo.Self);
     }
+//    else
+//    {
+//
+//    }
 
-    if(Element == data->Element.Type)
-    {
-        Element = data->Element.Type;
-    }
-    else
-    {
-        lastElement = Element;
-        Element = data->Element.Type;
-        data->LastElement.Type = data->Element.Type;
-    }
+//    if(Element == data->Element.Type)
+//    {
+//        Element = data->Element.Type;
+//    }
+//    else
+//    {
+//        lastElement = Element;
+//        Element = data->Element.Type;
+//        data->LastElement.Type = data->Element.Type;
+//    }
 
 
 
@@ -145,16 +150,30 @@ void Cycle_Handler(data_t *data)
     static bool isLeftHSensorFall = false;
     static bool isRightHSensorFall = false;
 
-    float bias_ra = 0.0;
+    static float bias_ra = 0.0;
 
-    if(data->Element.Exception.EXT != NoException && data->Element.Type == Cycle)
+    static float bias_slant = 0.0;
+
+    static bool Is_SlantIn = false;
+
+    if((FindMinIndex(data->H_ESensorValue,3) == 1) && (data->H_ESensorValue[1] <= 90.0) && data->Element.Type == Cycle)
     {
-        data->Element.Exception.EXT = NoException;
+        //data->Element.Exception.CC == CC_SlantIn;
 
-        data->Element.Exception.CC = CC_SlantIn;
+        bias_slant = fsign(data->v_difference) * 100.0;
 
-        cycleState = CC_Undefined;
+        Is_SlantIn = true;
+
     }
+
+//    if(data->Element.Exception.EXT != NoException && data->Element.Type == Cycle)
+//    {
+//        data->Element.Exception.EXT = NoException;
+//
+//        data->Element.Exception.CC = CC_SlantIn;
+//
+//        cycleState = CC_Undefined;
+//    }
 
     switch(cycleState)
     {
@@ -164,13 +183,24 @@ void Cycle_Handler(data_t *data)
 
             if((data->Element.Exception.CC == CC_SlantIn))
             {
-                bias_ra = data->Element.Exception.Info[RightAngle][Cycle];
+                if(data->Element.Exception.EXT == RA_To_CC)
+                {
+                    bias_ra = data->Element.Exception.Info[RightAngle][Cycle];
+                }
 
-                exceptionHandlerCnt = 100;
+                else
+                {
+                    bias = bias_slant;
+
+                    cycleState = CC_In;
+
+                    cycleInCnt = 360;
+                }
+                exceptionHandlerCnt = 50;
 
                 //BLED.OFF(BLED.Self);
 
-                BEEP.ON(BEEP.Self);
+                //BEEP.ON(BEEP.Self);
             }
 
             break;
@@ -179,24 +209,24 @@ void Cycle_Handler(data_t *data)
 
             exceptionHandlerCnt --;
 
-//            data->Bias = bias_ra;
-//
-//            data->Bias = data->v_bias;
+            data->Bias = bias_ra;
 
             if((data->Element.Exception.CC == CC_SlantIn))
             {
-                //if((Is_CCNormal(data,exceptionHandlerCnt)) || (exceptionHandlerCnt <= -100))
+                if(Is_CCNormal(data,exceptionHandlerCnt))
                 {
-                    //data->Bias = data->v_bias;
                     cycleState = CC_In;
 
-                    //cycleWaitCnt = 0;
+                    cycleInCnt = 360;
 
-                    cycleInCnt = 100;
+                    //bias = data->v_bias * 1.2;
 
-                    bias = data->v_bias * 1.2;
+                    bias = -bias_ra;
 
-                    data->Element.Type = None;
+                    //bias = 100.0;
+
+                    data->Element.Type =Cycle;
+
                     //BEEP.OFF(BEEP.Self);
 
 
@@ -205,13 +235,13 @@ void Cycle_Handler(data_t *data)
 
             if(data->Element.Exception.CC == CC_MisJudge)
             {
-                Console.WriteLine("[Warning]:CC_MisJudge(%f)",data->Element.Exception.Info[Cycle][Cycle]);
+                //Console.WriteLine("[Warning]:CC_MisJudge(%f)",data->Element.Exception.Info[Cycle][Cycle]);
                 cycleState = CC_Wait;
             }
 
             if(data->Element.Exception.CC == CC_Err)
             {
-                Console.WriteLine("[Error]:CC_Err(%f)",data->Element.Exception.Info[Cycle][Cycle]);
+                //Console.WriteLine("[Error]:CC_Err(%f)",data->Element.Exception.Info[Cycle][Cycle]);
                 cycleState = CC_Wait;
             }
 
@@ -248,12 +278,12 @@ void Cycle_Handler(data_t *data)
 
                 if(data->CarMode == LAutoBoot_Mode)
                 {
-                    cycleInCnt = 100;
+                    cycleInCnt = 160;
                     cycleOutCnt = 0;
 
-                    sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0] + data->O_ESensorValue[0];
+                    sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];// + data->O_ESensorValue[0];
 
-                    sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1] + data->O_ESensorValue[1];
+                    sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1];// + data->O_ESensorValue[1];
                 }
                 else
                 {
@@ -359,7 +389,29 @@ void Cycle_Handler(data_t *data)
 
                    if((cycleFlagCnt>=2) && (cycleWaitInCnt <= 0))
                    {
-                       cycleState = CC_In;
+
+                       if(data->Element.Exception.EXT != NoException)
+                       {
+                           //data->Element.Exception.EXT = NoException;
+
+                           data->Element.Exception.CC = CC_SlantIn;
+
+                           cycleState = CC_Undefined;
+                       }
+                       else if(Is_SlantIn)
+                       {
+                           Is_SlantIn = false;
+                           data->Element.Exception.CC = CC_SlantIn;
+
+                           cycleState = CC_Undefined;
+
+                           BEEP.ON(BEEP.Self);
+                       }
+                       else
+                       {
+                           cycleState = CC_In;
+                       }
+
                    }
 
               }
@@ -536,7 +588,8 @@ void RightAngle_Handler(data_t *data)
 
             RA_TRACKING:
 
-            if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
+            //if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
+            if(Is_RightAngle(data))
                 bias = fsign(data->v_difference) * 100.0;
 
             data->Bias = bias;
@@ -574,6 +627,8 @@ void RightAngle_Handler(data_t *data)
                 data->Element.Exception.EXT = RA_To_CC;
 
                 data->Element.Exception.Info[RightAngle][Cycle] = bias;
+
+                //BEEP.ON(BEEP.Self);
             }
             else
             {

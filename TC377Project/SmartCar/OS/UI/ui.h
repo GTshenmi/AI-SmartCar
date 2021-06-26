@@ -32,7 +32,7 @@ typedef struct
         float    *MPID_Kd;       /*电机PID参数*/
         float    *MPID_Result;   /*电机PID输出*/
 
-        sint16_t *M_PwmDuty;     /*电机占空比*/
+        uint16_t *M_PwmDuty;     /*电机占空比*/
 
         /*舵机部分*/
 

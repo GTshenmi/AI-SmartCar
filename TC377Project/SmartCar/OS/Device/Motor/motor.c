@@ -146,12 +146,13 @@ uint16_t Motor_GetPwmValue(struct motor_ctrl *self)
 
 void Motor_DefaultProtect(struct motor_ctrl *self,float speed,void *argv,uint16_t argc)
 {
-//    if(self->SpeedCache < 5 && speed != 0)
+//    if(self->SpeedCache == 0 && speed != 0)
 //        self->StallingTime ++;
-//    else
+//    else if(self->StallingTime > 0)
 //        self->StallingTime --;
 //
-//    if(self->StallingTime >= 0xffffffff)
+//
+//    if(self->StallingTime >= 3000)
 //    {
 //        self->State = Motor_Stalling;
 //    }

@@ -135,6 +135,7 @@ void Servo_SetPwmCentValue(struct servo_ctrl *self,uint16_t value)
 
 void Servo_DefaultProtect(struct servo_ctrl *self,float angle,void *argv,uint16_t argc)
 {
+
 //    if(...)
 //        self->State = Servo_Stalling;
 }

@@ -78,7 +78,7 @@ void MotorSystemIdentification()
 }
 /*
  * @Brief:CPU0 Main Func
- *  This Core is for Servo Control and Data Process.
+ *  This Core is for Servo Control and Dadta Process.
  * */
 void Core0_Main()
 {
@@ -89,6 +89,8 @@ void Core0_Main()
 
     data_t *data = &Data[data_pointer];
 
+    //Motor.SetPwmValue(Motor.Self,2000);
+
     //MotorSystemIdentification();
 
     //NNCU_Test();
@@ -98,7 +100,7 @@ void Core0_Main()
         if(RecordFlags && data->CarState)
         {
             //if(data->h_bias >= 20.0 || data->Element.Type == RightAngle || data->Element.Type == Cycle)
-            SaveParameterSD(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
+            //SaveParameterSD(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
 
             RecordFlags = false;
 

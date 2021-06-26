@@ -15,9 +15,9 @@
 /*ÅÐ¶ÏÆÂµÀ*/
 inline bool Is_Ramp(data_t *data)
 {
-    float distance = DSensor.GetDistance(DSensor.Self);
+    //float distance = DSensor.GetDistance(DSensor.Self);
 
-    distance = distance * 1.0;
+    //distance = distance * 1.0;
 
 
 
@@ -36,7 +36,7 @@ inline bool Is_RightAngle(data_t *data)
 
     if(data->CarMode == LAutoBoot_Mode)
     {
-        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and fabs(data->h_sum <= 120.0));
+        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
 
         //return ((fabs(data->v_sum) >= 20.0) and (fabs(data->v_difference >= 25.0)) and (fabs(data->o_difference <= 40.0)) and (data->h_sum <= 70.0));
     }
@@ -94,6 +94,8 @@ inline bool Is_Cycle(data_t *data)
 
 inline bool Is_CCNormal(data_t *data,sint32_t cnt)
 {
+    //return ((cnt <= 0) && (data->H_ESensorValue[0] >= 90.0) && (data->H_ESensorValue[1] >= 90.0));
+
     return (((FindMaxIndex(data->H_ESensorValue,4) == 1) || (FindMaxIndex(data->H_ESensorValue,4) == 0)) && (cnt <= 0));
 }
 
