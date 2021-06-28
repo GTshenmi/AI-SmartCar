@@ -29,7 +29,7 @@
 
 #define and &&
 #define or ||
-#define public /*public*/
+#define public  /*public*/
 #define private /*private*/
 
 #define pass

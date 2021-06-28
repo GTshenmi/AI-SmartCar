@@ -12,6 +12,15 @@
 #include "sys.h"
 #include "parameter.h"
 
+#define RustAngleEN 0
+
+inline bool Is_RustAngle(data_t *data)
+{
+    return ((((data->Ke[0] >= 10.0) and (data->Ke[6] <= -5.0)) or \
+            ((data->Ke[6] >= 10.0) and (data->Ke[1] <= -5.0))) and
+            (RustAngleEN) //Mask Bits
+            );
+}
 /*ÅÐ¶ÏÆÂµÀ*/
 inline bool Is_Ramp(data_t *data)
 {
@@ -31,18 +40,13 @@ inline bool Is_Straight(data_t *data)
 
 inline bool Is_RightAngle(data_t *data)
 {
-//    return ((data->Ke[0] >= 25.0) && (fabs(data->Ke[6] <= 5.0)))|| \
-//           ((data->Ke[6] >= 25.0) && (fabs(data->Ke[0] <= 5.0)));
-
     if(data->CarMode == LAutoBoot_Mode)
     {
         return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
-
-        //return ((fabs(data->v_sum) >= 20.0) and (fabs(data->v_difference >= 25.0)) and (fabs(data->o_difference <= 40.0)) and (data->h_sum <= 70.0));
     }
     else
     {
-        return  ((fabs(data->v_difference) >= 25.0) and (fabs(data->o_difference) <= 30.0))||\
+        return  ((fabs(data->v_difference) >= 25.0) and (fabs(data->o_difference) <= 30.0)) or\
                 ((fabs(data->v_sum) >= 20.0) and (data->v_bias >= 80.0) and (data->h_bias <= 20.0));
     }
 }
@@ -56,8 +60,6 @@ inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
     if(data->CarMode == LAutoBoot_Mode)
     {
         return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || data->H_ESensorValue[1] >= 30.0 || data->h_sum >= 60.0);
-                   //(h_sum >= 45.0) && );
-                   //(fabs(data->h_bias) <= 60.0));
     }
     else
     {
@@ -80,6 +82,10 @@ inline bool Is_RightAngleBackToStraight(data_t *data)
     return 1;
 }
 
+inline double CycleInCntFunc(double x)
+{
+    return (38978 * pow(x,-1.316));
+}
 inline bool Is_Cycle(data_t *data)
 {
     float h_sum = 0.0;
