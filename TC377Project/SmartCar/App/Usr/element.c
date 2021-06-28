@@ -352,7 +352,7 @@ void Cycle_Handler(data_t *data)
 
             data->Is_AdjustSpeed = true;
 
-            data->Speed = 2500;
+            data->Speed = 2000;
 
             data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
 

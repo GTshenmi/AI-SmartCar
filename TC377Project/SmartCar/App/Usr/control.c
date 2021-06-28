@@ -111,7 +111,7 @@ void SpeedControl(void *argv)
 //                data->Speed = 2000.0;
 //            }
 
-            data->Speed = 2500.0;
+            data->Speed = 2000.0;
 
             if(data->Element.Type == RightAngle)
               data->Speed = 2000.0;
