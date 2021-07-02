@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"ifxccu6_icu.h": "c",
+			"icu.h": "c",
+			"include.h": "c",
+			"control.h": "c",
+			"os.h": "c",
+			"xutility": "cpp"
+		},
+		"materialTheme.accent": "Tomato"
+	}
+}

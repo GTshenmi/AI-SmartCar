@@ -29,6 +29,79 @@ uint SaveMotorSystemInfo(float *input,float *output,uint32_t len)
     return 0;
 }
 
+
+
+uint SaveSensorDataAndAngle(data_t *data,float *LADC_Value,float *SADC_Value,float *Angle,char *name){
+
+    char buffer[100];
+    char* bufferPointer = buffer;
+
+    static uint32_t line = 0;
+
+    bufferPointer += sprintf(bufferPointer,"S %lu S ",line);
+
+//    for(uint8_t i = 0;i < MAX_LESENSOR_NUM;i++){
+//        bufferPointer += sprintf(bufferPointer,"%f ",LADC_Value[i]);
+//    }
+//    bufferPointer += sprintf(bufferPointer,"\n");
+
+    for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
+        bufferPointer += sprintf(bufferPointer,"%f ",SADC_Value[i]);
+    }
+    //bufferPointer += sprintf(bufferPointer,"\n");
+
+    //bufferPointer += sprintf(bufferPointer,"%f E\n",*Angle);
+
+    bufferPointer += sprintf(bufferPointer,"%f ",*Angle);
+
+    bufferPointer += sprintf(bufferPointer,"%f E\n",data->Speed);
+
+    //bufferPointer += sprintf(bufferPointer,"\n");
+
+    line++;
+
+    uint res = 0;
+
+    if(data->Element.Type == Cycle)
+        res = SD.fastWrite("Cycle.txt",buffer);
+    else if(data->Element.Type == RightAngle)
+        res = SD.fastWrite("RightAngle.txt",buffer);
+    else if(data->Element.Type == Cross)
+        res = SD.fastWrite("Cross.txt",buffer);
+    else if(data->h_bias >= 20.0 && data->v_bias >= 20.0)
+        res = SD.fastWrite("Corner.txt",buffer);
+    else if(data->h_bias <= 20.0 && data->v_bias <= 20.0)
+        res = SD.fastWrite("Straight.txt",buffer);
+    else
+        res = SD.fastWrite("Other.txt",buffer);
+
+    return res;
+//    if(data->Element.Type == Cycle)
+//        return SD.fastWrite("Cycle.txt",buffer);
+//    else
+//        return SD.fastWrite("Other.txt",buffer);
+
+//    char buffer[50];
+//    char* bufferPointer = buffer;
+//
+//    for(uint8_t i = 0;i < MAX_LESENSOR_NUM;i++){
+//        bufferPointer += sprintf(bufferPointer,"%u ",LADC_Value[i]);
+//    }
+//    bufferPointer += sprintf(bufferPointer,"\n");
+//
+//    for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
+//        bufferPointer += sprintf(bufferPointer,"%u ",SADC_Value[i]);
+//    }
+//    bufferPointer += sprintf(bufferPointer,"\n");
+//
+//    bufferPointer += sprintf(bufferPointer,"%d",*Angle);
+//    bufferPointer += sprintf(bufferPointer,"\n");
+//
+//    return SD.fastWrite("Parameter.txt",buffer);
+
+}
+
+
 uint SaveParameterSD(data_t *data,float *LADC_Value,float *SADC_Value,float *Angle){
 
     char buffer[100];

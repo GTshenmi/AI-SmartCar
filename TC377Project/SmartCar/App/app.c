@@ -99,8 +99,30 @@ void Core0_Main()
     {
         if(RecordFlags && data->CarState)
         {
-            //if(data->h_bias >= 20.0 || data->Element.Type == RightAngle || data->Element.Type == Cycle)
-            SaveParameterSD(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle);
+            data->Element.Type = Cycle;
+            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
+            data->Element.Type = Cross;
+            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
+            data->Element.Type = RightAngle;
+            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
+            data->Element.Type = None;
+            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
+            data->Element.Type = None;
+            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
+
+
+//            if(data->Element.Type == Cycle)
+//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Cycle.txt");
+//            else if(data->Element.Type == RightAngle)
+//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"RightAngle.txt");
+//            else if(data->Element.Type == Cross)
+//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Cross.txt");
+//            else if(data->h_bias >= 20.0 && data->v_bias >= 20.0)
+//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Corner.txt");
+//            else if(data->h_bias <= 20.0 && data->v_bias <= 20.0)
+//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Straight.txt");
+//            else
+//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Other.txt");
 
             RecordFlags = false;
 

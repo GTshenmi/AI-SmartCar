@@ -29,7 +29,9 @@ float NeuralNetworkCalAngle(void *argv)
 
     sint16_t *angle = NNForWardReasoning(NULL,data->SESensor_SampleValue,0);
 
-    return ((*angle) >> (14 - 10 - 1) ) * 1.1;
+    float res = ((*angle) >> (14 - 10 - 1) ) * 1.0;
+
+    return 0.98 * exp(0.0025 * fabs(res)) * res;
 }
 
 /*

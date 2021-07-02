@@ -57,11 +57,11 @@ float ElementDetermine(void *argv)
         //DebugBeepOff;
     }
 
-    if(loseLineCnt >= 1500)
-    {
-        Motor.Break(Motor.Self);
-        Servo.Break(Servo.Self);
-    }
+//    if(loseLineCnt >= 1500)
+//    {
+//        Motor.Break(Motor.Self);
+//        Servo.Break(Servo.Self);
+//    }
 //    else
 //    {
 //
@@ -175,6 +175,8 @@ void Cycle_Handler(data_t *data)
                 //Console.WriteLine("[Error]:CC_Err(%f)",data->Element.Exception.Info[Cycle][Cycle]);
                 cycleState = CC_Wait;
             }
+
+            cycleState = CC_Wait;
 
             break;
 

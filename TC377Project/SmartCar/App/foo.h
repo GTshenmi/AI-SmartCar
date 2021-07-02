@@ -18,5 +18,5 @@ void ReadParameterFromSDCard(void *data);
 void SaveParameterToSDCard(void *data);
 uint SaveParameterSD(data_t *data,float *LADC_Value,float *SADC_Value,float *Angle);
 uint SaveMotorSystemInfo(float *input,float *output,uint32_t len);
-
+uint SaveSensorDataAndAngle(data_t *data,float *LADC_Value,float *SADC_Value,float *Angle,char *name);
 #endif /* APP_FOO_H_ */
