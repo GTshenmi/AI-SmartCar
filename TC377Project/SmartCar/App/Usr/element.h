@@ -35,7 +35,12 @@ inline bool Is_Ramp(data_t *data)
 
 inline bool Is_Straight(data_t *data)
 {
-    return (data->h_bias <= 20.0 && data->v_sum <= 10.0);
+    return (fabs(data->h_bias) <= 20.0 && data->v_sum <= 10.0 && data->h_sum >= 50.0);
+}
+
+inline bool Is_Corner(data_t *data)
+{
+    return (fabs(data->h_bias) >= 20.0 && data->h_sum >= 60.0 && data->v_sum >= 10.0);
 }
 
 inline bool Is_RightAngle(data_t *data)

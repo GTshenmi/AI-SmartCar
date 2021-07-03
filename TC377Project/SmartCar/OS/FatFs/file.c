@@ -115,50 +115,123 @@ uint FileSys_Read(FIL *fp,sint8_t *buf,uint n)
     return true;
 }
 
-uint FileSys_FastWrite (sint8_t *path, sint8_t *str)
-{
-    static _Bool firstOpen = 1;
-    static FIL fp;
-    char finalName[25];
+#define FileSysPathLen 40
 
-    if (firstOpen)
-    {
-        uint8_t test = 100;
+typedef struct {
+    FIL fp;
+    char fileName[FileSysPathLen];
+} File;
+
+uint FileSys_FastWrite(const sint8_t * path, sint8_t *str) {
+
+    static File file[10];
+
+    _Bool firstOpen = 1;
+    char finalName[FileSysPathLen];
+
+    int filePointer = 0;
+    while (filePointer < 10) {
+        if (file[filePointer].fileName[0]) {
+            if (!strcmp(file[filePointer].fileName, path)) {
+                firstOpen = 0;
+                break;
+            }
+        }
+        filePointer++;
+    }
+
+    if (firstOpen) {
+        char myPathBuffer[FileSysPathLen];
+        char * myPath = myPathBuffer;
+        strcpy(myPath,path);
         uint8_t res;
         char suffix[10];
-        const char * name = path;
+        const char *name = myPath;
+
+        filePointer = 0;
+        while (filePointer < 10) {
+            if (!file[filePointer].fileName[0]) {
+                break;
+            }
+            filePointer++;
+        }
+        strcpy(file[filePointer].fileName, myPath);
 
         uint8_t counter = 0;
 
-        do
-        {
-            path++;
-        }while (*path != '.');
-        strcpy(suffix, path + 1);
-        *path = '\0';
+        do {
+            myPath++;
+        } while (*myPath != '.');
+        strcpy(suffix, myPath + 1);
+        *myPath = '\0';
 
-        do
-        {
+        uint8_t test = 100;
+        do {
             sprintf(finalName, "%s-%05d.%s", name, counter++, suffix);
-            res = f_open(&fp, finalName, FA_WRITE | FA_CREATE_NEW);
-        }while (test-- && res);
+            res = f_open(&file[filePointer].fp, finalName, FA_WRITE | FA_CREATE_NEW);
+        } while (test-- && res);
 
         if (res)
-            res = f_open(&fp, path, FA_WRITE);
-        firstOpen = 0;
+            res = f_open(&file[filePointer].fp, myPath, FA_WRITE);
 
         if (res)
-            return 0;
+            return 1;
 
-        f_lseek(&fp, fp.fsize);
+        f_lseek(&file[filePointer].fp, file[filePointer].fp.fsize);
     }
 
-    uint result = f_puts(str, &fp);
+    uint result = f_puts(str, &file[filePointer].fp);
 
-    f_sync(&fp);
+    f_sync(&file[filePointer].fp);
 
     return result;
 }
+
+
+//uint FileSys_FastWrite (sint8_t *path, sint8_t *str)
+//{
+//    static _Bool firstOpen = 1;
+//    static FIL fp;
+//    char finalName[25];
+//
+//    if (firstOpen)
+//    {
+//        uint8_t test = 100;
+//        uint8_t res;
+//        char suffix[10];
+//        const char * name = path;
+//
+//        uint8_t counter = 0;
+//
+//        do
+//        {
+//            path++;
+//        }while (*path != '.');
+//        strcpy(suffix, path + 1);
+//        *path = '\0';
+//
+//        do
+//        {
+//            sprintf(finalName, "%s-%05d.%s", name, counter++, suffix);
+//            res = f_open(&fp, finalName, FA_WRITE | FA_CREATE_NEW);
+//        }while (test-- && res);
+//
+//        if (res)
+//            res = f_open(&fp, path, FA_WRITE);
+//        firstOpen = 0;
+//
+//        if (res)
+//            return 0;
+//
+//        f_lseek(&fp, fp.fsize);
+//    }
+//
+//    uint result = f_puts(str, &fp);
+//
+//    f_sync(&fp);
+//
+//    return result;
+//}
 
 uint FileSys_FastRead(sint8_t *path,sint8_t *buf,uint n)
 {

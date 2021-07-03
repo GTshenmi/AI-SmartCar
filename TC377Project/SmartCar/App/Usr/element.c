@@ -560,8 +560,6 @@ void LoseLine_Handler(data_t *data)
 //                loseLineState = LL_BackSearchLine;
 //            }
 
-
-
             break;
 
         case LL_BackSearchLine:

@@ -29,6 +29,35 @@ void SmartCarSysDataReport(void *data)
 bool StartRecord = false;
 bool FinRecord = false;
 
+void SmartCarSysDataSave(data_t *data)
+{
+    extern bool RecordFlags;
+
+    if(RecordFlags && data->CarState)
+    {
+        if(!data->IsAddNoise)
+        {
+            if(data->Element.Type == Cycle)
+                SaveSensorDataAndAngle(data,"Cycle/Cycle.txt");
+            else if(data->Element.Type == RightAngle)
+                SaveSensorDataAndAngle(data,"RightAngle/RightAngle.txt");
+            else if(data->Element.Type == Cross)
+                SaveSensorDataAndAngle(data,"Cross/Cross.txt");
+            else if(Is_LoseLine(data))
+                SaveSensorDataAndAngle(data,"LoseLine/LoseLine.txt");
+            else if(Is_Straight(data))
+                SaveSensorDataAndAngle(data,"Straight/Straight.txt");
+            else if(Is_Corner(data))
+                SaveSensorDataAndAngle(data,"Corner/Corner.txt");
+            else
+                SaveSensorDataAndAngle(data,"Other/Other.txt");
+
+        }
+
+        RecordFlags = false;
+    }
+}
+
 float InputPwm[SystemIdeLen];
 float OutputSpeed[SystemIdeLen];
 
@@ -82,7 +111,7 @@ void MotorSystemIdentification()
  * */
 void Core0_Main()
 {
-    extern bool RecordFlags;
+    //extern bool RecordFlags;
 
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
@@ -97,37 +126,7 @@ void Core0_Main()
 
     while(1)
     {
-        if(RecordFlags && data->CarState)
-        {
-            data->Element.Type = Cycle;
-            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
-            data->Element.Type = Cross;
-            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
-            data->Element.Type = RightAngle;
-            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
-            data->Element.Type = None;
-            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
-            data->Element.Type = None;
-            SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"None.txt");
-
-
-//            if(data->Element.Type == Cycle)
-//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Cycle.txt");
-//            else if(data->Element.Type == RightAngle)
-//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"RightAngle.txt");
-//            else if(data->Element.Type == Cross)
-//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Cross.txt");
-//            else if(data->h_bias >= 20.0 && data->v_bias >= 20.0)
-//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Corner.txt");
-//            else if(data->h_bias <= 20.0 && data->v_bias <= 20.0)
-//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Straight.txt");
-//            else
-//                SaveSensorDataAndAngle(data,data->LESensor_NormalizedValue,data->SESensor_NormalizedValue,&data->Angle,"Other.txt");
-
-            RecordFlags = false;
-
-
-        }
+        SmartCarSysDataSave(data);
 
         //Screen.WriteXLine(Screen.Self,7,"Motor Pwm Value = %d",Motor.GetPwmValue(Motor.Self));
 

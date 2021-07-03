@@ -375,11 +375,36 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 /*
  * @Brief:  舵机闭环控制函数(角度环)
  * @output: Angle：[-90(左):90(右)]
+ *
  * */
 uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc)
 {
-    //data_t *data =(data_t *) argv;
+//    data_t *data =(data_t *) argv;
 
-    return target_angle + self->PwmCentValue;
+    float angle = 0.0;
+
+//    static float last_angle = 0.0;
+//    static float current_angle = 0.0;
+//    static float da = 0.0;
+//
+//    if(data->IsAddNoise)
+//    {
+//        last_angle = current_angle;
+//        current_angle = target_angle;
+//
+//        da = current_angle - last_angle;
+//
+//        angle = last_angle + ConstrainFloat(da,-100.0,100.0);
+//
+//
+//    }
+//    else
+//    {
+//        angle = target_angle + self->PwmCentValue;
+//    }
+
+    angle = target_angle + self->PwmCentValue;
+
+    return (uint16_t)angle;
 }
 
