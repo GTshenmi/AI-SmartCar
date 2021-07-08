@@ -14,7 +14,7 @@ void Cycle_Handler(data_t *data);
 void Cross_Handler(data_t *data);
 void RightAngle_Handler(data_t *data);
 void Ramp_Handler(data_t *data);
-
+void Parking_Handler(data_t *data);
 
 float ElementDetermine(void *argv)
 {
@@ -108,8 +108,17 @@ void SpecialElementHandler(void *argv)
     LoseLine_Handler(data);
 
     Ramp_Handler(data);
+
+    if(Is_Dst(data))
+    {
+        Parking_Handler(data);
+    }
 }
 
+void Parking_Handler(data_t *data)
+{
+
+}
 /*坡道处理*/
 void Ramp_Handler(data_t *data)
 {
@@ -202,6 +211,26 @@ void Cycle_Handler(data_t *data)
             {
                 cycleWaitInCnt = 220;
                 cycleState = CC_WaitIn;
+
+                float sum_l,sum_r;
+
+                //cycleInCnt = 120;
+
+                //s 90 80  50  35
+                //t 80 100 320 500
+
+                sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];
+
+                sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1];
+
+                if(sum_l > sum_r)
+                {
+                    cycleDir = CC_DirLeft;
+                }
+                else
+                {
+                    cycleDir = CC_DirRight;
+                }
             }
             else
             {
@@ -263,37 +292,37 @@ void Cycle_Handler(data_t *data)
                {
                    cycleState = CC_WaitIn;
 
-                   float sum_l,sum_r;
-
-                   //cycleInCnt = 120;
-
-                   //s 90 80  50  35
-                   //t 80 100 320 500
-
-                   sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];
-
-                   sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1];
-
-                   if(sum_l > sum_r)
-                   {
-                       cycleDir = CC_DirLeft;
-                   }
-                   else
-                   {
-                       cycleDir = CC_DirRight;
-                   }
+//                   float sum_l,sum_r;
+//
+//                   //cycleInCnt = 120;
+//
+//                   //s 90 80  50  35
+//                   //t 80 100 320 500
+//
+//                   sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];
+//
+//                   sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1];
+//
+//                   if(sum_l > sum_r)
+//                   {
+//                       cycleDir = CC_DirLeft;
+//                   }
+//                   else
+//                   {
+//                       cycleDir = CC_DirRight;
+//                   }
 
                    if(cycleDir == CC_DirLeft)
                    {
                        bias = 100.0;
-
-                       cycleInCnt = (sint32_t)CycleInCntFunc(data->H_ESensorValue[0]) - ConstrainFloat(data->O_ESensorValue[0] * 0.5,0.0,25.0);
+                       cycleInCnt = 100;
+                       //cycleInCnt = (sint32_t)CycleInCntFunc(data->H_ESensorValue[0]) - ConstrainFloat(data->O_ESensorValue[0] * 0.5,0.0,25.0);
                    }
                    else
                    {
                        bias = -100.0;
-
-                       cycleInCnt = (sint32_t)CycleInCntFunc(data->H_ESensorValue[2]) - ConstrainFloat(data->O_ESensorValue[1] * 0.5,0.0,25.0);
+                       cycleInCnt = 100;
+                       //cycleInCnt = (sint32_t)CycleInCntFunc(data->H_ESensorValue[2]) - ConstrainFloat(data->O_ESensorValue[1] * 0.5,0.0,25.0);
                    }
 
                    BLED.ON(BLED.Self);
@@ -354,11 +383,11 @@ void Cycle_Handler(data_t *data)
 
             data->Is_AdjustSpeed = true;
 
-            data->Speed = 2000;
+            //data->Speed = 2000;
 
             data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
 
-            data->Bias = data->Bias * 1.05 * 0.95 + fsign(bias) * 100.0 * 0.05;
+            data->Bias = data->Bias * 0.95 + fsign(bias) * 100.0 * 0.05;
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
 
@@ -452,7 +481,6 @@ void RightAngle_Handler(data_t *data)
             RA_TRACKING:
 
             if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
-            //if(Is_RightAngle(data))
                 bias = fsign(data->v_difference) * 100.0;
 
             data->Bias = bias;
@@ -566,7 +594,6 @@ void LoseLine_Handler(data_t *data)
 
             //DebugBeepOff;
             break;
-
 
         case LL_SearchLine:
 

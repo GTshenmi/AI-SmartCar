@@ -124,6 +124,8 @@ init.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
 init.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
+init.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
+../Driver/UsrDriver/MPU9250/mpu9250.h :
 init.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 init.o :	../OS/Device/ESensor/esensor.h

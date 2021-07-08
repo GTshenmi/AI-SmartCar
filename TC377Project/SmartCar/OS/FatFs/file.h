@@ -35,7 +35,7 @@ typedef struct
     uint (*walk)(sint8_t *top,...);
     uint (*write)(FIL *fp,sint8_t *str);
 
-    uint (*fastWrite)(sint8_t *path,sint8_t *str);
+    uint (*fastWrite)(const sint8_t *path,sint8_t *str);
     uint (*fastRead)(sint8_t *path,sint8_t *buf,uint n);
 
 }file_t;

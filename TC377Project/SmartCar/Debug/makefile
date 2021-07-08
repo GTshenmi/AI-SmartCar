@@ -80,6 +80,7 @@ RM := rm -rf
 -include Libraries/Infra/Ssw/TC37A/Tricore/subdir.mk
 -include Libraries/Infra/Platform/Tricore/Compilers/subdir.mk
 -include Driver/UsrDriver/SD/subdir.mk
+-include Driver/UsrDriver/MPU9250/subdir.mk
 -include Driver/UsrDriver/LCD/subdir.mk
 -include Driver/UsrDriver/ICM20602/subdir.mk
 -include Driver/UsrDriver/EEPROM/subdir.mk

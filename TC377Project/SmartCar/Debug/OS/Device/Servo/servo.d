@@ -120,3 +120,5 @@ servo.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
 servo.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
+servo.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
+../Driver/UsrDriver/MPU9250/mpu9250.h :

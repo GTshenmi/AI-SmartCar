@@ -349,6 +349,8 @@
                                     									
                                     <listOptionValue builtIn="false" value="../OS/Device/BLE"/>
                                     									
+                                    <listOptionValue builtIn="false" value="../Driver/UsrDriver/MPU9250"/>
+                                    									
                                     <listOptionValue builtIn="false" value="../OS/Device/KEY"/>
                                     									
                                     <listOptionValue builtIn="false" value="../OS/Device/WirelessSerial"/>

@@ -41,6 +41,9 @@ typedef struct imu
     axis_t     Mag;
     attitude_t Attitude;
 
+    bool Is_Update;
+    bool Is_Init;
+
     public 
 
     uint8_t (*Init)(struct imu *self);
@@ -55,6 +58,10 @@ typedef struct imu
     attitude_t (*GetAttitude)(struct imu *self);
 
     uint8_t (*AttitudeUpdate)(struct imu *self);
+
+    void (*SetUpdateFlags)(struct imu *self,bool state);
+
+    uint8_t (*GetUpdateFlags)(struct imu *self);
 
     struct imu *Self;
 }imu_t;

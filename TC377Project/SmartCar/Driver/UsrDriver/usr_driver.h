@@ -14,5 +14,6 @@
 #include "sd.h"
 #include "fatfs_sd.h"
 #include "eeprom.h"
+#include "mpu9250.h"
 
 #endif /* DRIVER_USRDRIVER_USR_DRIVER_H_ */

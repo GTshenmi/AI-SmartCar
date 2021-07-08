@@ -122,6 +122,8 @@ Cpu1_Main.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
 Cpu1_Main.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
+Cpu1_Main.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
+../Driver/UsrDriver/MPU9250/mpu9250.h :
 Cpu1_Main.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 Cpu1_Main.o :	../OS/Device/ESensor/esensor.h

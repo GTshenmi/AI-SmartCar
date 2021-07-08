@@ -113,6 +113,10 @@ void Core0_Main()
 {
     //extern bool RecordFlags;
 
+    //Servo.SetAngle(Servo.MaxAngle);
+
+    //while(1);
+
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
@@ -182,8 +186,20 @@ void Core2_Main()
 {
     //data_t *pdata = &Data[data_pointer];
 
+    if(IMU.Is_Init)
+        TIMx.Init(&TIM_Resources[5].TIMN);
+
     while(1)
     {
+        if(IMU.Is_Init)
+        {
+            if(IMU.GetUpdateFlags(IMU.Self))
+            {
+                IMU.AttitudeUpdate(IMU.Self);
+                IMU.SetUpdateFlags(IMU.Self,false);
+            }
+        }
+
         if(os.time.getnmsFlag(20))
         {
             os.task.KeyScan(NULL,0);

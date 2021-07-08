@@ -153,6 +153,16 @@ uint8_t IMU_AttitudeUpdate(struct imu *self)
     //此处也可添加修正微调值 roll+=(float)OFFSET_ROLL
 }
 
+void IMU_SetUpdateFlags(struct imu *self,bool state)
+{
+    self->Is_Update = state;
+}
+
+uint8_t IMU_GetUpdateFlags(struct imu *self)
+{
+    return self->Is_Update;
+}
+
 uint8_t IMU_Init(struct imu *self)
 {
     uint8_t res = 127;
@@ -169,8 +179,16 @@ uint8_t IMU_Init(struct imu *self)
 
     self->GetAttitude = IMU_GetAttitude;
 
+    self->SetUpdateFlags = IMU_SetUpdateFlags;
+
+    self->GetUpdateFlags = IMU_GetUpdateFlags;
+
     if(self->__Init__ != NULL)
+    {
         res = self->__Init__(self->__InitConfig__);
+
+        self->Is_Init = true;
+    }
 
     return res;
 }

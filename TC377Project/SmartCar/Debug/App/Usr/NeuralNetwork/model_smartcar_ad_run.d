@@ -124,6 +124,8 @@ model_smartcar_ad_run.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
 model_smartcar_ad_run.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
+model_smartcar_ad_run.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
+../Driver/UsrDriver/MPU9250/mpu9250.h :
 model_smartcar_ad_run.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 model_smartcar_ad_run.o :	../OS/Device/ESensor/esensor.h

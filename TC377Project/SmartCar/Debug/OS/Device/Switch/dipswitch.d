@@ -120,5 +120,7 @@ dipswitch.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
 dipswitch.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
+dipswitch.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
+../Driver/UsrDriver/MPU9250/mpu9250.h :
 dipswitch.o :	../OS/Device/Switch/switch.h
 ../OS/Device/Switch/switch.h :

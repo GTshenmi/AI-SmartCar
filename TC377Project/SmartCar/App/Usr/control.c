@@ -15,8 +15,6 @@ void SpeedControl(void *argv)
 
     static bool is_firstsetspeed = true;
 
-    static uint32_t i = 0;
-
     if(data->CarMode == AI_Mode)            //目前匀速，可以不改
     {
         if(!data->Is_AdjustSpeed && is_firstsetspeed)
@@ -66,27 +64,45 @@ void SpeedControl(void *argv)
     }
     else if(data->CarMode == DebugMode)
     {
-        extern bool StartRecord;
+//        extern bool StartRecord;
+//
+//        extern bool FinRecord;
+//
+//        if(StartRecord)
+//        {
+//            i++;
+//
+//            if(i >= SystemIdeLen)
+//            {
+//                StartRecord = false;
+//                FinRecord = true;
+//            }
+//
+//            extern float InputPwm[SystemIdeLen];
+//            extern float OutputSpeed[SystemIdeLen];
+//
+//            OutputSpeed[i] = Motor.GetSpeed(Motor.Self);
+//
+//            Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
+//        }
+        data->Speed = 2000;
 
-        extern bool FinRecord;
 
-        if(StartRecord)
-        {
-            i++;
+        //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
 
-            if(i >= SystemIdeLen)
-            {
-                StartRecord = false;
-                FinRecord = true;
-            }
+        float formatedSpeed = 0.0;
 
-            extern float InputPwm[SystemIdeLen];
-            extern float OutputSpeed[SystemIdeLen];
+        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
 
-            OutputSpeed[i] = Motor.GetSpeed(Motor.Self);
+        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
-            Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
-        }
+        //Motor.SetPwmValue(Motor.Self,data->Speed);
+
+        //Motor.SetPwmValue(Motor.Self,3500);
+
+        Motor.SetSpeed(Motor.Self,formatedSpeed);
+
+        Motor.Update(Motor.Self);
     }
     else
     {
@@ -316,6 +332,10 @@ void AngleControl(void *argv)
         Servo.SetAngle(Servo.Self,data->Angle);
 
         Servo.Update(Servo.Self);
+    }
+    else if(data->CarMode == DebugMode)
+    {
+        Servo.SetPwmValue(Servo.Self,data->SPwmValue);
     }
     else if(data->CarMode == SAutoBoot_Mode)
     {

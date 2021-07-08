@@ -14,6 +14,11 @@
 
 #define RustAngleEN 0
 
+inline bool Is_Dst(data_t *data)
+{
+    return 0;
+}
+
 inline bool Is_RustAngle(data_t *data)
 {
     return ((((data->Ke[0] >= 10.0) and (data->Ke[6] <= -5.0)) or \
@@ -45,30 +50,18 @@ inline bool Is_Corner(data_t *data)
 
 inline bool Is_RightAngle(data_t *data)
 {
-    if(data->CarMode == LAutoBoot_Mode)
-    {
-        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
-    }
-    else
-    {
-        return  ((fabs(data->v_difference) >= 25.0) and (fabs(data->o_difference) <= 30.0)) or\
-                ((fabs(data->v_sum) >= 20.0) and (data->v_bias >= 80.0) and (data->h_bias <= 20.0));
-    }
+    return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
 }
 
 inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 {
-    //float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[1];
-
-    //(data->V_ESensorValue[0] <=10.0 && data->V_ESensorValue[1] <= 10.0) &&
-
     if(data->CarMode == LAutoBoot_Mode)
     {
         return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || data->H_ESensorValue[1] >= 30.0 || data->h_sum >= 60.0);
     }
     else
     {
-        return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 35.0) || (data->H_ESensorValue[3] >= 35.0));
+        return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[2] >= 30.0)||(data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[3] >= 30.0) || data->H_ESensorValue[1] >= 30.0 || data->h_sum >= 80.0);
     }
 
 }
@@ -101,7 +94,6 @@ inline bool Is_Cycle(data_t *data)
         h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[3] + data->H_ESensorValue[4];
 
     return ((h_sum >= 180.0) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0)) and (fabs(data->v_difference) >= 20.0));
-    //((h_sum >= 180.0) && ((data->V_ESensorValue[0] > = 15.0) || (data->V_ESensorValue[1] >= 15.0)));
 }
 
 inline bool Is_CCNormal(data_t *data,sint32_t cnt)

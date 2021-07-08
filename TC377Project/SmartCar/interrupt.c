@@ -91,6 +91,9 @@ void CCU60_CH1_IRQHandler (void)
 
     //清除中断标志
     IfxCcu6_clearInterruptStatusFlag(&MODULE_CCU60, IfxCcu6_InterruptSource_t13PeriodMatch);
+
+    if(IMU.Is_Init)
+        IMU.SetUpdateFlags(IMU.Self,true);
 }
 
 void CCU61_CH0_IRQHandler(void)

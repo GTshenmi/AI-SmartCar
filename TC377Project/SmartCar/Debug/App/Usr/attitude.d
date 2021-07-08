@@ -122,6 +122,8 @@ attitude.o :	../Driver/UsrDriver/SD/fatfs_sd.h
 ../Driver/UsrDriver/SD/fatfs_sd.h :
 attitude.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
+attitude.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
+../Driver/UsrDriver/MPU9250/mpu9250.h :
 attitude.o :	../OS/Device/device.h
 ../OS/Device/device.h :
 attitude.o :	../OS/Device/ESensor/esensor.h

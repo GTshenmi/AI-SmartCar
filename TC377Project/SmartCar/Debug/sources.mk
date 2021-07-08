@@ -36,6 +36,7 @@ Driver/UsrDriver/Camera \
 Driver/UsrDriver/EEPROM \
 Driver/UsrDriver/ICM20602 \
 Driver/UsrDriver/LCD \
+Driver/UsrDriver/MPU9250 \
 Driver/UsrDriver/SD \
 Libraries/Infra/Platform/Tricore/Compilers \
 Libraries/Infra/Ssw/TC37A/Tricore \

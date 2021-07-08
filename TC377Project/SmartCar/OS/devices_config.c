@@ -42,11 +42,19 @@ imu_t IMU =
         .Init = IMU_Init,
         .Self = &IMU,
 
-        .__Init__ = ICM20602_Init,
+        .Is_Init = false,
+
+        .__Init__ = MPU9250_Init,
         .__InitConfig__ = NULL,
-        .__ReadAcc__  = ICM20602_ReadAcc,
-        .__ReadGyro__ = ICM20602_ReadGyro,
-        .__ReadMag__ = NULL,
+        .__ReadAcc__  = MPU_Get_Accelerometer,
+        .__ReadGyro__ = MPU_Get_Gyroscope,
+        .__ReadMag__ = MPU_Get_Magnetometer,
+
+//        .__Init__ = ICM20602_Init,
+//        .__InitConfig__ = NULL,
+//        .__ReadAcc__  = ICM20602_ReadAcc,
+//        .__ReadGyro__ = ICM20602_ReadGyro,
+//        .__ReadMag__ = NULL,
 };
 capture_t Capture = /*unknow*/
 {

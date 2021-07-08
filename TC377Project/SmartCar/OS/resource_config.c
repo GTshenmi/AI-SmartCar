@@ -159,7 +159,7 @@ adc_resource_t ADC_Resources[20] =
 
 };
 
-gpio_resource_t GPIO_Resources[25] =
+gpio_resource_t GPIO_Resources[30] =
 {
         [0] = {
                .GPION = {P15_3, PIN_MODE_OUTPUT,1,false,false},
@@ -272,6 +272,16 @@ gpio_resource_t GPIO_Resources[25] =
                .GPION = {P22_3, PIN_MODE_OUTPUT,1,false,false},
                .Description = "ICM CS"
         },
+
+        // QSPI0_CLK_P20_11,QSPI0_MISO_P20_12,QSPI0_MOSI_P20_14,QSPI0_CS_P20_8
+         [25] = {
+                .GPION = {P20_11, PIN_MODE_OUTPUT,1,false,false},
+                .Description = "MPU SCL"
+         },
+         [26] = {
+                .GPION = {P20_14, PIN_MODE_OUTPUT_OD,1,false,false},
+                .Description = "MPU SDA"
+         },
 };
 
 pwm_resource_t PWM_Resources[3] =
@@ -327,7 +337,10 @@ tim_resource_t TIM_Resources[8] =
                .Description = "Interrupt Timer For Motor Control.---Managed By Core1."
         },
 
-
+        [5] = {
+               .TIMN = {CCU60,CCU6_Channel1,2000,true,true,CCU6},
+               .Description = "Interrupt Timer For IMU Update.---Managed By Core2."
+        },
 
 };
 
