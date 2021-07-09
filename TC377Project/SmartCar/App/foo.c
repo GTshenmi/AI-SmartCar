@@ -34,13 +34,13 @@ char *ElementDict[] =\
     "None",\
     "RightAngle",\
     "Cross",\
-    "Cycle"\
-    "Ramp"\
+    "Cycle",\
+    "Ramp",\
     "Lost",\
     "Straight",\
-    "Corner"\
-    "Other"\
-    "Parameter"
+    "Corner",\
+    "Other",\
+    "Parameter",
 };
 
 uint SaveSensorDataAndAngleAI(data_t *data,char *path){
@@ -63,11 +63,11 @@ uint SaveSensorDataAndAngleAI(data_t *data,char *path){
 
     bufferPointer += sprintf(bufferPointer,"%f ",data->CorAngle);
 
+    bufferPointer += sprintf(bufferPointer,"%f ",data->Speed);
+
     bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
 
-    bufferPointer += sprintf(bufferPointer," AI ");
-
-    bufferPointer += sprintf(bufferPointer,"%f E\n",data->Speed);
+    bufferPointer += sprintf(bufferPointer," AI E\n");
 
     line++;
 
@@ -101,11 +101,11 @@ uint SaveSensorDataAndAngle(data_t *data,char *path){
 
     bufferPointer += sprintf(bufferPointer,"%f ",data->Angle);
 
+    bufferPointer += sprintf(bufferPointer,"%f ",data->Speed);
+
     bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
 
-    bufferPointer += sprintf(bufferPointer," LAutoBoot ");
-
-    bufferPointer += sprintf(bufferPointer,"%f E\n",data->Speed);
+    bufferPointer += sprintf(bufferPointer," LAutoBoot E\n");
 
     //bufferPointer += sprintf(bufferPointer,"\n");
 

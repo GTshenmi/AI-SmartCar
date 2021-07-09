@@ -9,8 +9,9 @@
 adc_resource_t ADC_Resources[20] =
 {
         [0] = {
-               .ADCN = {ADC21,10000},
-               .Description = "Reversed"
+               .ADCN = {ADC27,10000},
+               .Description = "AD1"
+               //.Description = "Reversed"
         },
 
         [1] = {

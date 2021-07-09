@@ -37,6 +37,8 @@ void ParameterInit(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    data->Error = NoError;
+
     data->DynamicKp = 0.000860;
 
     data->CarState = false;

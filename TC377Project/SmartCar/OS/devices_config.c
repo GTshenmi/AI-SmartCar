@@ -113,7 +113,7 @@ esensor_t LESensor[MAX_LESENSOR_NUM] =/*ok*/ /*9 - 16 Left*/
         [6] = {
                 .Init = ESensor_Init,
                 .Self = &LESensor[6],
-                .ADCn = &ADC_Resources[4].ADCN, //AD1
+                .ADCn = &ADC_Resources[0].ADCN, //AD1
         },
 //    [0] = {
 //            .Init = ESensor_Init,

@@ -27,9 +27,13 @@ uint8_t FileSys_Init()
         if (res == 0)
         {
             f_setlabel((const TCHAR*) "0:SDCard");
-            SD.isInit = true;
         }
 
+    }
+
+    if(res == 0)
+    {
+        SD.isInit = true;
     }
 
     return res;

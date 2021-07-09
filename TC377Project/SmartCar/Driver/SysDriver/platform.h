@@ -96,7 +96,7 @@ typedef char * string;
 #define intMax INT32_MAX
 #endif
 
-#define __Reset__()
+#define __Reset__() while(1)
 
 #if defined(Chip) && (Chip == TC264 || Chip == TC377)
 #define Cpu_AcquireMutex(lock) IfxCpu_acquireMutex(lock)

@@ -9,6 +9,7 @@
 
 #define ICM20602CS(x)    GPIOx.Write(&GPIO_Resources[24].GPION,x)
 #define ICM20602CSInit() GPIOx.Init(&GPIO_Resources[24].GPION)
+#define ICM20602SPI       NULL//&SPI_Resources[2].SPIN
 
 
 #define     ICM20602_SPI_W              0x00
@@ -97,7 +98,7 @@ void icm_spi_w_reg_byte(uint8_t cmd, uint8_t val)
     dat[0] = cmd | ICM20602_SPI_W;
     dat[1] = val;
 
-    SPIx.ReadWriteBytes(&SPI_Resources[2].SPIN,dat,NULL,2,SPIx.Time_Infinite);
+    SPIx.ReadWriteBytes(ICM20602SPI,dat,NULL,2,SPIx.Time_Infinite);
     ICM20602CS(1);
 }
 
@@ -117,7 +118,7 @@ void icm_spi_r_reg_byte(uint8_t cmd, uint8_t *val)
     dat[0] = cmd | ICM20602_SPI_R;
     dat[1] = *val;
 
-    SPIx.ReadWriteBytes(&SPI_Resources[2].SPIN,dat,dat,2,SPIx.Time_Infinite);
+    SPIx.ReadWriteBytes(ICM20602SPI,dat,dat,2,SPIx.Time_Infinite);
 
     *val = dat[1];
     ICM20602CS(1);
@@ -135,7 +136,7 @@ void icm_spi_r_reg_byte(uint8_t cmd, uint8_t *val)
 void icm_spi_r_reg_bytes(uint8_t * val, uint8_t num)
 {
     ICM20602CS(0);
-    SPIx.ReadWriteBytes(&SPI_Resources[2].SPIN,val,val,num,SPIx.Time_Infinite);
+    SPIx.ReadWriteBytes(ICM20602SPI,val,val,num,SPIx.Time_Infinite);
     ICM20602CS(1);
 
 }
@@ -180,7 +181,7 @@ uint8_t ICM20602_Init(void *config)
 
     ICM20602CSInit();
 
-    SPIx.Init(&SPI_Resources[2].SPIN);
+    SPIx.Init(ICM20602SPI);
 
     uint8_t val = 0x0;
 

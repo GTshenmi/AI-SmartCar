@@ -335,7 +335,7 @@ void Cycle_Handler(data_t *data)
 
             cycleWaitInCnt--;
 
-            if(data->CarMode == LAutoBoot_Mode)
+            if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
             {
                 if(data->Ke[2] >= 5.0 || data->Ke[4] >= 5.0)
                 {

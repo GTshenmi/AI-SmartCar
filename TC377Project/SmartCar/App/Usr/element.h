@@ -83,7 +83,7 @@ inline bool Is_Cycle(data_t *data)
     else
         h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[3] + data->H_ESensorValue[4];
 
-    return ((h_sum >= 180.0) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0)) and (fabs(data->v_difference) >= 20.0));
+    return ((h_sum >= 180.0) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0) || (data->v_sum >= 20.0)) and (fabs(data->v_difference) >= 15.0));
 }
 
 inline bool Is_CCNormal(data_t *data,sint32_t cnt)

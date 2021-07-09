@@ -34,110 +34,139 @@ inline bool AICor(data_t *data)
     return fabs(data->NNOutput - data->CorAngle) >= 10.0;
 }
 
+void ErrorMsg(data_t *data,uint error)
+{
+    switch(error)
+    {
+        case 1:
+            data->UIEnable = false;
+
+            os.time.delay(0.5,s);
+
+            Screen.SetFontColor(Screen.Self,WHITE);
+            Screen.Font.Backcolor = BLUE;
+
+            Screen.Clear(Screen.Self,BLUE);
+
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2," :) System Error     ");
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"    Reason:          ");
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    SD Card Not Init.");
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"    Please Restart.  ");
+
+            __Reset__();
+
+            break;
+
+        default:
+
+            break;
+    }
+}
 void SmartCarSysDataSave(data_t *data)
 {
     extern bool RecordFlags;
 
-    if(RecordFlags && data->CarState)
+    static bool Is_Init = true;
+
+    if(!Is_Init)
     {
-        //if(!data->IsAddNoise)
+
+    }
+    else
+    {
+        if(RecordFlags && data->CarState)
         {
-            if(SD.isInit)
+            //if(!data->IsAddNoise)
             {
-                if(data->CarMode == LAutoBoot_Mode)
+                if(SD.isInit)
                 {
-                    if(data->Element.Type == Cycle)
+                    if(data->CarMode == LAutoBoot_Mode)
                     {
-                        data->Element.Point = Cycle;
-                        SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
+                        if(data->Element.Type == Cycle)
+                        {
+                            data->Element.Point = Cycle;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
+                        }
+                        else if(data->Element.Type == RightAngle)
+                        {
+                            data->Element.Point = RightAngle;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngle.txt");
+                        }
+                        else if(data->Element.Type == Cross)
+                        {
+                            data->Element.Point = Cross;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
+                        }
+                        else if(Is_LoseLine(data))
+                        {
+                            data->Element.Point = Lost;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
+                        }
+                        else if(Is_Straight(data))
+                        {
+                            data->Element.Point = Straight;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
+                        }
+                        else if(Is_Corner(data))
+                        {
+                            data->Element.Point = Corner;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
+                        }
+                        else
+                        {
+                            data->Element.Point = Other;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
+                        }
                     }
-                    else if(data->Element.Type == RightAngle)
+                    else if(data->CarMode == AI_Mode && (AICor(data)))
                     {
-                        data->Element.Point = RightAngle;
-                        SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngle.txt");
-                    }
-                    else if(data->Element.Type == Cross)
-                    {
-                        data->Element.Point = Cross;
-                        SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
-                    }
-                    else if(Is_LoseLine(data))
-                    {
-                        data->Element.Point = Lost;
-                        SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
-                    }
-                    else if(Is_Straight(data))
-                    {
-                        data->Element.Point = Straight;
-                        SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
-                    }
-                    else if(Is_Corner(data))
-                    {
-                        data->Element.Point = Corner;
-                        SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
-                    }
-                    else
-                    {
-                        data->Element.Point = Other;
-                        SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
+                        if(data->Element.Type == Cycle)
+                        {
+                            data->Element.Point = Cycle;
+                            SaveSensorDataAndAngleAI(data,"AI/Cycle/CycleAI.txt");
+                        }
+                        else if(data->Element.Type == RightAngle)
+                        {
+                            data->Element.Point = RightAngle;
+                            SaveSensorDataAndAngleAI(data,"AI/RightAngle/RightAngleAI.txt");
+                        }
+                        else if(data->Element.Type == Cross)
+                        {
+                            data->Element.Point = Cross;
+                            SaveSensorDataAndAngleAI(data,"AI/Cross/CrossAI.txt");
+                        }
+                        else if(Is_LoseLine(data))
+                        {
+                            data->Element.Point = Lost;
+                            SaveSensorDataAndAngleAI(data,"AI/LoseLine/LoseLineAI.txt");
+                        }
+                        else if(Is_Straight(data))
+                        {
+                            data->Element.Point = Straight;
+                            SaveSensorDataAndAngleAI(data,"AI/Straight/StraightAI.txt");
+                        }
+                        else if(Is_Corner(data))
+                        {
+                            data->Element.Point = Corner;
+                            SaveSensorDataAndAngleAI(data,"AI/Corner/CornerAI.txt");
+                        }
+                        else
+                        {
+                            data->Element.Point = Other;
+                            SaveSensorDataAndAngle(data,"AI/Other/OtherAI.txt");
+                        }
                     }
                 }
-                else if(data->CarMode == AI_Mode && (AICor(data)))
+                else
                 {
-                    if(data->Element.Type == Cycle)
-                    {
-                        data->Element.Point = Cycle;
-                        SaveSensorDataAndAngleAI(data,"AI/Cycle/CycleAI.txt");
-                    }
-                    else if(data->Element.Type == RightAngle)
-                    {
-                        data->Element.Point = RightAngle;
-                        SaveSensorDataAndAngleAI(data,"AI/RightAngle/RightAngleAI.txt");
-                    }
-                    else if(data->Element.Type == Cross)
-                    {
-                        data->Element.Point = Cross;
-                        SaveSensorDataAndAngleAI(data,"AI/Cross/CrossAI.txt");
-                    }
-                    else if(Is_LoseLine(data))
-                    {
-                        data->Element.Point = Lost;
-                        SaveSensorDataAndAngleAI(data,"AI/LoseLine/LoseLineAI.txt");
-                    }
-                    else if(Is_Straight(data))
-                    {
-                        data->Element.Point = Straight;
-                        SaveSensorDataAndAngleAI(data,"AI/Straight/StraightAI.txt");
-                    }
-                    else if(Is_Corner(data))
-                    {
-                        data->Element.Point = Corner;
-                        SaveSensorDataAndAngleAI(data,"AI/Corner/CornerAI.txt");
-                    }
-                    else
-                    {
-                        data->Element.Point = Other;
-                        SaveSensorDataAndAngle(data,"AI/Other/OtherAI.txt");
-                    }
+                    Is_Init = false;
+                    data->Error = FileSysInitError;
                 }
-            }
-            else
-            {
-                data->UIEnable = false;
-                Screen.Clear(Screen.Self,BLUE);
-                Screen.SetFontColor(Screen.Self,WHITE);
 
-                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2,"  :) System Error     ");
-                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"     Reason:          ");
-                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"     SD Card Not Init.");
-                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"     Please Restart.  ");
-
-                __Reset__();
             }
 
+            RecordFlags = false;
         }
-
-        RecordFlags = false;
     }
 }
 
@@ -214,6 +243,8 @@ void Core0_Main()
     while(1)
     {
         SmartCarSysDataSave(data);
+
+        ErrorMsg(data,data->Error);
 
         //Screen.WriteXLine(Screen.Self,7,"Motor Pwm Value = %d",Motor.GetPwmValue(Motor.Self));
 

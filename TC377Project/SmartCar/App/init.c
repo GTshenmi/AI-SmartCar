@@ -130,11 +130,9 @@ void Core0_HardWareInit()
 
     /*950 690 430*/
 
-    Servo.SetAngleLimit(Servo.Self,260.0,-260.0);
+    Servo.SetAngleLimit(Servo.Self,210.0,-210.0);
 
-    Servo.SetPwmCentValue(Servo.Self,690);
-
-
+    Servo.SetPwmCentValue(Servo.Self,720);
 
     Servo.Start(Servo.Self);
     Servo.SetAngle(Servo.Self,0);

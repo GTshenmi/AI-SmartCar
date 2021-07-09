@@ -278,10 +278,21 @@ void AngleControl(void *argv)
 
         data->CorAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
 
-        /*舵机设置角度*/
-        Servo.SetAngle(Servo.Self,data->Angle);         
+        /*十字采集纠正 , 不开启:AI模式数据不对*/
+//        if(data->Element.Type == Cross)
+//        {
+//            /*舵机设置角度*/
+//            Servo.SetAngle(Servo.Self,data->CorAngle);
+//
+//            Servo.Update(Servo.Self);
+//        }
+//        else
+        {
+            /*舵机设置角度*/
+            Servo.SetAngle(Servo.Self,data->Angle);
 
-        Servo.Update(Servo.Self);
+            Servo.Update(Servo.Self);
+        }
 
 
     }

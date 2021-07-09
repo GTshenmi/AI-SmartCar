@@ -29,6 +29,11 @@
         }                           \
     }while(0);
 
+typedef enum
+{
+    NoError = 0,
+    FileSysInitError,
+}err_t;
 /* ¶ªÏß Begin*/
 typedef enum
 {
@@ -254,6 +259,8 @@ typedef struct
       queue_t OBiasQueue;
 
       /*State*/
+
+      err_t Error;
 
       bool UIEnable;
 

@@ -30,6 +30,6 @@ typedef struct
 
 extern console_t Console;
 
-void ErrorMsg(const char *fmt,...);
+//void ErrorMsg(const char *fmt,...);
 
 #endif /* OS_DEBUG_CONSOLE_H_ */
