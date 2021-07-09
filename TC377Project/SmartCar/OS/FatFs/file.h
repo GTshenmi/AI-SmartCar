@@ -21,6 +21,7 @@ typedef struct
 
 typedef struct
 {
+    uint8_t isInit;
     uint8_t (*init)(void);
     uint (*close)(FIL *fp);
     void (*getcwd)(void);

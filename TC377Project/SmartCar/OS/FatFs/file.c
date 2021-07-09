@@ -27,9 +27,11 @@ uint8_t FileSys_Init()
         if (res == 0)
         {
             f_setlabel((const TCHAR*) "0:SDCard");
+            SD.isInit = true;
         }
 
     }
+
     return res;
 }
 
@@ -115,7 +117,7 @@ uint FileSys_Read(FIL *fp,sint8_t *buf,uint n)
     return true;
 }
 
-#define FileSysPathLen 40
+#define FileSysPathLen 50
 
 typedef struct {
     FIL fp;
@@ -271,6 +273,7 @@ uint FileSys_CreateFile(sint8_t *path,sint8_t *file)
 }
 
 file_t SD = {
+        .isInit = false,
         .init = FileSys_Init,
         .open = FileSys_Open,
         .close = FileSys_Close,

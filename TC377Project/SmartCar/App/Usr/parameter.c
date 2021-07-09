@@ -41,6 +41,8 @@ void ParameterInit(void *argv)
 
     data->CarState = false;
 
+    data->UIEnable = true;
+
     data->TrackingState = Normal_Tracking;
 
     data->Is_AdjustAngle = false;

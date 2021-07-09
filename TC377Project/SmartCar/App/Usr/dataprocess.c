@@ -56,7 +56,11 @@ void ESensorDataAnalysis(void *argv)
 
     if(data->CarMode == AI_Mode)
     {
+        data->Bias = CalculateBiasLABM(data);
 
+        Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
+
+        LinearFit(data,CData.MaxLADCDeviceNum);
     }
     else if(data->CarMode == LAutoBoot_Mode)
     {
@@ -89,12 +93,12 @@ void ESensorDataAnalysis(void *argv)
     Queue.Puts(&data->VBiasQueue,&data->v_bias,0,1);
     Queue.Puts(&data->OBiasQueue,&data->o_bias,0,1);
 
-    if(data->CarMode != AI_Mode)
-    {
+//    if(data->CarMode != AI_Mode)
+//    {
         ElementDetermine(data);
 
         SpecialElementHandler(data);
-    }
+//    }
 
     //if(RecordFlags == false)
     RecordFlags = true;

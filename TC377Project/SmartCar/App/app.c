@@ -29,28 +29,111 @@ void SmartCarSysDataReport(void *data)
 bool StartRecord = false;
 bool FinRecord = false;
 
+inline bool AICor(data_t *data)
+{
+    return fabs(data->NNOutput - data->CorAngle) >= 10.0;
+}
+
 void SmartCarSysDataSave(data_t *data)
 {
     extern bool RecordFlags;
 
     if(RecordFlags && data->CarState)
     {
-        if(!data->IsAddNoise)
+        //if(!data->IsAddNoise)
         {
-            if(data->Element.Type == Cycle)
-                SaveSensorDataAndAngle(data,"Cycle/Cycle.txt");
-            else if(data->Element.Type == RightAngle)
-                SaveSensorDataAndAngle(data,"RightAngle/RightAngle.txt");
-            else if(data->Element.Type == Cross)
-                SaveSensorDataAndAngle(data,"Cross/Cross.txt");
-            else if(Is_LoseLine(data))
-                SaveSensorDataAndAngle(data,"LoseLine/LoseLine.txt");
-            else if(Is_Straight(data))
-                SaveSensorDataAndAngle(data,"Straight/Straight.txt");
-            else if(Is_Corner(data))
-                SaveSensorDataAndAngle(data,"Corner/Corner.txt");
+            if(SD.isInit)
+            {
+                if(data->CarMode == LAutoBoot_Mode)
+                {
+                    if(data->Element.Type == Cycle)
+                    {
+                        data->Element.Point = Cycle;
+                        SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
+                    }
+                    else if(data->Element.Type == RightAngle)
+                    {
+                        data->Element.Point = RightAngle;
+                        SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngle.txt");
+                    }
+                    else if(data->Element.Type == Cross)
+                    {
+                        data->Element.Point = Cross;
+                        SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
+                    }
+                    else if(Is_LoseLine(data))
+                    {
+                        data->Element.Point = Lost;
+                        SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
+                    }
+                    else if(Is_Straight(data))
+                    {
+                        data->Element.Point = Straight;
+                        SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
+                    }
+                    else if(Is_Corner(data))
+                    {
+                        data->Element.Point = Corner;
+                        SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
+                    }
+                    else
+                    {
+                        data->Element.Point = Other;
+                        SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
+                    }
+                }
+                else if(data->CarMode == AI_Mode && (AICor(data)))
+                {
+                    if(data->Element.Type == Cycle)
+                    {
+                        data->Element.Point = Cycle;
+                        SaveSensorDataAndAngleAI(data,"AI/Cycle/CycleAI.txt");
+                    }
+                    else if(data->Element.Type == RightAngle)
+                    {
+                        data->Element.Point = RightAngle;
+                        SaveSensorDataAndAngleAI(data,"AI/RightAngle/RightAngleAI.txt");
+                    }
+                    else if(data->Element.Type == Cross)
+                    {
+                        data->Element.Point = Cross;
+                        SaveSensorDataAndAngleAI(data,"AI/Cross/CrossAI.txt");
+                    }
+                    else if(Is_LoseLine(data))
+                    {
+                        data->Element.Point = Lost;
+                        SaveSensorDataAndAngleAI(data,"AI/LoseLine/LoseLineAI.txt");
+                    }
+                    else if(Is_Straight(data))
+                    {
+                        data->Element.Point = Straight;
+                        SaveSensorDataAndAngleAI(data,"AI/Straight/StraightAI.txt");
+                    }
+                    else if(Is_Corner(data))
+                    {
+                        data->Element.Point = Corner;
+                        SaveSensorDataAndAngleAI(data,"AI/Corner/CornerAI.txt");
+                    }
+                    else
+                    {
+                        data->Element.Point = Other;
+                        SaveSensorDataAndAngle(data,"AI/Other/OtherAI.txt");
+                    }
+                }
+            }
             else
-                SaveSensorDataAndAngle(data,"Other/Other.txt");
+            {
+                data->UIEnable = false;
+                Screen.Clear(Screen.Self,BLUE);
+                Screen.SetFontColor(Screen.Self,WHITE);
+
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2,"  :) System Error     ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"     Reason:          ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"     SD Card Not Init.");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"     Please Restart.  ");
+
+                __Reset__();
+            }
 
         }
 
@@ -171,9 +254,12 @@ void Core1_Main()
 {
     TIMx.Init(&TIM_Resources[4].TIMN);
 
+    data_t *data = &Data[data_pointer];
+
     while(1)
     {
-        os.task.UiUpdate(&UIData,sizeof(UIData));
+        if(data->UIEnable)
+            os.task.UiUpdate(&UIData,sizeof(UIData));
         Core1_CheckStatus();
     }
 }
@@ -184,7 +270,7 @@ void Core1_Main()
  * */
 void Core2_Main()
 {
-    //data_t *pdata = &Data[data_pointer];
+    data_t *data = &Data[data_pointer];
 
     if(IMU.Is_Init)
         TIMx.Init(&TIM_Resources[5].TIMN);
@@ -202,7 +288,9 @@ void Core2_Main()
 
         if(os.time.getnmsFlag(20))
         {
-            os.task.KeyScan(NULL,0);
+            if(data->UIEnable)
+                os.task.KeyScan(NULL,0);
+
             os.task.SoftTimerUpdate(NULL,0);
             os.task.DebugConsole(NULL,0);
         }
@@ -254,21 +342,26 @@ void Core0_CheckStatus()
 {
     static uint times = 0;
 
-    times++;
-    if(times % 3 == 0)
+    data_t *data = &Data[data_pointer];
+
+    if(data->UIEnable)
     {
-        Screen.ClearLine(Screen.Self,16,WHITE);
-        Screen.WriteXLine(Screen.Self,16,"Core0 Running.");
-    }
-    else if(times % 3 == 1)
-    {
-        Screen.ClearLine(Screen.Self,16,WHITE);
-        Screen.WriteXLine(Screen.Self,16,"Core0 Running..");
-    }
-    else
-    {
-        Screen.ClearLine(Screen.Self,16,WHITE);
-        Screen.WriteXLine(Screen.Self,16,"Core0 Running...");
+        times++;
+        if(times % 3 == 0)
+        {
+            Screen.ClearLine(Screen.Self,16,WHITE);
+            Screen.WriteXLine(Screen.Self,16,"Core0 Running.");
+        }
+        else if(times % 3 == 1)
+        {
+            Screen.ClearLine(Screen.Self,16,WHITE);
+            Screen.WriteXLine(Screen.Self,16,"Core0 Running..");
+        }
+        else
+        {
+            Screen.ClearLine(Screen.Self,16,WHITE);
+            Screen.WriteXLine(Screen.Self,16,"Core0 Running...");
+        }
     }
 }
 
@@ -276,21 +369,26 @@ void Core1_CheckStatus()
 {
     static uint times = 0;
 
-    times++;
-    if(times % 3 == 0)
+    data_t *data = &Data[data_pointer];
+
+    if(data->UIEnable)
     {
-        Screen.ClearLine(Screen.Self,17,WHITE);
-        Screen.WriteXLine(Screen.Self,17,"Core1 Running.");
-    }
-    else if(times % 3 == 1)
-    {
-        Screen.ClearLine(Screen.Self,17,WHITE);
-        Screen.WriteXLine(Screen.Self,17,"Core1 Running..");
-    }
-    else
-    {
-        Screen.ClearLine(Screen.Self,17,WHITE);
-        Screen.WriteXLine(Screen.Self,17,"Core1 Running...");
+        times++;
+        if(times % 3 == 0)
+        {
+            Screen.ClearLine(Screen.Self,17,WHITE);
+            Screen.WriteXLine(Screen.Self,17,"Core1 Running.");
+        }
+        else if(times % 3 == 1)
+        {
+            Screen.ClearLine(Screen.Self,17,WHITE);
+            Screen.WriteXLine(Screen.Self,17,"Core1 Running..");
+        }
+        else
+        {
+            Screen.ClearLine(Screen.Self,17,WHITE);
+            Screen.WriteXLine(Screen.Self,17,"Core1 Running...");
+        }
     }
 }
 
@@ -298,20 +396,25 @@ void Core2_CheckStatus()
 {
     static uint times = 0;
 
-    times++;
-    if(times % 3 == 0)
+    data_t *data = &Data[data_pointer];
+
+    if(data->UIEnable)
     {
-        Screen.ClearLine(Screen.Self,18,WHITE);
-        Screen.WriteXLine(Screen.Self,18,"Core2 Running.");
-    }
-    else if(times % 3 == 1)
-    {
-        Screen.ClearLine(Screen.Self,18,WHITE);
-        Screen.WriteXLine(Screen.Self,18,"Core2 Running..");
-    }
-    else
-    {
-        Screen.ClearLine(Screen.Self,18,WHITE);
-        Screen.WriteXLine(Screen.Self,18,"Core2 Running...");
+        times++;
+        if(times % 3 == 0)
+        {
+            Screen.ClearLine(Screen.Self,18,WHITE);
+            Screen.WriteXLine(Screen.Self,18,"Core2 Running.");
+        }
+        else if(times % 3 == 1)
+        {
+            Screen.ClearLine(Screen.Self,18,WHITE);
+            Screen.WriteXLine(Screen.Self,18,"Core2 Running..");
+        }
+        else
+        {
+            Screen.ClearLine(Screen.Self,18,WHITE);
+            Screen.WriteXLine(Screen.Self,18,"Core2 Running...");
+        }
     }
 }

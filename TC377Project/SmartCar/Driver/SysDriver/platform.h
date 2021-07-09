@@ -23,7 +23,7 @@
 #define TC264 0
 #define TC377 1
 #define RT1064 2
-#define Other -1
+#define OtherChip -1
 
 #define Chip TC377
 
@@ -95,6 +95,8 @@ typedef char * string;
 #ifndef intMax
 #define intMax INT32_MAX
 #endif
+
+#define __Reset__()
 
 #if defined(Chip) && (Chip == TC264 || Chip == TC377)
 #define Cpu_AcquireMutex(lock) IfxCpu_acquireMutex(lock)

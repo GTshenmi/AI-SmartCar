@@ -20,18 +20,13 @@ float NeuralNetworkCalAngle(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-//    uint16_t sESensorData[MAX_SESENSOR_NUM];
-//
-//    for(int i = 0 ; i < MAX_SESENSOR_NUM ; i++)
-//    {
-//        sESensorData[i] = (uint16_t)data->SESensor_NormalizedValue[i];
-//    }
-
     sint16_t *angle = NNForWardReasoning(NULL,data->SESensor_SampleValue,0);
 
     float res = ((*angle) >> (14 - 10 - 1) ) * 1.0;
 
-    return 0.98 * exp(0.0025 * fabs(res)) * res;
+    data->NNOutput = res;
+
+    return 1.25 * exp(0.0012 * fabs(res)) * res;
 }
 
 /*

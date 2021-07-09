@@ -233,9 +233,7 @@ void HowToNameThisFunc(data_t *data)
             {
 
                 data->IsAddNoise = false;
-                //Servo.WakeUp(Servo.Self);
 
-                //if(Is_Straight(data))
                 if((data->h_bias <= 20.0 && data->v_sum <= 10.0))
                 {
                     trackingstate = NormalTrackingStraight;
@@ -275,59 +273,24 @@ void AngleControl(void *argv)
         
         data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
 
+        if(!data->Is_AdjustAngle)
+            data->CorAngle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
+
+        data->CorAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+
         /*¶æ»úÉèÖÃ½Ç¶È*/
         Servo.SetAngle(Servo.Self,data->Angle);         
 
         Servo.Update(Servo.Self);
+
+
     }
     else if(data->CarMode == LAutoBoot_Mode)
     {
-
-    //    if(fabs(data->h_bias) >= 20.0 || data->v_bias >= 30.0)
-    //        data->S_PID.Kp = 0.8 + data->Bias * data->Bias * data->DynamicKp;
-    //    else
-    //        data->S_PID.Kp = 0.8;
-    //
-    //    if(data->S_PID.Kp > 2.227)
-    //        data->S_PID.Kp = 2.227;
-    //
-    //    if(data->Element.Type != None)
-    //        data->S_PID.Kp = 2.227;
-    //    PID_Ctrl(&data->S_PID,0.0,data->Bias);
-
-    //    data->Angle = data->S_PID.Result;
-    //    data->Angle = (sint16_t)(FIR_Filter(Ka,angle,data->S_PID.Result,5));
-
-//        if(setTime >= -1.0)
-//            setTime -= 1.0;
-
-//        if(Servo.GetState(Servo.Self) == Servo_Sleeping)
-//        {
-//            if(setTime <= 0.0)
-//            {
-//                Servo.WakeUp(Servo.Self);
-//            }
-//        }
-//        else if(Servo.GetState(Servo.Self) == Servo_Running)
-//        {
-//            sleepTime = random(0.0,3.0) * 500.0;
-//
-//            setTime = sleepTime;
-//
-//            Servo.Sleep(Servo.Self);
-//        }
-
         if(!data->Is_AdjustAngle)
             data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
 
         data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
-
-        //Servo.SetPwmValue(Servo.Self,data->SPwmValue);
-
-        //Servo.SetPwmValue(Servo.Self,750);
-
-        //if(data->Element.Type != RightAngle)
-        //    HowToNameThisFunc(data);
 
         Servo.SetAngle(Servo.Self,data->Angle);
 

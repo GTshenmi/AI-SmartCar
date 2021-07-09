@@ -119,6 +119,10 @@ typedef enum
     Cross,      //十字
     Cycle,
     Ramp,
+    Lost,
+    Straight,
+    Corner,
+    Other
 }element_t;
 
 typedef enum
@@ -151,6 +155,7 @@ typedef struct
 {
     uint Type;
     element_exception_t Exception;
+    uint Point;
     bool Lock;
 }elementwlock_t;
 
@@ -194,8 +199,11 @@ typedef struct
 
       uint16_t SPwmValue;
 
+      float NNOutput;
+
       bool Is_AdjustAngle;
       float Angle;        /*角度*/
+      float CorAngle;
 
       uint16_t LESensor_SampleValue[MAX_LESENSOR_NUM]; /*ADC值*/
       uint16_t SESensor_SampleValue[MAX_SESENSOR_NUM]; /*ADC值*/
@@ -246,6 +254,8 @@ typedef struct
       queue_t OBiasQueue;
 
       /*State*/
+
+      bool UIEnable;
 
       bool NeedToBack;
 

@@ -29,7 +29,54 @@ uint SaveMotorSystemInfo(float *input,float *output,uint32_t len)
     return 0;
 }
 
+char *ElementDict[] =\
+{
+    "None",\
+    "RightAngle",\
+    "Cross",\
+    "Cycle"\
+    "Ramp"\
+    "Lost",\
+    "Straight",\
+    "Corner"\
+    "Other"\
+    "Parameter"
+};
 
+uint SaveSensorDataAndAngleAI(data_t *data,char *path){
+
+    char buffer[100];
+    char* bufferPointer = buffer;
+
+    static uint32_t line = 0;
+
+    bufferPointer += sprintf(bufferPointer,"S %lu S ",line);
+
+//    for(uint8_t i = 0;i < MAX_LESENSOR_NUM;i++){
+//        bufferPointer += sprintf(bufferPointer,"%f ",LADC_Value[i]);
+//    }
+//    bufferPointer += sprintf(bufferPointer,"\n");
+
+    for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
+        bufferPointer += sprintf(bufferPointer,"%f ",data->SESensor_NormalizedValue[i]);
+    }
+
+    bufferPointer += sprintf(bufferPointer,"%f ",data->CorAngle);
+
+    bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
+
+    bufferPointer += sprintf(bufferPointer," AI ");
+
+    bufferPointer += sprintf(bufferPointer,"%f E\n",data->Speed);
+
+    line++;
+
+    uint res = 0;
+
+    res = SD.fastWrite(path,buffer);
+
+    return res;
+}
 
 uint SaveSensorDataAndAngle(data_t *data,char *path){
 
@@ -53,6 +100,10 @@ uint SaveSensorDataAndAngle(data_t *data,char *path){
     //bufferPointer += sprintf(bufferPointer,"%f E\n",*Angle);
 
     bufferPointer += sprintf(bufferPointer,"%f ",data->Angle);
+
+    bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
+
+    bufferPointer += sprintf(bufferPointer," LAutoBoot ");
 
     bufferPointer += sprintf(bufferPointer,"%f E\n",data->Speed);
 
