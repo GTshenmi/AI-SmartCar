@@ -6,6 +6,8 @@
  */
 #include "eeprom.h"
 
+#define MAX_SECTION_LENGTH 1024
+#define MAX_PAGE_LENGTH 12
 
 /*************************************************************************
 *  函数名称：void EEPROM_EraseSector(unsigned char sector)
@@ -100,16 +102,16 @@ void EEPROM_Write(unsigned char sector, unsigned short page, unsigned long * buf
 
 
 /*************************************************************************
-*  函数名称：void EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuff, unsigned short len)
-*  功能说明：eeprom读取
-*  参数说明：
-  * @param    sector   ：  扇区   范围  0-11
-  * @param    page     ：  页     范围  0-1023
-  * @param    buff     ：  存放写入数据
-  * @param    len      ：  写入数据个数
-*  函数返回：无
-*  修改时间：2020年3月10日
-*  备    注：EEPROM_Read(0, 0, u32rBuff, 24);   //读取扇区0  第0页  开始的24个unsigned long数据
+ *  函数名称：void EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuff, unsigned short len)
+ *  功能说明：eeprom读取
+ *  参数说明：
+ * @param    sector   ：  扇区   范围  0-11
+ * @param    page     ：  页     范围  0-1023
+ * @param    buff     ：  存放写入数据
+ * @param    len      ：  写入数据个数
+ *  函数返回：无
+ *  修改时间：2020年3月10日
+ *  备    注：EEPROM_Read(0, 0, u32rBuff, 24);   //读取扇区0  第0页  开始的24个unsigned long数据
 *************************************************************************/
 void EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuff, unsigned short len)
 {
@@ -135,7 +137,7 @@ void EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuf
  * */
 uint8_t EEPROM_WriteSector(uint32_t sector, uint32_t page, uint8_t * buff, uint32_t len)
 {
-    uint32_t writebuf[128];
+    uint32_t writebuf[MAX_PAGE_LENGTH];
     uint32_t writelen = len / 4 + 1;
 
   //  uint32_t i;
@@ -155,7 +157,7 @@ uint8_t EEPROM_WriteSector(uint32_t sector, uint32_t page, uint8_t * buff, uint3
  * */
 uint8_t EEPROM_ReadSector(uint32_t sector, uint32_t page, uint8_t * buff, uint32_t len)
 {
-    uint32_t readbuf[128];
+    uint32_t readbuf[MAX_PAGE_LENGTH];
     uint32_t readlen = len / 4 + 1;
 
    // int i;
@@ -171,4 +173,46 @@ uint8_t EEPROM_ReadSector(uint32_t sector, uint32_t page, uint8_t * buff, uint32
 uint32_t EEPROM_GetSectorNum(void)
 {
     return 12;
+}
+
+void* EEPROMGetData(uint32_t dataLocation,void * dataPointer) {
+	uint32_t readBuffer[MAX_SECTION_LENGTH];
+	EEPROM_Read(0, 0, readBuffer, MAX_SECTION_LENGTH);
+	*(uint32_t *)dataPointer = readBuffer[dataLocation];
+	return dataPointer;
+}
+
+
+void EEPROMSetData(uint32_t dataLocation, void * data) {
+	uint32_t readBuffer[MAX_SECTION_LENGTH];
+	EEPROM_Read(0, 0, readBuffer, MAX_SECTION_LENGTH);
+	readBuffer[dataLocation] = *(uint32_t*)data;
+
+	EEPROM_EraseSector(0);
+	EEPROM_Write(0,0,readBuffer,MAX_SECTION_LENGTH);
+}
+
+
+#define TRY_LENGTH 1024
+void TryEEPROM(void){
+	uint32_t readBuffer[TRY_LENGTH];
+	EEPROM_Read(0, 0, readBuffer, TRY_LENGTH);
+	for (int i = 0; i < TRY_LENGTH; ++i) {
+		printf("%d:%lu ",i,readBuffer[i]);
+	}
+	printf("\n");
+
+	memset(readBuffer,0,TRY_LENGTH);
+	for (int i = 0; i < TRY_LENGTH; ++i) {
+		readBuffer[i] = i+2;
+	}
+	EEPROM_EraseSector(0);
+	EEPROM_Write(0,0,readBuffer,TRY_LENGTH);
+
+	memset(readBuffer,0,TRY_LENGTH);
+	EEPROM_Read(0, 0, readBuffer, TRY_LENGTH);
+	for (int i = 0; i < TRY_LENGTH; ++i) {
+		printf("%d:%lu ",i,readBuffer[i]);
+	}
+	printf("\n");
 }

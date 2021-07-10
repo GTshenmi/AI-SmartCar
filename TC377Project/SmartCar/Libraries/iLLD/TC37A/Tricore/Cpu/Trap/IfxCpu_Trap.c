@@ -172,10 +172,21 @@ void IfxCpu_Trap_contextManagementError(uint32 tin)
 
 void IfxCpu_Trap_busError(uint32 tin)
 {
+//    extern void *app_data_pointer;
+//    extern void ErrorMsg(void *,unsigned int);
+
+//    volatile static unsigned int first_in = 0;
+
     volatile IfxCpu_Trap trapWatch;
     trapWatch = IfxCpu_Trap_extractTrapInfo(IfxCpu_Trap_Class_bus, tin);
     IFX_CFG_CPU_TRAP_BE_HOOK(trapWatch);
     IFX_CFG_CPU_TRAP_DEBUG;
+
+//    if(first_in >= 1)
+//        ErrorMsg(app_data_pointer,2/*BusError*/);
+//
+//    first_in++;
+
     __asm("rslcx"); /* Restore lower context before returning. lower context was stored in the trap vector */
     __asm("rfe");
 }

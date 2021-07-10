@@ -33,6 +33,8 @@ typedef enum
 {
     NoError = 0,
     FileSysInitError,
+    BusError,
+
 }err_t;
 /* 丢线 Begin*/
 typedef enum
@@ -208,7 +210,9 @@ typedef struct
 
       bool Is_AdjustAngle;
       float Angle;        /*角度*/
+
       float CorAngle;
+      float AIAngle;
 
       uint16_t LESensor_SampleValue[MAX_LESENSOR_NUM]; /*ADC值*/
       uint16_t SESensor_SampleValue[MAX_SESENSOR_NUM]; /*ADC值*/

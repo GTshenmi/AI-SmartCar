@@ -42,8 +42,9 @@ inline bool Is_RightAngle(data_t *data)
     }
     else
     {
-        return  ((fabs(data->v_difference) >= 25.0) and (fabs(data->o_difference) <= 30.0))||\
-                ((fabs(data->v_sum) >= 20.0) and (data->v_bias >= 80.0) and (data->h_bias <= 20.0));
+        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
+//        return  ((fabs(data->v_difference) >= 25.0) and (fabs(data->o_difference) <= 30.0))||\
+//                ((fabs(data->v_sum) >= 20.0) and (data->v_bias >= 80.0) and (data->h_bias <= 20.0));
     }
 }
 

@@ -61,13 +61,15 @@ uint SaveSensorDataAndAngleAI(data_t *data,char *path){
         bufferPointer += sprintf(bufferPointer,"%f ",data->SESensor_NormalizedValue[i]);
     }
 
-    bufferPointer += sprintf(bufferPointer,"%f ",data->CorAngle);
+    float angle =   (data->CorAngle / Servo.MaxAngle);
+
+    bufferPointer += sprintf(bufferPointer,"%f ",angle);
 
     bufferPointer += sprintf(bufferPointer,"%f ",data->Speed);
 
     bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
 
-    bufferPointer += sprintf(bufferPointer," AI E\n");
+    bufferPointer += sprintf(bufferPointer," AI E \n");
 
     line++;
 
@@ -95,17 +97,20 @@ uint SaveSensorDataAndAngle(data_t *data,char *path){
     for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
         bufferPointer += sprintf(bufferPointer,"%f ",data->SESensor_NormalizedValue[i]);
     }
+
     //bufferPointer += sprintf(bufferPointer,"\n");
 
     //bufferPointer += sprintf(bufferPointer,"%f E\n",*Angle);
 
-    bufferPointer += sprintf(bufferPointer,"%f ",data->Angle);
+    float angle =   (data->Angle / Servo.MaxAngle);
+
+    bufferPointer += sprintf(bufferPointer,"%f ",angle);
 
     bufferPointer += sprintf(bufferPointer,"%f ",data->Speed);
 
     bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
 
-    bufferPointer += sprintf(bufferPointer," LAutoBoot E\n");
+    bufferPointer += sprintf(bufferPointer," LAutoBoot E \n");
 
     //bufferPointer += sprintf(bufferPointer,"\n");
 

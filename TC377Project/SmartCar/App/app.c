@@ -34,11 +34,14 @@ inline bool AICor(data_t *data)
     return fabs(data->NNOutput - data->CorAngle) >= 10.0;
 }
 
-void ErrorMsg(data_t *data,uint error)
+void ErrorMsg(void *argv,uint error)
 {
+    data_t *data = (data_t *)argv;
+
     switch(error)
     {
-        case 1:
+        case FileSysInitError:
+
             data->UIEnable = false;
 
             os.time.delay(0.5,s);
@@ -50,11 +53,30 @@ void ErrorMsg(data_t *data,uint error)
 
             Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2," :) System Error     ");
             Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"    Reason:          ");
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    SD Card Not Init.");
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    File Sys Not Init.");
             Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"    Please Restart.  ");
 
             __Reset__();
 
+            break;
+
+        case BusError:
+
+            data->Error = BusError;
+
+            data->UIEnable = false;
+
+            Screen.SetFontColor(Screen.Self,WHITE);
+            Screen.Font.Backcolor = BLUE;
+
+            Screen.Clear(Screen.Self,BLUE);
+            Screen.Clear(Screen.Self,BLUE);
+            Screen.Clear(Screen.Self,BLUE);
+
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2," :) System Error     ");
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"    Reason:          ");
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    Bus Error.       ");
+            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"    Please Restart.  ");
             break;
 
         default:
@@ -246,20 +268,22 @@ void Core0_Main()
 
         ErrorMsg(data,data->Error);
 
-        //Screen.WriteXLine(Screen.Self,7,"Motor Pwm Value = %d",Motor.GetPwmValue(Motor.Self));
+//        data->UIEnable = false;
+//
+//        float dt = os.time.getTime(ms);
+//
+//        data->AIAngle = NeuralNetworkReasoning(data);
+//
+//        data->AIAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+//
+//        dt = os.time.getTime(ms) - dt;
+//
+//        Screen.Clear(Screen.Self,WHITE);
+//        Screen.WriteXLine(Screen.Self,5,"Angle = %.3f",data->AIAngle);
+//        Screen.WriteXLine(Screen.Self,6,"Time = %.3f",dt);
+//
+//        os.time.delay(0.5,s);
 
-//        if(data->CarState)
-//        {
-//            startTime = os.time.getTime(s);
-//        }
-//        else
-//        {
-//            endTime = os.time.getTime(s);
-//        }
-//
-//        dt = startTime - endTime;
-//
-//        speed = Length1/dt;
 
         if(os.time.getnmsFlag(2))
         {

@@ -58,36 +58,11 @@ float ElementDetermine(void *argv)
         //DebugBeepOff;
     }
 
-    if(loseLineCnt >= 1500)
+    if(loseLineCnt >= 1500 && data->CarMode != DebugMode)
     {
         Motor.Break(Motor.Self);
         Servo.Break(Servo.Self);
     }
-//    else
-//    {
-//
-//    }
-
-//    if(Element == data->Element.Type)
-//    {
-//        Element = data->Element.Type;
-//    }
-//    else
-//    {
-//        lastElement = Element;
-//        Element = data->Element.Type;
-//        data->LastElement.Type = data->Element.Type;
-//    }
-
-
-
-
-    //data->LastElement = data->Element;
-
-//    else
-//    {
-//        Motor.Start(Motor.Self);
-//    }
 
     return data->Element.Type * 1.0;
 
@@ -109,6 +84,19 @@ void SpecialElementHandler(void *argv)
     LoseLine_Handler(data);
 
     Ramp_Handler(data);
+}
+
+void StopSituationDetect(void) {
+    //GPIO Resources[27]
+    static _Bool firstExecute = 1;
+    if (firstExecute) {
+        GPIOx.Init(&GPIO_Resources[27].GPION);
+        firstExecute = 0;
+    }
+
+    if (!GPIOx.Read(&GPIO_Resources[27].GPION) && os.time.getTimes() >= 10) {
+        Motor.Stop(Motor.Self);
+    }
 }
 
 /*鍧￠亾澶勭悊*/
@@ -567,7 +555,7 @@ void RightAngle_Handler(data_t *data)
                 rightAngleState = RA_Tracking;
 
                 /*Changed.*/
-                if(data->CarMode != AI_Mode)
+                if(data->CarMode != AI_Mode && data->CarMode != SAutoBoot_Mode)
                 {
                     data->Is_AdjustAngle = true;
 
@@ -580,13 +568,6 @@ void RightAngle_Handler(data_t *data)
                 {
                     data->Bias = bias;
                 }
-
-//                data->Is_AdjustAngle = true;
-//
-//                data->Angle = - fsign(bias) * Servo.MaxAngle;
-//
-//                Servo.SetAngle(Servo.Self,data->Angle);
-//                Servo.Update(Servo.Self);
 
                 goto RA_TRACKING;
             }
@@ -603,7 +584,7 @@ void RightAngle_Handler(data_t *data)
             data->Bias = bias;
 
             /*Changed.*/
-            if(data->CarMode != AI_Mode)
+            if(data->CarMode != AI_Mode && data->CarMode != SAutoBoot_Mode)
             {
                 data->Angle = - fsign(bias) * Servo.MaxAngle;
 
@@ -611,18 +592,10 @@ void RightAngle_Handler(data_t *data)
                 Servo.Update(Servo.Self);
             }
 
-//            data->Angle = - fsign(bias) * Servo.MaxAngle;
-//
-//            Servo.SetAngle(Servo.Self,data->Angle);
-//            Servo.Update(Servo.Self);
-
             rightAngleCount--;
-
-
 
             if(Is_RightAngleOut(data,rightAngleCount) || rightAngleCount <= -1000)
             {
-
                 data->Is_AdjustAngle = false;
 
                 data->Is_AdjustSpeed = false;

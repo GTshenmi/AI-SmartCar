@@ -15,6 +15,8 @@ uint16_t CarMode =DebugMode;/*ÔËÐÐ×´Ì¬*/
 
 uint16_t data_pointer = 0;
 
+void *app_data_pointer = NULL;
+
 float ESensorDataQueue[100][8];
 float RBiasDataQueue[100];
 float EBiasDataQueue[100];
@@ -36,6 +38,8 @@ void FuzzyControlInit(data_t *data);
 void ParameterInit(void *argv)
 {
     data_t *data = (data_t *)argv;
+
+    app_data_pointer = (void *)data;
 
     data->Error = NoError;
 
