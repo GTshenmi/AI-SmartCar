@@ -107,7 +107,16 @@ void SmartCarSysDataSave(data_t *data)
                         if(data->Element.Type == Cycle)
                         {
                             data->Element.Point = Cycle;
-                            SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
+
+                            if(data->CycleState == CC_WaitIn || data->CycleState == CC_In || data->CycleState == CC_Confirm)
+                            {
+                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleIn.txt");
+                            }
+                            else
+                            {
+                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
+                            }
+
                         }
                         else if(data->Element.Type == RightAngle)
                         {

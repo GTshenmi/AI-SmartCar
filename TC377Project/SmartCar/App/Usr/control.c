@@ -19,7 +19,7 @@ void SpeedControl(void *argv)
     {
         if(!data->Is_AdjustSpeed && is_firstsetspeed)
         {
-            data->Speed = 2000;
+            data->Speed = 2300;
             is_firstsetspeed = false;
         }
 
@@ -28,6 +28,8 @@ void SpeedControl(void *argv)
         formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
 
         data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+        data->x += data->Actual_Speed * 0.000028 * 100.0;
 
         //Motor.SetPwmValue(Motor.Self,data->Speed);
 
@@ -41,7 +43,7 @@ void SpeedControl(void *argv)
     {
         if(!data->Is_AdjustSpeed && is_firstsetspeed)
         {
-            data->Speed = 2000;
+            data->Speed = 2300;
             is_firstsetspeed = false;
         }
 
@@ -53,6 +55,8 @@ void SpeedControl(void *argv)
         formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
 
         data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+        data->x += data->Actual_Speed * 0.000028 * 100.0;
 
         //Motor.SetPwmValue(Motor.Self,data->Speed);
 
@@ -94,7 +98,7 @@ void SpeedControl(void *argv)
 
         data->Actual_Speed = Motor.GetSpeed(Motor.Self);
 
-        data->x += data->Actual_Speed;
+        data->x += data->Actual_Speed * 0.000028 * 100.0;
 
         Motor.SetSpeed(Motor.Self,formatedSpeed);
 
@@ -232,6 +236,14 @@ void AngleControl(void *argv)
 //            Servo.Update(Servo.Self);
 //        }
 //        else
+
+//        if(data->Element.Type == Cycle)
+//        {
+//            Servo.SetAngle(Servo.Self,data->CorAngle);
+//
+//            Servo.Update(Servo.Self);
+//        }
+//        else
         {
             /*舵机设置角度*/
             Servo.SetAngle(Servo.Self,data->Angle);
@@ -260,18 +272,29 @@ void AngleControl(void *argv)
     {
         data->AIAngle = NeuralNetworkReasoning(data);
 
-        data->AIAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+        data->AIAngle = ConstrainFloat(data->AIAngle,Servo.MinAngle,Servo.MaxAngle);
 
-        data->CorAngle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
-        data->CorAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+//        data->CorAngle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
+//        data->CorAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
+//
+//        if(data->AIAngle * data->CorAngle > 0)  //短前瞻和AI预测角度方向相同，取最大
+//        {
+//            data->Angle = fsign(data->AIAngle) * max(fabs(data->AIAngle),fabs(data->CorAngle));
+//        }
+//        else if(data->AIAngle * data->CorAngle < 0) //方向相反
+//        {
+//            data->Angle = data->AIAngle;
+//        }
+//        else
+//        {
+//            data->Angle = data->AIAngle;
+//        }
 
-        if(data->AIAngle * data->CorAngle > 0)  //短前瞻和AI预测角度方向相同，取最大
+        if(data->Element.Type == Cycle)
         {
-            data->Angle = fsign(data->AIAngle) * max(fabs(data->AIAngle),fabs(data->CorAngle));
-        }
-        else if(data->AIAngle * data->CorAngle < 0) //方向相反
-        {
-            data->Angle = data->AIAngle;
+            data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
+
+            data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
         }
         else
         {

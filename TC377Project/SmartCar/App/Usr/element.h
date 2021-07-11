@@ -19,8 +19,6 @@ inline bool Is_Ramp(data_t *data)
 
     //distance = distance * 1.0;
 
-
-
     return 0;
 }
 
@@ -53,7 +51,7 @@ inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 
     if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
     {
-        return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || data->H_ESensorValue[1] >= 30.0 || data->h_sum >= 60.0);
+        return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || (data->H_ESensorValue[1] >= 30.0) || (data->h_sum >= 60.0));
     }
     else
     {
@@ -78,13 +76,19 @@ inline bool Is_RightAngleBackToStraight(data_t *data)
 inline bool Is_Cycle(data_t *data)
 {
     float h_sum = 0.0;
+    float h_sum1 = 0.0,h_sum2 = 0.0;
 
     if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
+    {
         h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
+        return ((h_sum >= 180.0) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0) || (data->v_sum >= 20.0)) and (fabs(data->v_difference) >= 15.0));
+    }
     else
-        h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[3] + data->H_ESensorValue[4];
-
-    return ((h_sum >= 180.0) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0) || (data->v_sum >= 20.0)) and (fabs(data->v_difference) >= 15.0));
+    {
+        h_sum1 = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
+        h_sum2 = data->H_ESensorValue[1] + data->H_ESensorValue[2] + data->H_ESensorValue[4];
+        return (((h_sum1 >= 160.0) or (h_sum2 >= 160.0)) and (fabs(data->o_difference) >= 40.0) and (fabs(data->v_difference) >= 10.0));//(data->o_difference >= 40.0) and ((data->V_ESensorValue[0] >= 5.0) || (data->V_ESensorValue[1] >= 5.0) || (data->v_sum >= 10.0)) and (fabs(data->v_difference) >= 5.0));
+    }
 }
 
 inline bool Is_CCNormal(data_t *data,sint32_t cnt)

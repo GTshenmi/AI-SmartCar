@@ -1,5 +1,9 @@
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/model_smartcar_ad_run.c
 ../App/Usr/NeuralNetwork/model_smartcar_ad_run.c :
+model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/unused/arm_math.h
+../App/Usr/NeuralNetwork/unused/arm_math.h :
+model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/unused/arm_nnfunctions.h
+../App/Usr/NeuralNetwork/unused/arm_nnfunctions.h :
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/nn_library.h
 ../App/Usr/NeuralNetwork/nn_library.h :
 model_smartcar_ad_run.o :	../App/Sys/sys.h
@@ -226,3 +230,5 @@ model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
 ../App/Usr/NeuralNetwork/tricore_nn_common.h :
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
 ../App/Usr/NeuralNetwork/tricore_nn_table.h :
+model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/unused/aia_cmsisnn_ext.h
+../App/Usr/NeuralNetwork/unused/aia_cmsisnn_ext.h :

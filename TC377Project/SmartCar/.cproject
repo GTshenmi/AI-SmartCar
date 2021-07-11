@@ -319,6 +319,8 @@
                                     									
                                     <listOptionValue builtIn="false" value="../App/Usr/NeuralNetwork"/>
                                     									
+                                    <listOptionValue builtIn="false" value="../App/Usr/NeuralNetwork/unused"/>
+                                    									
                                     <listOptionValue builtIn="false" value="../OS/Device/Demo"/>
                                     									
                                     <listOptionValue builtIn="false" value="../App"/>

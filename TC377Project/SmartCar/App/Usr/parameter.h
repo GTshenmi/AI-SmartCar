@@ -276,6 +276,8 @@ typedef struct
 
       const uint CarMode;
 
+      cycle_state_t CycleState;
+
       float x;
 
       float v;
