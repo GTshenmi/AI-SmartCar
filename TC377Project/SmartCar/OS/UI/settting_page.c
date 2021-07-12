@@ -115,17 +115,17 @@ uint8_t SettingPageGetStatus (SettingPageStruct *Self)
 float numberCoefficient(uint8_t coefficient){
     switch(coefficient){
         case 5:
-            return 1.0f;
+            return 100.0f;
         case 4:
-            return 0.1f;
+            return 10.0f;
         case 3:
-            return 0.01f;
+            return 1.0f;
         case 2:
-            return 0.001f;
+            return 0.1f;
         case 1:
-            return 0.0001f;
+            return 0.01f;
         case 0:
-            return 0.00001f;
+            return 0.001f;
     }
     return 0.0f;
 }

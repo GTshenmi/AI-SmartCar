@@ -19,94 +19,47 @@ void SpeedControl(void *argv)
     {
         if(!data->Is_AdjustSpeed && is_firstsetspeed)
         {
-            data->Speed = 2300;
+            data->Speed = 2000;
             is_firstsetspeed = false;
         }
-
-        float formatedSpeed = 0.0;
-
-        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
-
-        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
-
-        data->x += data->Actual_Speed * 0.000028 * 100.0;
-
-        //Motor.SetPwmValue(Motor.Self,data->Speed);
-
-        //Motor.SetPwmValue(Motor.Self,3500);
-
-        Motor.SetSpeed(Motor.Self,formatedSpeed);
-
-        Motor.Update(Motor.Self);
     }
     else if(data->CarMode == SAutoBoot_Mode)
     {
         if(!data->Is_AdjustSpeed && is_firstsetspeed)
         {
-            data->Speed = 2300;
+            data->Speed = 2200;
             is_firstsetspeed = false;
         }
 
-
         //data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Bias);
-
-        float formatedSpeed = 0.0;
-
-        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
-
-        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
-
-        data->x += data->Actual_Speed * 0.000028 * 100.0;
-
-        //Motor.SetPwmValue(Motor.Self,data->Speed);
-
-        //Motor.SetPwmValue(Motor.Self,3500);
-
-        Motor.SetSpeed(Motor.Self,formatedSpeed);
-
-        Motor.Update(Motor.Self);
     }
     else if(data->CarMode == DebugMode)
     {
         data->Speed = 2000;
-
-        float formatedSpeed = 0.0;
-
-        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
-
-        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
-
-        Motor.SetSpeed(Motor.Self,formatedSpeed);
-
-        Motor.Update(Motor.Self);
     }
     else
     {
 
         if(!data->Is_AdjustSpeed)
         {
-
             data->Speed = 2000.0;
 
             if(data->Element.Type == RightAngle)
               data->Speed = 2000.0;
         }
-
-        float formatedSpeed = 0.0;
-
-        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
-
-        data->Actual_Speed = Motor.GetSpeed(Motor.Self);
-
-        data->x += data->Actual_Speed * 0.000028 * 100.0;
-
-        Motor.SetSpeed(Motor.Self,formatedSpeed);
-
-        Motor.Update(Motor.Self);
     }
 
+    float formatedSpeed = 0.0;
 
+    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
 
+    data->Actual_Speed = Motor.GetSpeed(Motor.Self);
+
+    data->x += data->Actual_Speed * 0.000028 * 100.0;
+
+    Motor.SetSpeed(Motor.Self,formatedSpeed);
+
+    Motor.Update(Motor.Self);
 }
 
 
@@ -226,32 +179,6 @@ void AngleControl(void *argv)
 
         data->Angle = data->AIAngle;
 
-        /*十字采集纠正 , 不开启:AI模式数据不对*/
-
-//        if(data->Element.Type == Cross)
-//        {
-//            /*舵机设置角度*/
-//            Servo.SetAngle(Servo.Self,data->CorAngle);
-//
-//            Servo.Update(Servo.Self);
-//        }
-//        else
-
-//        if(data->Element.Type == Cycle)
-//        {
-//            Servo.SetAngle(Servo.Self,data->CorAngle);
-//
-//            Servo.Update(Servo.Self);
-//        }
-//        else
-        {
-            /*舵机设置角度*/
-            Servo.SetAngle(Servo.Self,data->Angle);
-
-            Servo.Update(Servo.Self);
-        }
-
-
     }
     else if(data->CarMode == LAutoBoot_Mode)
     {
@@ -259,10 +186,6 @@ void AngleControl(void *argv)
             data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
 
         data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
-
-        Servo.SetAngle(Servo.Self,data->Angle);
-
-        Servo.Update(Servo.Self);
     }
     else if(data->CarMode == DebugMode)
     {
@@ -274,25 +197,10 @@ void AngleControl(void *argv)
 
         data->AIAngle = ConstrainFloat(data->AIAngle,Servo.MinAngle,Servo.MaxAngle);
 
-//        data->CorAngle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
-//        data->CorAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
-//
-//        if(data->AIAngle * data->CorAngle > 0)  //短前瞻和AI预测角度方向相同，取最大
-//        {
-//            data->Angle = fsign(data->AIAngle) * max(fabs(data->AIAngle),fabs(data->CorAngle));
-//        }
-//        else if(data->AIAngle * data->CorAngle < 0) //方向相反
-//        {
-//            data->Angle = data->AIAngle;
-//        }
-//        else
-//        {
-//            data->Angle = data->AIAngle;
-//        }
-
         if(data->Element.Type == Cycle)
         {
-            data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
+            if(!data->Is_AdjustAngle)
+                data->Angle = FuzzyControl(&data->S_Fuzzy,0.0,data->Bias) * Servo.MaxAngle;
 
             data->Angle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
         }
@@ -300,11 +208,14 @@ void AngleControl(void *argv)
         {
             data->Angle = data->AIAngle;
         }
+    }
 
+    if(data->CarMode != DebugMode)
+    {
+        /*舵机设置角度*/
         Servo.SetAngle(Servo.Self,data->Angle);
 
         Servo.Update(Servo.Self);
-
     }
 
 }

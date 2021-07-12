@@ -296,7 +296,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .Self = &UIPages[4],
              .lineLength = 1,
              .targetDataType = FLOAT,
-             .confirmAction = changeDisplayType,
+             .confirmAction = openSettingPage,
 
      },
      [5] = {

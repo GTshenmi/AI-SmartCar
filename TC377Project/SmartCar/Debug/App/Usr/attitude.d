@@ -196,3 +196,5 @@ attitude.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 attitude.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
+attitude.o :	../App/Sys/sysmath.h
+../App/Sys/sysmath.h :

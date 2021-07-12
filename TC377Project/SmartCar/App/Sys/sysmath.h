@@ -10,6 +10,8 @@
 
 #include "platform.h"
 
+#define PI 3.14
+
 #define Zero 1e-6
 
 #define INFINITE 0xFFFFFFFF
@@ -68,6 +70,7 @@ inline float fdiv(float x,float y)
     return result;
 }
 
+float invSqrt(float x);
 float NormalizeFloat(float value,float min,float max);
 float CalculateDistanceDifDivSum(float L1,float L2);
 uint16_t FindMaxIndex(float *array,uint16_t len);

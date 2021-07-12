@@ -35,6 +35,11 @@ float ElementDetermine(void *argv)
     if(Is_Cycle(data))
     {
         data->Element.Type = Cycle;
+        BLED.ON(BLED.Self);
+    }
+    else
+    {
+        //BLED.OFF(BLED.Self);
     }
 
     if(Is_Cross(data) && data->Element.Type != Cycle && data->Element.Type != RightAngle)
@@ -79,7 +84,7 @@ void SpecialElementHandler(void *argv)
 
     Cross_Handler(data);
 
-    Cycle_Handler(data);
+    //Cycle_Handler(data);
 
     LoseLine_Handler(data);
 
@@ -109,6 +114,19 @@ void RustAngle_Handler(data_t *data)
 {
     data->Bias = Servo.GetMaxAngle(Servo.Self);
 }
+
+/*
+ *  y = a x ^3  x = 3 y = 1
+ *  y = 0.697 x^3
+ *
+ *  //y' = 28 x = tan(angle)
+ *
+ *
+ *  //angle = arctan(28x)
+ *
+ *
+ *
+ * */
 
 void Cycle_Handler(data_t *data)
 {
@@ -249,13 +267,6 @@ void Cycle_Handler(data_t *data)
             if(cycleWaitCnt <= 0)
                 cycleWaitCnt = 0;
 
-//            if(FindMinIndex(data->H_ESensorValue,3) == 1)
-//            {
-//                cycleState = CC_Undefined;
-//
-//                data->Element.Exception.CC = CC_SlantIn;
-//            }
-
             if(data->Element.Type == Cycle && cycleWaitCnt <= 0)
             {
                 cycleState = CC_Confirm;
@@ -317,18 +328,11 @@ void Cycle_Handler(data_t *data)
             }
             else
             {
-//                if(FindMinIndex(data->H_ESensorValue,3) == 1)
-//                {
-//                    cycleState = CC_Undefined;
-//
-//                    data->Element.Exception.CC = CC_SlantIn;
-//                }
-//                else
-                {
+
                     cycleState = CC_Undefined;
                     data->Element.Exception.CC = CC_MisJudge;
                     data->Element.Exception.Info[Cycle][Cycle] = CC_Confirm;
-                }
+
             }
 
             break;
@@ -339,110 +343,7 @@ void Cycle_Handler(data_t *data)
 
             pos = data->x;
 
-            if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
-            {
-                if(data->Ke[2] >= 5.0 || data->Ke[4] >= 5.0)
-                {
-                    isMidESensorMaxValue = true;
-                }
-
-               if(isMidESensorMaxValue)
-               {
-                   if(data->Ke[2] < 0.0)
-                   {
-                       isLeftOSensorFall = true;
-
-                       cycleFlagCnt++;
-                   }
-
-                   if(data->Ke[4] < 0.0)
-                   {
-                       isRightOSensorFall = true;
-                       cycleFlagCnt++;
-                   }
-
-                   if(data->Ke[3] <= 0.0)
-                   {
-                       isMidHSensorFall = true;
-
-                       cycleFlagCnt++;
-                   }
-
-                   if(data->Ke[1] <= 0.0)
-                   {
-                       isLeftHSensorFall = true;
-
-                       cycleFlagCnt++;
-
-                   }
-
-                   if(data->Ke[5] <= 0.0)
-                   {
-                       isRightHSensorFall = true;
-
-                       cycleFlagCnt++;
-                   }
-
-                   if((cycleFlagCnt>=2) && ((pos - isCyclePos) >= 90.0))
-                   {
-                           cycleState = CC_In;
-                           inPos = data->x;
-                   }
-
-              }
-            }
-            else
-            {
-
-               if(data->Ke[2] >= 5.0 || data->Ke[5] >= 5.0)
-               {
-                     isMidESensorMaxValue = true;
-               }
-
-               if(isMidESensorMaxValue)
-               {
-                   if(data->Ke[2] < 0.0)
-                   {
-                       isLeftOSensorFall = true;
-
-                       cycleFlagCnt++;
-                   }
-
-                   if(data->Ke[5] < 0.0)
-                   {
-                       isRightOSensorFall = true;
-                       cycleFlagCnt++;
-                   }
-
-                   if(data->Ke[4] <= 0.0)
-                   {
-                       isMidHSensorFall = true;
-
-                       cycleFlagCnt++;
-                   }
-
-                   if(data->Ke[3] <= 0.0)
-                   {
-                       isLeftHSensorFall = true;
-
-                       cycleFlagCnt++;
-
-                   }
-
-                   if((cycleFlagCnt>=2) && ((pos - isCyclePos) >= 50.0))
-                   {
-                           cycleState = CC_In;
-                           inPos = data->x;
-                   }
-               }
-
-               if(cycleWaitInCnt <= -2000)
-               {
-                   cycleState = CC_Undefined;
-                   data->Element.Exception.CC = CC_MisJudge;
-                   data->Element.Exception.Info[Cycle][Cycle] = CC_WaitIn;
-               }
-            }
+            cycleState = CC_In;
 
             break;
 
@@ -455,57 +356,40 @@ void Cycle_Handler(data_t *data)
 
             pos = data->x;
 
+            if(data->CarMode == LAutoBoot_Mode || data->CarMode == SAutoBoot_Mode)
+            {
+                data->Is_AdjustAngle = true;
+                data->Angle = CycleInFunc(data,data->x - isCyclePos)  * fsign(-bias);
+            }
+
+
+            float in_distance = 0.0;
+
             if(data->CarMode == AI_Mode || data->CarMode == LAutoBoot_Mode)
             {
-                if(data->h_bias <= 20.0 && cycleInCnt <= 0 && ((pos - inPos) >= 25.0))
-                {
-                    isLeftOSensorFall = false;
-                    isRightOSensorFall = false;
-                    isMidHSensorFall = false;
-                    isRightHSensorFall = false;
-                    isLeftHSensorFall = false;
-                    isMidESensorMaxValue = false;
-
-                    //pos = 0.0;
-
-                    inPos = 0.0;
-
-                    isCyclePos = 0.0;
-
-                    cycleWaitInCnt = 0;
-
-                    cycleInCnt = 0;
-
-                    cycleFlagCnt = 0;
-
-                    cycleState = CC_Tracking;
-                }
+                in_distance = 160.0;
             }
             else
             {
-                if(data->h_bias <= 35.0 && cycleInCnt <= 0 && ((pos - inPos) >= 20.0))
-                {
-                    isLeftOSensorFall = false;
-                    isRightOSensorFall = false;
-                    isMidHSensorFall = false;
-                    isRightHSensorFall = false;
-                    isLeftHSensorFall = false;
-                    isMidESensorMaxValue = false;
+                in_distance = 65.0;
+            }
 
-                    //pos = 0.0;
+            if(data->h_sum <= 100.0 && data->h_bias <= 35.0 && ((data->x - isCyclePos) >= in_distance))
+            {
+                isLeftOSensorFall = false;
+                isRightOSensorFall = false;
+                isMidHSensorFall = false;
+                isRightHSensorFall = false;
+                isLeftHSensorFall = false;
+                isMidESensorMaxValue = false;
 
-                    inPos = 0.0;
+                cycleWaitInCnt = 0;
 
-                    isCyclePos = 0.0;
+                cycleInCnt = 0;
 
-                    cycleWaitInCnt = 0;
+                cycleFlagCnt = 0;
 
-                    cycleInCnt = 0;
-
-                    cycleFlagCnt = 0;
-
-                    cycleState = CC_Tracking;
-                }
+                cycleState = CC_Tracking;
             }
 
             if(cycleInCnt <= -2000)
@@ -521,13 +405,20 @@ void Cycle_Handler(data_t *data)
 
             cycleOutCnt++;
 
-            data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
+            data->Is_AdjustAngle = false;
 
-            //data->Bias = data->Bias * 1.05 * 0.95 + fsign(bias) * 100.0 * 0.05;
+            data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
 
             data->Bias = data->Bias * 0.95 + fsign(bias) * 100.0 * 0.05;
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
+
+            if(data->CarMode == SAutoBoot_Mode)
+            {
+                data->Is_AdjustAngle = true;
+
+                data->Angle = data->AIAngle;
+            }
 
             if(Is_CycleOut(data,cycleOutCnt) || cycleOutCnt >= 6000 || (data->x - pos) >= 2000.0)
             {
@@ -544,6 +435,9 @@ void Cycle_Handler(data_t *data)
                 data->Element.Type = None;
 
                 cycleWaitCnt = 500;
+
+                data->Is_AdjustAngle = false;
+                data->Is_AdjustSpeed = false;
 
                 BLED.OFF(BLED.Self);
             }
@@ -564,6 +458,476 @@ void Cycle_Handler(data_t *data)
 
     data->CycleState = cycleState;
 }
+
+//void Cycle_Handler(data_t *data)
+//{
+//    static cycle_state_t cycleState = CC_Wait;
+//    static cycle_dir_t   cycleDir = CC_DirUndefined;
+//
+//    static float bias = 0.0;
+//
+//    static sint32_t cycleWaitCnt = 0;
+//
+//    static sint32_t cycleWaitInCnt = 0;
+//
+//    static sint32_t cycleInCnt = 0;
+//
+//    static sint32_t cycleOutCnt;
+//
+//    static sint32_t cycleFlagCnt = 0;
+//
+//    static sint32_t exceptionHandlerCnt = 0;
+//
+//    static bool isMidESensorMaxValue = false;
+//    static bool isLeftOSensorFall = false;
+//    static bool isRightOSensorFall = false;
+//    static bool isMidHSensorFall = false;
+//
+//    static bool isLeftHSensorFall = false;
+//    static bool isRightHSensorFall = false;
+//
+//    static float bias_ra = 0.0;
+//
+//    static float bias_slant = 0.0;
+//
+//    static float isCyclePos = 0.0;
+//
+//    static float pos = 0.0;
+//
+//    static float inPos = 0.0;
+//
+//    static bool Is_SlantIn = false;
+//
+//    if((FindMinIndex(data->H_ESensorValue,3) == 1) && (data->H_ESensorValue[1] <= 90.0) && data->Element.Type == Cycle)
+//    {
+//        //data->Element.Exception.CC == CC_SlantIn;
+//
+//        bias_slant = fsign(data->v_difference) * 100.0;
+//
+//        Is_SlantIn = true;
+//
+//    }
+//
+////    if(data->Element.Exception.EXT != NoException && data->Element.Type == Cycle)
+////    {
+////        data->Element.Exception.EXT = NoException;
+////
+////        data->Element.Exception.CC = CC_SlantIn;
+////
+////        cycleState = CC_Undefined;
+////    }
+//
+//    switch(cycleState)
+//    {
+//        case CC_Undefined:
+//
+//            cycleState = CC_Exception_Handler;
+//
+//            if((data->Element.Exception.CC == CC_SlantIn))
+//            {
+//                if(data->Element.Exception.EXT == RA_To_CC)
+//                {
+//                    bias_ra = data->Element.Exception.Info[RightAngle][Cycle];
+//                }
+//
+//                else
+//                {
+//                    bias = bias_slant;
+//
+//                    cycleState = CC_In;
+//
+//                    cycleInCnt = 360;
+//                }
+//                exceptionHandlerCnt = 50;
+//            }
+//
+//            break;
+//
+//        case CC_Exception_Handler:
+//
+//            exceptionHandlerCnt --;
+//
+//            data->Bias = bias_ra;
+//
+//            isCyclePos = 0.0;
+//
+//            pos = 0.0;
+//
+//            inPos = 0.0;
+//
+//            if((data->Element.Exception.CC == CC_SlantIn))
+//            {
+//                if(Is_CCNormal(data,exceptionHandlerCnt))
+//                {
+//                    cycleState = CC_In;
+//
+//                    cycleInCnt = 360;
+//
+//                    //bias = data->v_bias * 1.2;
+//
+//                    bias = -bias_ra;
+//
+//                    //bias = 100.0;
+//
+//                    data->Element.Type =Cycle;
+//
+//                    //BEEP.OFF(BEEP.Self);
+//
+//
+//                }
+//            }
+//
+//            if(data->Element.Exception.CC == CC_MisJudge)
+//            {
+//                //Console.WriteLine("[Warning]:CC_MisJudge(%f)",data->Element.Exception.Info[Cycle][Cycle]);
+//                cycleState = CC_Wait;
+//            }
+//
+//            if(data->Element.Exception.CC == CC_Err)
+//            {
+//                //Console.WriteLine("[Error]:CC_Err(%f)",data->Element.Exception.Info[Cycle][Cycle]);
+//                cycleState = CC_Wait;
+//            }
+//
+//            break;
+//
+//        case CC_Wait:
+//
+//            cycleWaitCnt--;
+//
+//            if(cycleWaitCnt <= 0)
+//                cycleWaitCnt = 0;
+//
+////            if(FindMinIndex(data->H_ESensorValue,3) == 1)
+////            {
+////                cycleState = CC_Undefined;
+////
+////                data->Element.Exception.CC = CC_SlantIn;
+////            }
+//
+//            if(data->Element.Type == Cycle && cycleWaitCnt <= 0)
+//            {
+//                cycleState = CC_Confirm;
+//
+//                isCyclePos = data->x;
+//            }
+//
+//            break;
+//
+//        case CC_Confirm:
+//
+//            if(1)//Is_Cycle(data))
+//            {
+//                cycleState = CC_WaitIn;
+//
+//                float sum_l,sum_r;
+//
+//                if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
+//                {
+//                    cycleInCnt = 100;
+//                    cycleOutCnt = 0;
+//
+//                    sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];// + data->O_ESensorValue[0];
+//
+//                    sum_r = data->H_ESensorValue[2] + data->V_ESensorValue[1];// + data->O_ESensorValue[1];
+//                }
+//                else
+//                {
+//                    cycleInCnt = 100;
+//
+//                    cycleOutCnt = 0; /*have problem. is zero?*/
+//
+//                    sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];
+//
+//                    sum_r = data->H_ESensorValue[3] + data->V_ESensorValue[1];
+//                }
+//
+//                BLED.ON(BLED.Self);
+//
+//                if(sum_l > sum_r)
+//                {
+//                    cycleDir = CC_DirLeft;
+//                }
+//                else
+//                {
+//                    cycleDir = CC_DirRight;
+//                }
+//
+//                if(cycleDir == CC_DirLeft)
+//                {
+//                    bias = 100.0;
+//                    cycleWaitInCnt = 220;
+//                }
+//                else
+//                {
+//                    bias = -100.0;
+//                    cycleWaitInCnt = 220;
+//                }
+//            }
+//            else
+//            {
+////                if(FindMinIndex(data->H_ESensorValue,3) == 1)
+////                {
+////                    cycleState = CC_Undefined;
+////
+////                    data->Element.Exception.CC = CC_SlantIn;
+////                }
+////                else
+//                {
+//                    cycleState = CC_Undefined;
+//                    data->Element.Exception.CC = CC_MisJudge;
+//                    data->Element.Exception.Info[Cycle][Cycle] = CC_Confirm;
+//                }
+//            }
+//
+//            break;
+//
+//        case CC_WaitIn:
+//
+//            cycleWaitInCnt--;
+//            if(data->CarMode == LAutoBoot_Mode)
+//            {
+//                data->Is_AdjustAngle = true;
+//                data->Angle = CycleInFunc(data->x - isCyclePos) * fsign(-bias);
+//            }
+//
+//            pos = data->x;
+//
+//            if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
+//            {
+//                if(data->Ke[2] >= 5.0 || data->Ke[4] >= 5.0)
+//                {
+//                    isMidESensorMaxValue = true;
+//                }
+//
+//               if(isMidESensorMaxValue)
+//               {
+//                   if(data->Ke[2] < 0.0)
+//                   {
+//                       isLeftOSensorFall = true;
+//
+//                       cycleFlagCnt++;
+//                   }
+//
+//                   if(data->Ke[4] < 0.0)
+//                   {
+//                       isRightOSensorFall = true;
+//                       cycleFlagCnt++;
+//                   }
+//
+//                   if(data->Ke[3] <= 0.0)
+//                   {
+//                       isMidHSensorFall = true;
+//
+//                       cycleFlagCnt++;
+//                   }
+//
+//                   if(data->Ke[1] <= 0.0)
+//                   {
+//                       isLeftHSensorFall = true;
+//
+//                       cycleFlagCnt++;
+//
+//                   }
+//
+//                   if(data->Ke[5] <= 0.0)
+//                   {
+//                       isRightHSensorFall = true;
+//
+//                       cycleFlagCnt++;
+//                   }
+//
+//                   if((cycleFlagCnt>=2) && ((pos - isCyclePos) >= 60.0))
+//                   {
+//                           cycleState = CC_In;
+//                           inPos = data->x;
+//                   }
+//
+//              }
+//            }
+//            else
+//            {
+//
+//               if(data->Ke[2] >= 5.0 || data->Ke[5] >= 5.0)
+//               {
+//                     isMidESensorMaxValue = true;
+//               }
+//
+//               if(isMidESensorMaxValue)
+//               {
+//                   if(data->Ke[2] < 0.0)
+//                   {
+//                       isLeftOSensorFall = true;
+//
+//                       cycleFlagCnt++;
+//                   }
+//
+//                   if(data->Ke[5] < 0.0)
+//                   {
+//                       isRightOSensorFall = true;
+//                       cycleFlagCnt++;
+//                   }
+//
+//                   if(data->Ke[4] <= 0.0)
+//                   {
+//                       isMidHSensorFall = true;
+//
+//                       cycleFlagCnt++;
+//                   }
+//
+//                   if(data->Ke[3] <= 0.0)
+//                   {
+//                       isLeftHSensorFall = true;
+//
+//                       cycleFlagCnt++;
+//
+//                   }
+//
+//                   if((cycleFlagCnt>=2) && ((pos - isCyclePos) >= 50.0))
+//                   {
+//                           cycleState = CC_In;
+//                           inPos = data->x;
+//                   }
+//               }
+//
+//               if(cycleWaitInCnt <= -3000)
+//               {
+//                   cycleState = CC_Undefined;
+//                   data->Element.Exception.CC = CC_MisJudge;
+//                   data->Element.Exception.Info[Cycle][Cycle] = CC_WaitIn;
+//               }
+//            }
+//
+//            break;
+//
+//
+//        case CC_In:
+//
+//            data->Bias = bias;
+//
+//            cycleInCnt--;
+//
+//            pos = data->x;
+//
+//            cycleWaitInCnt--;
+//            if(data->CarMode == LAutoBoot_Mode)
+//            {
+//                data->Is_AdjustAngle = true;
+//                data->Angle = CycleInFunc(data->x - isCyclePos)  * fsign(bias);
+//            }
+//
+//            if(data->CarMode == AI_Mode || data->CarMode == LAutoBoot_Mode)
+//            {
+//                if(data->h_bias <= 20.0 && cycleInCnt <= 0 && ((pos - inPos) >= 25.0))
+//                {
+//                    isLeftOSensorFall = false;
+//                    isRightOSensorFall = false;
+//                    isMidHSensorFall = false;
+//                    isRightHSensorFall = false;
+//                    isLeftHSensorFall = false;
+//                    isMidESensorMaxValue = false;
+//
+//                    //pos = 0.0;
+//
+//                    //inPos = 0.0;
+//
+//                    //isCyclePos = 0.0;
+//
+//                    cycleWaitInCnt = 0;
+//
+//                    cycleInCnt = 0;
+//
+//                    cycleFlagCnt = 0;
+//
+//                    cycleState = CC_Tracking;
+//                }
+//            }
+//            else
+//            {
+//                if(data->h_bias <= 35.0 && cycleInCnt <= 0 && ((pos - inPos) >= 20.0))
+//                {
+//                    isLeftOSensorFall = false;
+//                    isRightOSensorFall = false;
+//                    isMidHSensorFall = false;
+//                    isRightHSensorFall = false;
+//                    isLeftHSensorFall = false;
+//                    isMidESensorMaxValue = false;
+//
+//                    //pos = 0.0;
+//
+//                    inPos = 0.0;
+//
+//                    isCyclePos = 0.0;
+//
+//                    cycleWaitInCnt = 0;
+//
+//                    cycleInCnt = 0;
+//
+//                    cycleFlagCnt = 0;
+//
+//                    cycleState = CC_Tracking;
+//                }
+//            }
+//
+//            if(cycleInCnt <= -2000)
+//            {
+//                cycleState = CC_Undefined;
+//                data->Element.Exception.CC = CC_Err;
+//                data->Element.Exception.Info[Cycle][Cycle] = CC_In;
+//            }
+//
+//            break;
+//
+//        case CC_Tracking:
+//
+//            cycleOutCnt++;
+//
+//            data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
+//
+//            //data->Bias = data->Bias * 1.05 * 0.95 + fsign(bias) * 100.0 * 0.05;
+//
+//            data->Bias = data->Bias * 0.95 + fsign(bias) * 100.0 * 0.05;
+//
+//            data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
+//
+//            if(Is_CycleOut(data,cycleOutCnt) || cycleOutCnt >= 6000 || (data->x - pos) >= 2000.0)
+//            {
+//                cycleState = CC_Out;
+//            }
+//
+//            break;
+//
+//        case CC_Out:
+//
+//            if(Is_CycleBackToStraight(data) || cycleOutCnt >= 6000 || (data->x - pos) >= 2000.0)
+//            {
+//                cycleState = CC_Wait;
+//                data->Element.Type = None;
+//
+//                cycleWaitCnt = 500;
+//
+//                data->Is_AdjustAngle = false;
+//                data->Is_AdjustSpeed = false;
+//
+//                BLED.OFF(BLED.Self);
+//            }
+//
+//            if(cycleOutCnt >= 6000)
+//            {
+//                cycleState = CC_Undefined;
+//                data->Element.Exception.CC = CC_Err;
+//                data->Element.Exception.Info[Cycle][Cycle] = CC_Out;
+//            }
+//
+//            break;
+//
+//        default:
+//
+//            break;
+//    }
+//
+//    data->CycleState = cycleState;
+//}
 
 void RightAngle_Handler(data_t *data)
 {

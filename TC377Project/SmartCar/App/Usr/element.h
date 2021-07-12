@@ -75,13 +75,23 @@ inline bool Is_RightAngleBackToStraight(data_t *data)
 
 inline bool Is_Cycle(data_t *data)
 {
-    float h_sum = 0.0;
     float h_sum1 = 0.0,h_sum2 = 0.0;
 
     if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
     {
-        h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
-        return ((h_sum >= 180.0) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0) || (data->v_sum >= 20.0)) and (fabs(data->v_difference) >= 15.0));
+        //h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
+         //float sum_1 = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->O_ESensorValue[0];
+        //float sum_2 = data->H_ESensorValue[2] + data->H_ESensorValue[1] + data->O_ESensorValue[1];
+
+        float sum_l = data->H_ESensorValue[0] + data->O_ESensorValue[0];
+        float sum_r = data->H_ESensorValue[2] + data->O_ESensorValue[1];
+
+        float sum = sum_l + sum_r + data->H_ESensorValue[1];
+
+        //return (((fabs(sum_l - sum_r) >= 60.0) or (sum >= 340)) and ((sum_l >= 150) || (sum_r >= 150)) and (data->v_sum <= 50.0) and (fabs(data->v_difference) >= 5.0) and (data->o_sum >= 100.0) and (data->V_ESensorValue[0] <= 25.0) and(data->V_ESensorValue[1] <= 25.0));
+
+        return (((fabs(sum_l - sum_r) >= 60.0) or (sum >= 340)) and ((sum_l >= 150) || (sum_r >= 150))); //and (fabs(data->v_difference) >= 5.0) and (fabs(data->h_difference) >= 20.0) and (data->o_sum >= 100.0) and (data->V_ESensorValue[0] <= 25.0) and (data->V_ESensorValue[1] <= 25.0));
+        //return ((h_sum >= 160.0) and ((sum_1 >= 180.0) or (sum_2 >= 180.0)) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0) || (data->v_sum >= 20.0)) and (fabs(data->v_difference) >= 15.0));
     }
     else
     {
@@ -89,6 +99,29 @@ inline bool Is_Cycle(data_t *data)
         h_sum2 = data->H_ESensorValue[1] + data->H_ESensorValue[2] + data->H_ESensorValue[4];
         return (((h_sum1 >= 160.0) or (h_sum2 >= 160.0)) and (fabs(data->o_difference) >= 40.0) and (fabs(data->v_difference) >= 10.0));//(data->o_difference >= 40.0) and ((data->V_ESensorValue[0] >= 5.0) || (data->V_ESensorValue[1] >= 5.0) || (data->v_sum >= 10.0)) and (fabs(data->v_difference) >= 5.0));
     }
+}
+
+inline float CycleInFunc(data_t *data,float x)
+{
+    //x = x / 100.0;
+
+    if(data->CarMode == LAutoBoot_Mode)
+        //return 120* exp(-0.001 * square(x - 95));
+        return 120* exp(-0.008 * square(x - 95));
+    else if(data->CarMode == SAutoBoot_Mode)
+        return 120* exp(-0.001 * square(x - 55));
+    else
+        return 0.0;
+
+    //return 120* exp(-0.002 * square(x - 75));
+
+    //return 120* exp(-0.001 * square(x - 65));
+
+    //return (100 * exp(-0.001 * square(x - 75)));
+
+    //return 120 * exp(-0.0008 * square(x - 75));
+
+    //return (120* exp(-0.01 * square(x - 60.0)));//((5.0 * x * 360.0)/((1.0 + 25.0 * pow(x,4.0)) * 2 * PI));
 }
 
 inline bool Is_CCNormal(data_t *data,sint32_t cnt)

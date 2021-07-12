@@ -96,6 +96,11 @@ void SmartCarSysDataSave(data_t *data)
     }
     else
     {
+
+        data->Element.Type = Cycle;
+
+        //data->Is_AdjustAngle = true;
+
         if(RecordFlags && data->CarState)
         {
             //if(!data->IsAddNoise)
@@ -107,15 +112,16 @@ void SmartCarSysDataSave(data_t *data)
                         if(data->Element.Type == Cycle)
                         {
                             data->Element.Point = Cycle;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleM.txt");
 
-                            if(data->CycleState == CC_WaitIn || data->CycleState == CC_In || data->CycleState == CC_Confirm)
-                            {
-                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleIn.txt");
-                            }
-                            else
-                            {
-                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
-                            }
+//                            if(data->CycleState == CC_WaitIn || data->CycleState == CC_In || data->CycleState == CC_Confirm)
+//                            {
+//                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleIn.txt");
+//                            }
+//                            else
+//                            {
+//                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
+//                            }
 
                         }
                         else if(data->Element.Type == RightAngle)
@@ -128,17 +134,17 @@ void SmartCarSysDataSave(data_t *data)
                             data->Element.Point = Cross;
                             SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
                         }
-                        else if(Is_LoseLine(data))
-                        {
-                            data->Element.Point = Lost;
-                            SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
-                        }
-                        else if(Is_Straight(data))
-                        {
-                            data->Element.Point = Straight;
-                            SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
-                        }
-                        else if(Is_Corner(data))
+//                        else if(Is_LoseLine(data))
+//                        {
+//                            data->Element.Point = Lost;
+//                            SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
+//                        }
+//                        else if(Is_Straight(data) || data->Element.Type == Straight)
+//                        {
+//                            data->Element.Point = Straight;
+//                            SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
+//                        }
+                        else if(Is_Corner(data) || data->Element.Type == Corner)
                         {
                             data->Element.Point = Corner;
                             SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
@@ -265,6 +271,8 @@ void Core0_Main()
 
     data_t *data = &Data[data_pointer];
 
+    data->Is_AdjustAngle = true;
+
     //Motor.SetPwmValue(Motor.Self,2000);
 
     //MotorSystemIdentification();
@@ -277,6 +285,14 @@ void Core0_Main()
 
         ErrorMsg(data,data->Error);
 
+
+
+        //Console.WriteLine("ESensor:%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f",data->LESensor_NormalizedValue[0],data->LESensor_NormalizedValue[1],\
+           //                                                            data->LESensor_NormalizedValue[2],data->LESensor_NormalizedValue[3],\
+          //                                                             data->LESensor_NormalizedValue[4],data->LESensor_NormalizedValue[5],\
+          //                                                             data->LESensor_NormalizedValue[6]);
+
+        //Console.WriteLine("Yaw:%.3f,Pitch:%.3f,");
 //        data->UIEnable = false;
 //
 //        float dt = os.time.getTime(ms);
