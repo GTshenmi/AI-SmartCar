@@ -14,6 +14,7 @@ void Cycle_Handler(data_t *data);
 void Cross_Handler(data_t *data);
 void RightAngle_Handler(data_t *data);
 void Ramp_Handler(data_t *data);
+void StopSituationDetect(void);
 
 
 float ElementDetermine(void *argv)
@@ -80,7 +81,7 @@ void SpecialElementHandler(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    RightAngle_Handler(data);
+    //RightAngle_Handler(data);
 
     Cross_Handler(data);
 
@@ -89,6 +90,8 @@ void SpecialElementHandler(void *argv)
     LoseLine_Handler(data);
 
     Ramp_Handler(data);
+
+    StopSituationDetect();
 }
 
 void StopSituationDetect(void) {
@@ -99,8 +102,8 @@ void StopSituationDetect(void) {
         firstExecute = 0;
     }
 
-    if (!GPIOx.Read(&GPIO_Resources[27].GPION) && os.time.getTimes() >= 10) {
-        Motor.Stop(Motor.Self);
+    if ((!GPIOx.Read(&GPIO_Resources[27].GPION)) && (os.time.getTimes() >= 10)) {
+        Motor.Break(Motor.Self);
     }
 }
 

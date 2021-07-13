@@ -283,6 +283,12 @@ gpio_resource_t GPIO_Resources[30] =
                 .GPION = {P20_14, PIN_MODE_OUTPUT_OD,1,false,false},
                 .Description = "MPU SDA"
          },
+
+         [27] = {
+                .GPION = {P10_2, PIN_MODE_INPUT_PULLUP, 1, false, false},
+                .Description = "ReedTube"
+         },
+
 };
 
 pwm_resource_t PWM_Resources[3] =

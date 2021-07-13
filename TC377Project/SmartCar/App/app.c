@@ -98,8 +98,9 @@ void SmartCarSysDataSave(data_t *data)
     {
 
         data->Element.Type = Cycle;
+        //data->Element.Type = RightAngle;
 
-        //data->Is_AdjustAngle = true;
+        data->Is_AdjustAngle = true;
 
         if(RecordFlags && data->CarState)
         {
@@ -109,6 +110,7 @@ void SmartCarSysDataSave(data_t *data)
                 {
                     if(data->CarMode == LAutoBoot_Mode)
                     {
+                        //SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngleM.txt");
                         if(data->Element.Type == Cycle)
                         {
                             data->Element.Point = Cycle;
@@ -124,36 +126,36 @@ void SmartCarSysDataSave(data_t *data)
 //                            }
 
                         }
-                        else if(data->Element.Type == RightAngle)
-                        {
-                            data->Element.Point = RightAngle;
-                            SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngle.txt");
-                        }
-                        else if(data->Element.Type == Cross)
-                        {
-                            data->Element.Point = Cross;
-                            SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
-                        }
-//                        else if(Is_LoseLine(data))
+//                        else if(data->Element.Type == RightAngle)
 //                        {
-//                            data->Element.Point = Lost;
-//                            SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
+//                            data->Element.Point = RightAngle;
+//                            SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngle.txt");
 //                        }
-//                        else if(Is_Straight(data) || data->Element.Type == Straight)
+//                        else if(data->Element.Type == Cross)
 //                        {
-//                            data->Element.Point = Straight;
-//                            SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
+//                            data->Element.Point = Cross;
+//                            SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
 //                        }
-                        else if(Is_Corner(data) || data->Element.Type == Corner)
-                        {
-                            data->Element.Point = Corner;
-                            SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
-                        }
-                        else
-                        {
-                            data->Element.Point = Other;
-                            SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
-                        }
+////                        else if(Is_LoseLine(data))
+////                        {
+////                            data->Element.Point = Lost;
+////                            SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
+////                        }
+////                        else if(Is_Straight(data) || data->Element.Type == Straight)
+////                        {
+////                            data->Element.Point = Straight;
+////                            SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
+////                        }
+//                        else if(Is_Corner(data) || data->Element.Type == Corner)
+//                        {
+//                            data->Element.Point = Corner;
+//                            SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
+//                        }
+//                        else
+//                        {
+//                            data->Element.Point = Other;
+//                            SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
+//                        }
                     }
                     else if(data->CarMode == AI_Mode && (AICor(data)))
                     {
@@ -271,7 +273,7 @@ void Core0_Main()
 
     data_t *data = &Data[data_pointer];
 
-    data->Is_AdjustAngle = true;
+    //data->Is_AdjustAngle = true;
 
     //Motor.SetPwmValue(Motor.Self,2000);
 

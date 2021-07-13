@@ -28,6 +28,8 @@ float NeuralNetworkCalAngle(void *argv)
 
     //return res;
 
+    //return res;
+
     return 1.25 * exp(0.0012 * fabs(res)) * res;
     //return res * 1.25;
 }

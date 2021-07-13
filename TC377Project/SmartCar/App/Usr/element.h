@@ -51,7 +51,8 @@ inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleCount)
 
     if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
     {
-        return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || (data->H_ESensorValue[1] >= 30.0) || (data->h_sum >= 60.0));
+        return ((rightAngleCount <= 0) && (data->h_bias <= 30.0) && (data->v_bias <= 10.0));
+        //return ((rightAngleCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || (data->H_ESensorValue[1] >= 30.0) || (data->h_sum >= 60.0));
     }
     else
     {
