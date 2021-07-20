@@ -1,0 +1,13 @@
+times=0,loss=100000.0000,accu=0.0000,lr=0.010000,decay=0.000002
+Saved times=1,loss=0.1324,accu=0.0005,lr=0.010000,decay=0.000002overfit rate = 0%
+Saved times=2,loss=0.0587,accu=0.0005,lr=0.009970,decay=0.000002overfit rate = 0%
+Saved times=1,loss=0.0543,accu=0.0005,lr=0.009940,decay=0.000002overfit rate = 0%
+Saved times=2,loss=0.0466,accu=0.0005,lr=0.009910,decay=0.000002overfit rate = 0%
+Saved times=1,loss=0.0400,accu=0.0005,lr=0.009880,decay=0.000002overfit rate = 0%
+Saved times=2,loss=0.0313,accu=0.0005,lr=0.009851,decay=0.000002overfit rate = 0%
+Saved times=1,loss=0.0278,accu=0.0005,lr=0.009821,decay=0.000002overfit rate = 0%
+times=2,loss=0.0278,accu=0.0005,lr=0.009792,decay=0.000002overfit rate = 5%
+Saved times=1,loss=0.0270,accu=0.0005,lr=0.009763,decay=0.000002overfit rate = 0%
+Saved times=2,loss=0.0219,accu=0.0005,lr=0.009733,decay=0.000002overfit rate = 0%
+times=1,loss=0.0219,accu=0.0005,lr=0.009704,decay=0.000002overfit rate = 0%
+Saved times=2,loss=0.0201,accu=0.0005,lr=0.009675,decay=0.000002overfit rate = 0%
