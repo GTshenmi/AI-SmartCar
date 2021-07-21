@@ -200,8 +200,6 @@ Cpu1_Main.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 Cpu1_Main.o :	../OS/os.h
 ../OS/os.h :
-Cpu1_Main.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 Cpu1_Main.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 Cpu1_Main.o :	../App/Sys/kalman_filter.h
@@ -264,6 +262,10 @@ Cpu1_Main.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 Cpu1_Main.o :	../OS/os.h
 ../OS/os.h :
+Cpu1_Main.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+Cpu1_Main.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 Cpu1_Main.o :	../App/foo.h
 ../App/foo.h :
 Cpu1_Main.o :	../OS/os.h

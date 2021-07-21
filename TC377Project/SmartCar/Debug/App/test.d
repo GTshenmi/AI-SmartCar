@@ -200,8 +200,6 @@ test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 test.o :	../OS/os.h
 ../OS/os.h :
-test.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 test.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 test.o :	../App/Sys/kalman_filter.h
@@ -264,6 +262,10 @@ test.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 test.o :	../OS/os.h
 ../OS/os.h :
+test.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+test.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 test.o :	../App/foo.h
 ../App/foo.h :
 test.o :	../OS/os.h

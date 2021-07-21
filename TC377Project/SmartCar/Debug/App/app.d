@@ -202,8 +202,6 @@ app.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 app.o :	../OS/os.h
 ../OS/os.h :
-app.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 app.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 app.o :	../App/Sys/kalman_filter.h
@@ -266,6 +264,10 @@ app.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 app.o :	../OS/os.h
 ../OS/os.h :
+app.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+app.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 app.o :	../App/foo.h
 ../App/foo.h :
 app.o :	../OS/os.h

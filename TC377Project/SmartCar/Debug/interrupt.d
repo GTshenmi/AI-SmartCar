@@ -200,8 +200,6 @@ interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
 interrupt.o :	../OS/os.h
 ../OS/os.h :
-interrupt.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 interrupt.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 interrupt.o :	../App/Sys/kalman_filter.h
@@ -264,6 +262,10 @@ interrupt.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 interrupt.o :	../OS/os.h
 ../OS/os.h :
+interrupt.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+interrupt.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 interrupt.o :	../App/foo.h
 ../App/foo.h :
 interrupt.o :	../OS/os.h

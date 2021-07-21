@@ -200,8 +200,6 @@ neuralnetwork.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 neuralnetwork.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-neuralnetwork.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 neuralnetwork.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 neuralnetwork.o :	../App/Sys/kalman_filter.h
@@ -266,6 +264,10 @@ neuralnetwork.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 neuralnetwork.o :	../OS/os.h
 ../OS/os.h :
+neuralnetwork.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+neuralnetwork.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 neuralnetwork.o :	../App/foo.h
 ../App/foo.h :
 neuralnetwork.o :	../OS/os.h

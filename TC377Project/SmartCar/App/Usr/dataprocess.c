@@ -10,36 +10,31 @@
 #include <dataprocess.h>
 #include "include.h"
 
-void GetESensorData(void *argv);
-void ESensorNormailze(void *argv);
+void GetESensorData(data_t *data);
+void ESensorNormailze(data_t *data);
 float CalculateDistance(float L1,float L2);
-void LinearFit(void *argv,uint16_t argc);
+void LinearFit(float *data,float *k,uint16_t num);
 
 
-float CalculateBiasLABM(void *argv);
-float CalculateBiasSABM(void *argv);
+float CalculateBiasLABM(data_t *data);
+float CalculateBiasSABM(data_t *data);
 
 
-void GetESensorData(void *argv)
+void GetESensorData(data_t *data)
 {
-    data_t *data = (data_t *)argv;
     for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
         data->LESensor_SampleValue[i] = LESensor[i].Read(LESensor[i].Self);
     for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
         data->SESensor_SampleValue[i] = SESensor[i].Read(SESensor[i].Self);
 }
 
-void ESensorNormailze(void *argv)
+void ESensorNormailze(data_t *data)
 {
-    data_t *data = (data_t *)argv;
-
     /*归一化*/
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
         data->LESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->LESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
     for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
         data->SESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->SESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
-
-    //data->SESensor_NormalizedValue[3] = 0.0;
 }
 
 bool RecordFlags = false;
@@ -52,65 +47,61 @@ void ESensorDataAnalysis(void *argv)
 
     ESensorNormailze(data);             //获取电感归一化数据
 
-    //Queue.Puts(data->ESensorQueue,data->LESensor_NormalizedValue,0.7);
-
-    if(data->CarMode == AI_Mode)
+    switch(data->CarMode)
     {
-        //data->Bias = CalculateBiasLABM(data);
+        case AI_Mode:
 
-        data->Bias = CalculateBiasSABM(data);
+            data->Bias = CalculateBiasSABM(data);
 
-        Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
+            LinearFit(data->SESensor_NormalizedValue,data->Ke,CData.MaxSADCDeviceNum);
 
-        LinearFit(data,CData.MaxLADCDeviceNum);
+            break;
+
+        case SAutoBoot_Mode:
+
+            data->Bias = CalculateBiasSABM(data);
+
+            LinearFit(data->SESensor_NormalizedValue,data->Ke,CData.MaxSADCDeviceNum);
+
+            break;
+
+        case DebugMode:
+
+
+
+            break;
+
+        case LAutoBoot_Mode:
+
+            data->Bias = CalculateBiasLABM(data);
+
+            LinearFit(data->LESensor_NormalizedValue,data->Ke,CData.MaxLADCDeviceNum);
+
+            break;
+
+        default:
+
+            break;
+
     }
-    else if(data->CarMode == LAutoBoot_Mode)
+
+    ElementDetermine(data);
+
+    SpecialElementHandler(data);
+
+    for(int i = 0 ; i < 9 ; i++)
     {
-        data->Bias = CalculateBiasLABM(data);// + 20.0;
-
-        Queue.Puts(&data->ESensorQueue,data->LESensor_NormalizedValue,0,7);
-
-        LinearFit(data,CData.MaxLADCDeviceNum);
-    }
-    else if(data->CarMode == DebugMode)
-    {
-
-    }
-    else if(data->CarMode == SAutoBoot_Mode)
-    {
-        data->Bias = CalculateBiasSABM(data);
-
-        Queue.Puts(&data->ESensorQueue,data->SESensor_NormalizedValue,0,8);
-
-        LinearFit(data,CData.MaxSADCDeviceNum);
+        data->B[i] = data->B[i + 1];
     }
 
-    Queue.Puts(&data->RawBiasQueue,&data->Bias,0,1);
+    data->B[9] = data->Bias;
 
-    Queue.Puts(&data->HESensorQueue,data->H_ESensorValue,0,4);
-    Queue.Puts(&data->VESensorQueue,data->V_ESensorValue,0,2);
-    Queue.Puts(&data->OESensorQueue,data->O_ESensorValue,0,2);
-
-    Queue.Puts(&data->HBiasQueue,&data->h_bias,0,1);
-    Queue.Puts(&data->VBiasQueue,&data->v_bias,0,1);
-    Queue.Puts(&data->OBiasQueue,&data->o_bias,0,1);
-
-//    if(data->CarMode != AI_Mode)
-//    {
-        ElementDetermine(data);
-
-        SpecialElementHandler(data);
-//    }
-
-    //if(RecordFlags == false)
     RecordFlags = true;
 }
 
-void LinearFit(void *argv,uint16_t argc)
+void LinearFit(float *data,float *k,uint16_t num)
 {
-    data_t *data = (data_t *)argv;
-
-    uint16_t sensorNum = argc;
+    uint16_t sensorNum = num;
 
     float sumXY[8] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
     float sumX2[8] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0};
@@ -131,7 +122,7 @@ void LinearFit(void *argv,uint16_t argc)
 
     for(int i = 0 ; i < sensorNum ;i++)
     {
-        eSensorData[PointNum - 1][i] = data->LESensor_NormalizedValue[i];
+        eSensorData[PointNum - 1][i] = data[i];
     }
 
     for (int i = 0; i < sensorNum; i++)
@@ -155,31 +146,18 @@ void LinearFit(void *argv,uint16_t argc)
     {
         if(Is_Zero(sumX2[i] - PointNum * square(aveX[i])))
         {
-            data->Ke[i] = 1.0;
+            k[i] = 1.0;
         }
         else
         {
-            data->Ke[i] = (sumXY[i] - PointNum * aveX[i] * aveY[i])/(sumX2[i] - PointNum * square(aveX[i]));
+            k[i] = (sumXY[i] - PointNum * aveX[i] * aveY[i])/(sumX2[i] - PointNum * square(aveX[i]));
         }
     }
 }
 
 
-float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
+float CalculateBiasLABM(data_t *data)     /*Calculate Bias And Element Type.*/
 {
- /*
-  * SESensor  : [0]  [1]  [2]  [3]  [4]  [5]  [6]
-  * Direction :  |   ---   \   ---   /   ---   |
-  * ESensor   : (-100.0,100.0)
-  * Distance  : (-1.0,1.0)
-  * Problem   : 1.直角切内弯会反方向误判
-  *
-  * */
-    
-    //static float _bias[5] = {0.0,0.0,0.0,0.0,0.0};
-
-    data_t *data = (data_t *)argv;
-
     static float bias = 0.0;
 
     data->H_ESensorValue[0] = data->LESensor_NormalizedValue[1];
@@ -216,33 +194,14 @@ float CalculateBiasLABM(void *argv)     /*Calculate Bias And Element Type.*/
 
     bias = data->h_bias;
 
-    //float Ka[5] = {0.3,0.3,0.2,0.2,0.1};
-
-    //bias = FIR_Filter(Ka,_bias,((data->h_difference + data->v_difference) / data->h_sum) * 100.0,5);
-
     if(fabs(data->h_sum) <= 1e-6)
         bias = ((data->h_difference + data->v_difference * 0.78)/data->h_sum) * 100.0;
-
-    //float weight = ((int)((data->Ke[0] + data->Ke[7]) / 2.0 + 0.5)) * 0.1;
-
-    //bias = (1 - weight) * data->h_bias + weight * data->v_difference;
 
     return bias;
 }
 
-float CalculateBiasSABM(void *argv)     /*Calculate Bias And Element Type.*/
+float CalculateBiasSABM(data_t *data)     /*Calculate Bias And Element Type.*/
 {
- /*
-  * SESensor  : [0]  [1]  [2]  [3]  [4]  [5]  [6]
-  * Direction :  |   ---   \   ---   /   ---   |
-  * ESensor   : (-100.0,100.0)
-  * Distance  : (-1.0,1.0)
-  * Problem   : 1.直角切内弯会反方向误判
-  *
-  * */
-
-    data_t *data = (data_t *)argv;
-
     static float bias = 0.0;
 
     data->H_ESensorValue[0] = data->SESensor_NormalizedValue[0];

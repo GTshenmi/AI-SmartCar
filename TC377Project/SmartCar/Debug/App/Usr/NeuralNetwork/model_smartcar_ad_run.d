@@ -202,8 +202,6 @@ model_smartcar_ad_run.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 model_smartcar_ad_run.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-model_smartcar_ad_run.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 model_smartcar_ad_run.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 model_smartcar_ad_run.o :	../App/Sys/kalman_filter.h

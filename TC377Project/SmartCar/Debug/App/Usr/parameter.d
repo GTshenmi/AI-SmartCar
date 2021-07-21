@@ -198,8 +198,6 @@ parameter.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 parameter.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-parameter.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 parameter.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 parameter.o :	../App/Sys/kalman_filter.h
@@ -266,6 +264,10 @@ parameter.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 parameter.o :	../OS/os.h
 ../OS/os.h :
+parameter.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+parameter.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 parameter.o :	../App/foo.h
 ../App/foo.h :
 parameter.o :	../OS/os.h

@@ -8,7 +8,6 @@
 
 attitude_t attitude;
 axis_t acc,gyro;
-//float dt = 0.0;
 
 void STM0_CH1_IRQHandler(void)
 {
@@ -20,6 +19,7 @@ void STM0_CH1_IRQHandler(void)
 
     //开启新的中断配置，开始下次中断
     IfxStm_increaseCompare(&MODULE_STM0, g_StmCompareConfig[1].comparator, g_StmCompareConfig[1].ticks);
+
 
     //BEEP.Toggle(BEEP.Self);
 

@@ -13,22 +13,100 @@
 #include "fuzzycontrol.h"
 
 void SmartCarSysStateUpdate(void *data);
+void SmartCarSysDataReport(void *data);
+void SmartCarSysDataSave(data_t *data);
+void ErrorMsg(void *argv,uint error);
+void MotorSystemIdentification(void);
 void Core0_CheckStatus(void);
 void Core1_CheckStatus(void);
 void Core2_CheckStatus(void);
 
 void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc);
 
-void SmartCarSysDataReport(void *data)
+/*
+ * @Brief:CPU0 Main Func
+ *  This Core is for Servo Control and Dadta Process.
+ * */
+void Core0_Main()
 {
-    //data_t *pdata = (data_t *)data;
+    TIMx.Init(&TIM_Resources[2].TIMN);
+    TIMx.Init(&TIM_Resources[3].TIMN);
 
-    //Console.WriteLine("MPID:%f,%f,%f",pdata->Speed,pdata->Actual_Speed,pdata->MPwmValue);
+    data_t *data = &Data[data_pointer];
+
+    while(1)
+    {
+        SmartCarSysDataSave(data);
+
+        ErrorMsg(data,data->Error);
+
+        if(os.time.getnmsFlag(1000))
+        {
+            Core0_CheckStatus();
+        }
+    }
 }
 
-bool StartRecord = false;
-bool FinRecord = false;
+/*
+ * @Brief:CPU1 Main Func
+ *  This Core is for Motor Control.
+ * */
+void Core1_Main()
+{
+    TIMx.Init(&TIM_Resources[4].TIMN);
 
+    data_t *data = &Data[data_pointer];
+
+    while(1)
+    {
+        if(data->UIEnable)
+            os.task.UiUpdate(&UIData,sizeof(UIData));
+        Core1_CheckStatus();
+    }
+}
+
+/*
+ * @Brief:CPU2 Main Func
+ *  This Core is for Debug.
+ * */
+void Core2_Main()
+{
+    data_t *data = &Data[data_pointer];
+
+//    if(IMU.Is_Init)
+//        TIMx.Init(&TIM_Resources[5].TIMN);
+
+    while(1)
+    {
+//        if(IMU.Is_Init)
+//        {
+//            if(IMU.GetUpdateFlags(IMU.Self))
+//            {
+//                IMU.AttitudeUpdate(IMU.Self);
+//                IMU.SetUpdateFlags(IMU.Self,false);
+//            }
+//        }
+
+        if(os.time.getnmsFlag(20))
+        {
+            if(data->UIEnable)
+                os.task.KeyScan(NULL,0);
+
+            os.task.SoftTimerUpdate(NULL,0);
+            os.task.DebugConsole(NULL,0);
+        }
+
+        if(os.time.getnmsFlag(1000))
+        {
+            Core2_CheckStatus();
+        }
+    }
+}
+
+void SmartCarSysDataReport(void *data)
+{
+
+}
 inline bool AICor(data_t *data)
 {
     return fabs(data->NNOutput - data->CorAngle) >= 10.0;
@@ -38,50 +116,60 @@ void ErrorMsg(void *argv,uint error)
 {
     data_t *data = (data_t *)argv;
 
-    switch(error)
+    static bool is_handled = false;
+
+    if(!is_handled)
     {
-        case FileSysInitError:
+        switch(error)
+        {
+            case FileSysInitError:
 
-            data->UIEnable = false;
+                data->UIEnable = false;
 
-            os.time.delay(0.5,s);
+                os.time.delay(0.5,s);
 
-            Screen.SetFontColor(Screen.Self,WHITE);
-            Screen.Font.Backcolor = BLUE;
+                Screen.SetFontColor(Screen.Self,WHITE);
+                Screen.Font.Backcolor = BLUE;
 
-            Screen.Clear(Screen.Self,BLUE);
+                Screen.Clear(Screen.Self,BLUE);
 
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2," :) System Error     ");
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"    Reason:          ");
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    File Sys Not Init.");
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"    Please Restart.  ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2," :) System Error     ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"    Reason:          ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    File Sys Not Init.");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"    Please Restart.  ");
 
-            __Reset__();
+                is_handled = true;
 
-            break;
+                __Reset__();
 
-        case BusError:
+                break;
 
-            data->Error = BusError;
+            case BusError:
 
-            data->UIEnable = false;
+                data->Error = BusError;
 
-            Screen.SetFontColor(Screen.Self,WHITE);
-            Screen.Font.Backcolor = BLUE;
+                data->UIEnable = false;
 
-            Screen.Clear(Screen.Self,BLUE);
-            Screen.Clear(Screen.Self,BLUE);
-            Screen.Clear(Screen.Self,BLUE);
+                Screen.SetFontColor(Screen.Self,WHITE);
+                Screen.Font.Backcolor = BLUE;
 
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2," :) System Error     ");
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"    Reason:          ");
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    Bus Error.       ");
-            Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"    Please Restart.  ");
-            break;
+                Screen.Clear(Screen.Self,BLUE);
+                Screen.Clear(Screen.Self,BLUE);
+                Screen.Clear(Screen.Self,BLUE);
 
-        default:
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 2," :) System Error     ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) - 1,"    Reason:          ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 0,"    Bus Error.       ");
+                Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2) + 1,"    Please Restart.  ");
 
-            break;
+                is_handled = true;
+
+                break;
+
+            default:
+
+                break;
+        }
     }
 }
 void SmartCarSysDataSave(data_t *data)
@@ -189,6 +277,41 @@ void SmartCarSysDataSave(data_t *data)
     }
 }
 
+void SmartCarSysStateUpdate(void *data)
+{
+    //data_t *pdata = (data_t *)data;
+
+    uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
+
+    // if(pdata->CarState == true)
+    // {
+    //     Motor.Start(Motor.Self);
+    //     Servo.Start(Servo.Self);
+    // }
+    // else
+    // {
+    //     Motor.Stop(Motor.Self);
+    //     Servo.Stop(Servo.Self);
+    // }
+
+    if(bits & 0x04)
+        Screen.SetEnable(Screen.Self,true);
+    else
+        Screen.SetEnable(Screen.Self,false);
+}
+
+void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
+{
+    for(int i = 0 ; i < 6 ; i++)
+    {
+        if(self == KEY[i].Self)
+            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
+    }
+}
+
+bool StartRecord = false;
+bool FinRecord = false;
+
 float InputPwm[SystemIdeLen];
 float OutputSpeed[SystemIdeLen];
 
@@ -235,175 +358,6 @@ void MotorSystemIdentification()
     Screen.WriteXLine(Screen.Self,5,"Finished.");
 
     while(1);
-}
-/*
- * @Brief:CPU0 Main Func
- *  This Core is for Servo Control and Dadta Process.
- * */
-void Core0_Main()
-{
-    //extern bool RecordFlags;
-
-    //Servo.SetAngle(Servo.MaxAngle);
-
-    //while(1);
-
-    TIMx.Init(&TIM_Resources[2].TIMN);
-    TIMx.Init(&TIM_Resources[3].TIMN);
-
-    data_t *data = &Data[data_pointer];
-
-    //data->Is_AdjustAngle = true;
-
-    //Motor.SetPwmValue(Motor.Self,2000);
-
-    //MotorSystemIdentification();
-
-    //NNCU_Test();
-
-    while(1)
-    {
-        SmartCarSysDataSave(data);
-
-        ErrorMsg(data,data->Error);
-
-        //if(os.time.getnmsFlag(1000))
-        //GLED.Toggle(GLED.Self);
-        // os.time.delay(1.0,s);
-
-        //Console.WriteLine("ESensor:%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f",data->LESensor_NormalizedValue[0],data->LESensor_NormalizedValue[1],\
-           //                                                            data->LESensor_NormalizedValue[2],data->LESensor_NormalizedValue[3],\
-          //                                                             data->LESensor_NormalizedValue[4],data->LESensor_NormalizedValue[5],\
-          //                                                             data->LESensor_NormalizedValue[6]);
-
-        //Console.WriteLine("Yaw:%.3f,Pitch:%.3f,");
-//        data->UIEnable = false;
-//
-//        float dt = os.time.getTime(ms);
-//
-//        data->AIAngle = NeuralNetworkReasoning(data);
-//
-//        data->AIAngle = ConstrainFloat(data->Angle,Servo.MinAngle,Servo.MaxAngle);
-//
-//        dt = os.time.getTime(ms) - dt;
-//
-//        Screen.Clear(Screen.Self,WHITE);
-//        Screen.WriteXLine(Screen.Self,5,"Angle = %.3f",data->AIAngle);
-//        Screen.WriteXLine(Screen.Self,6,"Time = %.3f",dt);
-//
-//        os.time.delay(0.5,s);
-
-
-        if(os.time.getnmsFlag(2))
-        {
-            //Console.WriteLine("Speed:%f",data->Actual_Speed);
-            //Console.WriteLine("Ke:%.3f,%.3f,%.3f,%.3F",data->Ke[0],data->Ke[6],data->V_ESensorValue[0],data->V_ESensorValue[1]);
-        }
-
-
-        //os.time.delay(0.002,s);
-
-        if(os.time.getnmsFlag(1000))
-        {
-            Core0_CheckStatus();
-        }
-    }
-}
-
-/*
- * @Brief:CPU1 Main Func
- *  This Core is for Motor Control.
- * */
-void Core1_Main()
-{
-    TIMx.Init(&TIM_Resources[4].TIMN);
-
-    data_t *data = &Data[data_pointer];
-
-    while(1)
-    {
-        //if(os.time.getnmsFlag(1000))
-          //  BLED.Toggle(BLED.Self);
-         //   os.time.delay(1.0,s);
-
-        if(data->UIEnable)
-            os.task.UiUpdate(&UIData,sizeof(UIData));
-        Core1_CheckStatus();
-    }
-}
-
-/*
- * @Brief:CPU2 Main Func
- *  This Core is for Debug.
- * */
-void Core2_Main()
-{
-    data_t *data = &Data[data_pointer];
-
-    if(IMU.Is_Init)
-        TIMx.Init(&TIM_Resources[5].TIMN);
-
-    while(1)
-    {
-        if(IMU.Is_Init)
-        {
-            if(IMU.GetUpdateFlags(IMU.Self))
-            {
-                IMU.AttitudeUpdate(IMU.Self);
-                IMU.SetUpdateFlags(IMU.Self,false);
-            }
-        }
-
-        if(os.time.getnmsFlag(20))
-        {
-            if(data->UIEnable)
-                os.task.KeyScan(NULL,0);
-
-            os.task.SoftTimerUpdate(NULL,0);
-            os.task.DebugConsole(NULL,0);
-        }
-
-        if(os.time.getnmsFlag(1000))
-        {
-            Core2_CheckStatus();
-        }
-
-        //os.time.delay(0.001,s);
-    }
-}
-
-
-
-void SmartCarSysStateUpdate(void *data)
-{
-    //data_t *pdata = (data_t *)data;
-
-    uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
-
-    // if(pdata->CarState == true)
-    // {
-    //     Motor.Start(Motor.Self);
-    //     Servo.Start(Servo.Self);
-    // }
-    // else
-    // {
-    //     Motor.Stop(Motor.Self);
-    //     Servo.Stop(Servo.Self);
-    // }
-
-    if(bits & 0x04)
-        Screen.SetEnable(Screen.Self,true);
-    else
-        Screen.SetEnable(Screen.Self,false);
-}
-
-void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
-{
-    for(int i = 0 ; i < 6 ; i++)
-    {
-        if(self == KEY[i].Self)
-            Screen.WriteXLine(Screen.Self,0,"KEY[%d] Pressed.",i);
-    }
 }
 
 void Core0_CheckStatus()

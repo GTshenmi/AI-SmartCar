@@ -201,18 +201,18 @@ void Core0_HardWareInit()
 
     res = -1;
 
-    Screen.WriteXLine(Screen.Self,line+=2,"Init Gyro..........");
+    Screen.WriteXLine(Screen.Self,line+=2,"Init IMU..........");
 
-    if(bits & 0x02)
-        res = IMU.Init(IMU.Self);
+    //if(bits & 0x02)
+    //    res = IMU.Init(IMU.Self);
 
     if(res)
     {
-        Screen.WriteXLine(Screen.Self,line++,"Init Gyro........Fail");
+        Screen.WriteXLine(Screen.Self,line++,"Init IMU........Fail");
         Screen.WriteXLine(Screen.Self,line,"Error Code : %d",res);
     }
     else
-        Screen.WriteXLine(Screen.Self,line,"Init Gyro..........OK");
+        Screen.WriteXLine(Screen.Self,line,"Init IMU..........OK");
 }
 
 void Core0_SoftWareInit()
@@ -274,7 +274,7 @@ void UIParameterInit(void)
 
     Data[data_pointer].SPwmValue = 750;
 
-    UIData.Actual_Speed = &Data[data_pointer].Actual_Speed;
+    UIData.Actual_Speed = &Data[data_pointer].ActualSpeed;
     UIData.Angle =        &Data[data_pointer].Angle;
     UIData.Bias =         &Data[data_pointer].Bias;
     UIData.MPID_Kd =      &Data[data_pointer].M_PID.Kd;

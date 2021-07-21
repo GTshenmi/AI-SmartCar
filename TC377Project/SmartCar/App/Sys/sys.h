@@ -9,7 +9,6 @@
 #define APP_SYS_SYS_H_
 
 #include "os.h"
-#include "ctrlsys.h"
 #include "filter.h"
 #include "kalman_filter.h"
 #include "pid_ctrl.h"

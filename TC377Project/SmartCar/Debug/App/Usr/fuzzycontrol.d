@@ -198,8 +198,6 @@ fuzzycontrol.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 fuzzycontrol.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-fuzzycontrol.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 fuzzycontrol.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 fuzzycontrol.o :	../App/Sys/kalman_filter.h
@@ -266,6 +264,10 @@ fuzzycontrol.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 fuzzycontrol.o :	../OS/os.h
 ../OS/os.h :
+fuzzycontrol.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+fuzzycontrol.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 fuzzycontrol.o :	../App/foo.h
 ../App/foo.h :
 fuzzycontrol.o :	../OS/os.h

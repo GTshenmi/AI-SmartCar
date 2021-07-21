@@ -198,8 +198,6 @@ dataprocess.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 dataprocess.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-dataprocess.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 dataprocess.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 dataprocess.o :	../App/Sys/kalman_filter.h
@@ -266,6 +264,10 @@ dataprocess.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 dataprocess.o :	../OS/os.h
 ../OS/os.h :
+dataprocess.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+dataprocess.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 dataprocess.o :	../App/foo.h
 ../App/foo.h :
 dataprocess.o :	../OS/os.h

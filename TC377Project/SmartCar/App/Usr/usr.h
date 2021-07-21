@@ -14,5 +14,6 @@
 #include "element.h"
 #include "neuralnetwork.h"
 #include "attitude.h"
+#include "datacollection.h"
 
 #endif /* APP_USR_USR_H_ */

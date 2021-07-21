@@ -31,6 +31,13 @@
 
 typedef enum
 {
+    RASC_Wait,
+    RASC_Tracking,
+    RASC_Out,
+}rightangle_speedctrl;
+
+typedef enum
+{
     NoError = 0,
     FileSysInitError,
     BusError,
@@ -182,19 +189,26 @@ typedef enum
 
 typedef struct
 {
-      /*For Motor PID*/
+      uint16_t SampleValue;
+      float    NormalizedValue;
+      float    K;
+}esensor_data_t;
 
-      PID_TypeDef M_PID;     /*电机速度的PID控制器*/
+typedef struct
+{
+      /*For Motor*/
+
+      PID_TypeDef M_PID;       /*电机速度的PID控制器*/
       Fuzzy_TypeDef M_FuzzyKp;
       Fuzzy_TypeDef M_FuzzyKi;
 
-      Fuzzy_TypeDef FuzzySpeed;
+      Fuzzy_TypeDef FuzzySpeed;/*模糊速度*/
 
-      float Actual_Speed; /*实际速度*/
-      float Speed;        /*速度*/
+      float ActualSpeed;       /*实际速度*/
+      float Speed;             /*目标速度*/
       bool  Is_AdjustSpeed;
 
-      /*For Servo PID*/
+      /*For Servo*/
 
       float DynamicKp;
       PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
@@ -211,6 +225,7 @@ typedef struct
       bool Is_AdjustAngle;
       float Angle;        /*角度*/
       float A[10];
+      float B[10];
       float CorAngle;
       float AIAngle;
       float Da;
@@ -245,26 +260,9 @@ typedef struct
 
       elementwlock_t Element;  /*赛道元素类型*/
 
-      elementwlock_t LastElement;  /*赛道元素类型*/
-
       tracking_state_t TrackingState;
       
-
       cycle_dir_t CycleDir;
-
-      queue_t ESensorQueue;//ESensor
-      queue_t RawBiasQueue;//Raw Bias
-      queue_t ElementBiasQueue;//Element Bias
-      queue_t TrackingQueue;//LoseLine
-      queue_t ElementTypeQueue;//Element
-
-      queue_t HESensorQueue;
-      queue_t VESensorQueue;
-      queue_t OESensorQueue;
-
-      queue_t HBiasQueue;
-      queue_t VBiasQueue;
-      queue_t OBiasQueue;
 
       /*State*/
 
@@ -286,14 +284,11 @@ typedef struct
       float CycleInDistance;
       float Err;
 
-
       float x;
 
       float v;
 
       /*For Debug.*/
-
-      float *eSensorData;
 
 }data_t;
 

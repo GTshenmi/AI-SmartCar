@@ -79,20 +79,20 @@ void ParameterInit(void *argv)
 
     FuzzyControlInit(&Data[data_pointer]);
 
-    Queue.Init(&data->ESensorQueue,&ESensorDataQueue[0][0],8);
-
-    Queue.Init(&data->RawBiasQueue,&RBiasDataQueue[0],1);
-    Queue.Init(&data->ElementBiasQueue,&EBiasDataQueue[0],1);
-    Queue.Init(&data->TrackingQueue,&TrackingDataQueue[0],1);
-    Queue.Init(&data->ElementTypeQueue,&TrackingDataQueue[0],1);
-    
-    Queue.Init(&data->HESensorQueue,&HESensorDataQueue[0][0],4);
-    Queue.Init(&data->VESensorQueue,&VESensorDataQueue[0][0],2);
-    Queue.Init(&data->OESensorQueue,&OESensorDataQueue[0][0],2);
-
-    Queue.Init(&data->HBiasQueue,&HBiasQueue[0],1);
-    Queue.Init(&data->VBiasQueue,&VBiasQueue[0],1);
-    Queue.Init(&data->OBiasQueue,&OBiasQueue[0],1);
+//    Queue.Init(&data->ESensorQueue,&ESensorDataQueue[0][0],8);
+//
+//    Queue.Init(&data->RawBiasQueue,&RBiasDataQueue[0],1);
+//    Queue.Init(&data->ElementBiasQueue,&EBiasDataQueue[0],1);
+//    Queue.Init(&data->TrackingQueue,&TrackingDataQueue[0],1);
+//    Queue.Init(&data->ElementTypeQueue,&TrackingDataQueue[0],1);
+//
+//    Queue.Init(&data->HESensorQueue,&HESensorDataQueue[0][0],4);
+//    Queue.Init(&data->VESensorQueue,&VESensorDataQueue[0][0],2);
+//    Queue.Init(&data->OESensorQueue,&OESensorDataQueue[0][0],2);
+//
+//    Queue.Init(&data->HBiasQueue,&HBiasQueue[0],1);
+//    Queue.Init(&data->VBiasQueue,&VBiasQueue[0],1);
+//    Queue.Init(&data->OBiasQueue,&OBiasQueue[0],1);
 
 }
 

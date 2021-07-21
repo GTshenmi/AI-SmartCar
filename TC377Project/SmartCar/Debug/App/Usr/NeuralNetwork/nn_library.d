@@ -198,8 +198,6 @@ nn_library.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 nn_library.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-nn_library.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 nn_library.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 nn_library.o :	../App/Sys/kalman_filter.h

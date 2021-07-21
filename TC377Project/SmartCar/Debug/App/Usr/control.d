@@ -198,8 +198,6 @@ control.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 control.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-control.o :	../App/Sys/ctrlsys.h
-../App/Sys/ctrlsys.h :
 control.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 control.o :	../App/Sys/kalman_filter.h
@@ -266,6 +264,10 @@ control.o :	../App/Usr/attitude.h
 ../App/Usr/attitude.h :
 control.o :	../OS/os.h
 ../OS/os.h :
+control.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+control.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 control.o :	../App/foo.h
 ../App/foo.h :
 control.o :	../OS/os.h
