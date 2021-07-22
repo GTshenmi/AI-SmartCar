@@ -203,8 +203,8 @@ void Core0_HardWareInit()
 
     Screen.WriteXLine(Screen.Self,line+=2,"Init IMU..........");
 
-    //if(bits & 0x02)
-    //    res = IMU.Init(IMU.Self);
+    if(bits & 0x02)
+        res = IMU.Init(IMU.Self);
 
     if(res)
     {
@@ -332,7 +332,7 @@ void UIParameterInit(void)
     UIData.CycleWaitInDistance = &Data[data_pointer].CycleWaitInDistance;
     UIData.CycleInDistance = &Data[data_pointer].CycleInDistance;
     UIData.Err = &Data[data_pointer].Err;
-    UIData.Ea = &Data[data_pointer].FuzzySpeed.e[1];
+    UIData.Ea = &Data[data_pointer].M_FuzzySpeed.e[1];
     UIData.Da = &Data[data_pointer].Da;
 
     //UIData.ElementType = &Data[data_pointer].Element.Type;

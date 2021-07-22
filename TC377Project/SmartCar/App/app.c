@@ -32,6 +32,8 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
+    axis_t acc,gyro,mag;
+
     data_t *data = &Data[data_pointer];
 
     while(1)
@@ -39,6 +41,18 @@ void Core0_Main()
         SmartCarSysDataSave(data);
 
         ErrorMsg(data,data->Error);
+
+        if(os.time.getnmsFlag(500))
+        {
+            IMU.Read(IMU.Self,&acc,&gyro,&mag);
+
+            Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
+            Console.WriteLine("gyro:%f,%f,%f",gyro.x,gyro.y,gyro.z);
+            Console.WriteLine("mag:%f,%f,%f",mag.x,mag.y,mag.z);
+        }
+
+        /*Attitude Update*/
+
 
         if(os.time.getnmsFlag(1000))
         {
@@ -61,6 +75,9 @@ void Core1_Main()
     {
         if(data->UIEnable)
             os.task.UiUpdate(&UIData,sizeof(UIData));
+
+        ErrorMsg(data,data->Error);
+
         Core1_CheckStatus();
     }
 }
@@ -86,6 +103,8 @@ void Core2_Main()
 //                IMU.SetUpdateFlags(IMU.Self,false);
 //            }
 //        }
+
+        ErrorMsg(data,data->Error);
 
         if(os.time.getnmsFlag(20))
         {

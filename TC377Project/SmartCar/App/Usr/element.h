@@ -12,33 +12,6 @@
 #include "sys.h"
 #include "parameter.h"
 
-inline bool Is_Boundary(data_t *data)
-{
-#define BoundaryGate 10.0
-
-   uint8_t is_boundary = 0;
-
-   is_boundary += ((data->H_ESensorValue[0] >= BoundaryGate) &&\
-            (data->H_ESensorValue[1] <= BoundaryGate) &&\
-            (data->H_ESensorValue[2] <= BoundaryGate) &&\
-            (data->V_ESensorValue[0] <= BoundaryGate) &&\
-            (data->V_ESensorValue[1] <= BoundaryGate) &&\
-            (data->O_ESensorValue[0] <= BoundaryGate) &&\
-            (data->O_ESensorValue[1] <= BoundaryGate) &&\
-            (data->H_ESensorValue[3] <= BoundaryGate));
-
-   is_boundary += ((data->H_ESensorValue[0] <= BoundaryGate) &&\
-           (data->H_ESensorValue[1] <= BoundaryGate) &&\
-           (data->H_ESensorValue[2] <= BoundaryGate) &&\
-           (data->V_ESensorValue[0] <= BoundaryGate) &&\
-           (data->V_ESensorValue[1] <= BoundaryGate) &&\
-           (data->O_ESensorValue[0] <= BoundaryGate) &&\
-           (data->O_ESensorValue[1] <= BoundaryGate) &&\
-           (data->H_ESensorValue[3] >= BoundaryGate));
-
-   return is_boundary;
-
-}
 /*ÅÐ¶ÏÆÂµÀ*/
 inline bool Is_Ramp(data_t *data)
 {
@@ -61,28 +34,12 @@ inline bool Is_Corner(data_t *data)
 
 inline bool Is_RightAngle(data_t *data)
 {
-    if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
-    {
-        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
-    }
-    else
-    {
-        return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
-    }
+    return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
 }
 
 inline bool Is_RightAngleOut(data_t *data,sint32_t rightAngleTrackingCount)
 {
-
-    if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
-    {
-        return ((((rightAngleTrackingCount <= 0)) && ((data->H_ESensorValue[0] >= 30.0) || (data->H_ESensorValue[2] >= 30.0) || (data->H_ESensorValue[1] >= 30.0) || (data->h_sum >= 60.0)))  || (rightAngleTrackingCount <= -1000));
-    }
-    else
-    {
-        return ((((rightAngleTrackingCount <= 0)) && ((data->H_ESensorValue[0] >= 35.0) || (data->H_ESensorValue[3] >= 35.0) || (data->H_ESensorValue[1] >= 35.0) || (data->H_ESensorValue[2] >= 35.0)))  || (rightAngleTrackingCount <= -1000));
-    }
-
+    return ((((rightAngleTrackingCount <= 0)) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0)))  || (rightAngleTrackingCount <= -1000));
 }
 
 inline bool Is_RightAngleBackToStraight(data_t *data)
@@ -94,26 +51,90 @@ inline bool Is_Cycle(data_t *data)
 {
     if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
     {
-        float sum_l = data->H_ESensorValue[0] + data->O_ESensorValue[0];
-        float sum_r = data->H_ESensorValue[2] + data->O_ESensorValue[1];
+        float sum_l = data->HESensor[0].Value + data->OESensor[0].Value;
+        float sum_r = data->HESensor[3].Value + data->OESensor[1].Value;
 
-        float sum = sum_l + sum_r + data->H_ESensorValue[1];
+        float sum = sum_l + sum_r + data->HESensor[1].Value;
 
-        //return (((fabs(sum_l - sum_r) >= 60.0) or (sum >= 340)) and ((sum_l >= 150) || (sum_r >= 150)) and (data->v_sum <= 50.0) and (fabs(data->v_difference) >= 5.0) and (data->o_sum >= 100.0) and (data->V_ESensorValue[0] <= 25.0) and(data->V_ESensorValue[1] <= 25.0));
-
-        return (((fabs(sum_l - sum_r) >= 60.0) or (sum >= 340)) and ((sum_l >= 150) || (sum_r >= 150))); //and (fabs(data->v_difference) >= 5.0) and (fabs(data->h_difference) >= 20.0) and (data->o_sum >= 100.0) and (data->V_ESensorValue[0] <= 25.0) and (data->V_ESensorValue[1] <= 25.0));
-        //return ((h_sum >= 160.0) and ((sum_1 >= 180.0) or (sum_2 >= 180.0)) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0) || (data->v_sum >= 20.0)) and (fabs(data->v_difference) >= 15.0));
+        return (((fabs(sum_l - sum_r) >= 60.0) or (sum >= 340)) and ((sum_l >= 150) || (sum_r >= 150)));
     }
     else
     {
-//        float sum_l = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
-//        float sum_r = data->H_ESensorValue[1] + data->H_ESensorValue[2] + data->H_ESensorValue[3];
-
-        float h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2] + data->H_ESensorValue[3];
-
-        return ((h_sum >= 200.0) and ((data->V_ESensorValue[0] >= 15.0) || (data->V_ESensorValue[1] >= 15.0)) and (fabs(data->v_difference) >= 20.0));
-        //return (((h_sum1 >= 160.0) or (h_sum2 >= 160.0)) and (fabs(data->o_difference) >= 40.0) and (fabs(data->v_difference) >= 10.0));//(data->o_difference >= 40.0) and ((data->V_ESensorValue[0] >= 5.0) || (data->V_ESensorValue[1] >= 5.0) || (data->v_sum >= 10.0)) and (fabs(data->v_difference) >= 5.0));
+        return ((data->h_sum4 >= 200.0) and ((data->VESensor[0].Value >= 15.0) || (data->VESensor[1].Value >= 15.0)) and (fabs(data->v_difference) >= 20.0));
     }
+}
+
+inline void CycleClearCnt(cycle_cnt_t *cnt)
+{
+    cnt->Confirm = 0;
+    cnt->Wait = 0;
+    cnt->WaitIn = 0;
+    cnt->Flags = 0;
+    cnt->In = 0;
+    cnt->Out = 0;
+}
+
+inline void CycleClearFlag(cycle_flag_t *flag)
+{
+    flag->isLeftHSensorFall = false;
+    flag->isLeftOSensorFall = false;
+    flag->isMidHSensorFall = false;
+    flag->isOESensorMaxValue = false;
+    flag->isRightHSensorFall = false;
+    flag->isRightOSensorFall = false;
+}
+
+inline bool Is_CycleConfirmed(data_t *data,cycle_cnt_t *cnt,cycle_flag_t *flag)
+{
+    if(data->OESensor[0].K >= 5.0 || data->OESensor[1].K >= 5.0)
+    {
+        flag->isOESensorMaxValue = true;
+    }
+
+    if(flag->isOESensorMaxValue)
+    {
+        if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall)
+        {
+            flag->isLeftOSensorFall = true;
+
+            cnt->Flags++;
+        }
+
+        if(data->OESensor[1].K  < 0.0 && !flag->isRightOSensorFall)
+        {
+            flag->isRightOSensorFall = true;
+            cnt->Flags++;
+        }
+
+        if((data->HESensor[2].K <= 0.0 || data->HESensor[3].K <= 0.0) && !flag->isMidHSensorFall)
+        {
+            flag->isMidHSensorFall = true;
+
+            cnt->Flags++;
+        }
+
+        if(data->HESensor[0].K <= 0.0 && !flag->isLeftHSensorFall)
+        {
+            flag->isLeftHSensorFall = true;
+
+            cnt->Flags++;
+
+        }
+
+        if(data->HESensor[3].K <= 0.0 && !flag->isLeftHSensorFall)
+        {
+            flag->isRightHSensorFall = true;
+
+            cnt->Flags++;
+        }
+
+        if(cnt->Flags >= 2)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 inline float CycleInFunc(data_t *data,float x)
@@ -148,30 +169,12 @@ inline bool Is_CycleIn(data_t *data,float isCyclePos,float inDistance)
 
 inline bool Is_CycleOut(data_t *data,uint32_t cycleOutCnt)
 {
-    float h_sum = 0.0;
-
-    if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
-        h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
-    else
-        h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[3];
-
-    return (h_sum >= 180.0 && cycleOutCnt >= 1000);
+    return (data->h_sum3 >= 180.0 && cycleOutCnt >= 1000);
 }
 
 inline bool Is_CycleBackToStraight(data_t *data)
 {
-    float h_sum = 0.0;
-
-    if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
-    {
-        h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[1] + data->H_ESensorValue[2];
-        return (h_sum <= 150.0 || (data->H_ESensorValue[0] <=50.0 && data->H_ESensorValue[2] <= 50.0));
-    }
-    else
-    {
-        h_sum = data->H_ESensorValue[0] + data->H_ESensorValue[2] + data->H_ESensorValue[3];
-        return (h_sum <= 150.0 && (data->H_ESensorValue[0] <=50.0 && data->H_ESensorValue[3] <= 50.0));
-    }
+    return (data->h_sum3 <= 150.0 && (data->HESensor[0].Value <=50.0 && data->HESensor[3].Value <= 50.0));
 }
 
 
@@ -186,30 +189,58 @@ inline bool Is_CrossOut(data_t *data)
              fabs(data->v_sum >= 80.0)));
 }
 
+inline bool Is_Boundary(data_t *data)
+{
+#define BoundaryGate 10.0
+
+   uint8_t is_boundary = 0;
+
+   is_boundary += ((data->HESensor[0].Value >= BoundaryGate) &&\
+                   (data->HESensor[1].Value <= BoundaryGate) &&\
+                   (data->HESensor[2].Value <= BoundaryGate) &&\
+                   (data->VESensor[0].Value <= BoundaryGate) &&\
+                   (data->VESensor[1].Value <= BoundaryGate) &&\
+                   (data->OESensor[0].Value <= BoundaryGate) &&\
+                   (data->OESensor[1].Value <= BoundaryGate) &&\
+                   (data->HESensor[3].Value <= BoundaryGate));
+
+   is_boundary += ((data->HESensor[0].Value <= BoundaryGate) &&\
+                   (data->HESensor[1].Value <= BoundaryGate) &&\
+                   (data->HESensor[2].Value <= BoundaryGate) &&\
+                   (data->VESensor[0].Value <= BoundaryGate) &&\
+                   (data->VESensor[1].Value <= BoundaryGate) &&\
+                   (data->OESensor[0].Value <= BoundaryGate) &&\
+                   (data->OESensor[1].Value <= BoundaryGate) &&\
+                   (data->HESensor[3].Value >= BoundaryGate));
+
+   return is_boundary;
+
+}
+
 #define LoseLineGateValue 10.0
 
 inline bool Is_LoseLine(data_t *data)
 {
-    return ((data->H_ESensorValue[0] <= LoseLineGateValue) &&\
-            (data->H_ESensorValue[1] <= LoseLineGateValue) &&\
-            (data->H_ESensorValue[2] <= LoseLineGateValue) &&\
-            (data->V_ESensorValue[0] <= LoseLineGateValue) &&\
-            (data->V_ESensorValue[1] <= LoseLineGateValue) &&\
-            (data->O_ESensorValue[0] <= LoseLineGateValue) &&\
-            (data->O_ESensorValue[1] <= LoseLineGateValue) &&\
-            (data->H_ESensorValue[3] <= LoseLineGateValue));
+    return ((data->HESensor[0].Value <= LoseLineGateValue) &&\
+            (data->HESensor[1].Value <= LoseLineGateValue) &&\
+            (data->HESensor[2].Value <= LoseLineGateValue) &&\
+            (data->VESensor[0].Value <= LoseLineGateValue) &&\
+            (data->VESensor[1].Value <= LoseLineGateValue) &&\
+            (data->OESensor[0].Value <= LoseLineGateValue) &&\
+            (data->OESensor[1].Value <= LoseLineGateValue) &&\
+            (data->HESensor[3].Value <= LoseLineGateValue));
 
     //return 0;
 }
 
 inline bool Is_SearchedLine(data_t *data)
 {
-    return ((data->H_ESensorValue[0] >= LoseLineGateValue) ||\
-            (data->H_ESensorValue[1] >= LoseLineGateValue) ||\
-            (data->H_ESensorValue[2] >= LoseLineGateValue) ||\
-            (data->V_ESensorValue[0] >= LoseLineGateValue) ||\
-            (data->V_ESensorValue[1] >= LoseLineGateValue) ||\
-            (data->H_ESensorValue[3] >= LoseLineGateValue));
+    return ((data->HESensor[0].Value >= LoseLineGateValue) ||\
+            (data->HESensor[1].Value >= LoseLineGateValue) ||\
+            (data->HESensor[2].Value >= LoseLineGateValue) ||\
+            (data->VESensor[0].Value >= LoseLineGateValue) ||\
+            (data->VESensor[1].Value >= LoseLineGateValue) ||\
+            (data->HESensor[3].Value >= LoseLineGateValue));
 }
 
 void SpecialElementHandler(void *argv);

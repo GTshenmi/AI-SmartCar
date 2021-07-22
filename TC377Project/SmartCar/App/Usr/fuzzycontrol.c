@@ -102,7 +102,7 @@ sint32_t SFuzzyRule[7][7];
 //            {1, 2, 3, 3, 4, 5, 6},
 //            {3, 4, 5, 6, 6, 6, 6]}},
 
-float FuzzyControl(fuzzy_ctrl_t *fuzzy, float target, float actual)
+float FuzzyControl(Fuzzy_TypeDef *fuzzy, float target, float actual)
 {
     float EF[2] = { 0.0,0.0 }, DF[2] = {0.0,0.0};
 
@@ -419,191 +419,6 @@ float MUFF[13] = { 2000,2200,2400,2600,2800,3000,3200,3000,2800,2600,2400,2200,2
 
 float FuzzySpeedControl(Fuzzy_TypeDef *fuzzy,float target,float actual)
 {
-//    float EF[2] = { 0.0,0.0 }, DF[2] = {0.0,0.0};
-//
-//    int i = 0;
-//
-//    int En = 0, Dn = 0;
-//
-//    sint32_t Un[4];
-//
-//    float UF[4];
-//
-//    float U[13];
-//
-//    for (i = 0; i < 13; i++)
-//    {
-//        U[i] = 0.0;
-//    }
-//
-//    /*Calculate E and Ec.*/
-//
-//    fuzzy->e[0] = fuzzy->e[1];
-//    fuzzy->e[1] = target - actual;
-//
-//    fuzzy->ec = fuzzy->e[1] - fuzzy->e[0];
-//
-//    /*Calculate Membership.*/
-//
-//    if (fuzzy->e[1] < MEFF[0])
-//    {
-//        EF[0] = 1.0;
-//        EF[1] = 0.0;
-//
-//        En = -3;
-//    }
-//    else if (fuzzy->e[1] >= MEFF[6])
-//    {
-//        EF[0] = 0.0;
-//        EF[1] = 1.0;
-//        //En = 3;
-//        En = 2;
-//    }
-//    else
-//    {
-//        for (i = 1; i <= 6; i++)
-//        {
-//            if ((fuzzy->e[1] < MEFF[i]) && (fuzzy->e[1] >= MEFF[i - 1])) //ÓÐ2Ìõ¹æÔòÉúÐ§
-//            {
-//                En = i - 1 - 3;
-//
-//                EF[0] = -(fuzzy->e[1] - MEFF[i]) / (MEFF[i] - MEFF[i - 1]);
-//
-//                EF[1] = (fuzzy->e[1] - MEFF[i - 1]) / (MEFF[i] - MEFF[i - 1]);
-//            }
-//        }
-//    }
-//
-//    if (fuzzy->ec < MDFF[0])
-//    {
-//        DF[0] = 1.0;
-//        DF[1] = 0.0;
-//
-//        Dn = -3;
-//    }
-//    else if (fuzzy->ec >= MDFF[6])
-//    {
-//        DF[0] = 0.0;
-//        DF[1] = 1.0;
-//        //Dn = 3;
-//        Dn = 2;
-//    }
-//    else
-//    {
-//        for (i = 1; i <= 6; i++)
-//        {
-//            if (fuzzy->ec < MDFF[i] && fuzzy->ec >= MDFF[i - 1]) //ÓÐ2Ìõ¹æÔòÉúÐ§
-//            {
-//                Dn = i - 1 - 3;
-//
-//                DF[0] = -(fuzzy->ec - MDFF[i]) / (MDFF[i] - MDFF[i - 1]);
-//
-//                DF[1] = (fuzzy->ec - MDFF[i - 1]) / (MDFF[i] - MDFF[i - 1]);
-//            }
-//        }
-//    }
-//
-//    /*Fuzzy Reasoning.*/
-//
-//    Un[0] = MFuzzyRule[En + 3][Dn + 3] + 6;      //2*2 = 4Ìõ¹æÔòÉúÐ§
-//
-//    UF[0] = min(EF[0], DF[0]);
-//
-//    Un[1] = MFuzzyRule[En + 3 + 1][Dn + 3] + 6;
-//    UF[1] = min(EF[1], DF[0]);
-//
-//    Un[2] = MFuzzyRule[En + 3][Dn + 3 + 1] + 6;
-//    UF[2] = 1.0 * min(EF[0], DF[1]);
-//
-//    Un[3] = MFuzzyRule[En + 3 + 1][Dn + 3 + 1] + 6;
-//    UF[3] = 1.0 * min(EF[1], DF[1]);
-//
-//    if (Un[0] == Un[1])    //Í¬Á¥Êô¶ÈÓïÑÔÈ¡´ó
-//    {
-//        if (UF[0] > UF[1])
-//            UF[1] = 0;
-//        else
-//            UF[0] = 0;
-//    }
-//    if (Un[0] == Un[2])
-//    {
-//        if (UF[0] > UF[2])
-//            UF[2] = 0;
-//        else
-//            UF[0] = 0;
-//    }
-//    if (Un[0] == Un[3])
-//    {
-//        if (UF[0] > UF[3])
-//            UF[3] = 0;
-//        else
-//            UF[0] = 0;
-//    }
-//
-//    if (Un[1] == Un[2])
-//    {
-//        if (UF[1] > UF[2])
-//            UF[2] = 0;
-//        else
-//            UF[1] = 0;
-//    }
-//    if (Un[1] == Un[3])
-//    {
-//        if (UF[1] > UF[3])
-//            UF[3] = 0;
-//        else
-//            UF[1] = 0;
-//    }
-//
-//    if (Un[2] == Un[3])
-//    {
-//        if (UF[2] > UF[3])
-//            UF[3] = 0;
-//        else
-//            UF[2] = 0;
-//    }
-//
-//    for (i = 0; i < 4; i++)
-//    {
-//        U[Un[i]] += UF[i];
-//    }
-//
-//    /*Anti Fuzzy(Gravity Method)*/
-//
-//    float sum0 = 0.0;
-//    float sum1 = 0.0;
-//
-//    for (i = 0; i < 13; i++)
-//    {
-//        sum0 += U[i] * MUFF[i];
-//
-//        sum1 += U[i];
-//    }
-//
-//    if (fabs(sum1) < 1e-6)
-//        fuzzy->U = 0.0;
-//    else
-//        fuzzy->U = sum0 / sum1;
-//
-//    return fuzzy->U;
-
-    fuzzy->e[0] = fuzzy->e[1];
-
-    fuzzy->e[1] = target - actual;
-
-    fuzzy->ec = fuzzy->e[1] - fuzzy->e[0];
-
-//    data_t *data = &Data[data_pointer];
-
-//    if(!(fabs(fuzzy->ec) <= 1e-6))
-//    {
-//        data->Da = fuzzy->ec;
-//    }
-//    if(fabs(fuzzy->ec) >= fabs(data->Da))
-//    {
-//        data->Da = fuzzy->ec;
-//    }
-
     float EFF[13] = {-90.0,-80.0,-70.0,-60.0,-30.0,-20.0,0.0,20.0,30.0,60.0,70.0,80.0,90.0};
 
     float DFF[13] = {-60.0,-45.0,-30.0,-20.0,-10.0,-5.0,0.0,5.0,10.0,20.0,30.0,45.0,60.0};
@@ -623,18 +438,15 @@ float FuzzySpeedControl(Fuzzy_TypeDef *fuzzy,float target,float actual)
     }
     else if (e >= EFF[6])
     {
-        //En = 3;
         E = 6;
     }
     else
     {
         for (int i = 1; i <= 13; i++)
         {
-            if ((e < EFF[i]) && (e >= EFF[i - 1])) //ÓÐ2Ìõ¹æÔòÉúÐ§
+            if ((e < EFF[i]) && (e >= EFF[i - 1]))
             {
                 E = i - 1 - 6 + (e - EFF[i - 1])/(EFF[i] - EFF[i - 1]);
-
-                //En = i - 1 - 3;
             }
         }
     }
@@ -645,18 +457,15 @@ float FuzzySpeedControl(Fuzzy_TypeDef *fuzzy,float target,float actual)
     }
     else if (ec >= DFF[6])
     {
-        //En = 3;
         D = 6;
     }
     else
     {
         for (int i = 1; i <= 13; i++)
         {
-            if ((ec < DFF[i]) && (ec >= DFF[i - 1])) //ÓÐ2Ìõ¹æÔòÉúÐ§
+            if ((ec < DFF[i]) && (ec >= DFF[i - 1]))
             {
                 D = i - 1 - 6 + (e - DFF[i - 1])/(DFF[i] - DFF[i - 1]);
-
-                //En = i - 1 - 3;
             }
         }
     }
@@ -764,189 +573,3 @@ float FuzzyPID(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy,float target,float ac
     FuzzyCtrl(iFuzzy,target,actual);
     return 0.0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// void Fuzzy_CalculateMatrixR()
-// {
-//     uint32_t k = 0;
-
-//     uint32_t U_Index = 0;
-
-//     for(int i = 0 ; i < 169 ;i++)
-//     {
-//         for(int j = 0 ; j <13 ;j++)
-//         {
-//             R[i][j] = 0.0;
-//         }
-//     }
-
-//     for(int e_index = 0 ; e_index < 7 ; e_index++)
-//     {
-//         for(int ec_index = 0 ; ec_index < 7 ;ec_index++) /*Calculae U(E(i) X EC(j)) for i , j = 1,2...7*/
-//         {
-//             U_Index = FuzzyRule[e_index][ec_index] + 3;
-
-//             for(int i = 0 ; i < 13 ;i++)
-//             {
-//                 for(int j = 0 ; j < 13 ;j++)
-//                 {
-//                     if(E_MemberShipR[e_index][i] > EC_MemberShipR[ec_index][j])
-//                         R1[i][j] = EC_MemberShipR[ec_index][j];
-//                     else
-//                         R1[i][j] = E_MemberShipR[e_index][i];
-
-//                     R2[k++] = R1[i][j];      
-//                 }
-//             }
-
-//             for(int i = 0 ; i < 163 ;i++)
-//             {
-//                 for(int j = 0 ; j < 13 ;j++)
-//                 {
-//                     if(R2[i] > U_MemberShipR[U_Index][j])
-//                         R3[i][j] = U_MemberShipR[U_Index][j];
-//                     else
-//                         R3[i][j] = R2[j];
-
-//                     if(R3[i][j] > R[i][j])
-//                         R[i][j] = R3[i][j];
-//                 }
-//             }
-
-//         }
-//     }
-// }
-
-//  void Fuzzy_Ctrl(fuzzy_ctrl_t *fuzzy,float target,float actual)
-//  {
-//       /*Calculate Error and Delta Error.*/
-//       fuzzy->e[0] = fuzzy->e[1];
-//       fuzzy->e[1] = target - actual;
-      
-//       fuzzy->ec = fuzzy->e[1] - fuzzy->e[0];
-
-//       /*Calculate MemberShip.*/
-
-//       for(int i = 0 ; i < 13 ; i++)
-//       {
-//           E_MemberShip[i] = 0.0;
-//           EC_MemberShip[i] = 0.0;
-//       }
-
-//       if(fuzzy->e[1] < EFF[0])
-//       {
-//           E_MemberShip[0] = 1.0;
-//           E_MemberShip[1] = 0.0;      
-//       }
-//       else if(fuzzy->e[1] > EFF[12])
-//       {
-//           E_MemberShip[12] = 1.0;
-//           E_MemberShip[11] = 0.0;    
-//       }
-//       else
-//       {
-//           for(int i = 1 ; i < 12 ; i++)
-//           {
-//               if(fuzzy->e[1] <= EFF[i] && fuzzy->e[1] >= EFF[i - 1])
-//               {
-//                   E_MemberShip[i] =(-fuzzy->e[1] + EFF[i])/(EFF[i] - EFF[i-1]);
-//                   E_MemberShip[i - 1] = (1.0 - E_MemberShip[i])/2.0;
-//                   E_MemberShip[i+i] = (1.0 - E_MemberShip[i])/2.0;
-//               }
-//           }         
-//       }
-
-//       if(fuzzy->ec < DFF[0])
-//       {
-//           EC_MemberShip[0] = 1.0;
-//           EC_MemberShip[1] = 0.0;             
-//       }
-//       else if(fuzzy->ec > DFF[12])
-//       {
-//           EC_MemberShip[12] = 1.0;
-//           EC_MemberShip[11] = 0.0;          
-//       }
-//       else
-//       {
-//           for(int i = 1 ; i < 12 ; i++)
-//           {
-//               if(fuzzy->ec <= DFF[i] && fuzzy->ec >= DFF[i - 1])
-//               {
-//                   EC_MemberShip[i] =(-fuzzy->e[1] + DFF[i])/(DFF[i] - DFF[i-1]);
-//                   EC_MemberShip[i - 1] = (1.0 - EC_MemberShip[i])/2.0;
-//                   EC_MemberShip[i+i] = (1.0 - EC_MemberShip[i])/2.0;
-//               }       
-//           }
-//       }
-
-//       /*Fuzzy Reasoning.*/
-
-//       uint32_t k = 0;
-
-//       for(int i = 0 ; i < 13 ; i++)                   //����ģ������ E_MemberShip[13] �� EC_MemberShip[13] �� �ѿ���������ת��1ά����ECC[169]��
-//       {
-//           for(int j = 0 ; j < 13 ; j++)
-//           {
-//               if(E_MemberShip[i] < EC_MemberShip[j])  //ȡС����
-//                   EEC[k] = E_MemberShip[i];         
-//               else
-//                   EEC[k] = EC_MemberShip[j];
-              
-//               k++;
-//           }
-//       }
-
-//       float temp = 0.0;
-
-//       for(int i = 0 ; i < 16 ;i++)
-//           Result[i] = 0.0;
-
-//       /*Calculate ECC[169] X R[169][13]*/  
-//       for(int i = 0 ; i < 169 ;i++)         
-//       {
-//           for(int j = 0 ; j < 13;j++)   //*ȡС +ȡ��
-//           {
-//               if(EEC[i] > R[i][j])
-//                 temp = R[i][j];
-//               else
-//                 temp = EEC[i];
-              
-//               if(temp > Result[j])
-//                   Result[j] = temp;
-//           }
-//       }
-
-//       /*��ģ��(���ķ�)*/
-
-//       fuzzy->U = 0.0;
-
-//       float sum0 = 0.0;
-//       float sum1 = 0.0;
-
-//       for(int i = 0 ; i < 13 ; i++)
-//       {
-//           sum0 += Result[i] * UFF[i];
-//           sum1 += Result[i];
-//       }
-
-//       fuzzy->U = sum0/sum1;
-//  }

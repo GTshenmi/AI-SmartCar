@@ -45,7 +45,7 @@ void SpeedControl(void *argv)
             }
             else
             {
-                data->Speed = FuzzySpeedControl(&data->FuzzySpeed,0.0,data->Angle * 100.0/210.0);
+                data->Speed = FuzzySpeedControl(&data->M_FuzzySpeed,0.0,data->Angle * 100.0/210.0);
             }
 
             RightAngleSpeedCtrl(data);

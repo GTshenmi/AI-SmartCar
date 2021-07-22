@@ -1,7 +1,7 @@
 /*
  * element.c
  *
- *  Created on: 2020骞�12鏈�6鏃�
+ *  Created on: 2020年12月6日
  *      Author: 936305695
  *  @Brief:
  *          This file is for the special element.
@@ -14,7 +14,7 @@ void Cycle_Handler(data_t *data);
 void Cross_Handler(data_t *data);
 void RightAngle_Handler(data_t *data);
 void Ramp_Handler(data_t *data);
-void StopSituationDetect(void);
+void StopSituationDetect(data_t *data);
 
 
 float ElementDetermine(void *argv)
@@ -59,18 +59,18 @@ float ElementDetermine(void *argv)
         //DebugBeepOff;
     }
 
-    if(loseLineCnt >= 1500 && data->CarMode != DebugMode)
-    {
-        Motor.Break(Motor.Self);
-        Servo.Break(Servo.Self);
-    }
+//    if(loseLineCnt >= 1500 && data->CarMode != DebugMode)
+//    {
+//        Motor.Break(Motor.Self);
+//        Servo.Break(Servo.Self);
+//    }
 
     return data->Element.Type * 1.0;
 
 }
 
 /*
- * @Brief:鐗规畩鍏冪礌澶勭悊鎺ュ彛鍑芥暟
+ * @Brief:特殊元素处理接口函数
  * */
 void SpecialElementHandler(void *argv)
 {
@@ -82,14 +82,14 @@ void SpecialElementHandler(void *argv)
 
     Cycle_Handler(data);
 
-    LoseLine_Handler(data);
+    //LoseLine_Handler(data);
 
     Ramp_Handler(data);
 
-    StopSituationDetect();
+    StopSituationDetect(data);
 }
 
-void StopSituationDetect(void) {
+void StopSituationDetect(data_t *data) {
     //GPIO Resources[27]
     static _Bool firstExecute = 1;
     if (firstExecute) {
@@ -97,7 +97,7 @@ void StopSituationDetect(void) {
         firstExecute = 0;
     }
 
-    if ((!GPIOx.Read(&GPIO_Resources[27].GPION)) && (os.time.getTimes() >= 10)) {
+    if ((!GPIOx.Read(&GPIO_Resources[27].GPION)) && (os.time.getTimes() >= 10 && (data->x >= 100.0))) {
         Motor.Break(Motor.Self);
     }
 }
@@ -117,31 +117,20 @@ void Cycle_Handler(data_t *data)
     static cycle_state_t cycleState = CC_Wait;
     static cycle_dir_t   cycleDir = CC_DirUndefined;
 
+    static cycle_cnt_t cycleCnt = {0,0,0,0,0,0};
+
+    static cycle_flag_t cycleFlag = {false,false,false,false,false,false};
+
     static float bias = 0.0;
-
-    static sint32_t cycleWaitCnt = 0;
-
-    static sint32_t cycleWaitInCnt = 0;
-
-    static sint32_t cycleInCnt = 0;
-
-    static sint32_t cycleOutCnt;
-
-    static sint32_t cycleFlagCnt = 0;
-
-    static bool isMidESensorMaxValue = false;
-    static bool isLeftOSensorFall = false;
-    static bool isRightOSensorFall = false;
-    static bool isMidHSensorFall = false;
-
-    static bool isLeftHSensorFall = false;
-    static bool isRightHSensorFall = false;
 
     static float isCyclePos = 0.0;
 
     static float waitInDistance = 0.0;
 
     static float inDistance = 0.0;
+
+    float sum_l = 0.0;
+    float sum_r = 0.0;
 
     switch(cycleState)
     {
@@ -153,7 +142,17 @@ void Cycle_Handler(data_t *data)
 
         case CC_Exception_Handler:
 
+            bias = 0.0;
+
             isCyclePos = 0.0;
+
+            waitInDistance = 0.0;
+
+            inDistance = 0.0;
+
+            CycleClearCnt(&cycleCnt);
+
+            CycleClearFlag(&cycleFlag);
 
             cycleState = CC_Wait;
 
@@ -161,70 +160,83 @@ void Cycle_Handler(data_t *data)
 
         case CC_Wait:
 
-            cycleWaitCnt--;
+            cycleCnt.Wait--;
 
-            if(cycleWaitCnt <= 0)
-                cycleWaitCnt = 0;
+            if(cycleCnt.Wait <= 0)
+                cycleCnt.Wait = 0;
 
-            if(data->Element.Type == Cycle && cycleWaitCnt <= 0)
+            if(data->Element.Type == Cycle && cycleCnt.Wait <= 0)
             {
-                cycleState = CC_Confirm;
+                cycleState = CC_Config;
 
                 isCyclePos = data->x;
             }
 
             break;
 
-        case CC_Confirm:
+        case CC_Config:
 
-            if(1)
+            sum_l = data->HESensor[0].Value + data->VESensor[0].Value;
+
+            sum_r = data->HESensor[3].Value + data->VESensor[1].Value;
+
+            if(sum_l > sum_r)
             {
-                float sum_l,sum_r;
-
-                sum_l = data->H_ESensorValue[0] + data->V_ESensorValue[0];
-
-                sum_r = data->H_ESensorValue[3] + data->V_ESensorValue[1];
-
-                if(sum_l > sum_r)
-                {
-                    cycleDir = CC_DirLeft;
-                }
-                else
-                {
-                    cycleDir = CC_DirRight;
-                }
-
-                if(cycleDir == CC_DirLeft)
-                {
-                    bias = 100.0;
-                }
-                else
-                {
-                    bias = -100.0;
-                }
-
-                waitInDistance = data->CycleWaitInDistance;
-                inDistance = data->CycleInDistance;
-
-                BLED.ON(BLED.Self);
-
-                cycleState = CC_WaitIn;
-
+                cycleDir = CC_DirLeft;
             }
             else
             {
-                    cycleState = CC_Undefined;
-                    data->Element.Exception.CC = CC_MisJudge;
-                    data->Element.Exception.Info[Cycle][Cycle] = CC_Confirm;
+                cycleDir = CC_DirRight;
             }
+
+            if(cycleDir == CC_DirLeft)
+            {
+                bias = 100.0;
+            }
+            else
+            {
+                bias = -100.0;
+            }
+
+            waitInDistance = data->CycleWaitInDistance;
+            inDistance = data->CycleInDistance;
+
+            CycleClearCnt(&cycleCnt);
+
+            CycleClearFlag(&cycleFlag);
+
+            BLED.ON(BLED.Self);
+
+            cycleState = CC_Confirm;
+
+            break;
+
+        case CC_Confirm:
+
+            cycleCnt.Confirm--;
+
+            if(Is_CycleConfirmed(data,&cycleCnt,&cycleFlag))
+            {
+                cycleState = CC_WaitIn;
+            }
+
+            if(cycleCnt.Confirm <= -2000.0)
+                cycleState = CC_Undefined;
 
             break;
 
         case CC_WaitIn:
 
+            cycleCnt.WaitIn--;
+
             if(Is_ArriveCycleInPoint(data,isCyclePos,waitInDistance))
             {
                 cycleState = CC_In;
+            }
+
+            if(cycleCnt.WaitIn <= -2000.0)
+            {
+                cycleState = CC_Undefined;
             }
 
             break;
@@ -232,29 +244,16 @@ void Cycle_Handler(data_t *data)
 
         case CC_In:
 
-            data->Bias = bias;
+            cycleCnt.In--;
 
-            cycleInCnt--;
+            data->Bias = bias;
 
             if(Is_CycleIn(data,isCyclePos,inDistance))
             {
-                isLeftOSensorFall = false;
-                isRightOSensorFall = false;
-                isMidHSensorFall = false;
-                isRightHSensorFall = false;
-                isLeftHSensorFall = false;
-                isMidESensorMaxValue = false;
-
-                cycleWaitInCnt = 0;
-
-                cycleInCnt = 0;
-
-                cycleFlagCnt = 0;
-
                 cycleState = CC_Tracking;
             }
 
-            if(cycleInCnt <= -2000)
+            if(cycleCnt.In <= -2000)
             {
                 cycleState = CC_Undefined;
             }
@@ -263,9 +262,7 @@ void Cycle_Handler(data_t *data)
 
         case CC_Tracking:
 
-            cycleOutCnt++;
-
-            data->Is_AdjustAngle = false;
+            cycleCnt.Out++;
 
             data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
 
@@ -273,14 +270,7 @@ void Cycle_Handler(data_t *data)
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
 
-            if(data->CarMode == SAutoBoot_Mode)
-            {
-                data->Is_AdjustAngle = true;
-
-                data->Angle = data->AIAngle;
-            }
-
-            if(Is_CycleOut(data,cycleOutCnt) || cycleOutCnt >= 6000 || (data->x - isCyclePos) >= 2000.0)
+            if(Is_CycleOut(data,cycleCnt.Out) || cycleCnt.Out >= 6000 || (data->x - isCyclePos) >= 2000.0)
             {
                 cycleState = CC_Out;
             }
@@ -289,24 +279,19 @@ void Cycle_Handler(data_t *data)
 
         case CC_Out:
 
-            if(Is_CycleBackToStraight(data) || cycleOutCnt >= 6000 || (data->x - isCyclePos) >= 2000.0)
+            if(Is_CycleBackToStraight(data) || cycleCnt.Out >= 6000 || (data->x - isCyclePos) >= 2000.0)
             {
                 cycleState = CC_Wait;
                 data->Element.Type = None;
 
-                cycleWaitCnt = 500;
-
-                data->Is_AdjustAngle = false;
-                data->Is_AdjustSpeed = false;
+                cycleCnt.Wait = 500;
 
                 BLED.OFF(BLED.Self);
             }
 
-            if(cycleOutCnt >= 6000)
+            if(cycleCnt.Out >= 6000)
             {
                 cycleState = CC_Undefined;
-                data->Element.Exception.CC = CC_Err;
-                data->Element.Exception.Info[Cycle][Cycle] = CC_Out;
             }
 
             break;
@@ -333,10 +318,24 @@ void RightAngle_Handler(data_t *data)
 
             if(data->Element.Type == RightAngle)
             {
-                rightAngleState = RA_Confirm;
+                rightAngleState = RA_Config;
 
-                goto RA_CONFIRM;
+                goto RA_CONFIG;
             }
+
+            break;
+
+        case RA_Config:
+
+            RA_CONFIG:
+
+            rightAngleTrackingCount = 100;
+
+            bias = fsign(data->v_difference) * 100.0;
+
+            rightAngleState = RA_Confirm;
+
+            goto RA_CONFIRM;
 
             break;
 
@@ -346,15 +345,9 @@ void RightAngle_Handler(data_t *data)
 
             if(1)
             {
-                rightAngleTrackingCount = 100;
-
                 GLED.ON(GLED.Self);
 
-                bias = fsign(data->v_difference) * 100.0;
-
                 rightAngleState = RA_Tracking;
-
-                data->Bias = bias;
 
                 goto RA_TRACKING;
             }
@@ -374,10 +367,6 @@ void RightAngle_Handler(data_t *data)
 
             if(Is_RightAngleOut(data,rightAngleTrackingCount))
             {
-                data->Is_AdjustAngle = false;
-
-                data->Is_AdjustSpeed = false;
-
                 rightAngleState = RA_Out;
             }
 
@@ -536,7 +525,6 @@ void Cross_Handler(data_t *data)
         case CS_Out:
 
             crossCnt --;
-
 
             if(crossCnt <= 0)
             {

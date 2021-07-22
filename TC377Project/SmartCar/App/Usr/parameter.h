@@ -13,22 +13,6 @@
 
 #define MAX_DATA_LEN 5
 
-#define Lock(x)  ((x).Lock = 1)
-#define pLock(x) ((x)->Lock == 1)
-#define Unlock(x) ((x).Lock = 0)
-#define pUnlock(x) ((x)->Lock = 0) 
-
-#define IsLocked(x) ((x).Lock)
-
-#define SetValueWLock(x,data,value) \
-    do                              \
-    {                               \
-        if(!IsLocked(x))             \
-        {                           \
-            x.data = value;         \
-        }                           \
-    }while(0);
-
 typedef enum
 {
     RASC_Wait,
@@ -41,7 +25,6 @@ typedef enum
     NoError = 0,
     FileSysInitError,
     BusError,
-
 }err_t;
 /* 丢线 Begin*/
 typedef enum
@@ -60,6 +43,7 @@ typedef enum
 {
     RA_Undefined,
     RA_Wait,
+    RA_Config,
     RA_Confirm,
     RA_Tracking,
     RA_Out,
@@ -68,6 +52,29 @@ typedef enum
 
 
 /* 环岛 Begin*/
+
+typedef struct
+{
+    sint32_t Wait;
+    sint32_t Confirm;
+    sint32_t WaitIn;
+    sint32_t In;
+    sint32_t Out;
+    sint32_t Flags;
+
+}cycle_cnt_t;
+
+
+typedef struct
+{
+    bool isOESensorMaxValue;
+    bool isLeftOSensorFall;
+    bool isRightOSensorFall;
+    bool isMidHSensorFall;
+
+    bool isLeftHSensorFall;
+    bool isRightHSensorFall;
+}cycle_flag_t;
 typedef enum
 {
     CC_DirUndefined,
@@ -81,6 +88,7 @@ typedef enum
     CC_Exception_Handler,
 
     CC_Wait,
+    CC_Config,
     CC_Confirm,
     CC_WaitIn,
 
@@ -155,20 +163,7 @@ typedef enum
 
 typedef struct
 {
-    uint EXT;
-
-    uint CC;
-
-    uint RA;
-
-    float Info[10][10];
-
-}element_exception_t;
-
-typedef struct
-{
     uint Type;
-    element_exception_t Exception;
     uint Point;
     bool Lock;
 }elementwlock_t;
@@ -189,8 +184,7 @@ typedef enum
 
 typedef struct
 {
-      uint16_t SampleValue;
-      float    NormalizedValue;
+      float    Value;
       float    K;
 }esensor_data_t;
 
@@ -202,7 +196,7 @@ typedef struct
       Fuzzy_TypeDef M_FuzzyKp;
       Fuzzy_TypeDef M_FuzzyKi;
 
-      Fuzzy_TypeDef FuzzySpeed;/*模糊速度*/
+      Fuzzy_TypeDef M_FuzzySpeed;/*模糊速度*/
 
       float ActualSpeed;       /*实际速度*/
       float Speed;             /*目标速度*/
@@ -213,7 +207,7 @@ typedef struct
       float DynamicKp;
       PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
 
-      fuzzy_ctrl_t S_Fuzzy;
+      Fuzzy_TypeDef S_Fuzzy;  /*舵机模糊控制器*/
 
       float _Bias;
       float Bias;            /*实际中线偏差*/
@@ -223,9 +217,11 @@ typedef struct
       float NNOutput;
 
       bool Is_AdjustAngle;
-      float Angle;        /*角度*/
-      float A[10];
-      float B[10];
+
+      float Angle;          /*角度*/
+      float A[10];          /*历史十次角度*/
+      float B[10];          /*历史十次偏差*/
+
       float CorAngle;
       float AIAngle;
       float Da;
@@ -236,9 +232,9 @@ typedef struct
       float LESensor_NormalizedValue[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
       float SESensor_NormalizedValue[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
 
-      float H_ESensorValue[4];
-      float V_ESensorValue[2];
-      float O_ESensorValue[2];
+      esensor_data_t HESensor[4];
+      esensor_data_t VESensor[4];
+      esensor_data_t OESensor[4];
 
       float Ke[MAX_SESENSOR_NUM];
 
@@ -247,6 +243,13 @@ typedef struct
       float o_difference;
 
       float h_sum;
+      float h_suml2;
+      float h_sumr2;
+      float h_sum2;
+      float h_suml3;
+      float h_sumr3;
+      float h_sum3;
+      float h_sum4;
       float v_sum;
       float o_sum;
 
@@ -264,6 +267,13 @@ typedef struct
       
       cycle_dir_t CycleDir;
 
+      cycle_state_t CycleState;
+
+      float CycleWaitInDistance;
+      float CycleInDistance;
+
+      float Err;
+
       /*State*/
 
       err_t Error;
@@ -277,12 +287,6 @@ typedef struct
       uint CarState;
 
       const uint CarMode;
-
-      cycle_state_t CycleState;
-
-      float CycleWaitInDistance;
-      float CycleInDistance;
-      float Err;
 
       float x;
 
