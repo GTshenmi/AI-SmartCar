@@ -44,11 +44,20 @@ void Core0_Main()
 
         if(os.time.getnmsFlag(500))
         {
-            IMU.Read(IMU.Self,&acc,&gyro,&mag);
+            uint8_t res = IMU.Read(IMU.Self,&acc,&gyro,&mag);
 
-            Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
-            Console.WriteLine("gyro:%f,%f,%f",gyro.x,gyro.y,gyro.z);
-            Console.WriteLine("mag:%f,%f,%f",mag.x,mag.y,mag.z);
+            if(res)
+            {
+                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine("---------------Error Code : %u-----------------",res);
+                Console.WriteLine("--------------------------------------------------");
+            }
+            else
+            {
+                Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
+                Console.WriteLine("gyro:%f,%f,%f",gyro.x,gyro.y,gyro.z);
+                Console.WriteLine("mag:%f,%f,%f",mag.x,mag.y,mag.z);
+            }
         }
 
         /*Attitude Update*/

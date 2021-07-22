@@ -210,7 +210,8 @@ uint8_t IICx_ReadBytesFromSlave(iicx_t *iic,uint8_t dev, uint8_t reg, uint8_t le
     }
     IICx_Stop(iic); //产生一个停止条件
 
-    return count;
+    //return count;
+    return 0;
 }
 
 uint8_t IICx_WriteBytesToSlave(iicx_t *iic,uint8_t dev, uint8_t reg, uint8_t length, uint8_t *bytes)

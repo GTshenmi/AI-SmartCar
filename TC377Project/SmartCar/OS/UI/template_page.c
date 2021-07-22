@@ -238,9 +238,9 @@ void UIPagesInit (void)
     UIPages[29].secondaryTargetData = UIData.h_bias;
     UIPages[30].secondaryTargetData = UIData.v_bias;
 
-     UIPages[33].secondaryTargetData = UIData.Ke;
+    UIPages[33].secondaryTargetData = UIData.Ke;
 
-     UIPages[34].secondaryTargetData = UIData.x;
+    UIPages[34].secondaryTargetData = UIData.x;
 
     UIPages[35].secondaryTargetData = UIData.CycleInDistance;
     UIPages[36].secondaryTargetData = UIData.CycleWaitInDistance;

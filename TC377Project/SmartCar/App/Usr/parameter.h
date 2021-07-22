@@ -175,6 +175,7 @@ typedef enum
     ManualBoot_Mode = 2,   /*手动巡线模式*/
     DebugMode = 3,         /*调试*/
     SAutoBoot_Mode = 4,    /*短前瞻巡线*/
+    DataCollection = 5,
 }car_mode_t;
 
 typedef enum
@@ -192,25 +193,25 @@ typedef struct
 {
       /*For Motor*/
 
-      PID_TypeDef M_PID;       /*电机速度的PID控制器*/
+      PID_TypeDef M_PID;         /*Motor Fuzzy PID Controler*/
       Fuzzy_TypeDef M_FuzzyKp;
       Fuzzy_TypeDef M_FuzzyKi;
 
-      Fuzzy_TypeDef M_FuzzySpeed;/*模糊速度*/
+      Fuzzy_TypeDef M_FuzzySpeed;/*Fuzzy Speed Controler*/
 
-      float ActualSpeed;       /*实际速度*/
-      float Speed;             /*目标速度*/
+      float ActualSpeed;
+      float Speed;
       bool  Is_AdjustSpeed;
 
       /*For Servo*/
 
       float DynamicKp;
-      PID_TypeDef S_PID;     /*舵机中线偏差的PID控制器*/
+      PID_TypeDef S_PID;        /*Servo PID Controler(Not Use)*/
 
-      Fuzzy_TypeDef S_Fuzzy;  /*舵机模糊控制器*/
+      Fuzzy_TypeDef S_Fuzzy;    /*Servo Fuzzy Controler*/
 
-      float _Bias;
-      float Bias;            /*实际中线偏差*/
+//      float _Bias;
+      float Bias;               /*Actual Centerline Deviation*/
 
       uint16_t SPwmValue;
 
@@ -218,19 +219,19 @@ typedef struct
 
       bool Is_AdjustAngle;
 
-      float Angle;          /*角度*/
-      float A[10];          /*历史十次角度*/
-      float B[10];          /*历史十次偏差*/
+      float Angle;            /*角度*/
+      float A[10];            /*历史十次角度*/
+      float B[10];            /*历史十次偏差*/
 
       float CorAngle;
       float AIAngle;
       float Da;
 
-      uint16_t LESensor_SampleValue[MAX_LESENSOR_NUM]; /*ADC值*/
-      uint16_t SESensor_SampleValue[MAX_SESENSOR_NUM]; /*ADC值*/
+      uint16_t LESensor_SampleValue[MAX_LESENSOR_NUM];  /*长前瞻采样值*/
+      uint16_t SESensor_SampleValue[MAX_SESENSOR_NUM];  /*短前瞻采样值*/
 
-      float LESensor_NormalizedValue[MAX_LESENSOR_NUM];/*归一化后的长前瞻参数*/
-      float SESensor_NormalizedValue[MAX_SESENSOR_NUM];/*归一化后的短前瞻参数*/
+      float LESensor_NormalizedValue[MAX_LESENSOR_NUM];
+      float SESensor_NormalizedValue[MAX_SESENSOR_NUM];
 
       esensor_data_t HESensor[4];
       esensor_data_t VESensor[4];
