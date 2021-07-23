@@ -15,7 +15,13 @@ void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    static uint32_t i = 0;
+
     static bool is_firstsetspeed = true;
+
+    extern bool StartRecord;
+
+    extern bool FinRecord;
 
     switch(data->CarMode)
     {
@@ -54,11 +60,30 @@ void SpeedControl(void *argv)
 
         case DebugMode:
 
-            if(is_firstsetspeed)
+            if(StartRecord)
             {
-                data->Speed = 2000;
-                is_firstsetspeed = false;
+                i++;
+
+                if(i >= SystemIdeLen)
+                {
+                    StartRecord = false;
+                    FinRecord = true;
+                }
+
+                extern float InputPwm[SystemIdeLen];
+                extern float OutputSpeed[SystemIdeLen];
+
+                OutputSpeed[i] = Motor.GetSpeed(Motor.Self);
+
+                Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
+
             }
+
+//            if(is_firstsetspeed)
+//            {
+//                data->Speed = 2000;
+//                is_firstsetspeed = false;
+//            }
 
             break;
 
@@ -75,9 +100,9 @@ void SpeedControl(void *argv)
 
     float formatedSpeed = 0.0;
 
-    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // x * 500 /10000 = 100
+    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // target * 0.055
 
-    data->ActualSpeed = Motor.GetSpeed(Motor.Self);
+    data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        // actual
 
     data->x += data->ActualSpeed * 0.000028 * 100.0;
 
@@ -120,7 +145,7 @@ void AngleControl(void *argv)
 
             if(Is_LoseLine(data))
             {
-                data->Angle = fsign(data->A[9] * 0.6 + data->A[8] * 0.4) * Servo.MaxAngle;
+                data->Angle = fsign(data->A[9] * 0.6 + data->A[8] * 0.4) * Servo.MaxAngle;//LowPass Filter.
             }
             else
             {
@@ -209,14 +234,25 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 
     float tspeed,aspeed = 0.0;
 
+    /*
+     *
+     * target * 0.055 * 100.0 /550.0
+     *
+     * actual * 100.0/ 550.0
+     *
+     * */
+
     tspeed = 100.0 * NormalizeFloat(target_speed,0.0,self->MaxSpeed);
 
     aspeed = 100.0 * NormalizeFloat(actual_speed,0.0,self->MaxSpeed);
 
 //    FuzzyPID(&data->M_FuzzyKp,&data->M_FuzzyKi,target_speed,actual_speed);
-//
-//    data->M_PID.Kp += data->M_FuzzyKp.U;
-//    data->M_PID.Ki += data->M_FuzzyKi.U;
+
+//    data->M_PID.Kp = 3.6 + data->M_FuzzyKp.U;
+//    data->M_PID.Ki = 0.5 + data->M_FuzzyKi.U;
+
+//    data->M_PID.Kp = ConstrainFloat(data->M_PID.Kp,1.0,20.0);
+//    data->M_PID.Ki = ConstrainFloat(data->M_PID.Ki,0.0,2.0);
 
     if(0)
     {

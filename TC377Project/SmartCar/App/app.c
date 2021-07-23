@@ -44,6 +44,8 @@ void Core0_Main()
 
         if(os.time.getnmsFlag(500))
         {
+            //uint8_t res = IMU.Read(IMU.Self,&data->Acc,&data->Gyro,&data->Mag);
+
             uint8_t res = IMU.Read(IMU.Self,&acc,&gyro,&mag);
 
             if(res)
@@ -345,9 +347,13 @@ float OutputSpeed[SystemIdeLen];
 
 void MotorSystemIdentification()
 {
-    //data_t *data = &Data[data_pointer];
+    data_t *data = &Data[data_pointer];
 
     //float dt = 0.002;
+
+    data->UIEnable = false;
+
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Input : Step Signal.");
 
     /*Input : Step Singal*/
     for(int i = 0 ; i < SystemIdeLen/3 ; i++)
@@ -364,6 +370,8 @@ void MotorSystemIdentification()
     }
 
     StartRecord = true;
+
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Start Recording Response.");
 
     /*Record Response*/
 //    for(int i = 0 ; i < SystemIdeLen ; i ++)
@@ -383,7 +391,9 @@ void MotorSystemIdentification()
 
     Screen.SetFontColor(Screen.Self,RED);
 
-    Screen.WriteXLine(Screen.Self,5,"Finished.");
+    Screen.Clear(Screen.Self,WHITE);
+
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Recording Finished.");
 
     while(1);
 }

@@ -74,7 +74,6 @@ sint32_t SABMSFuzzyRule[7][7] =
 
 sint32_t SFuzzyRule[7][7];
 
-
 //sint32_t SFuzzyRule[7][7] =
 //{
 //                    {-6,-6,-6,-6,-5,-5,-4},

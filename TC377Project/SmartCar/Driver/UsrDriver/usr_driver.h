@@ -12,7 +12,6 @@
 #include "lcd_driver.h"
 #include "camera.h"
 #include "sd.h"
-#include "fatfs_sd.h"
 #include "eeprom.h"
 #include "mpu9250.h"
 

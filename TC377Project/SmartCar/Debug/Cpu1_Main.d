@@ -118,8 +118,6 @@ Cpu1_Main.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 Cpu1_Main.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-Cpu1_Main.o :	../Driver/UsrDriver/SD/fatfs_sd.h
-../Driver/UsrDriver/SD/fatfs_sd.h :
 Cpu1_Main.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
 Cpu1_Main.o :	../Driver/UsrDriver/MPU9250/mpu9250.h

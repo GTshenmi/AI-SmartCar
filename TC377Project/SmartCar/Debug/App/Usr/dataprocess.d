@@ -120,8 +120,6 @@ dataprocess.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 dataprocess.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-dataprocess.o :	../Driver/UsrDriver/SD/fatfs_sd.h
-../Driver/UsrDriver/SD/fatfs_sd.h :
 dataprocess.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
 dataprocess.o :	../Driver/UsrDriver/MPU9250/mpu9250.h

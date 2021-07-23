@@ -20,7 +20,9 @@
 
 #define FIs_Equal(x,y) (fabs((x) - (y)) < Zero)
 
-#define fsign(x) ((x) > 0.0 ?  1.0 : -1.0 )
+#define fsign(x) ((x) > (0.0) ?  (1.0) : (-1.0) )
+
+#define sign(x)  ((x) > (0) ? (1) : (-1))
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 

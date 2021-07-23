@@ -120,8 +120,6 @@ datacollection.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 datacollection.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-datacollection.o :	../Driver/UsrDriver/SD/fatfs_sd.h
-../Driver/UsrDriver/SD/fatfs_sd.h :
 datacollection.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
 datacollection.o :	../Driver/UsrDriver/MPU9250/mpu9250.h

@@ -116,8 +116,6 @@ screen.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 screen.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-screen.o :	../Driver/UsrDriver/SD/fatfs_sd.h
-../Driver/UsrDriver/SD/fatfs_sd.h :
 screen.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
 screen.o :	../Driver/UsrDriver/MPU9250/mpu9250.h

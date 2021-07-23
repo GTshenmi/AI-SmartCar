@@ -30,24 +30,45 @@ typedef enum
 typedef enum
 {
     LL_Undefined,
+    LL_ExceptionHandler,
     LL_Wait,
+    LL_Config,
+    LL_Confirm,
     LL_Lose,      //丢线
     LL_BackSearchLine,
     LL_SearchLine,//找线
     LL_Searched   //已找到
 }loseline_state_t;
+
+typedef struct
+{
+    float bias;
+}loseline_config;
+
 /* 丢线 End*/
 
 /* 直角 Begin*/
 typedef enum
 {
     RA_Undefined,
+    RA_ExceptionHandler,
     RA_Wait,
     RA_Config,
     RA_Confirm,
     RA_Tracking,
     RA_Out,
 }rightangle_state_t;
+
+typedef struct
+{
+    float bias;
+}rightangle_config;
+
+typedef struct
+{
+    sint32_t Tracking;
+}rightangle_cnt;
+
 /* 直角 End*/
 
 
@@ -59,11 +80,29 @@ typedef struct
     sint32_t Confirm;
     sint32_t WaitIn;
     sint32_t In;
+    sint32_t Tracking;
     sint32_t Out;
     sint32_t Flags;
 
-}cycle_cnt_t;
+}cycle_cnt;
 
+typedef struct
+{
+    float bias;
+
+    float isCyclePos;
+
+    float waitInDistance;
+
+    float inDistance;
+
+    float dYaw;
+
+    float inCyclePointYaw;
+
+    float sum_l;
+    float sum_r;
+}cycle_config;
 
 typedef struct
 {
@@ -75,6 +114,7 @@ typedef struct
     bool isLeftHSensorFall;
     bool isRightHSensorFall;
 }cycle_flag_t;
+
 typedef enum
 {
     CC_DirUndefined,
@@ -102,10 +142,10 @@ typedef enum
 typedef enum
 {
     CS_Undefined,
+    CS_ExceptionHandler,
     CS_Wait,
+    CS_Config,
     CS_Confirm,
-
-
     CS_In,
     CS_Tracking,
     CS_Out,
@@ -125,6 +165,16 @@ typedef enum
     CS_Left,
     CS_Right,
 }cross_info_t;
+
+typedef struct
+{
+    sint32_t interval;
+}cross_config;
+
+typedef struct
+{
+    sint32_t cnt;
+}cross_cnt;
 /* 十字 Begin*/
 
 
@@ -292,6 +342,11 @@ typedef struct
       float x;
 
       float v;
+
+      attitude_t attitude;
+      axis_t     acc;
+      axis_t     gyro;
+      axis_t     mag;
 
       /*For Debug.*/
 

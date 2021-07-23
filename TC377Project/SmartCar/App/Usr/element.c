@@ -14,6 +14,7 @@ void Cycle_Handler(data_t *data);
 void Cross_Handler(data_t *data);
 void RightAngle_Handler(data_t *data);
 void Ramp_Handler(data_t *data);
+void RustAngle_Handler(data_t *data);
 void StopSituationDetect(data_t *data);
 
 
@@ -82,9 +83,11 @@ void SpecialElementHandler(void *argv)
 
     Cycle_Handler(data);
 
-    //LoseLine_Handler(data);
+    LoseLine_Handler(data);
 
     Ramp_Handler(data);
+
+    RustAngle_Handler(data);
 
     StopSituationDetect(data);
 }
@@ -104,12 +107,12 @@ void StopSituationDetect(data_t *data) {
 
 void Ramp_Handler(data_t *data)
 {
-
+    //data->Bias = 0.0;
 }
 
 void RustAngle_Handler(data_t *data)
 {
-    data->Bias = Servo.GetMaxAngle(Servo.Self);
+    //data->Bias = Servo.GetMaxAngle(Servo.Self) * fsign(data->HESensor[0].Value - data->HESensor[1].Value);
 }
 
 void Cycle_Handler(data_t *data)
@@ -117,20 +120,11 @@ void Cycle_Handler(data_t *data)
     static cycle_state_t cycleState = CC_Wait;
     static cycle_dir_t   cycleDir = CC_DirUndefined;
 
-    static cycle_cnt_t cycleCnt = {0,0,0,0,0,0};
+    static cycle_cnt cycleCnt = {0,0,0,0,0,0,0};
 
     static cycle_flag_t cycleFlag = {false,false,false,false,false,false};
 
-    static float bias = 0.0;
-
-    static float isCyclePos = 0.0;
-
-    static float waitInDistance = 0.0;
-
-    static float inDistance = 0.0;
-
-    float sum_l = 0.0;
-    float sum_r = 0.0;
+    static cycle_config  cycleConfig = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
     switch(cycleState)
     {
@@ -142,13 +136,7 @@ void Cycle_Handler(data_t *data)
 
         case CC_Exception_Handler:
 
-            bias = 0.0;
-
-            isCyclePos = 0.0;
-
-            waitInDistance = 0.0;
-
-            inDistance = 0.0;
+            CycleClearConfig(&cycleConfig);
 
             CycleClearCnt(&cycleCnt);
 
@@ -168,19 +156,28 @@ void Cycle_Handler(data_t *data)
             if(data->Element.Type == Cycle && cycleCnt.Wait <= 0)
             {
                 cycleState = CC_Config;
-
-                isCyclePos = data->x;
             }
 
             break;
 
         case CC_Config:
 
-            sum_l = data->HESensor[0].Value + data->VESensor[0].Value;
+            CycleClearConfig(&cycleConfig);
+            CycleClearCnt(&cycleCnt);
+            CycleClearFlag(&cycleFlag);
 
-            sum_r = data->HESensor[3].Value + data->VESensor[1].Value;
+            cycleConfig.inCyclePointYaw = 0.0;
 
-            if(sum_l > sum_r)
+            cycleConfig.dYaw = 0.0;
+
+            cycleConfig.waitInDistance = data->CycleWaitInDistance;
+            cycleConfig.inDistance = data->CycleInDistance;
+
+            cycleConfig.sum_l = data->HESensor[0].Value + data->VESensor[0].Value;
+
+            cycleConfig.sum_r = data->HESensor[3].Value + data->VESensor[1].Value;
+
+            if(cycleConfig.sum_l > cycleConfig.sum_r)
             {
                 cycleDir = CC_DirLeft;
             }
@@ -191,19 +188,12 @@ void Cycle_Handler(data_t *data)
 
             if(cycleDir == CC_DirLeft)
             {
-                bias = 100.0;
+                cycleConfig.bias = 100.0;
             }
             else
             {
-                bias = -100.0;
+                cycleConfig.bias = -100.0;
             }
-
-            waitInDistance = data->CycleWaitInDistance;
-            inDistance = data->CycleInDistance;
-
-            CycleClearCnt(&cycleCnt);
-
-            CycleClearFlag(&cycleFlag);
 
             BLED.ON(BLED.Self);
 
@@ -217,6 +207,10 @@ void Cycle_Handler(data_t *data)
 
             if(Is_CycleConfirmed(data,&cycleCnt,&cycleFlag))
             {
+                cycleConfig.inCyclePointYaw = data->attitude.yaw;
+
+                cycleConfig.isCyclePos = data->x;
+
                 cycleState = CC_WaitIn;
             }
 
@@ -229,7 +223,9 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.WaitIn--;
 
-            if(Is_ArriveCycleInPoint(data,isCyclePos,waitInDistance))
+            cycleConfig.dYaw = data->attitude.yaw - cycleConfig.inCyclePointYaw;
+
+            if(Is_ArriveCycleInPoint(data,&cycleConfig))
             {
                 cycleState = CC_In;
             }
@@ -246,9 +242,9 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.In--;
 
-            data->Bias = bias;
+            data->Bias = cycleConfig.bias;
 
-            if(Is_CycleIn(data,isCyclePos,inDistance))
+            if(Is_CycleIn(data,&cycleConfig))
             {
                 cycleState = CC_Tracking;
             }
@@ -262,15 +258,17 @@ void Cycle_Handler(data_t *data)
 
         case CC_Tracking:
 
-            cycleCnt.Out++;
+            cycleCnt.Tracking++;
+
+            cycleConfig.dYaw = data->attitude.yaw - cycleConfig.inCyclePointYaw;
 
             data->Bias = ((data->h_difference + data->v_difference) / data->h_sum) * 100.0;
 
-            data->Bias = data->Bias * 0.95 + fsign(bias) * 100.0 * 0.05;
+            data->Bias = data->Bias * 0.95 + fsign(cycleConfig.bias) * 100.0 * 0.05;
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
 
-            if(Is_CycleOut(data,cycleCnt.Out) || cycleCnt.Out >= 6000 || (data->x - isCyclePos) >= 2000.0)
+            if(Is_CycleOut(data,&cycleCnt,&cycleConfig) || cycleCnt.Tracking >= 6000 || (data->x - cycleConfig.isCyclePos) >= 2000.0)
             {
                 cycleState = CC_Out;
             }
@@ -279,7 +277,9 @@ void Cycle_Handler(data_t *data)
 
         case CC_Out:
 
-            if(Is_CycleBackToStraight(data) || cycleCnt.Out >= 6000 || (data->x - isCyclePos) >= 2000.0)
+            cycleCnt.Out++;
+
+            if(Is_CycleBackToStraight(data) || cycleCnt.Tracking >=  6000 || cycleCnt.Out >= 500 || (data->x - cycleConfig.isCyclePos) >= 2000.0)
             {
                 cycleState = CC_Wait;
                 data->Element.Type = None;
@@ -289,7 +289,7 @@ void Cycle_Handler(data_t *data)
                 BLED.OFF(BLED.Self);
             }
 
-            if(cycleCnt.Out >= 6000)
+            if(cycleCnt.Out >= 500 || cycleCnt.Tracking >= 6000)
             {
                 cycleState = CC_Undefined;
             }
@@ -308,12 +308,26 @@ void RightAngle_Handler(data_t *data)
 {
     static rightangle_state_t rightAngleState = RA_Wait;
 
-    static sint32_t rightAngleTrackingCount = 0;
+    static rightangle_cnt rightAngleCnt = {0};
 
-    static float bias = 0.0;
+    static rightangle_config rightAngleConfig = {0};
 
     switch(rightAngleState)
     {
+        case RA_Undefined:
+
+            rightAngleState = RA_ExceptionHandler;
+
+            break;
+
+        case RA_ExceptionHandler:
+
+            RightAngleClearCnt(&rightAngleCnt);
+            RightAngleClearConfig(&rightAngleConfig);
+            rightAngleState = RA_Wait;
+
+            break;
+
         case RA_Wait:
 
             if(data->Element.Type == RightAngle)
@@ -329,9 +343,12 @@ void RightAngle_Handler(data_t *data)
 
             RA_CONFIG:
 
-            rightAngleTrackingCount = 100;
+            RightAngleClearCnt(&rightAngleCnt);
+            RightAngleClearConfig(&rightAngleConfig);
 
-            bias = fsign(data->v_difference) * 100.0;
+            rightAngleCnt.Tracking = 100;
+
+            rightAngleConfig.bias = fsign(data->v_difference) * 100.0;
 
             rightAngleState = RA_Confirm;
 
@@ -359,13 +376,13 @@ void RightAngle_Handler(data_t *data)
             RA_TRACKING:
 
             if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
-                bias = fsign(data->v_difference) * 100.0;
+                rightAngleConfig.bias = fsign(data->v_difference) * 100.0;
 
-            data->Bias = bias;
+            data->Bias = rightAngleConfig.bias;
 
-            rightAngleTrackingCount--;
+            rightAngleCnt.Tracking--;
 
-            if(Is_RightAngleOut(data,rightAngleTrackingCount))
+            if(Is_RightAngleOut(data,&rightAngleCnt))
             {
                 rightAngleState = RA_Out;
             }
@@ -383,10 +400,6 @@ void RightAngle_Handler(data_t *data)
 
             break;
 
-        case RA_Undefined:
-
-            break;
-
         default:
 
             break;
@@ -397,7 +410,7 @@ void LoseLine_Handler(data_t *data)
 {
     static loseline_state_t loseLineState = LL_Wait;
 
-    static float bias = 0.0;
+    static loseline_config  loseLineConfig = {0};
 
     if(data->TrackingState == Normal_Tracking)
     {
@@ -406,20 +419,47 @@ void LoseLine_Handler(data_t *data)
 
     switch(loseLineState)
     {
+        case LL_Undefined:
+
+            loseLineState = LL_ExceptionHandler;
+
+            break;
+
+        case LL_ExceptionHandler:
+
+            LoseLineClearConfig(&loseLineConfig);
+
+            loseLineState = LL_Wait;
+
+            break;
+
         case LL_Wait:
 
             if(data->TrackingState == LoseLine)
             {
-                loseLineState = LL_Lose;
+                loseLineState = LL_Config;
             }
 
             break;
 
-        case LL_Lose:
+        case LL_Config:
 
-            bias = data->B[8];
+            LoseLineClearConfig(&loseLineConfig);
+            loseLineConfig.bias = data->B[8];
+            loseLineState = LL_Confirm;
 
-            loseLineState = LL_SearchLine;
+            break;
+
+        case LL_Confirm:
+
+            if(Is_LoseLine(data))
+            {
+                loseLineState = LL_SearchLine;
+            }
+            else
+            {
+                loseLineState = LL_Undefined;
+            }
 
             break;
 
@@ -430,7 +470,7 @@ void LoseLine_Handler(data_t *data)
 
         case LL_SearchLine:
 
-            data->Bias = bias;
+            data->Bias = loseLineConfig.bias;
 
             if(Is_SearchedLine(data))
             {
@@ -446,7 +486,7 @@ void LoseLine_Handler(data_t *data)
 
             break;
 
-        case LL_Undefined:default:
+        default:
 
             break;
     }
@@ -456,33 +496,56 @@ void Cross_Handler(data_t *data)
 {
     static cross_state_t crossState = CS_Wait;
 
-    static uint32_t crossCnt = 0;
+    static cross_cnt     crossCnt = {0};
 
-    uint32_t interval = 125;
+    static cross_config  crossConfig = {0};
 
     switch(crossState)
     {
+
+        case CS_Undefined:
+
+            crossState = CS_ExceptionHandler;
+
+            break;
+
+        case CS_ExceptionHandler:
+
+            CrossClearCnt(&crossCnt);
+            CrossClearConfig(&crossConfig);
+            crossState = CS_Wait;
+
+            break;
+
         case CS_Wait:
 
             if(data->Element.Type == Cross)
             {
-                crossCnt = interval;
-
                 BEEP.ON(BEEP.Self);
 
-                crossState = CS_Confirm;
+                crossState = CS_Config;
             }
 
             break;
 
+        case CS_Config:
+
+            CrossClearCnt(&crossCnt);
+            CrossClearConfig(&crossConfig);
+
+            crossConfig.interval = 125;
+            crossCnt.cnt = crossConfig.interval;
+
+            crossState = CS_Confirm;
+            break;
+
         case CS_Confirm:
 
-            crossCnt --;
+            crossCnt.cnt --;
 
-
-            if(crossCnt <= 0)
+            if(crossCnt.cnt <= 0)
             {
-                crossCnt = interval;
+                crossCnt.cnt = crossConfig.interval;
 
                 crossState = CS_In;
 
@@ -493,12 +556,11 @@ void Cross_Handler(data_t *data)
             break;
 
         case CS_In:
-            crossCnt --;
+            crossCnt.cnt --;
 
-
-            if(crossCnt <= 0)
+            if(crossCnt.cnt <= 0)
             {
-                crossCnt = interval;
+                crossCnt.cnt = crossConfig.interval;
 
                 crossState = CS_Tracking;
 
@@ -509,12 +571,12 @@ void Cross_Handler(data_t *data)
 
         case CS_Tracking:
 
-            crossCnt --;
+            crossCnt.cnt --;
 
 
-            if(crossCnt <= 0)
+            if(crossCnt.cnt <= 0)
             {
-                crossCnt = interval;
+                crossCnt.cnt = crossConfig.interval;
 
                 crossState = CS_Out;
 
@@ -524,11 +586,11 @@ void Cross_Handler(data_t *data)
             break;
         case CS_Out:
 
-            crossCnt --;
+            crossCnt.cnt --;
 
-            if(crossCnt <= 0)
+            if(crossCnt.cnt <= 0)
             {
-                crossCnt = interval;
+                crossCnt.cnt = crossConfig.interval;
 
                 crossState = CS_Tracking;
 

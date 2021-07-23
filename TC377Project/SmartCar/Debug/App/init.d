@@ -120,8 +120,6 @@ init.o :	../Driver/UsrDriver/Camera/camera.h
 ../Driver/UsrDriver/Camera/camera.h :
 init.o :	../Driver/UsrDriver/SD/sd.h
 ../Driver/UsrDriver/SD/sd.h :
-init.o :	../Driver/UsrDriver/SD/fatfs_sd.h
-../Driver/UsrDriver/SD/fatfs_sd.h :
 init.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
 init.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
