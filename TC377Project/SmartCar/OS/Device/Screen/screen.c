@@ -254,6 +254,11 @@ void Screen_ShowChar(struct screen *self,uint16_t x,uint16_t y,uint8_t ch,uint16
             }
         }
 //    }
+      if(ch == '\n')
+      {
+          self->Cursor.y += self->Font.Hight;
+          self->Cursor.x = 0;
+      }
 }
 /**
     *

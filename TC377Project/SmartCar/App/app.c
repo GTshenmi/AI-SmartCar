@@ -32,6 +32,8 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
+    //MotorSystemIdentification();
+
     axis_t acc,gyro,mag;
 
     data_t *data = &Data[data_pointer];
@@ -353,6 +355,8 @@ void MotorSystemIdentification()
 
     data->UIEnable = false;
 
+    Screen.SetFontColor(Screen.Self,BLUE);
+
     Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Input : Step Signal.");
 
     /*Input : Step Singal*/
@@ -369,9 +373,11 @@ void MotorSystemIdentification()
         InputPwm[i + (SystemIdeLen * 2)/3] = 0;
     }
 
+    os.time.delay(1.0,s);
+
     StartRecord = true;
 
-    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Start Recording Response.");
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Recording Response.");
 
     /*Record Response*/
 //    for(int i = 0 ; i < SystemIdeLen ; i ++)

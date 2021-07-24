@@ -64,7 +64,7 @@ void SpeedControl(void *argv)
             {
                 i++;
 
-                if(i >= SystemIdeLen)
+                if(i > SystemIdeLen)
                 {
                     StartRecord = false;
                     FinRecord = true;
@@ -98,17 +98,20 @@ void SpeedControl(void *argv)
 
     }
 
-    float formatedSpeed = 0.0;
+    if(data->CarMode != DebugMode)
+    {
+        float formatedSpeed = 0.0;
 
-    formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // target * 0.055
+        formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // target * 0.055
 
-    data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        // actual
+        data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        // actual
 
-    data->x += data->ActualSpeed * 0.000028 * 100.0;
+        data->x += data->ActualSpeed * 0.000028 * 100.0;
 
-    Motor.SetSpeed(Motor.Self,formatedSpeed);
+        Motor.SetSpeed(Motor.Self,formatedSpeed);
 
-    Motor.Update(Motor.Self);
+        Motor.Update(Motor.Self);
+    }
 }
 
 void AngleControl(void *argv)

@@ -84,10 +84,12 @@ void ESensorDataAnalysis(void *argv)
 
     }
 
-    ElementDetermine(data);
+    if(data->CarMode != DebugMode)
+    {
+        ElementDetermine(data);
 
-    SpecialElementHandler(data);
-
+        SpecialElementHandler(data);
+    }
     for(int i = 0 ; i < 9 ; i++)
     {
         data->B[i] = data->B[i + 1];

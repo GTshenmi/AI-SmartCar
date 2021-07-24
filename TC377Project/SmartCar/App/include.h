@@ -20,7 +20,7 @@
 //#define Length1 42.61
 
 
-#define SystemIdeLen 1500
+#define SystemIdeLen 3000
 
 
 extern IFX_ALIGN(4) IfxCpu_mutexLock mutexCpu0InitIsOk;
