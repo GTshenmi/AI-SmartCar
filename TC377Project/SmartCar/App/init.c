@@ -127,9 +127,9 @@ void Core0_HardWareInit()
     Motor.Init(Motor.Self);
     Motor.Connect(Motor.Self,MotorCtrlStrategy,&Data[data_pointer],sizeof(data_t));
 
-    Motor.SetSpeedLimit(Motor.Self,10000.0,-10000.0);
+    //Motor.SetSpeedLimit(Motor.Self,10000.0,-10000.0);
 
-    //Motor.SetSpeedLimit(Motor.Self,550.0,-550.0);
+    Motor.SetSpeedLimit(Motor.Self,550.0,-550.0);
 
     //Motor.SetSpeedLimit(Motor.Self,550.0,-550.0);
 
