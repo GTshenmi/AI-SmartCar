@@ -41,6 +41,8 @@ typedef struct motor_ctrl
 
         float SpeedCache;
 
+        float Speed[10];
+
         uint32_t StallingTime;
 
         void *Argv;
@@ -75,6 +77,7 @@ typedef struct motor_ctrl
         void (*SetSpeedLimit)(struct motor_ctrl *self,float MaxSpeed,float MinSpeed);
 
         float (*GetSpeed)(struct motor_ctrl *self);              /*Read Speed From ENC,it will ReWrite SpeedCache*/
+        float (*SpeedFilter)(struct motor_ctrl *self);
         float (*GetSpeedFromCache)(struct motor_ctrl *self);     /*Read Speed From SpeedCache,it will not ReWrite SpeedCache*/
         float (*GetMaxSpeed)(struct motor_ctrl *self);
         float (*GetMinSpeed)(struct motor_ctrl *self);

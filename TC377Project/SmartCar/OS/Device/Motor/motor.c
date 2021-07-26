@@ -63,6 +63,15 @@ float Motor_SetSpeed(struct motor_ctrl *self,float speed)
     return self->TargetSpeed;
 }
 
+float Motor_SpeedFilter(struct motor_ctrl *self)
+{
+    //float a = 0.6;
+
+    //return (1 - a) * self->Speed[8] + a * self->Speed[9];
+
+    return self->Speed[9] * 0.5 + self->Speed[8] * 0.3 + self->Speed[7] * 0.1 + self->Speed[6] * 0.05 + self->Speed[5] * 0.05;
+}
+
 float Motor_GetSpeed(struct motor_ctrl *self)
 {
     float speed = ENCx.Read(self->Encn) * 1.0;
@@ -73,6 +82,15 @@ float Motor_GetSpeed(struct motor_ctrl *self)
       speed = self->MinSpeed;
 
     return self->SpeedCache = speed;
+
+//    for(int i = 0 ; i < 9 ; i++)
+//    {
+//        self->Speed[i] = self->Speed[i + 1];
+//    }
+//
+//    self->Speed[9] = speed;
+//
+//    return self->SpeedCache = self->SpeedFilter(self);
 }
 
 float Motor_GetSpeedFromCache(struct motor_ctrl *self)
@@ -230,6 +248,7 @@ uint8_t Motor_Init(struct motor_ctrl *self)
 
     self->SetSpeed = Motor_SetSpeed;
     self->GetSpeed = Motor_GetSpeed;
+    self->SpeedFilter = Motor_SpeedFilter;
     self->GetSpeedFromCache = Motor_GetSpeedFromCache;
     self->Protect = Motor_DefaultProtect;
 

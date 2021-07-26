@@ -13,6 +13,10 @@
 uint16_t CarMode =DebugMode;/*运行状态*/
 //uint16_t CarMode = AI_Mode; //调AI 换成此状态
 
+float TSpeedArray[MPIDRecordLen];
+float ASpeedArrayPID[MPIDRecordLen];
+float ASpeedArrayFuzzyPID[MPIDRecordLen];
+
 uint16_t data_pointer = 0;
 
 void *app_data_pointer = NULL;
@@ -43,9 +47,9 @@ void ParameterInit(void *argv)
     data->Is_AdjustSpeed = false;
 
     /*Set Servo And Motor PID Value.*/
-    PID_SetValue(&data->M_PID,PIDValue(3.3,0.2,0.0));
+    PID_SetValue(&data->M_PID,PIDValue(3.6,0.5,0.0));
 
-    data->M_PID.MaxIntegralValue = 100.0;
+    data->M_PID.MaxIntegralValue = 1.2;
 
     data->Speed = 3200.0;
 

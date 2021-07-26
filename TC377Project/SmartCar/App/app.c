@@ -17,6 +17,7 @@ void SmartCarSysDataReport(void *data);
 void SmartCarSysDataSave(data_t *data);
 void ErrorMsg(void *argv,uint error);
 void MotorSystemIdentification(void);
+void MotorPIDRecording(data_t *data);
 void Core0_CheckStatus(void);
 void Core1_CheckStatus(void);
 void Core2_CheckStatus(void);
@@ -34,43 +35,54 @@ void Core0_Main()
 
     //MotorSystemIdentification();
 
-    axis_t acc,gyro,mag;
+    //axis_t acc,gyro,mag;
 
     data_t *data = &Data[data_pointer];
 
+    //MotorPIDRecording(data);
+
     while(1)
     {
+
         SmartCarSysDataSave(data);
 
         ErrorMsg(data,data->Error);
 
-        if(os.time.getnmsFlag(500))
-        {
-            //uint8_t res = IMU.Read(IMU.Self,&data->Acc,&data->Gyro,&data->Mag);
+        //Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
+        //os.time.delay(0.002,s);
 
-            uint8_t res = IMU.Read(IMU.Self,&acc,&gyro,&mag);
+//        if(os.time.getnmsFlag(2))
+//        {
+//            Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
+//        }
 
-            if(res)
-            {
-                Console.WriteLine("--------------------------------------------------");
-                Console.WriteLine("---------------Error Code : %u-----------------",res);
-                Console.WriteLine("--------------------------------------------------");
-            }
-            else
-            {
-                Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
-                Console.WriteLine("gyro:%f,%f,%f",gyro.x,gyro.y,gyro.z);
-                Console.WriteLine("mag:%f,%f,%f",mag.x,mag.y,mag.z);
-            }
-        }
+//        if(os.time.getnmsFlag(500))
+//        {
+//            //uint8_t res = IMU.Read(IMU.Self,&data->Acc,&data->Gyro,&data->Mag);
+//
+//            uint8_t res = IMU.Read(IMU.Self,&acc,&gyro,&mag);
+//
+//            if(res)
+//            {
+//                Console.WriteLine("--------------------------------------------------");
+//                Console.WriteLine("---------------Error Code : %u-----------------",res);
+//                Console.WriteLine("--------------------------------------------------");
+//            }
+//            else
+//            {
+//                Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
+//                Console.WriteLine("gyro:%f,%f,%f",gyro.x,gyro.y,gyro.z);
+//                Console.WriteLine("mag:%f,%f,%f",mag.x,mag.y,mag.z);
+//            }
+//        }
 
         /*Attitude Update*/
 
 
-        if(os.time.getnmsFlag(1000))
-        {
-            Core0_CheckStatus();
-        }
+//        if(os.time.getnmsFlag(1000))
+//        {
+//            Core0_CheckStatus();
+//        }
     }
 }
 
@@ -341,6 +353,47 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
     }
 }
 
+void MotorPIDRecording(data_t *data)
+{
+    for(int i = 0; i < MPIDRecordLen/10;i++)
+    {
+        TSpeedArray[i] = 0.0;
+    }
+    for(int i = MPIDRecordLen/10 ; i < MPIDRecordLen;i++)
+    {
+        TSpeedArray[i] = 150.0;
+    }
+
+    data->UIEnable = false;
+    os.time.delay(2.0,s);
+    Screen.Clear(Screen.Self,WHITE);
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Start Recording...");
+    data->StartRecord = true;
+    while(!data->RecordFin);
+
+    Motor.Break(Motor.Self);
+
+    //Screen.Clear(Screen.Self,WHITE);
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Record Finished...");
+
+    os.time.delay(1.0,s);
+    //Screen.Clear(Screen.Self,WHITE);
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Start Send Data...");
+
+    for(int i = 0 ; i < MPIDRecordLen;i++)
+    {
+        Console.WriteLine("MPID:%.3f,%.3f,%.3f",TSpeedArray[i],ASpeedArrayPID[i],ASpeedArrayFuzzyPID[i]);
+        os.time.delay(0.05,s);
+    }
+
+    Screen.SetFontColor(Screen.Self,RED);
+    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Send Data Fin....");
+
+
+
+    while(1);
+
+}
 bool StartRecord = false;
 bool FinRecord = false;
 

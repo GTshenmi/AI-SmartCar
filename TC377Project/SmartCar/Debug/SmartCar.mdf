@@ -12,8 +12,8 @@ space	mpe:tc0:abs18	103	8
 space	mpe:tc0:csa	104	8
 space	mpe:tc1:linear	201	8
 space	mpe:tc1:abs24	202	8
-space	mpe:vtc:abs24	2	8
 space	mpe:vtc:abs18	3	8
+space	mpe:vtc:abs24	2	8
 # chip <name> <id> <mau size> <size> <type>
 chip	mpe:dsram1	2	8	245760	ram
 chip	mpe:psram2	1	8	65536	ram

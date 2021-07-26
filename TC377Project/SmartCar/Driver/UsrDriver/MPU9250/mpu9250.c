@@ -4,6 +4,14 @@
 
 #include "mpu9250.h"
 
+//#define MPU9250_DEBUG
+
+#ifdef MPU9250_DEBUG
+#define MPU9250_DEBUG_PRINT(fmt,__VA_ARGS__) printf(fmt,__VA_ARGS__)
+#else
+#define MPU9250_DEBUG_PRINT(fmt,__VA_ARGS__)
+#endif
+
 u8 MPU_Write_Byte(u8 devaddr,u8 reg,u8 data);
 u8 MPU_Read_Byte(u8 devaddr,u8 reg);
 u8 MPU_Set_Gyro_Fsr(u8 fsr);
@@ -42,7 +50,7 @@ u8 MPU9250_Init(void *config) {
 	IICx.Init(&iic);
 	for (int i = 0; i < 16; ++i) {
 		res = MPU_Read_Byte(MPU9250_ADDR, 0x75);
-		printf("WHO AM I:%d\n", res);
+		MPU9250_DEBUG_PRINT("WHO AM I:%d\n", res);
 		if (res == 0x75)
 			break;
 	}

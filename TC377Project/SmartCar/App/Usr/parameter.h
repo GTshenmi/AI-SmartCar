@@ -350,7 +350,15 @@ typedef struct
 
       /*For Debug.*/
 
+      bool  StartRecord;
+      bool  RecordFin;
 }data_t;
+
+#define MPIDRecordLen   1000
+
+extern float TSpeedArray[MPIDRecordLen];
+extern float ASpeedArrayPID[MPIDRecordLen];
+extern float ASpeedArrayFuzzyPID[MPIDRecordLen];
 
 typedef struct
 {
