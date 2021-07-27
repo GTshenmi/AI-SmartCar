@@ -79,7 +79,13 @@ uint SaveSensorDataAndAngleAI(data_t *data,char *path){
 
     uint res = 0;
 
+    float dt = os.time.getTime(s);
+
     res = SD.fastWrite(path,buffer);
+
+    dt = os.time.getTime(s) - dt;
+
+    data->time = dt;
 
     return res;
 }

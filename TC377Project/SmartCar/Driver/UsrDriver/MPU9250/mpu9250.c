@@ -4,8 +4,6 @@
 
 #include "mpu9250.h"
 
-//#define MPU9250_DEBUG
-
 #ifdef MPU9250_DEBUG
 #define MPU9250_DEBUG_PRINT(fmt,__VA_ARGS__) printf(fmt,__VA_ARGS__)
 #else
@@ -44,22 +42,22 @@ u8 MPU9250_Init(void *config) {
 	iic.SDAPin = &GPIO_Resources[26].GPION;
 	iic.IIC_Type = SoftWare_IIC;
 	iic.IIC_DeviceType = IIC_Master;
-	iic.BaudRate = 1000;
+	iic.BaudRate = 10;
 	u8 res;
 	//IIC_Init();     //初始化IIC总线
 	IICx.Init(&iic);
 	for (int i = 0; i < 16; ++i) {
 		res = MPU_Read_Byte(MPU9250_ADDR, 0x75);
-		MPU9250_DEBUG_PRINT("WHO AM I:%d\n", res);
-		if (res == 0x75)
+		if (res == 0x71)
 			break;
+		MPU9250_DEBUG_PRINT("MPU9250:WHO_AM_I=%d\n", res);
 	}
 	MPU_Write_Byte(MPU9250_ADDR, MPU_PWR_MGMT1_REG, 0X80);//复位MPU9250
 	Systime.Delayms(100);  //延时100ms
 	MPU_Write_Byte(MPU9250_ADDR, MPU_PWR_MGMT1_REG, 0X00);//唤醒MPU9250
 	MPU_Set_Gyro_Fsr(3);                              //陀螺仪传感器,±2000dps
 	MPU_Set_Accel_Fsr(0);                             //加速度传感器,±2g
-	MPU_Set_Rate(50);                                 //设置采样率50Hz
+	MPU_Set_Rate(500);                                 //设置采样率500Hz
 	MPU_Write_Byte(MPU9250_ADDR, MPU_INT_EN_REG, 0X00);   //关闭所有中断
 	MPU_Write_Byte(MPU9250_ADDR, MPU_USER_CTRL_REG, 0X00);//I2C主模式关闭
 	MPU_Write_Byte(MPU9250_ADDR, MPU_FIFO_EN_REG, 0X00);    //关闭FIFO
@@ -141,28 +139,44 @@ short MPU_Get_Temperature(void) {
 //返回值:0,成功
 //    其他,错误代码
 u8 MPU_Get_Gyroscope(float *gx, float *gy, float *gz) {
-	u8 buf[6], res = 0;
+	u8 buf[6], res;
+
+	short gxr,gyr,gzr;
+
 	res = MPU_Read_Len(MPU9250_ADDR, MPU_GYRO_XOUTH_REG, 6, buf);
 	if (res == 0) {
-		*gx = (((u16) buf[0] << 8) | buf[1]) * 1.0;
-		*gy = (((u16) buf[2] << 8) | buf[3]) * 1.0;
-		*gz = (((u16) buf[4] << 8) | buf[5]) * 1.0;
+		gxr = ((u16) buf[0] << 8) | buf[1];
+		gyr = ((u16) buf[2] << 8) | buf[3];
+		gzr = ((u16) buf[4] << 8) | buf[5];
 	}
-	return res;
+
+	*gx = gxr * 1.0;
+	*gy = gyr * 1.0;
+	*gz = gzr * 1.0;
+
+	return res;;
 }
 //得到加速度值(原始值)
 //gx,gy,gz:陀螺仪x,y,z轴的原始读数(带符号)
 //返回值:0,成功
 //    其他,错误代码
 u8 MPU_Get_Accelerometer(float *ax, float *ay, float *az) {
-	u8 buf[6], res = 0;
+	u8 buf[6], res;
+
+	short axr,ayr,azr;
+
 	res = MPU_Read_Len(MPU9250_ADDR, MPU_ACCEL_XOUTH_REG, 6, buf);
 	if (res == 0) {
-		*ax = (((u16) buf[0] << 8) | buf[1]) * 1.0;
-		*ay = (((u16) buf[2] << 8) | buf[3]) * 1.0;
-		*az = (((u16) buf[4] << 8) | buf[5]) * 1.0;
+		axr = ((u16) buf[0] << 8) | buf[1];
+		ayr = ((u16) buf[2] << 8) | buf[3];
+		azr = ((u16) buf[4] << 8) | buf[5];
 	}
-	return res;
+
+	*ax = axr * 1.0;
+	*ay = ayr * 1.0;
+	*az = azr * 1.0;
+
+	return res;;
 }
 
 //得到磁力计值(原始值)
@@ -170,13 +184,22 @@ u8 MPU_Get_Accelerometer(float *ax, float *ay, float *az) {
 //返回值:0,成功
 //    其他,错误代码
 u8 MPU_Get_Magnetometer(float *mx, float *my, float *mz) {
-	u8 buf[6], res = 0;
+
+	u8 buf[6], res;
+
+	short mxr,myr,mzr;
+
 	res = MPU_Read_Len(AK8963_ADDR, MAG_XOUT_L, 6, buf);
 	if (res == 0) {
-		*mx = (((u16) buf[1] << 8) | buf[0]) * 1.0;
-		*my = (((u16) buf[3] << 8) | buf[2]) * 1.0;
-		*mz = (((u16) buf[5] << 8) | buf[4]) * 1.0;
+		mxr = ((u16) buf[1] << 8) | buf[0];
+		myr = ((u16) buf[3] << 8) | buf[2];
+		mzr = ((u16) buf[5] << 8) | buf[4];
 	}
+
+	*mx = mxr * 1.0;
+	*my = myr * 1.0;
+	*mz = mzr * 1.0;
+
 	MPU_Write_Byte(AK8963_ADDR, MAG_CNTL1, 0X11); //AK8963每次读完以后都需要重新设置为单次测量模式
 
 	return res;
@@ -204,9 +227,9 @@ u8 MPU_Write_Len(u8 addr, u8 reg, u8 len, u8 *buf) {
 //返回值:0,正常
 //    其他,错误代码
 u8 MPU_Read_Len(u8 addr, u8 reg, u8 len, u8 *buf) {
-	return IICx.ReadBytesFromSlave(&iic, addr << 1, reg, len, buf);
-	//return 0;
-    //return HAL_I2C_Mem_Read(&hi2c2, addr << 1, reg,
+	IICx.ReadBytesFromSlave(&iic, addr << 1, reg, len, buf);
+	return 0;
+//  return HAL_I2C_Mem_Read(&hi2c2, addr << 1, reg,
 //                   I2C_MEMADD_SIZE_8BIT, buf, len, 10);
 }
 
@@ -217,10 +240,10 @@ u8 MPU_Read_Len(u8 addr, u8 reg, u8 len, u8 *buf) {
 //返回值:0,正常
 //    其他,错误代码
 u8 MPU_Write_Byte(u8 addr, u8 reg, u8 data) {
-	return IICx.WriteBytesToSlave(&iic, addr << 1, reg, 1, &data);
+	IICx.WriteBytesToSlave(&iic, addr << 1, reg, 1, &data);
 //  return HAL_I2C_Mem_Write(&hi2c2, addr << 1, reg,
 //                    I2C_MEMADD_SIZE_8BIT, (uint8_t *)&data, 1, 10);
-	//return 0;
+	return 0;
 }
 
 //IIC读一个字节
@@ -231,6 +254,5 @@ u8 MPU_Read_Byte(u8 addr, u8 reg) {
 //  HAL_I2C_Mem_Read(&hi2c2, addr << 1, reg,
 //                   I2C_MEMADD_SIZE_8BIT, &res, 1, 10);
 	IICx.ReadBytesFromSlave(&iic, addr << 1, reg, 1, &res);
-
 	return res;
 }

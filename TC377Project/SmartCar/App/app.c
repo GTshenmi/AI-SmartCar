@@ -33,56 +33,38 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-    //MotorSystemIdentification();
-
-    //axis_t acc,gyro,mag;
+//    axis_t acc,gyro,mag;
+//
+//    attitude_t attitude;
 
     data_t *data = &Data[data_pointer];
 
-    //MotorPIDRecording(data);
-
     while(1)
     {
-
         SmartCarSysDataSave(data);
 
         ErrorMsg(data,data->Error);
 
-        //Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
-        //os.time.delay(0.002,s);
-
 //        if(os.time.getnmsFlag(2))
 //        {
-//            Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
-//        }
-
-//        if(os.time.getnmsFlag(500))
-//        {
-//            //uint8_t res = IMU.Read(IMU.Self,&data->Acc,&data->Gyro,&data->Mag);
 //
-//            uint8_t res = IMU.Read(IMU.Self,&acc,&gyro,&mag);
+//            MPU_Get_Accelerometer(&acc.x,&acc.y,&acc.z);
 //
-//            if(res)
-//            {
-//                Console.WriteLine("--------------------------------------------------");
-//                Console.WriteLine("---------------Error Code : %u-----------------",res);
-//                Console.WriteLine("--------------------------------------------------");
-//            }
-//            else
-//            {
-//                Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
-//                Console.WriteLine("gyro:%f,%f,%f",gyro.x,gyro.y,gyro.z);
-//                Console.WriteLine("mag:%f,%f,%f",mag.x,mag.y,mag.z);
-//            }
+//            MPU_Get_Gyroscope(&gyro.x,&gyro.y,&gyro.z);
+//
+//            MPU_Get_Magnetometer(&mag.x,&mag.y,&mag.z);
+//
+//            //IMU_Update0();
+//
+//            Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
+//
+//            Console.WriteLine("acc:%f,%f,%f",gyro.x,gyro.y,gyro.z);
+//
+//            Console.WriteLine("acc:%f,%f,%f",mag.x,mag.y,mag.z);
+//
+//            Console.WriteLine("angle:%f,%f,%f",attitude.pitch,attitude.roll,attitude.yaw);
 //        }
 
-        /*Attitude Update*/
-
-
-//        if(os.time.getnmsFlag(1000))
-//        {
-//            Core0_CheckStatus();
-//        }
     }
 }
 
@@ -92,18 +74,43 @@ void Core0_Main()
  * */
 void Core1_Main()
 {
-    TIMx.Init(&TIM_Resources[4].TIMN);
+//    TIMx.Init(&TIM_Resources[4].TIMN);
+//
+//    data_t *data = &Data[data_pointer];
 
-    data_t *data = &Data[data_pointer];
+    axis_t acc,gyro,mag;
+
+    attitude_t attitude;
 
     while(1)
     {
-        if(data->UIEnable)
-            os.task.UiUpdate(&UIData,sizeof(UIData));
+        if(os.time.getnmsFlag(20))
+        {
 
-        ErrorMsg(data,data->Error);
+            MPU_Get_Accelerometer(&acc.x,&acc.y,&acc.z);
 
-        Core1_CheckStatus();
+            MPU_Get_Gyroscope(&gyro.x,&gyro.y,&gyro.z);
+
+            MPU_Get_Magnetometer(&mag.x,&mag.y,&mag.z);
+
+            //IMU_Update0();
+
+            Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
+
+            Console.WriteLine("acc:%f,%f,%f",gyro.x,gyro.y,gyro.z);
+
+            Console.WriteLine("acc:%f,%f,%f",mag.x,mag.y,mag.z);
+
+            Console.WriteLine("angle:%f,%f,%f",attitude.pitch,attitude.roll,attitude.yaw);
+
+        }
+
+//        if(data->UIEnable)
+//            os.task.UiUpdate(&UIData,sizeof(UIData));
+//
+//        ErrorMsg(data,data->Error);
+//
+//        Core1_CheckStatus();
     }
 }
 
@@ -303,7 +310,7 @@ void SmartCarSysDataSave(data_t *data)
 //                            SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
 //                        }
                     }
-                    else //if(data->CarMode == AI_Mode)
+                    else
                     {
                         SaveSensorDataAndAngleAI(data,"AI/Data.txt");
                     }

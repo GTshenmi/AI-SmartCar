@@ -352,6 +352,7 @@ typedef struct
 
       bool  StartRecord;
       bool  RecordFin;
+      float time;
 }data_t;
 
 #define MPIDRecordLen   1000

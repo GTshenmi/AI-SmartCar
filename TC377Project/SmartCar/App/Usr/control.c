@@ -343,7 +343,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
     }
     else
     {
-        Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
+        //Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
 
         PID_Ctrl(&data->M_PID,tspeed,aspeed);
 
