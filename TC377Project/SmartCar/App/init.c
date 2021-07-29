@@ -26,7 +26,6 @@ void Core0_HardWareInit()
 {
     sint8_t res = -1;
     uint32_t bits = 0;
-
     /*Init Debug Console.*/
 
     Console.Init();
@@ -91,14 +90,14 @@ void Core0_HardWareInit()
 
     line += 2;
 
-    if(bits & 0x10)
+    if(bits & 0x40)
     {
-        Screen.WriteXLine(Screen.Self,line,"Left");
+        Screen.WriteXLine(Screen.Self,line,"Cycle:Left");
         Data[data_pointer].CycleDir = CC_DirLeft;
     }
     else
     {
-        Screen.WriteXLine(Screen.Self,line,"Right");
+        Screen.WriteXLine(Screen.Self,line,"Cycle:Right");
         Data[data_pointer].CycleDir = CC_DirRight;
     }
 
@@ -168,15 +167,15 @@ void Core0_HardWareInit()
     {
         LESensor[i].Init(LESensor[i].Self);
         LESensor[i].EnableFilter(LESensor[i].Self,true);
-//        LESensor[i].SetGain(LESensor[i].Self,1.0);
-//        LESensor[i].EnableGain(LESensor[i].Self,false);
+        LESensor[i].SetGain(LESensor[i].Self,1.0);
+        LESensor[i].EnableGain(LESensor[i].Self,true);
     }
     for(int i = 0;i<CData.MaxSADCDeviceNum;i++)
     {
         SESensor[i].Init(SESensor[i].Self);
         SESensor[i].EnableFilter(SESensor[i].Self,true);
-//        SESensor[i].SetGain(SESensor[i].Self,1.0);
-//        SESensor[i].EnableGain(SESensor[i].Self,false);
+        SESensor[i].SetGain(SESensor[i].Self,1.0);
+        SESensor[i].EnableGain(SESensor[i].Self,true);
     }
 
     //DSensor.Init(DSensor.Self);
@@ -213,6 +212,8 @@ void Core0_HardWareInit()
     }
     else
         Screen.WriteXLine(Screen.Self,line,"Init IMU...........OK");
+
+    os.time.delay(0.5,s);
 }
 
 void Core0_SoftWareInit()
@@ -229,17 +230,12 @@ void Core0_SoftWareInit()
     /*Init Parameter.*/
     ParameterInit(&Data[data_pointer]);
 
-    Screen.WriteXLine(Screen.Self,line+=2,"System Init Finished.");
-
-    //GLED.ON(GLED.Self);
-    //BLED.ON(BLED.Self);
-    os.time.delay(2.0,s);
-
     Screen.Clear(Screen.Self,WHITE);
 
     Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight*2),"  ---System Start---  ");
 
     os.time.delay(2.0,s);
+
     Screen.Clear(Screen.Self,WHITE);
 
     /* System Init Finished,BEEP ON */
@@ -335,6 +331,10 @@ void UIParameterInit(void)
     UIData.Ea = &Data[data_pointer].M_FuzzySpeed.e[1];
     UIData.Da = &Data[data_pointer].Da;
 
+    pCalibrationVESensor = CalibrationVESensor;
+    pCalibrationHOESensor = CalibrationHOESensor;
+
+
     //UIData.ElementType = &Data[data_pointer].Element.Type;
 
 
@@ -382,6 +382,9 @@ void UIParameterInit(void)
     UIData.ServoSysState[0] = (uint *)ReservedData.D;
     UIData.ServoSysState[1] = (uint *)ReservedData.D;
     UIData.ServoSysState[2] = (uint *)ReservedData.D;
+
+//    pCalibrationVESensor = (void (*func)(uint16_t,uint16_t))ReservedData.D;
+//    pCalibrationHOESensor = (void (*func)(uint16_t,uint16_t))ReservedData.D;
 
 #endif
 }

@@ -33,6 +33,14 @@ struct esensor;
 
 typedef uint16_t (*esensor_filtercallback)(struct esensor *self,void *argv,uint16_t argc);
 
+typedef enum
+{
+    ESensor_Normal = 0,
+    ESensor_NoConnection,
+    ESensor_ValueTooSmall,
+    ESensor_ValueTooLarge
+}esensor_err;
+
 typedef struct esensor
 {
     private
@@ -52,6 +60,8 @@ typedef struct esensor
         void *Argv;
         uint16_t Argc;
 
+        esensor_err Err;
+
         esensor_filtercallback Filter;
 
 #if ESENSOR_FAST_READ_LEVEL == ESENSOR_FAST_READ_LEVEL_0
@@ -63,6 +73,7 @@ typedef struct esensor
         uint16_t (*Init)(struct esensor *self);
         uint16_t (*Read)(struct esensor *self);
         uint16_t (*ReadFromCache)(struct esensor *self);
+        uint16_t (*SelfCalibration)(struct esensor *self,float ref);
 
         void (*EnableFilter)(struct esensor *self,bool enable);
         void (*EnableGain)(struct esensor *self,bool enable);

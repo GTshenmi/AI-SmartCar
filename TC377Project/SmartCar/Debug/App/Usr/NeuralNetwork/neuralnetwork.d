@@ -266,6 +266,10 @@ neuralnetwork.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 neuralnetwork.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+neuralnetwork.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+neuralnetwork.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 neuralnetwork.o :	../App/foo.h
 ../App/foo.h :
 neuralnetwork.o :	../OS/os.h

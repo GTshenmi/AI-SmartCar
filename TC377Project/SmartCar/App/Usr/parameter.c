@@ -27,6 +27,8 @@ void ParameterInit(void *argv)
 {
     data_t *data = (data_t *)argv;
 
+    uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
+
     app_data_pointer = (void *)data;
 
     data->Error = NoError;
@@ -36,6 +38,8 @@ void ParameterInit(void *argv)
     data->CarState = false;
 
     data->UIEnable = true;
+
+    data->Speed = 2000;
 
     data->TrackingState = Normal_Tracking;
 
@@ -55,17 +59,98 @@ void ParameterInit(void *argv)
 
     PID_SetValue(&data->S_PID,PIDValue(2.227,0.0,0.0));
 
-    PID_SetGain(&Data[data_pointer].S_PID,PIDGainValue(1.0,1.0));
+    PID_SetGain(&data->S_PID,PIDGainValue(1.0,1.0));
 
-    PID_SetGain(&Data[data_pointer].M_PID,PIDGainValue(1.0,100.0));
+    PID_SetGain(&data->M_PID,PIDGainValue(1.0,100.0));
 
-    PID_SetOutPutLimit(&Data[data_pointer].S_PID,PIDLimit(Servo.MinAngle,Servo.MaxAngle));
+    PID_SetOutPutLimit(&data->S_PID,PIDLimit(Servo.MinAngle,Servo.MaxAngle));
 
-    PID_SetOutPutLimit(&Data[data_pointer].M_PID,PIDLimit(-100.0,100.0));
+    PID_SetOutPutLimit(&data->M_PID,PIDLimit(-100.0,100.0));
 
     FuzzyPIDInit(&data->M_FuzzyKp,&data->M_FuzzyKi);
 
-    FuzzyControlInit(&Data[data_pointer]);
+    FuzzyControlInit(data);
+
+    for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
+    {
+        data->LESensorGain[i] = LESensor[i].Gain;
+    }
+
+    for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+    {
+        data->SESensorGain[i] = SESensor[i].Gain;
+    }
+
+    switch((bits >> 4) & 0x00000003)
+    {
+        case 0:
+
+            break;
+
+        case 1:
+
+            LoadDataFromEeprom();
+
+            for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
+            {
+                LESensor[i].EnableGain(LESensor[i].Self,true);
+                LESensor[i].SetGain(LESensor[i].Self,data->LESensorGain[i]);
+            }
+
+            for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+            {
+                SESensor[i].EnableGain(SESensor[i].Self,true);
+                SESensor[i].SetGain(SESensor[i].Self,data->SESensorGain[i]);
+            }
+
+            Console.WriteArray("float",data->SESensorGain,8);
+
+            break;
+
+        case 2:
+
+            LoadDataFromEeprom();
+
+            for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
+            {
+                LESensor[i].EnableGain(LESensor[i].Self,true);
+                LESensor[i].SetGain(LESensor[i].Self,data->LESensorGain[i]);
+            }
+
+            for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+            {
+                SESensor[i].EnableGain(SESensor[i].Self,true);
+                SESensor[i].SetGain(SESensor[i].Self,data->SESensorGain[i]);
+            }
+
+            break;
+
+        case 3:
+
+            LoadDataFromEeprom();
+
+            SelfCalibration(data,CalibrationLHOESensor);
+
+            os.time.delay(0.5,s);
+
+            SelfCalibration(data,CalibrationSHOESensor);
+
+            os.time.delay(0.5,s);
+
+            SelfCalibration(data,CalibrationLVESensor);
+
+            os.time.delay(0.5,s);
+
+            SelfCalibration(data,CalibrationSVESensor);
+
+            os.time.delay(0.5,s);
+
+            break;
+
+
+    }
+
+    SelfCalibration(data,CalibrationIMU);
 }
 
 void FuzzyControlInit(data_t *data)

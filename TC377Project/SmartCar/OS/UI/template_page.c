@@ -12,6 +12,8 @@
 #include "matrix_page.h"
 
 
+uint8_t CalibrationSensorPageOn = 0;
+
 void displayDataAlone (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
 {
 
@@ -151,6 +153,24 @@ void openMatrixPage (UIPageStruct *Self)
     MatrixPage.Open(MatrixPage.Self, Self);
 }
 
+void calibrationSensor(UIPageStruct *Self){
+    //ClearScreen();
+    CalibrationSensorPageOn = 1;
+    if(Self == &UIPages[1])
+        pCalibrationVESensor(0,0);
+    else if(Self == &UIPages[2])
+        pCalibrationVESensor(0,1);
+    else if(Self == &UIPages[3])
+        pCalibrationVESensor(1,0);
+    else if(Self == &UIPages[4])
+        pCalibrationVESensor(1,1);
+    else if(Self == &UIPages[5])
+        pCalibrationHOESensor(0);
+    else if(Self == &UIPages[6])
+        pCalibrationHOESensor(1);
+
+}
+
 //    UIPages[0].primaryTargetData = UIData.LADC;
 //    UIPages[0].secondaryTargetData = UIData.NLADC;
 
@@ -191,64 +211,64 @@ void openMatrixPage (UIPageStruct *Self)
 
 void UIPagesInit (void)
 {
-    UIPages[1].primaryTargetData = UIData.LADC;
-    UIPages[1].secondaryTargetData = UIData.NLADC;
+    UIPages[7].primaryTargetData = UIData.LADC;
+    UIPages[7].secondaryTargetData = UIData.NLADC;
 
-    UIPages[2].primaryTargetData = UIData.SADC;
-    UIPages[2].secondaryTargetData = UIData.NSADC;
+    UIPages[8].primaryTargetData = UIData.SADC;
+    UIPages[8].secondaryTargetData = UIData.NSADC;
 
-    UIPages[3].secondaryTargetData = UIData.Bias;
+    UIPages[9].secondaryTargetData = UIData.Bias;
 
-    UIPages[4].secondaryTargetData = UIData.Angle;
+    UIPages[10].secondaryTargetData = UIData.Angle;
     //UIPages[4].secondaryTargetData = UIData.NAngle;
 
-    UIPages[5].secondaryTargetData = UIData.SPID_Result;
-    UIPages[6].primaryTargetData = UIData.S_PwmDuty;
-    UIPages[7].secondaryTargetData = UIData.SPID_Kp;
-    UIPages[8].secondaryTargetData = UIData.SPID_Ki;
-    UIPages[9].secondaryTargetData = UIData.SPID_Kd;
+//    UIPages[5].secondaryTargetData = UIData.SPID_Result;
+    UIPages[11].primaryTargetData = UIData.S_PwmDuty;
+//    UIPages[7].secondaryTargetData = UIData.SPID_Kp;
+//    UIPages[8].secondaryTargetData = UIData.SPID_Ki;
+//    UIPages[9].secondaryTargetData = UIData.SPID_Kd;
 
 
-    UIPages[10].secondaryTargetData = UIData.Speed;
+    UIPages[12].secondaryTargetData = UIData.Speed;
     //UIPages[10].secondaryTargetData = UIData.NSpeed;
 
-    UIPages[11].secondaryTargetData = UIData.Speed;
+//    UIPages[11].secondaryTargetData = UIData.Speed;
     //UIPages[11].secondaryTargetData = UIData.NSpeed;
 
-    UIPages[12].secondaryTargetData = UIData.Actual_Speed;
+    UIPages[13].secondaryTargetData = UIData.Actual_Speed;
     //UIPages[12].secondaryTargetData = UIData.NActual_Speed;
 
-    UIPages[13].secondaryTargetData = UIData.MPID_Result;
-    UIPages[14].primaryTargetData = UIData.M_PwmDuty;
-    UIPages[15].secondaryTargetData = UIData.MPID_Kp;
-    UIPages[16].secondaryTargetData = UIData.MPID_Ki;
-    UIPages[17].secondaryTargetData = UIData.MPID_Kd;
+    UIPages[14].secondaryTargetData = UIData.MPID_Result;
+    UIPages[15].primaryTargetData = UIData.M_PwmDuty;
+    UIPages[16].secondaryTargetData = UIData.MPID_Kp;
+    UIPages[17].secondaryTargetData = UIData.MPID_Ki;
+    UIPages[18].secondaryTargetData = UIData.MPID_Kd;
 
-    UIPages[21].secondaryTargetData = UIData.DynamicKp;
+//    UIPages[21].secondaryTargetData = UIData.DynamicKp;
 
-    UIPages[22].secondaryTargetData = UIData.o_difference;
-    UIPages[23].secondaryTargetData = UIData.h_difference;
-    UIPages[24].secondaryTargetData = UIData.v_difference;
+    UIPages[19].secondaryTargetData = UIData.o_difference;
+    UIPages[20].secondaryTargetData = UIData.h_difference;
+    UIPages[21].secondaryTargetData = UIData.v_difference;
 
-    UIPages[25].secondaryTargetData = UIData.o_sum;
-    UIPages[26].secondaryTargetData = UIData.h_sum;
-    UIPages[27].secondaryTargetData = UIData.v_sum;
+    UIPages[22].secondaryTargetData = UIData.o_sum;
+    UIPages[23].secondaryTargetData = UIData.h_sum;
+    UIPages[24].secondaryTargetData = UIData.v_sum;
 
-    UIPages[28].secondaryTargetData = UIData.o_bias;
-    UIPages[29].secondaryTargetData = UIData.h_bias;
-    UIPages[30].secondaryTargetData = UIData.v_bias;
+    UIPages[25].secondaryTargetData = UIData.o_bias;
+    UIPages[26].secondaryTargetData = UIData.h_bias;
+    UIPages[27].secondaryTargetData = UIData.v_bias;
 
-    UIPages[33].secondaryTargetData = UIData.Ke;
+    UIPages[30].secondaryTargetData = UIData.Ke;
 
-    UIPages[34].secondaryTargetData = UIData.x;
+    UIPages[31].secondaryTargetData = UIData.x;
 
-    UIPages[35].secondaryTargetData = UIData.CycleInDistance;
-    UIPages[36].secondaryTargetData = UIData.CycleWaitInDistance;
+    UIPages[32].secondaryTargetData = UIData.CycleInDistance;
+    UIPages[33].secondaryTargetData = UIData.CycleWaitInDistance;
 
-    UIPages[37].secondaryTargetData = UIData.Err;
+    UIPages[34].secondaryTargetData = UIData.Err;
 
-    UIPages[38].secondaryTargetData = UIData.Ea;
-    UIPages[39].secondaryTargetData = UIData.Da;
+    UIPages[35].secondaryTargetData = UIData.Ea;
+    UIPages[36].secondaryTargetData = UIData.Da;
 
     UIPages[0].beginLine = 0;
 
@@ -274,134 +294,168 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
              .confirmAction = changeCarStatus,
     },
     [1] = {
-            .description = "LADC",
-            .displayData = displayDataWithGraph,
-            .Self = &UIPages[1],
-            .lineLength = MAX_LESENSOR_NUM,
-            .targetDataType = INTEGER,
-            .confirmAction = changeDisplayType,
+             .description = "CaliLVESen0",
+             .displayData = displayDesciption,
+             .Self = &UIPages[1],
+             .lineLength = 1,
+             .confirmAction = calibrationSensor,
     },
     [2] = {
-            .description = "SADC",
-            .displayData = displayDataWithGraph,
-            .Self = &UIPages[2],
-            .lineLength = MAX_SESENSOR_NUM,
-            .targetDataType = INTEGER,
-            .confirmAction = changeDisplayType,
+             .description = "CaliLVESen1",
+             .displayData = displayDesciption,
+             .Self = &UIPages[2],
+             .lineLength = 1,
+             .confirmAction = calibrationSensor,
     },
     [3] = {
+             .description = "CaliSVESen0",
+             .displayData = displayDesciption,
+             .Self = &UIPages[3],
+             .lineLength = 1,
+             .confirmAction = calibrationSensor,
+    },
+    [4] = {
+             .description = "CaliSVESen1",
+             .displayData = displayDesciption,
+             .Self = &UIPages[4],
+             .lineLength = 1,
+             .confirmAction = calibrationSensor,
+    },
+    [5] = {
+             .description = "CaliLHOESen",
+             .displayData = displayDesciption,
+             .Self = &UIPages[5],
+             .lineLength = 1,
+             .confirmAction = calibrationSensor,
+    },
+    [6] = {
+             .description = "CaliSHOESen",
+             .displayData = displayDesciption,
+             .Self = &UIPages[6],
+             .lineLength = 1,
+             .confirmAction = calibrationSensor,
+    },
+    [7] = {
+            .description = "LADC",
+            .displayData = displayDataWithGraph,
+            .Self = &UIPages[7],
+            .lineLength = MAX_LESENSOR_NUM,
+            .targetDataType = FLOAT,
+            .confirmAction = changeDisplayType,
+    },
+    [8] = {
+            .description = "SADC",
+            .displayData = displayDataWithGraph,
+            .Self = &UIPages[8],
+            .lineLength = MAX_SESENSOR_NUM,
+            .targetDataType = FLOAT,
+            .confirmAction = changeDisplayType,
+    },
+    [9] = {
             .description = "Bias", //中线偏差(float)
             .displayData = displayDataAlone,
-            .Self = &UIPages[3],
+            .Self = &UIPages[9],
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
 
     },
-    [4] = {
+    [10] = {
              .description = "Angle", //要设置的舵机角度(sint16_t，归一化后float)
              .displayData = displayDataAlone,
-             .Self = &UIPages[4],
+             .Self = &UIPages[10],
              .lineLength = 1,
              .targetDataType = FLOAT,
              .confirmAction = openSettingPage,
 
      },
-     [5] = {
-             .description = "SPID.Res", //舵机PID的输出(float)
-             .displayData = displayDataAlone,
-             .Self = &UIPages[5],
-             .lineLength = 1,
-             .targetDataType = FLOAT,
-             .confirmAction = openSettingPage,
-     },
+//     [11] = {
+//             .description = "SPID.Res", //舵机PID的输出(float)
+//             .displayData = displayDataAlone,
+//             .Self = &UIPages[11],
+//             .lineLength = 1,
+//             .targetDataType = FLOAT,
+//             .confirmAction = openSettingPage,
+//     },
 
-     [6] = {
+     [11] = {
              .description = "SPwmValue", //舵机最终的占空比(uint16_t)
              .displayData = displayDataAlone,
-             .Self = &UIPages[6],
+             .Self = &UIPages[11],
              .lineLength = 1,
              .targetDataType = INTEGER,
              .confirmAction = openSettingPage,
      },
-     [7] = {
-             .description = "SPID.Kp", //舵机PID的三个参数(float)
-             .displayData = displayDataAlone,
-             .Self = &UIPages[7],
-             .lineLength = 1,
-             .targetDataType = FLOAT,
-             .confirmAction = openSettingPage,
-
-
-     },
-     [8] = {
-             .description = "SPID.Ki", //舵机PID的三个参数(float)
-             .displayData = displayDataAlone,
-             .Self = &UIPages[8],
-             .lineLength = 1,
-             .targetDataType = FLOAT,
-             .confirmAction = openSettingPage,
-
-     },
-     [9] = {
-             .description = "SPID.Kd", //舵机PID的三个参数(float)
-             .displayData = displayDataAlone,
-             .Self = &UIPages[9],
-             .lineLength = 1,
-             .targetDataType = FLOAT,
-             .confirmAction = openSettingPage,
-
-     },
-     [10] = {
+//     [13] = {
+//             .description = "SPID.Kp", //舵机PID的三个参数(float)
+//             .displayData = displayDataAlone,
+//             .Self = &UIPages[13],
+//             .lineLength = 1,
+//             .targetDataType = FLOAT,
+//             .confirmAction = openSettingPage,
+//
+//
+//     },
+//     [14] = {
+//             .description = "SPID.Ki", //舵机PID的三个参数(float)
+//             .displayData = displayDataAlone,
+//             .Self = &UIPages[14],
+//             .lineLength = 1,
+//             .targetDataType = FLOAT,
+//             .confirmAction = openSettingPage,
+//
+//     },
+//     [15] = {
+//             .description = "SPID.Kd", //舵机PID的三个参数(float)
+//             .displayData = displayDataAlone,
+//             .Self = &UIPages[15],
+//             .lineLength = 1,
+//             .targetDataType = FLOAT,
+//             .confirmAction = openSettingPage,
+//
+//     },
+//     [16] = {
+//            .description = "Speed", //要设置的电机转速(原数据sint16_t，归一化后float)
+//            .displayData = displayDataAlone,
+//            .Self = &UIPages[16],
+//            .lineLength = 1,
+//            .targetDataType = FLOAT,
+//            .confirmAction = changeDisplayType,
+//     },
+     [12] = {
             .description = "Speed", //要设置的电机转速(原数据sint16_t，归一化后float)
-            .displayData = displayDataAlone,
-            .Self = &UIPages[10],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = changeDisplayType,
-     },
-     [11] = {
-            .description = "Speed", //要设置的电机转速(原数据sint16_t，归一化后float)
-            .displayData = displayDataAlone,
-            .Self = &UIPages[11],
+            .displayData = displayDataAlone,//*
+            .Self = &UIPages[12],
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = openSettingPage,
      },
-    [12] = {
-            .description = "ASpeed", //电机的实际速度(原数据sint16_t，归一化后float)
-            .displayData = displayDataAlone,
-            .Self = &UIPages[12],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = changeDisplayType,
-    },
     [13] = {
-            .description = "MPID.Res", //电机PID输出(float)
+            .description = "ASpeed", //电机的实际速度(原数据sint16_t，归一化后float)
             .displayData = displayDataAlone,
             .Self = &UIPages[13],
             .lineLength = 1,
             .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
+            .confirmAction = changeDisplayType,
     },
     [14] = {
-            .description = "MPwmValue", //电机最终的占空比(sint16_t)
+            .description = "MPID.Res", //电机PID输出(float)
             .displayData = displayDataAlone,
             .Self = &UIPages[14],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [15] = {
+            .description = "MPwmValue", //电机最终的占空比(sint16_t)
+            .displayData = displayDataAlone,
+            .Self = &UIPages[15],
             .lineLength = 1,
             .targetDataType = INTEGER,
             .confirmAction = emptyConfirmAction,
     },
-    [15] = {
-            .description = "MPID.Kp", //电机PID的三个参数
-            .displayData = displayDataAlone,
-            .Self = &UIPages[15],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = openSettingPage,
-    },
     [16] = {
-            .description = "MPID.Ki", //电机PID的三个参数
+            .description = "MPID.Kp", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[16],
             .lineLength = 1,
@@ -409,7 +463,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [17] = {
-            .description = "MPID.Kd", //电机PID的三个参数
+            .description = "MPID.Ki", //电机PID的三个参数
             .displayData = displayDataAlone,
             .Self = &UIPages[17],
             .lineLength = 1,
@@ -417,38 +471,70 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = openSettingPage,
     },
     [18] = {
-            .description = "LoadParameterFromSD",
-            .displayData = displayDesciption,
-            .Self = &UIPages[18],
-            .lineLength = 1,
-            .confirmAction = loadFromSD,
-    },
-    [19] = {
-            .description = "SaveParameterToSD",
-            .displayData = displayDesciption,
-            .Self = &UIPages[19],
-            .lineLength = 1,
-            .confirmAction = saveToSD,
-    },
-
-    [20] = {
-            .description = "AIState",
-            .displayData = displayAIInfo,
-            .Self = &UIPages[20],
-            .lineLength = 1,
-            .confirmAction = emptyConfirmAction,
-
-    },
-    [21] = {
-            .description = "DymKp",
+            .description = "MPID.Kd", //电机PID的三个参数
             .displayData = displayDataAlone,
-            .Self = &UIPages[21],
+            .Self = &UIPages[18],
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = openSettingPage,
     },
-    [22] = {
+//    [24] = {
+//            .description = "LoadParameterFromSD",
+//            .displayData = displayDesciption,
+//            .Self = &UIPages[24],
+//            .lineLength = 1,
+//            .confirmAction = loadFromSD,
+//    },
+//    [25] = {
+//            .description = "SaveParameterToSD",
+//            .displayData = displayDesciption,
+//            .Self = &UIPages[25],
+//            .lineLength = 1,
+//            .confirmAction = saveToSD,
+//    },
+
+//    [26] = {
+//            .description = "AIState",
+//            .displayData = displayAIInfo,
+//            .Self = &UIPages[26],
+//            .lineLength = 1,
+//            .confirmAction = emptyConfirmAction,
+//
+//    },
+//    [27] = {
+//            .description = "DymKp",
+//            .displayData = displayDataAlone,
+//            .Self = &UIPages[27],
+//            .lineLength = 1,
+//            .targetDataType = FLOAT,
+//            .confirmAction = openSettingPage,
+//    },
+    [19] = {
             .description = "o-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[19],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [20] = {
+            .description = "h-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[20],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [21] = {
+            .description = "v-diff",
+            .displayData = displayDataAlone,
+            .Self = &UIPages[21],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = emptyConfirmAction,
+    },
+    [22] = {
+            .description = "o-sum",
             .displayData = displayDataAlone,
             .Self = &UIPages[22],
             .lineLength = 1,
@@ -456,7 +542,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [23] = {
-            .description = "h-diff",
+            .description = "h-sum",
             .displayData = displayDataAlone,
             .Self = &UIPages[23],
             .lineLength = 1,
@@ -464,7 +550,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [24] = {
-            .description = "v-diff",
+            .description = "v-sum",
             .displayData = displayDataAlone,
             .Self = &UIPages[24],
             .lineLength = 1,
@@ -472,7 +558,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [25] = {
-            .description = "o-sum",
+            .description = "o-bias",
             .displayData = displayDataAlone,
             .Self = &UIPages[25],
             .lineLength = 1,
@@ -480,7 +566,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [26] = {
-            .description = "h-sum",
+            .description = "h-bias",
             .displayData = displayDataAlone,
             .Self = &UIPages[26],
             .lineLength = 1,
@@ -488,7 +574,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [27] = {
-            .description = "v-sum",
+            .description = "v-bias",
             .displayData = displayDataAlone,
             .Self = &UIPages[27],
             .lineLength = 1,
@@ -496,95 +582,71 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [28] = {
-            .description = "o-bias",
-            .displayData = displayDataAlone,
+            .description = "FuzzyCtrl",
+            .displayData = displayDesciption,
             .Self = &UIPages[28],
             .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
+            .confirmAction = openMatrixPage,
     },
     [29] = {
-            .description = "h-bias",
-            .displayData = displayDataAlone,
+            .description = "Element",
+            .displayData = displayElement,
             .Self = &UIPages[29],
             .lineLength = 1,
-            .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },
     [30] = {
-            .description = "v-bias",
+            .description = "Ke",
             .displayData = displayDataAlone,
             .Self = &UIPages[30],
-            .lineLength = 1,
+            .lineLength = 8,
             .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },
     [31] = {
-            .description = "FuzzyCtrl",
-            .displayData = displayDesciption,
+            .description = "x",
+            .displayData = displayDataAlone,
             .Self = &UIPages[31],
             .lineLength = 1,
-            .confirmAction = openMatrixPage,
-    },
-    [32] = {
-            .description = "Element",
-            .displayData = displayElement,
-            .Self = &UIPages[32],
-            .lineLength = 1,
-            .confirmAction = emptyConfirmAction,
-    },
-    [33] = {
-            .description = "Ke",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[33],
-            .lineLength = 7,
             .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },
+    [32] = {
+            .description = "CycleInDi",         //*
+            .displayData = displayDataAlone,
+            .Self = &UIPages[32],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = openSettingPage,
+    },
+    [33] = {
+            .description = "CycleWtInDis",  //*
+            .displayData = displayDataAlone,
+            .Self = &UIPages[33],
+            .lineLength = 1,
+            .targetDataType = FLOAT,
+            .confirmAction = openSettingPage,
+    },
     [34] = {
-            .description = "x",
+            .description = "Err",
             .displayData = displayDataAlone,
             .Self = &UIPages[34],
             .lineLength = 1,
             .targetDataType = FLOAT,
-            .confirmAction = emptyConfirmAction,
+            .confirmAction = openSettingPage,
     },
     [35] = {
-            .description = "CycleInDi",
+            .description = "Ea",
             .displayData = displayDataAlone,
             .Self = &UIPages[35],
             .lineLength = 1,
             .targetDataType = FLOAT,
-            .confirmAction = openSettingPage,
-    },
-    [36] = {
-            .description = "CycleWtInDis",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[36],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = openSettingPage,
-    },
-    [37] = {
-            .description = "Err",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[37],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
-            .confirmAction = openSettingPage,
-    },
-    [38] = {
-            .description = "Ea",
-            .displayData = displayDataAlone,
-            .Self = &UIPages[38],
-            .lineLength = 1,
-            .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,
     },
-    [39] = {
+    [36] = {
             .description = "Da",
             .displayData = displayDataAlone,
-            .Self = &UIPages[39],
+            .Self = &UIPages[36],
             .lineLength = 1,
             .targetDataType = FLOAT,
             .confirmAction = emptyConfirmAction,

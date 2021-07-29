@@ -37,6 +37,7 @@ typedef struct key
     private
 
         void *GPIOn;
+        group_t Group;
 
         uint8_t KeyShield;                //按键屏蔽1:屏蔽，0:不屏蔽
         uint8_t Count;                    //按键长按计数
@@ -46,8 +47,16 @@ typedef struct key
         uint8_t State;                    //按键状态
         uint8_t Event;                    //按键事件
 
+
         void *Argv;
         uint16_t Argc;
+
+        uint8_t (*ChangeGroup)(struct key *self,group_t group,char *psw);
+
+        key_eventcallback CallBack;
+
+        key_eventcallback SysCallBack;
+
         key_eventcallback PressedCallBack;      /*回调函数(按下一次)*/
         key_eventcallback LongPressedCallBack;  /*回调函数(长按)*/
 

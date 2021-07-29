@@ -33,37 +33,17 @@ void Core0_Main()
     TIMx.Init(&TIM_Resources[2].TIMN);
     TIMx.Init(&TIM_Resources[3].TIMN);
 
-//    axis_t acc,gyro,mag;
-//
-//    attitude_t attitude;
-
     data_t *data = &Data[data_pointer];
 
     while(1)
     {
+
         SmartCarSysDataSave(data);
 
         ErrorMsg(data,data->Error);
 
-//        if(os.time.getnmsFlag(2))
-//        {
-//
-//            MPU_Get_Accelerometer(&acc.x,&acc.y,&acc.z);
-//
-//            MPU_Get_Gyroscope(&gyro.x,&gyro.y,&gyro.z);
-//
-//            MPU_Get_Magnetometer(&mag.x,&mag.y,&mag.z);
-//
-//            //IMU_Update0();
-//
-//            Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
-//
-//            Console.WriteLine("acc:%f,%f,%f",gyro.x,gyro.y,gyro.z);
-//
-//            Console.WriteLine("acc:%f,%f,%f",mag.x,mag.y,mag.z);
-//
-//            Console.WriteLine("angle:%f,%f,%f",attitude.pitch,attitude.roll,attitude.yaw);
-//        }
+        if(os.time.getnmsFlag(1000))
+            Core0_CheckStatus();
 
     }
 }
@@ -74,43 +54,20 @@ void Core0_Main()
  * */
 void Core1_Main()
 {
-//    TIMx.Init(&TIM_Resources[4].TIMN);
-//
-//    data_t *data = &Data[data_pointer];
+    TIMx.Init(&TIM_Resources[4].TIMN);
 
-    axis_t acc,gyro,mag;
+    data_t *data = &Data[data_pointer];
 
-    attitude_t attitude;
+
 
     while(1)
     {
-        if(os.time.getnmsFlag(20))
-        {
+        if(data->UIEnable)
+            os.task.UiUpdate(&UIData,sizeof(UIData));
 
-            MPU_Get_Accelerometer(&acc.x,&acc.y,&acc.z);
+        ErrorMsg(data,data->Error);
 
-            MPU_Get_Gyroscope(&gyro.x,&gyro.y,&gyro.z);
-
-            MPU_Get_Magnetometer(&mag.x,&mag.y,&mag.z);
-
-            //IMU_Update0();
-
-            Console.WriteLine("acc:%f,%f,%f",acc.x,acc.y,acc.z);
-
-            Console.WriteLine("acc:%f,%f,%f",gyro.x,gyro.y,gyro.z);
-
-            Console.WriteLine("acc:%f,%f,%f",mag.x,mag.y,mag.z);
-
-            Console.WriteLine("angle:%f,%f,%f",attitude.pitch,attitude.roll,attitude.yaw);
-
-        }
-
-//        if(data->UIEnable)
-//            os.task.UiUpdate(&UIData,sizeof(UIData));
-//
-//        ErrorMsg(data,data->Error);
-//
-//        Core1_CheckStatus();
+        Core1_CheckStatus();
     }
 }
 

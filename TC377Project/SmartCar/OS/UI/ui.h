@@ -13,6 +13,14 @@
 
 #define EnableUiDataLink 1
 
+#define CursorDownKeyIndex 0
+#define CursorUpKeyIndex 1
+#define CancelKeyIndex 2
+#define ConfirmKeyIndex 3
+
+#define PageUpKeyIndex 4
+#define PageDownKeyIndex 5
+
 typedef struct
 {
         /*电磁传感器部分*/
@@ -97,5 +105,7 @@ void UI_Init(void);
 
 extern void (*LoadParameterFromSD)(void);
 extern void (*SaveParameterToSD)(void);
+extern void (*pCalibrationVESensor)(uint16_t esensor,uint16_t index);
+extern void (*pCalibrationHOESensor)(uint16_t esensor);
 
 #endif /* OS_UI_UI_H_ */

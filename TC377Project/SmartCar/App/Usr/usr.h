@@ -15,5 +15,6 @@
 #include "neuralnetwork.h"
 #include "attitude.h"
 #include "datacollection.h"
+#include "calibration.h"
 
 #endif /* APP_USR_USR_H_ */

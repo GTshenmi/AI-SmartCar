@@ -27,12 +27,6 @@ void SpeedControl(void *argv)
     {
         case AI_Mode:
 
-            if(is_firstsetspeed)
-            {
-                data->Speed = 2000;
-                is_firstsetspeed = false;
-            }
-
             break;
 
         case SAutoBoot_Mode:
@@ -45,10 +39,10 @@ void SpeedControl(void *argv)
             {
                 data->Speed = 2100.0;
             }
-            else if(fabs(data->Angle) >= 180.0)
-            {
-                data->Speed = 2000.0;
-            }
+//            else if(fabs(data->Angle) >= 180.0)
+//            {
+//                data->Speed = 2000.0;
+//            }
             else
             {
                 data->Speed = FuzzySpeedControl(&data->M_FuzzySpeed,0.0,data->Angle * 100.0/210.0);
@@ -103,11 +97,6 @@ void SpeedControl(void *argv)
 
         case LAutoBoot_Mode:default:
 
-            if(is_firstsetspeed)
-            {
-                data->Speed = 2000.0;
-                is_firstsetspeed = false;
-            }
             break;
 
     }

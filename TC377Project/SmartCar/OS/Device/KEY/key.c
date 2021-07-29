@@ -99,10 +99,7 @@ uint8_t KEY_Scan(struct key *self)
                 break;
         }
 
-        if(self->Event == KEY_DOWN && (self->PressedCallBack != NULL))
-             self->PressedCallBack(self,self->Argv,self->Argc);
-        else if(self->Event == KEY_LONG && (self->LongPressedCallBack != NULL))
-              self->LongPressedCallBack(self,self->Argv,self->Argc);
+        self->CallBack(self,self->Argv,self->Argc);
     }
     else
     {
@@ -111,9 +108,47 @@ uint8_t KEY_Scan(struct key *self)
     }
     return 0;
 }
+
 #if defined(Chip) && (Chip == TC264 || Chip == TC377)
 #pragma warning default
 #endif
+
+uint8_t KEY_ChangeGroup(struct key *self,group_t group,char *psw)
+{
+    if(group == Sys)
+    {
+        if(!strcmp(psw,"Sys Enable:123456"))
+        {
+            self->Group = Sys;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    else
+    {
+        self->Group = group;
+    }
+
+    return 0;
+}
+
+void KEY_CallBack(struct key *self,void *argv,uint16_t argc)
+{
+    if(self->Group == Sys)
+    {
+        if((self->Event == KEY_DOWN || self->Event == KEY_LONG) && self->SysCallBack != NULL)
+            self->SysCallBack(self,self->Argv,self->Argc);
+    }
+    else
+    {
+        if(self->Event == KEY_DOWN && (self->PressedCallBack != NULL))
+             self->PressedCallBack(self,self->Argv,self->Argc);
+        else if(self->Event == KEY_LONG && (self->LongPressedCallBack != NULL))
+              self->LongPressedCallBack(self,self->Argv,self->Argc);
+    }
+}
 
 void KEY_SetShield(struct key *self,bool is_shield)
 {
@@ -194,6 +229,11 @@ uint8_t KEY_Init(struct key *self)
     self->SetShield(self,false);
     self->Connect(self,KEY_DefaultCallBack,KEY_DefaultCallBack,NULL,0);
 
+    self->Group = Usr;
+
+    self->CallBack = KEY_CallBack;
+    self->SysCallBack = NULL;
+    self->ChangeGroup = KEY_ChangeGroup;
 
     return GPIOx.Init(self->GPIOn);
 }

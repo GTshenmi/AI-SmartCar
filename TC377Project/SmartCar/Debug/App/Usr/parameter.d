@@ -266,6 +266,10 @@ parameter.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 parameter.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+parameter.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+parameter.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 parameter.o :	../App/foo.h
 ../App/foo.h :
 parameter.o :	../OS/os.h

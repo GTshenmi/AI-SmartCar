@@ -51,6 +51,7 @@ typedef struct screen
 
         uint16_t Hight;
         uint16_t Width;
+        uint16_t CenterLine;
 
         screen_font_t Font;
         screen_cursor_t Cursor;

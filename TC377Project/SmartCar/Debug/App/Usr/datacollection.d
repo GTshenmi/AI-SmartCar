@@ -266,6 +266,10 @@ datacollection.o :	../OS/os.h
 ../OS/os.h :
 datacollection.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
+datacollection.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+datacollection.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 datacollection.o :	../App/foo.h
 ../App/foo.h :
 datacollection.o :	../OS/os.h

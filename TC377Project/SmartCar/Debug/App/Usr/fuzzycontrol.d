@@ -266,6 +266,10 @@ fuzzycontrol.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 fuzzycontrol.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+fuzzycontrol.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+fuzzycontrol.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 fuzzycontrol.o :	../App/foo.h
 ../App/foo.h :
 fuzzycontrol.o :	../OS/os.h

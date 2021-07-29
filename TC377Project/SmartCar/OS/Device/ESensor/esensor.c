@@ -78,6 +78,65 @@ static uint16_t ESensor_SlidingMedianFilter(struct esensor *self,uint16_t *Filte
     return result;
 }
 
+uint16_t ESensor_SelfCalibration(struct esensor *self,float ref)
+{
+    float gain = 0.0;
+    float ave = 0.0;
+    float val = 0.0;
+
+    for(int i = 0 ; i < 50 ; i++)
+    {
+        ave += (self->Read(self) * 100.0) / 4096.0;
+    }
+
+    for(int i = 0 ; i < 500 ; i++)
+    {
+        ave += (self->Read(self) * 100.0) / 4096.0;
+    }
+    ave /= 500.0;
+
+    for(int i = 0 ; i < 500 ; i++)
+    {
+        val = (self->Read(self) * 100.0) / 4096.0;
+
+        if(fabs(val - ave) >= 5.0)
+        {
+            i--;
+        }
+        else
+        {
+            if(fabs(val) >= 1e-6)
+                gain += ref /val;
+            else
+                i--;
+        }
+    }
+
+    gain /= 500.0;
+
+    if(self->ConfigReg & ESENSOR_BITS_GAIN_ENABLE_MASK)
+    {
+        self->SetGain(self,gain);
+    }
+
+    if(ave >= 7.0 && ave <= 8.0)
+    {
+        return ESensor_NoConnection;
+    }
+
+    if(ave <= 1.0)
+    {
+        return ESensor_ValueTooSmall;
+    }
+
+    if(ave >= 99.9)
+    {
+        return ESensor_ValueTooLarge;
+    }
+
+    return ESensor_Normal;
+}
+
 uint16_t ESensor_Filter(struct esensor *self,void *argv,uint16_t argc)
 {
     return ESensor_SlidingMedianFilter(self,self->FilterBuf,self->FilterBufLen,ESensor_MidFilter(self));
@@ -153,6 +212,8 @@ uint16_t ESensor_Init(struct esensor *self)
     self->EnableFilter(self,true);
     self->EnableGain(self,false);
     self->Connect(self,ESensor_Filter,NULL,0);
+
+    self->SelfCalibration = ESensor_SelfCalibration;
 
     return 0;
 }

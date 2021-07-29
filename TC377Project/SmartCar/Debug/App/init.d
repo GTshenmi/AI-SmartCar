@@ -266,6 +266,10 @@ init.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 init.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+init.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+init.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 init.o :	../App/foo.h
 ../App/foo.h :
 init.o :	../OS/os.h

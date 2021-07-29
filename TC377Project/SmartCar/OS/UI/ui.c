@@ -9,6 +9,7 @@
 #include "info_page.h"
 #include "ui_utilities.h"
 #include "matrix_page.h"
+#include "foo.h"
 
 ui_data_pkg_t UIData;
 
@@ -23,6 +24,9 @@ void cancelPressedCallBack (key_t *self, void *argv, uint16_t argc);
 void (*LoadParameterFromSD) (void) = NULL;
 void (*SaveParameterToSD) (void) = NULL;
 
+void (*pCalibrationVESensor)(uint16_t esensor,uint16_t index) = NULL;
+void (*pCalibrationHOESensor)(uint16_t esensor) = NULL;
+
 /*
  * App Layer 传参:
  * argv: ui_data_pkg_t *
@@ -30,12 +34,12 @@ void (*SaveParameterToSD) (void) = NULL;
  * */
 void UI_Init ()
 {
-    KEY[0].Connect(KEY[0].Self, cursorDownPressedCallBack, NULL, NULL, 0);
-    KEY[1].Connect(KEY[1].Self, cursorUpPressedCallBack, NULL, NULL, 0);
-    KEY[2].Connect(KEY[2].Self, cancelPressedCallBack, NULL, NULL, 0);
-    KEY[3].Connect(KEY[3].Self, confirmPressedCallBack, NULL, NULL, 0);
-    KEY[4].Connect(KEY[4].Self, pageUpPressedCallBack, pageUpLongPressedCallBack, NULL, 0);
-    KEY[5].Connect(KEY[5].Self, pageDownPressedCallBack, pageDownLongPressedCallBack, NULL, 0);
+    KEY[CursorDownKeyIndex].Connect(KEY[CursorDownKeyIndex].Self, cursorDownPressedCallBack, NULL, NULL, 0);
+    KEY[CursorUpKeyIndex].Connect(KEY[CursorUpKeyIndex].Self, cursorUpPressedCallBack, NULL, NULL, 0);
+    KEY[CancelKeyIndex].Connect(KEY[CancelKeyIndex].Self, cancelPressedCallBack, NULL, NULL, 0);
+    KEY[ConfirmKeyIndex].Connect(KEY[ConfirmKeyIndex].Self, confirmPressedCallBack, NULL, NULL, 0);
+    KEY[PageUpKeyIndex].Connect(KEY[PageUpKeyIndex].Self, pageUpPressedCallBack, pageUpLongPressedCallBack, NULL, 0);
+    KEY[PageDownKeyIndex].Connect(KEY[PageDownKeyIndex].Self, pageDownPressedCallBack, pageDownLongPressedCallBack, NULL, 0);
 
     UIPagesInit();
 }
@@ -51,6 +55,10 @@ void UI_Update (void *argv, uint16_t argc)
     else if (MatrixPage.GetStatus(MatrixPage.Self))
     {
         MatrixPage.Display(MatrixPage.Self);
+    }
+    else if(CalibrationSensorPageOn)
+    {
+
     }
     else
     {
@@ -233,6 +241,11 @@ void cancelPressedCallBack (key_t *self, void *argv, uint16_t argc) // // 取消按
     else if (MatrixPage.GetStatus(MatrixPage.Self))
     {
         MatrixPage.CancelPressed(MatrixPage.Self);
+    }
+    else if(CalibrationSensorPageOn){
+        ClearScreen();
+        CalibrationSensorPageOn = 0;
+        SaveDataToEeprom();
     }
 
     Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 5, BLACK);

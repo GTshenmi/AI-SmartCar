@@ -593,6 +593,8 @@ uint8_t Screen_Init(struct screen *self)
 
     self->SetEnable = Screen_SetEnable;
 
+    self->CenterLine = self->Hight/(self->Font.Hight * 2);
+
     uint8_t res = 0;
     if(self->__Init__ != NULL && self->__InitConfig__ != NULL)
         res = self->__Init__(self->__InitConfig__);

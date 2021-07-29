@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../App/Usr/attitude.c \
+../App/Usr/calibration.c \
 ../App/Usr/control.c \
 ../App/Usr/datacollection.c \
 ../App/Usr/dataprocess.c \
@@ -14,6 +15,7 @@ C_SRCS += \
 
 OBJS += \
 ./App/Usr/attitude.o \
+./App/Usr/calibration.o \
 ./App/Usr/control.o \
 ./App/Usr/datacollection.o \
 ./App/Usr/dataprocess.o \
@@ -23,6 +25,7 @@ OBJS += \
 
 COMPILED_SRCS += \
 ./App/Usr/attitude.src \
+./App/Usr/calibration.src \
 ./App/Usr/control.src \
 ./App/Usr/datacollection.src \
 ./App/Usr/dataprocess.src \
@@ -32,6 +35,7 @@ COMPILED_SRCS += \
 
 C_DEPS += \
 ./App/Usr/attitude.d \
+./App/Usr/calibration.d \
 ./App/Usr/control.d \
 ./App/Usr/datacollection.d \
 ./App/Usr/dataprocess.d \

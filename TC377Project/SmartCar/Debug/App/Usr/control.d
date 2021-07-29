@@ -266,6 +266,10 @@ control.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 control.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+control.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+control.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 control.o :	../App/foo.h
 ../App/foo.h :
 control.o :	../OS/os.h

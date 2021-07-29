@@ -266,6 +266,10 @@ dataprocess.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 dataprocess.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+dataprocess.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+dataprocess.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 dataprocess.o :	../App/foo.h
 ../App/foo.h :
 dataprocess.o :	../OS/os.h

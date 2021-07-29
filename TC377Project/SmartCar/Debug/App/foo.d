@@ -270,6 +270,10 @@ foo.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 foo.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+foo.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+foo.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 foo.o :	../App/foo.h
 ../App/foo.h :
 foo.o :	../App/init.h

@@ -109,4 +109,10 @@ typedef char * string;
     //Cpu_LockMutex(lock);
 #endif
 
+typedef enum
+{
+    Sys,
+    Usr,
+}group_t;
+
 #endif /* DRIVER_SYSDRIVER_PLATFORM_H_ */

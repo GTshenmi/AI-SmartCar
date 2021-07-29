@@ -11,6 +11,4 @@
 #include "sys_driver.h"
 #include "usr_driver.h"
 
-
-
 #endif /* DRIVER_DRIVER_H_ */

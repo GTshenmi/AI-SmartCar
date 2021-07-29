@@ -264,6 +264,10 @@ test.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 test.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+test.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+test.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 test.o :	../App/foo.h
 ../App/foo.h :
 test.o :	../OS/os.h

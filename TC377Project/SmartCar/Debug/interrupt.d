@@ -264,6 +264,10 @@ interrupt.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 interrupt.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+interrupt.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+interrupt.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 interrupt.o :	../App/foo.h
 ../App/foo.h :
 interrupt.o :	../OS/os.h

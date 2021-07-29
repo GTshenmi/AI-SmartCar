@@ -13,6 +13,28 @@
 
 #define MAX_DATA_LEN 5
 
+enum{
+    PrepareCalibration,
+    CalibrationLHOESensor,
+    CalibrationLVESensor,
+    CalibrationLVESensor0,
+    CalibrationLVESensor1,
+    CalibrationSHOESensor,
+    CalibrationSVESensor,
+    CalibrationSVESensor0,
+    CalibrationSVESensor1,
+    CalibrationIMU,
+
+    CalibrationVESensorFin,
+};
+
+enum
+{
+    UnConfirmed = 0,
+    Yes,
+    No,
+};
+
 typedef enum
 {
     RASC_Wait,
@@ -283,6 +305,9 @@ typedef struct
       float LESensor_NormalizedValue[MAX_LESENSOR_NUM];
       float SESensor_NormalizedValue[MAX_SESENSOR_NUM];
 
+      float LESensorGain[MAX_LESENSOR_NUM];//*
+      float SESensorGain[MAX_SESENSOR_NUM];//*
+
       esensor_data_t HESensor[4];
       esensor_data_t VESensor[4];
       esensor_data_t OESensor[4];
@@ -349,6 +374,8 @@ typedef struct
       axis_t     mag;
 
       /*For Debug.*/
+
+      uint32_t VESensorCalConfirmState;
 
       bool  StartRecord;
       bool  RecordFin;

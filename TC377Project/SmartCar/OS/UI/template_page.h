@@ -12,7 +12,7 @@
 
 #define SCREEN_MAX_LINE 8
 #define SCREEN_MIN_LINE 0
-#define TOTAL_PAGE_NUMBER 40
+#define TOTAL_PAGE_NUMBER 37
 #define ADC_MAX_NUMBER 4096.0
 
 typedef enum{
@@ -36,6 +36,8 @@ typedef struct sUIPageStruct_t{
 }UIPageStruct;
 
 extern UIPageStruct UIPages[];
+
+extern uint8_t CalibrationSensorPageOn;
 
 void UIPagesInit(void);
 

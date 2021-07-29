@@ -266,6 +266,10 @@ element.o :	../App/Usr/datacollection.h
 ../App/Usr/datacollection.h :
 element.o :	../App/Sys/sys.h
 ../App/Sys/sys.h :
+element.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+element.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 element.o :	../App/foo.h
 ../App/foo.h :
 element.o :	../OS/os.h
