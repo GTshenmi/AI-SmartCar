@@ -26,8 +26,10 @@ typedef struct
         /*电磁传感器部分*/
         uint16_t *LADC;         /*长前瞻电感值(原数据)*/
         float    *NLADC;        /*长前瞻电感值(归一化)*/
+        float    *LADCGain;
         uint16_t *SADC;         /*短前瞻电感值(原数据)*/
         float    *NSADC;        /*短前瞻电感值(归一化)*/
+        float    *SADCGain;
 
         /*电机部分*/
         float    *Speed;         /*要设置的电机转速(原数据)*/

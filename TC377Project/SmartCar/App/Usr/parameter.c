@@ -73,77 +73,37 @@ void ParameterInit(void *argv)
 
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
     {
-        data->LESensorGain[i] = LESensor[i].Gain;
+        data->LESensorGain[i] = 1.0;
     }
 
     for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
     {
-        data->SESensorGain[i] = SESensor[i].Gain;
+        data->SESensorGain[i] = 1.0;
     }
 
-    switch((bits >> 4) & 0x00000003)
+    switch((bits >> 6) & 0x00000001)
     {
         case 0:
+
+            LoadDataFromEEPROM(NULL,false);
+
+            for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
+            {
+                LESensor[i].EnableGain(LESensor[i].Self,true);
+                LESensor[i].SetGain(LESensor[i].Self,data->LESensorGain[i]);
+            }
+
+            for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
+            {
+                SESensor[i].EnableGain(SESensor[i].Self,true);
+                SESensor[i].SetGain(SESensor[i].Self,data->SESensorGain[i]);
+            }
 
             break;
 
         case 1:
 
-            LoadDataFromEeprom();
-
-            for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
-            {
-                LESensor[i].EnableGain(LESensor[i].Self,true);
-                LESensor[i].SetGain(LESensor[i].Self,data->LESensorGain[i]);
-            }
-
-            for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
-            {
-                SESensor[i].EnableGain(SESensor[i].Self,true);
-                SESensor[i].SetGain(SESensor[i].Self,data->SESensorGain[i]);
-            }
-
-            Console.WriteArray("float",data->SESensorGain,8);
-
-            break;
-
-        case 2:
-
-            LoadDataFromEeprom();
-
-            for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
-            {
-                LESensor[i].EnableGain(LESensor[i].Self,true);
-                LESensor[i].SetGain(LESensor[i].Self,data->LESensorGain[i]);
-            }
-
-            for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
-            {
-                SESensor[i].EnableGain(SESensor[i].Self,true);
-                SESensor[i].SetGain(SESensor[i].Self,data->SESensorGain[i]);
-            }
-
-            break;
-
-        case 3:
-
-            LoadDataFromEeprom();
-
-            SelfCalibration(data,CalibrationLHOESensor);
-
-            os.time.delay(0.5,s);
-
-            SelfCalibration(data,CalibrationSHOESensor);
-
-            os.time.delay(0.5,s);
-
-            SelfCalibration(data,CalibrationLVESensor);
-
-            os.time.delay(0.5,s);
-
-            SelfCalibration(data,CalibrationSVESensor);
-
-            os.time.delay(0.5,s);
+            SaveDataToEEPROM(NULL,true);
 
             break;
 

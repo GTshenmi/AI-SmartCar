@@ -17,7 +17,7 @@ void SpeedControl(void *argv)
 
     //static uint32_t i = 0;
 
-    static bool is_firstsetspeed = true;
+    //static bool is_firstsetspeed = true;
 
     extern bool StartRecord;
 

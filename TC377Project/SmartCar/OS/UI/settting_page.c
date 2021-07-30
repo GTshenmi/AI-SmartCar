@@ -6,7 +6,7 @@
  */
 
 #include <setting_page.h>
-#include <foo.h>
+//#include <foo.h>
 
 void SettingPageOpen (SettingPageStruct *Self, UIPageStruct *targetUIPage)
 {
@@ -100,9 +100,10 @@ void SettingPageDisplay (SettingPageStruct *Self)
 
 void SettingPageClose (SettingPageStruct *Self)
 {
+    SaveDataToEEPROM(Self->targetUIPage,false);
+
     Self->targetUIPage = NULL;
     ClearScreen();
-    SaveDataToEeprom();
 }
 
 uint8_t SettingPageGetStatus (SettingPageStruct *Self)

@@ -90,7 +90,7 @@ void Core0_HardWareInit()
 
     line += 2;
 
-    if(bits & 0x40)
+    if(bits & 0x80)
     {
         Screen.WriteXLine(Screen.Self,line,"Cycle:Left");
         Data[data_pointer].CycleDir = CC_DirLeft;
@@ -102,10 +102,6 @@ void Core0_HardWareInit()
     }
 
     line += 2;
-
-    UIParameterInit();
-
-    UI_Init();
 
     /*Init LED And BEEP.*/
 
@@ -218,6 +214,13 @@ void Core0_HardWareInit()
 
 void Core0_SoftWareInit()
 {
+
+    /*Init User Interface.*/
+
+    UIParameterInit();
+
+    UI_Init();
+
     /*Init PID Controller.*/
     Data[data_pointer].S_PID = PID_Init(PositionalPID);
     Data[data_pointer].M_PID = PID_Init(IncrementalPID);
@@ -331,9 +334,11 @@ void UIParameterInit(void)
     UIData.Ea = &Data[data_pointer].M_FuzzySpeed.e[1];
     UIData.Da = &Data[data_pointer].Da;
 
+    UIData.LADCGain = Data[data_pointer].LESensorGain;
+    UIData.SADCGain = Data[data_pointer].SESensorGain;
+
     pCalibrationVESensor = CalibrationVESensor;
     pCalibrationHOESensor = CalibrationHOESensor;
-
 
     //UIData.ElementType = &Data[data_pointer].Element.Type;
 

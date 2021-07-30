@@ -41,4 +41,8 @@ extern uint8_t CalibrationSensorPageOn;
 
 void UIPagesInit(void);
 
+void SaveDataToEEPROM(UIPageStruct *targetUIPage,bool allReset);
+void LoadDataFromEEPROM(UIPageStruct *targetUIPage,bool allReset);
+uint UIPagesGetIndexByDescription(char *description);
+
 #endif /* OS_DEVICE_KEY_TEMPLATE_PAGE_H_ */

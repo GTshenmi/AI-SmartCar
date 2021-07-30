@@ -9,7 +9,8 @@
 #include "info_page.h"
 #include "ui_utilities.h"
 #include "matrix_page.h"
-#include "foo.h"
+#include "driver.h"
+//#include "foo.h"
 
 ui_data_pkg_t UIData;
 
@@ -26,6 +27,61 @@ void (*SaveParameterToSD) (void) = NULL;
 
 void (*pCalibrationVESensor)(uint16_t esensor,uint16_t index) = NULL;
 void (*pCalibrationHOESensor)(uint16_t esensor) = NULL;
+
+void SaveDataToEEPROM(UIPageStruct *targetUIPage,bool allReset){
+
+
+
+    int dataCounter = 0;
+
+    //dataCounter++;
+
+    if(targetUIPage == UIPages[UIPagesGetIndexByDescription("Speed")].Self || allReset)
+        EEPROMSetData(dataCounter,UIData.Speed);
+
+    dataCounter++;
+
+    if(targetUIPage == UIPages[UIPagesGetIndexByDescription("CycleInDis")].Self || allReset)
+        EEPROMSetData(dataCounter,UIData.CycleInDistance);
+
+    dataCounter++;
+
+    if(targetUIPage == UIPages[UIPagesGetIndexByDescription("CycleWtInDis")].Self || allReset)
+        EEPROMSetData(dataCounter,UIData.CycleWaitInDistance);
+
+    dataCounter++;
+
+    if(targetUIPage == UIPages[UIPagesGetIndexByDescription("CaliLHOESen")].Self || allReset)
+    {
+        for(int i = 0;i<MAX_LESENSOR_NUM;i++){
+            UIData.LADCGain[i] = LESensor[i].Gain;
+            EEPROMSetData(dataCounter, &UIData.LADCGain[i]);
+            dataCounter++;
+        }
+        for(int i = 0;i<MAX_SESENSOR_NUM;i++){
+            UIData.SADCGain[i] = SESensor[i].Gain;
+            EEPROMSetData(dataCounter, &UIData.SADCGain[i]);
+            dataCounter++;
+        }
+    }
+}
+
+void LoadDataFromEEPROM(UIPageStruct *targetUIPage,bool allReset){
+
+    int dataCounter = 0;
+
+    EEPROMGetData(dataCounter++,UIData.Speed);
+    EEPROMGetData(dataCounter++,UIData.CycleInDistance);
+    EEPROMGetData(dataCounter++,UIData.CycleWaitInDistance);
+
+    for(int i = 0;i<MAX_LESENSOR_NUM;i++){
+        EEPROMGetData(dataCounter++, &UIData.LADCGain[i]);
+
+    }
+    for(int i = 0;i<MAX_SESENSOR_NUM;i++){
+        EEPROMGetData(dataCounter++, &UIData.SADCGain[i]);
+    }
+}
 
 /*
  * App Layer 传参:
@@ -245,7 +301,7 @@ void cancelPressedCallBack (key_t *self, void *argv, uint16_t argc) // // 取消按
     else if(CalibrationSensorPageOn){
         ClearScreen();
         CalibrationSensorPageOn = 0;
-        SaveDataToEeprom();
+        SaveDataToEEPROM(UIPages[UIPagesGetIndexByDescription("CaliLHOESen")].Self,false);//
     }
 
     Screen.ShowNum(Screen.Self, Screen.Width - Screen.Font.Width, 0, 5, BLACK);

@@ -20,6 +20,5 @@ uint SaveParameterSD(data_t *data,float *LADC_Value,float *SADC_Value,float *Ang
 uint SaveMotorSystemInfo(float *input,float *output,uint32_t len);
 uint SaveSensorDataAndAngle(data_t *data,char *path);
 uint SaveSensorDataAndAngleAI(data_t *data,char *path);
-void SaveDataToEeprom(void);
-void LoadDataFromEeprom(void);
+
 #endif /* APP_FOO_H_ */

@@ -14,6 +14,27 @@
 
 uint8_t CalibrationSensorPageOn = 0;
 
+uint UIPagesGetIndexByDescription(char *description)
+{
+    uint index = 0;
+
+    for(uint i = 0 ; i < TOTAL_PAGE_NUMBER ; i++)
+    {
+        if(!strcmp(UIPages[i].description,description))
+        {
+            index = i;
+            break;
+        }
+    }
+
+    if(index >= TOTAL_PAGE_NUMBER)
+        index = TOTAL_PAGE_NUMBER - 1;
+
+    //printf("index = %u",index);
+
+    return index;
+}
+
 void displayDataAlone (UIPageStruct *Self, uint8_t dataLineTmp, uint16_t beginLineTmp)
 {
 
@@ -612,7 +633,7 @@ UIPageStruct UIPages[TOTAL_PAGE_NUMBER] = {
             .confirmAction = emptyConfirmAction,
     },
     [32] = {
-            .description = "CycleInDi",         //*
+            .description = "CycleInDis",         //*
             .displayData = displayDataAlone,
             .Self = &UIPages[32],
             .lineLength = 1,

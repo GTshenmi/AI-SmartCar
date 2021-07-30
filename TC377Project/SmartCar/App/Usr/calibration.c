@@ -15,6 +15,7 @@ void CalibrationESensor(esensor_t *esensor,uint16_t line,uint16_t index,float re
 
     esensor->SetGain(esensor->Self,1.0);
     esensor->EnableGain(esensor->Self,true);
+
     res = esensor->SelfCalibration(esensor->Self,ref);
 
     val = esensor->Read(esensor->Self) * 100.0 / 4096.0;

@@ -68,10 +68,6 @@ ui.o :	../OS/UI/ui_utilities.h
 ../OS/UI/ui_utilities.h :
 ui.o :	../OS/UI/matrix_page.h
 ../OS/UI/matrix_page.h :
-ui.o :	../App/foo.h
-../App/foo.h :
-ui.o :	../OS/os.h
-../OS/os.h :
 ui.o :	../Driver/driver.h
 ../Driver/driver.h :
 ui.o :	../Driver/SysDriver/sys_driver.h
@@ -202,55 +198,3 @@ ui.o :	../Driver/UsrDriver/EEPROM/eeprom.h
 ../Driver/UsrDriver/EEPROM/eeprom.h :
 ui.o :	../Driver/UsrDriver/MPU9250/mpu9250.h
 ../Driver/UsrDriver/MPU9250/mpu9250.h :
-ui.o :	../OS/Malloc/malloc.h
-../OS/Malloc/malloc.h :
-ui.o :	../OS/Task/task.h
-../OS/Task/task.h :
-ui.o :	../OS/FatFs/file.h
-../OS/FatFs/file.h :
-ui.o :	../OS/FatFs/src/ff.h
-../OS/FatFs/src/ff.h :
-ui.o :	../OS/FatFs/src/integer.h
-../OS/FatFs/src/integer.h :
-ui.o :	../OS/FatFs/src/ffconf.h
-../OS/FatFs/src/ffconf.h :
-ui.o :	../OS/Time/softtimer.h
-../OS/Time/softtimer.h :
-ui.o :	../OS/Time/ostime.h
-../OS/Time/ostime.h :
-ui.o :	../OS/Debug/debug.h
-../OS/Debug/debug.h :
-ui.o :	../OS/Debug/print.h
-../OS/Debug/print.h :
-ui.o :	../OS/Debug/console.h
-../OS/Debug/console.h :
-ui.o :	../OS/Debug/ano_dt.h
-../OS/Debug/ano_dt.h :
-ui.o :	../App/Usr/parameter.h
-../App/Usr/parameter.h :
-ui.o :	../App/Sys/sys.h
-../App/Sys/sys.h :
-ui.o :	../OS/os.h
-../OS/os.h :
-ui.o :	../App/Sys/filter.h
-../App/Sys/filter.h :
-ui.o :	../App/Sys/kalman_filter.h
-../App/Sys/kalman_filter.h :
-ui.o :	../App/Sys/pid_ctrl.h
-../App/Sys/pid_ctrl.h :
-ui.o :	../App/Sys/sort.h
-../App/Sys/sort.h :
-ui.o :	../App/Sys/matrix.h
-../App/Sys/matrix.h :
-ui.o :	../App/Sys/sysmath.h
-../App/Sys/sysmath.h :
-ui.o :	../App/Sys/fuzzy_ctrl.h
-../App/Sys/fuzzy_ctrl.h :
-ui.o :	../OS/os.h
-../OS/os.h :
-ui.o :	../App/Sys/queue.h
-../App/Sys/queue.h :
-ui.o :	../App/Usr/fuzzycontrol.h
-../App/Usr/fuzzycontrol.h :
-ui.o :	../App/Sys/sys.h
-../App/Sys/sys.h :
