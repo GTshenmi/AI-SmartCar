@@ -17,6 +17,7 @@
 #include "sysmath.h"
 #include "fuzzy_ctrl.h"
 #include "queue.h"
+#include "adrc.h"
 
 #define FunctionMode(basename,mode) basename##_##mode
 

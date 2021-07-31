@@ -218,6 +218,10 @@ foo.o :	../OS/os.h
 ../OS/os.h :
 foo.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+foo.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+foo.o :	../OS/os.h
+../OS/os.h :
 foo.o :	../App/Usr/fuzzycontrol.h
 ../App/Usr/fuzzycontrol.h :
 foo.o :	../App/Sys/sys.h

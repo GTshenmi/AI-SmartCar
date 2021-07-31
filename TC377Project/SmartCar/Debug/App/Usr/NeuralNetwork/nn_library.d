@@ -214,6 +214,10 @@ nn_library.o :	../OS/os.h
 ../OS/os.h :
 nn_library.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+nn_library.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+nn_library.o :	../OS/os.h
+../OS/os.h :
 nn_library.o :	../App/Usr/NeuralNetwork/nn_parameter.h
 ../App/Usr/NeuralNetwork/nn_parameter.h :
 nn_library.o :	../App/Usr/NeuralNetwork/tricore_nn.h

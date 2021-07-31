@@ -218,6 +218,10 @@ app.o :	../OS/os.h
 ../OS/os.h :
 app.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+app.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+app.o :	../OS/os.h
+../OS/os.h :
 app.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 app.o :	../App/Usr/parameter.h

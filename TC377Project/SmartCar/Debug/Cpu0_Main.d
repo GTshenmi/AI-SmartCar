@@ -216,6 +216,10 @@ Cpu0_Main.o :	../OS/os.h
 ../OS/os.h :
 Cpu0_Main.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+Cpu0_Main.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+Cpu0_Main.o :	../OS/os.h
+../OS/os.h :
 Cpu0_Main.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 Cpu0_Main.o :	../App/Usr/parameter.h

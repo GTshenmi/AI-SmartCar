@@ -214,6 +214,10 @@ calibration.o :	../OS/os.h
 ../OS/os.h :
 calibration.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+calibration.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+calibration.o :	../OS/os.h
+../OS/os.h :
 calibration.o :	../App/include.h
 ../App/include.h :
 calibration.o :	../OS/os.h

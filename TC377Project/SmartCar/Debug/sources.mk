@@ -24,6 +24,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+App/Sys/Matlab \
 App/Sys \
 App/Usr/NeuralNetwork \
 App/Usr \

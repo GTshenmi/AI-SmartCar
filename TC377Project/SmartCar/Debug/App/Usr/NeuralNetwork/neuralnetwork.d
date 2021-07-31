@@ -216,6 +216,10 @@ neuralnetwork.o :	../OS/os.h
 ../OS/os.h :
 neuralnetwork.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+neuralnetwork.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+neuralnetwork.o :	../OS/os.h
+../OS/os.h :
 neuralnetwork.o :	../App/Usr/NeuralNetwork/nn_parameter.h
 ../App/Usr/NeuralNetwork/nn_parameter.h :
 neuralnetwork.o :	../App/Usr/NeuralNetwork/tricore_nn.h

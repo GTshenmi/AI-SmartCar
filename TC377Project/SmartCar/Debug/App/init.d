@@ -218,6 +218,10 @@ init.o :	../OS/os.h
 ../OS/os.h :
 init.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+init.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+init.o :	../OS/os.h
+../OS/os.h :
 init.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 init.o :	../App/Usr/parameter.h

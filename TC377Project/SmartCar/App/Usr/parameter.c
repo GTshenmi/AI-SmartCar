@@ -71,6 +71,8 @@ void ParameterInit(void *argv)
 
     FuzzyControlInit(data);
 
+    ADRC_Init(&data->M_ADRC);
+
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
     {
         data->LESensorGain[i] = 1.0;

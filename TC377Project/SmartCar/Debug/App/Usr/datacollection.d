@@ -214,6 +214,10 @@ datacollection.o :	../OS/os.h
 ../OS/os.h :
 datacollection.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+datacollection.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+datacollection.o :	../OS/os.h
+../OS/os.h :
 datacollection.o :	../App/include.h
 ../App/include.h :
 datacollection.o :	../OS/os.h

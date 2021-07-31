@@ -389,6 +389,8 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Driver/UsrDriver/EEPROM"/>
                                     									
+                                    <listOptionValue builtIn="false" value="../App/Sys/Matlab"/>
+                                    									
                                     <listOptionValue builtIn="false" value="../App/Sys"/>
                                     									
                                     <listOptionValue builtIn="false" value="../OS"/>

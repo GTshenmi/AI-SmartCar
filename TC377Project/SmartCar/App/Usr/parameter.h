@@ -265,9 +265,11 @@ typedef struct
 {
       /*For Motor*/
 
-      PID_TypeDef M_PID;         /*Motor Fuzzy PID Controler*/
+      PID_TypeDef M_PID;         /*Motor Fuzzy PID Controler(Not Used.)*/
       Fuzzy_TypeDef M_FuzzyKp;
       Fuzzy_TypeDef M_FuzzyKi;
+
+      ADRC_TypeDef M_ADRC;
 
       Fuzzy_TypeDef M_FuzzySpeed;/*Fuzzy Speed Controler*/
 

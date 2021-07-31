@@ -90,6 +90,7 @@ RM := rm -rf
 -include Configurations/subdir.mk
 -include App/Usr/NeuralNetwork/subdir.mk
 -include App/Usr/subdir.mk
+-include App/Sys/Matlab/subdir.mk
 -include App/Sys/subdir.mk
 -include App/subdir.mk
 -include subdir.mk

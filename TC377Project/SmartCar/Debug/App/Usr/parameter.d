@@ -214,6 +214,10 @@ parameter.o :	../OS/os.h
 ../OS/os.h :
 parameter.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+parameter.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+parameter.o :	../OS/os.h
+../OS/os.h :
 parameter.o :	../App/Usr/fuzzycontrol.h
 ../App/Usr/fuzzycontrol.h :
 parameter.o :	../App/Sys/sys.h

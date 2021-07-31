@@ -214,6 +214,10 @@ fuzzycontrol.o :	../OS/os.h
 ../OS/os.h :
 fuzzycontrol.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+fuzzycontrol.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+fuzzycontrol.o :	../OS/os.h
+../OS/os.h :
 fuzzycontrol.o :	../App/include.h
 ../App/include.h :
 fuzzycontrol.o :	../OS/os.h

@@ -214,6 +214,10 @@ element.o :	../OS/os.h
 ../OS/os.h :
 element.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
+element.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+element.o :	../OS/os.h
+../OS/os.h :
 element.o :	../App/Usr/parameter.h
 ../App/Usr/parameter.h :
 element.o :	../App/Sys/sys.h
