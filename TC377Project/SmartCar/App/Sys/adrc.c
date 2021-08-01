@@ -67,7 +67,7 @@ int16_t Fsg_ADRC(float x,float d)
   output=(Sign_ADRC(x+d)-Sign_ADRC(x-d))/2;
   return output;
 }
-void ADRC_Init(ADRC_TypeDef *fhan_Input1)
+void ADRC_Init0(ADRC_TypeDef *fhan_Input1)
 {
   fhan_Input1->r=ADRC_Unit[0][0];
   fhan_Input1->h=ADRC_Unit[0][1];
@@ -106,6 +106,28 @@ void ADRC_Init(ADRC_TypeDef *fhan_Input1)
 //  fhan_Input2->b=ADRC_Unit[1][15];
 }
 
+void ADRC_Init(ADRC_TypeDef *adrc)
+{
+    adrc->r= 10000;
+    adrc->h= 0.002;
+    adrc->N0= 5;
+    adrc->beta_01= 300;
+    adrc->beta_02= 500;
+    adrc->beta_03= 600;
+    adrc->nlsef_alpha1 = 0.7;
+    adrc->nlsef_alpha2 = 0.95;
+//    adrc->b0=ADRC_Unit[0][6];
+//    adrc->beta_0=ADRC_Unit[0][7];
+//    adrc->beta_1=ADRC_Unit[0][8];
+//    adrc->beta_2=ADRC_Unit[0][9];
+    //adrc->N1=(uint16)(ADRC_Unit[0][10]);
+    //adrc->c=ADRC_Unit[0][11];
+
+    adrc->alpha1=0.5;
+    adrc->alpha2=0.25;
+    adrc->delta= 0.0025;
+    adrc-> b= 1.0;
+}
 float ADRC_Sign(float input)
 {
     float output = 0.0;
@@ -178,12 +200,14 @@ void ADRC_TD(ADRC_TypeDef *adrc,float target)
 
     adrc->x1+=adrc->h*adrc->x2;                         //跟新最速跟踪状态量x1
     adrc->x2+=adrc->h*adrc->fh;                         //跟新最速跟踪状态量微分x2
+
+    //Console.WriteLine("ADRC-TD:%f,%f",adrc->x1,adrc->x2);
 }
 
 void ADRC_NolinearConbination(ADRC_TypeDef *adrc)
 {
-    adrc->u0 = adrc->beta_01 * ADRC_Fal(adrc->e1,adrc->alpha1,adrc->zeta) +\
-               adrc->beta_02 * ADRC_Fal(adrc->e2,adrc->alpha2,adrc->zeta);
+    adrc->u0 = adrc->beta_01 * ADRC_Fal(adrc->e1,adrc->nlsef_alpha1,adrc->delta) +\
+               adrc->beta_02 * ADRC_Fal(adrc->e2,adrc->nlsef_alpha2,adrc->delta);
 }
 
 void ADRC_ESO(ADRC_TypeDef *adrc)
@@ -191,8 +215,8 @@ void ADRC_ESO(ADRC_TypeDef *adrc)
 
     adrc->e=adrc->z1-adrc->y;//状态误差
 
-    adrc->fe=ADRC_Fal(adrc->e,0.5,adrc->zeta);//非线性函数，提取跟踪状态与当前状态误差
-    adrc->fe1=ADRC_Fal(adrc->e,0.25,adrc->zeta);
+    adrc->fe=ADRC_Fal(adrc->e,0.5,adrc->delta);//非线性函数，提取跟踪状态与当前状态误差
+    adrc->fe1=ADRC_Fal(adrc->e,0.25,adrc->delta);
 
   /*************扩展状态量更新**********/
     adrc->z1+=adrc->h*(adrc->z2-adrc->beta_01*adrc->e);
@@ -211,6 +235,9 @@ float ADRC_Control(ADRC_TypeDef *adrc,float target,float actual)
     adrc->e1=adrc->x1-adrc->z1; //状态偏差项
     adrc->e2=adrc->x2-adrc->z2; //状态微分项
     ADRC_NolinearConbination(adrc);//非线性反馈
+
+    Console.WriteLine("ADRC:%f,%f,%f,%f,%f,%f",adrc->z1,adrc->z2,adrc->z3,adrc->e1,adrc->e2,adrc->u0);
+
     adrc->u=adrc->u0                //计算控制量
         -adrc->z3/adrc->b;
 

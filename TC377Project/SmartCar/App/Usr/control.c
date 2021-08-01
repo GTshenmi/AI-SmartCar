@@ -332,13 +332,19 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
     }
     else
     {
-        Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
+        //Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
 
         //PID_Ctrl(&data->M_PID,tspeed,aspeed);
 
-        ADRC_Control(&data->M_ADRC,tspeed,aspeed);
+        //ADRC_Control(&data->M_ADRC,tspeed,aspeed);
 
-        PwmValue = (sint16_t)ConstrainFloat(data->M_ADRC.u * 100.0,-10000.0,10000.0);
+        //ADRC_Control(&data->M_ADRC,target_speed,actual_speed);
+
+        //PwmValue = 2000;
+
+        //PwmValue = (sint16_t)ConstrainFloat(data->M_ADRC.u,-10000.0,10000.0);
+
+
 
         //PwmValue = (sint16_t)ConstrainFloat(data->M_PID.Result,-10000.0,10000.0);
     }

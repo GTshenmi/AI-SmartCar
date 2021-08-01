@@ -44,13 +44,22 @@ typedef struct
     float e2_lpf;
     float b;
 
+    float nlsef_alpha1;
+    float nlsef_alpha2;
+
+    float delta;
+
+    float alpha1;
+    float alpha2;
+
+
     /*********第一种组合形式*********/
     float beta_0;//线性
     float beta_1;//非线性组合参数
     float beta_2;//u0=beta_1*e1+beta_2*e2+(beta_0*e0);
     /*********第二种组合形式*********/
-    float alpha1;//u0=beta_1*fal(e1,alpha1,zeta)+beta_2*fal(e2,alpha2,zeta)
-    float alpha2;//0<alpha1<1<alpha2
+//    float alpha1;//u0=beta_1*fal(e1,alpha1,zeta)+beta_2*fal(e2,alpha2,zeta)
+//    float alpha2;//0<alpha1<1<alpha2
     float zeta;//线性段的区间长度
     /*********第三种组合形式*********/
     float h1;//u0=-fhan(e1,e2,r,h1);
@@ -75,7 +84,7 @@ typedef struct
 
 
 
-void ADRC_Init(ADRC_TypeDef *fhan_Input1);
+void ADRC_Init(ADRC_TypeDef *adrc);
 void Fhan_ADRC(ADRC_TypeDef *fhan_Input,float expect_ADRC);
 float ADRC_Control(ADRC_TypeDef *adrc,float target,float actual);
 
