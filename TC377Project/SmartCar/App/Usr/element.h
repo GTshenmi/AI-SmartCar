@@ -125,7 +125,7 @@ inline float CycleInFunc(data_t *data,float x)
 
 inline bool Is_Cycle(data_t *data)
 {
-    if(data->CarMode == LAutoBoot_Mode || data->CarMode == AI_Mode)
+    if(data->CarMode == LAutoBoot_Mode)
     {
         float sum_l = data->HESensor[0].Value + data->OESensor[0].Value;
         float sum_r = data->HESensor[3].Value + data->OESensor[1].Value;
@@ -202,7 +202,7 @@ inline bool Is_CycleIn(data_t *data,cycle_config *config)
 {
     return (data->h_sum <= 100.0 && data->h_bias <= 35.0 && ((data->x - config->isCyclePos) >= config->inDistance));
 
-    //return (data->h_sum <= 100.0 && data->h_bias <= 35.0 && ((data->x - isCyclePos) >= inDistance) && (dYaw >= 30.0));
+    //return (data->h_sum <= 100.0 && data->h_bias <= 35.0 && ((data->x - config->isCyclePos) >= config->inDistance) && (config->dYaw >= 30.0));
 }
 
 inline bool Is_CycleOut(data_t *data,cycle_cnt *cnt,cycle_config *config)

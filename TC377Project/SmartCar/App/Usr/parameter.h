@@ -13,6 +13,14 @@
 
 #define MAX_DATA_LEN 5
 
+enum
+{
+    PID,
+    FuzzyPID,
+    ADRC,
+    OpeningLoop,
+};
+
 enum{
     PrepareCalibration,
     CalibrationLHOESensor,
@@ -98,6 +106,7 @@ typedef struct
 
 typedef struct
 {
+
     sint32_t Wait;
     sint32_t Confirm;
     sint32_t WaitIn;
@@ -266,6 +275,7 @@ typedef struct
       /*For Motor*/
 
       PID_TypeDef M_PID;         /*Motor Fuzzy PID Controler(Not Used.)*/
+
       Fuzzy_TypeDef M_FuzzyKp;
       Fuzzy_TypeDef M_FuzzyKi;
 
@@ -366,16 +376,20 @@ typedef struct
 
       const uint CarMode;
 
-      float x;
-
-      float v;
+      /*Physical Parameter.*/
 
       attitude_t attitude;
       axis_t     acc;
       axis_t     gyro;
       axis_t     mag;
 
+      float x;              //总运行距离
+
+      float v;              //瞬时速度
+
       /*For Debug.*/
+
+      uint SpeedLoopCtrlType;
 
       uint32_t VESensorCalConfirmState;
 

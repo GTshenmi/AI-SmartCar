@@ -4,19 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../App/Sys/Matlab/ert_main.c \
 ../App/Sys/Matlab/sfun_target.c 
 
 OBJS += \
-./App/Sys/Matlab/ert_main.o \
 ./App/Sys/Matlab/sfun_target.o 
 
 COMPILED_SRCS += \
-./App/Sys/Matlab/ert_main.src \
 ./App/Sys/Matlab/sfun_target.src 
 
 C_DEPS += \
-./App/Sys/Matlab/ert_main.d \
 ./App/Sys/Matlab/sfun_target.d 
 
 

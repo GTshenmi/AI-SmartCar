@@ -6,7 +6,7 @@
 float FuzzyControl(Fuzzy_TypeDef* fuzzy, float target, float actual);
 float FuzzySpeedControl(Fuzzy_TypeDef *fuzzy,float target,float actual);
 float FuzzyPIDInit(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy);
-float FuzzyPID(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy,float target,float actual);
+float FuzzyPIDCtrl(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy,float target,float actual);
 
 extern sint32_t LABMSFuzzyRule[7][7];
 

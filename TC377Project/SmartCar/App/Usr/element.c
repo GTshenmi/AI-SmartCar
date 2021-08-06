@@ -83,7 +83,7 @@ void SpecialElementHandler(void *argv)
 
     Cycle_Handler(data);
 
-    LoseLine_Handler(data);
+    //LoseLine_Handler(data);
 
     Ramp_Handler(data);
 
@@ -141,6 +141,8 @@ void Cycle_Handler(data_t *data)
             CycleClearCnt(&cycleCnt);
 
             CycleClearFlag(&cycleFlag);
+
+            BLED.OFF(BLED.Self);
 
             cycleState = CC_Wait;
 
@@ -223,8 +225,6 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.WaitIn--;
 
-            cycleConfig.dYaw = data->attitude.yaw - cycleConfig.inCyclePointYaw;
-
             if(Is_ArriveCycleInPoint(data,&cycleConfig))
             {
                 cycleState = CC_In;
@@ -241,6 +241,8 @@ void Cycle_Handler(data_t *data)
         case CC_In:
 
             cycleCnt.In--;
+
+            cycleConfig.dYaw = data->attitude.yaw - cycleConfig.inCyclePointYaw;
 
             data->Bias = cycleConfig.bias;
 
@@ -324,6 +326,7 @@ void RightAngle_Handler(data_t *data)
 
             RightAngleClearCnt(&rightAngleCnt);
             RightAngleClearConfig(&rightAngleConfig);
+            GLED.OFF(GLED.Self);
             rightAngleState = RA_Wait;
 
             break;

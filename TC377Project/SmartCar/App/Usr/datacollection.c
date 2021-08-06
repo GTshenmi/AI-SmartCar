@@ -8,6 +8,139 @@
 #include "include.h"
 
 
+uint SaveMotorSystemInfo(float *input,float *output,uint32_t len)
+{
+    char buffer[100];
+    char *bufferPointer = buffer;
+    float time = 0.0;
+
+    for(int i = 0 ; i < len ; i++)
+    {
+        bufferPointer = buffer;
+
+        time = i * 0.002;
+
+        bufferPointer += sprintf(bufferPointer,"%f %f %f\n",time,input[i],output[i]);
+
+        SD.fastWrite("MotorSystem.txt",buffer);
+    }
+
+    return 0;
+}
+
+char *ElementDict[] =\
+{
+    "None",\
+    "RightAngle",\
+    "Cross",\
+    "Cycle",\
+    "Ramp",\
+    "Lost",\
+    "Straight",\
+    "Corner",\
+    "Other",\
+    "Parameter",
+};
+
+uint SaveSensorDataAndAngleAI(void *argv,char *path){
+
+    data_t *data = (data_t *)argv;
+
+    char buffer[100];
+    char* bufferPointer = buffer;
+
+    static uint32_t line = 0;
+
+    bufferPointer += sprintf(bufferPointer,"S %lu S ",line);
+
+    for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
+        bufferPointer += sprintf(bufferPointer,"%f ",data->SESensor_NormalizedValue[i]);
+    }
+
+    float anglecor = data->CorAngle / Servo.MaxAngle;
+
+    bufferPointer += sprintf(bufferPointer,"%f ",anglecor);
+
+    bufferPointer += sprintf(bufferPointer,"%f ",data->Speed);
+
+    bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
+
+    bufferPointer += sprintf(bufferPointer," AI E \n");
+
+    line++;
+
+    uint res = 0;
+
+    float dt = os.time.getTime(s);
+
+    res = SD.fastWrite(path,buffer);
+
+    dt = os.time.getTime(s) - dt;
+
+    data->time = dt;
+
+    return res;
+}
+
+uint SaveSensorDataAndAngle(void *argv,char *path){
+
+    data_t *data = (data_t *)argv;
+    char buffer[100];
+    char* bufferPointer = buffer;
+
+    static uint32_t line = 0;
+
+    bufferPointer += sprintf(bufferPointer,"S %lu S ",line);
+
+    for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
+        bufferPointer += sprintf(bufferPointer,"%f ",data->SESensor_NormalizedValue[i]);
+    }
+
+    float angle =   (data->Angle / Servo.MaxAngle);
+
+    bufferPointer += sprintf(bufferPointer,"%f ",angle);
+
+    bufferPointer += sprintf(bufferPointer,"%f ",data->Speed);
+
+    bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
+
+    bufferPointer += sprintf(bufferPointer," LAutoBoot E \n");
+
+    line++;
+
+    uint res = 0;
+
+    res = SD.fastWrite(path,buffer);
+
+    return res;
+
+}
+
+
+uint SaveParameterSD(void *argv,float *LADC_Value,float *SADC_Value,float *Angle){
+
+    data_t *data = (data_t *)argv;
+    char buffer[100];
+    char* bufferPointer = buffer;
+
+    static uint32_t line = 0;
+
+    bufferPointer += sprintf(bufferPointer,"S %lu S ",line);
+
+    for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
+        bufferPointer += sprintf(bufferPointer,"%f ",SADC_Value[i]);
+    }
+
+    bufferPointer += sprintf(bufferPointer,"%f ",*Angle);
+
+    bufferPointer += sprintf(bufferPointer,"%f E\n",data->Speed);
+
+    line++;
+
+    return SD.fastWrite("Parameter.txt",buffer);
+
+}
+
 typedef enum{
     NormalTrackingStraight,
     DeviateStraight,

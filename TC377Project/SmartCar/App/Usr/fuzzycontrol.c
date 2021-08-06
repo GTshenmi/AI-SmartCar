@@ -572,7 +572,7 @@ float FuzzyPIDInit(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy)
     return 0.0;
 }
 
-float FuzzyPID(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy,float target,float actual)
+float FuzzyPIDCtrl(Fuzzy_TypeDef *pFuzzy,Fuzzy_TypeDef *iFuzzy,float target,float actual)
 {
     FuzzyCtrl(pFuzzy,target,actual);
     FuzzyCtrl(iFuzzy,target,actual);

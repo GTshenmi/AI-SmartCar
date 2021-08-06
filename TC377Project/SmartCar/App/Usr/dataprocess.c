@@ -74,6 +74,7 @@ void ESensorDataAnalysis(void *argv)
         case LAutoBoot_Mode:
 
             LinearFit(data->LESensor_NormalizedValue,data->Ke,CData.MaxLADCDeviceNum);
+
             data->Bias = CalculateBiasLABM(data);
 
             break;
@@ -90,6 +91,7 @@ void ESensorDataAnalysis(void *argv)
 
         SpecialElementHandler(data);
     }
+
     for(int i = 0 ; i < 9 ; i++)
     {
         data->B[i] = data->B[i + 1];
@@ -159,6 +161,11 @@ void LinearFit(float *data,float *k,uint16_t num)
 
 float CalculateBiasLABM(data_t *data)     /*Calculate Bias And Element Type.*/
 {
+    /*
+     * LESensor [0] [1] [2] [3] [4] [5] [6]
+     *           |   -   \   -   /   -   |
+     * */
+
     static float bias = 0.0;
 
     data->HESensor[0].Value = data->LESensor_NormalizedValue[1];
@@ -223,6 +230,8 @@ float CalculateBiasLABM(data_t *data)     /*Calculate Bias And Element Type.*/
 
     if(fabs(data->h_sum) <= 1e-6 && fabs(data->v_sum) <= 1e-6)
         bias = 0.0;
+    else if(fabs(data->h_sum) <= 1e-6)
+        bias = 100.0;
     else
         bias = ((data->h_difference + data->v_difference * 0.78)/data->h_sum) * 100.0;
 
@@ -231,6 +240,11 @@ float CalculateBiasLABM(data_t *data)     /*Calculate Bias And Element Type.*/
 
 float CalculateBiasSABM(data_t *data)     /*Calculate Bias And Element Type.*/
 {
+    /*
+     * SESensor [0] [1] [2] [3] [4] [5] [6] [7]
+     *           -   |   \   -   -   /   |   -
+     * */
+
     static float bias = 0.0;
 
     data->HESensor[0].Value = data->SESensor_NormalizedValue[0];
@@ -292,6 +306,13 @@ float CalculateBiasSABM(data_t *data)     /*Calculate Bias And Element Type.*/
     /*Calculate Bias:*/
 
     bias = data->h_bias;
+
+    if(fabs(data->h_sum) <= 1e-6 && fabs(data->v_sum) <= 1e-6)
+        bias = 0.0;
+    else if(fabs(data->h_sum) <= 1e-6)
+        bias = 100.0;
+    else
+        bias = ((data->h_difference + data->v_difference * 0.78)/data->h_sum) * 100.0;
 
     return bias;
 }

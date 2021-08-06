@@ -19,9 +19,9 @@
 #include "debug.h"
 #include "ui.h"
 
-#define Version "V1.1.0"
+#define Version "V2.1.0"
 #define Author  "GT_shenmi"
-#define Date    "2021-02-25"
+#define Date    "2021-08-06"
 
 typedef struct
 {

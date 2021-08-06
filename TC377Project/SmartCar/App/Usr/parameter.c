@@ -11,11 +11,6 @@
 #include "include.h"
 
 uint16_t CarMode =DebugMode;/*运行状态*/
-//uint16_t CarMode = AI_Mode; //调AI 换成此状态
-
-float TSpeedArray[MPIDRecordLen];
-float ASpeedArrayPID[MPIDRecordLen];
-float ASpeedArrayFuzzyPID[MPIDRecordLen];
 
 uint16_t data_pointer = 0;
 
@@ -28,6 +23,8 @@ void ParameterInit(void *argv)
     data_t *data = (data_t *)argv;
 
     uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
+
+    //bits = 0;
 
     app_data_pointer = (void *)data;
 

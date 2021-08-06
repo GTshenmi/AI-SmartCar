@@ -200,6 +200,7 @@ motor_ctrl_t Motor =/*ok*/
 {
         .Init = Motor_Init,
         .Self = &Motor,
+        //.Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
         .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
         .Encn = &ENC_Resources[0].ENCN,
 };

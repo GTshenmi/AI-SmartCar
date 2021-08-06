@@ -35,11 +35,12 @@ void Core0_Main()
 
     data_t *data = &Data[data_pointer];
 
+    //Motor.SetPwmValue(Motor.Self,3500);
 
     while(1)
     {
 
-        SmartCarSysDataSave(data);
+        //SmartCarSysDataSave(data);
 
         ErrorMsg(data,data->Error);
 
@@ -318,47 +319,6 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)
     }
 }
 
-void MotorPIDRecording(data_t *data)
-{
-    for(int i = 0; i < MPIDRecordLen/10;i++)
-    {
-        TSpeedArray[i] = 0.0;
-    }
-    for(int i = MPIDRecordLen/10 ; i < MPIDRecordLen;i++)
-    {
-        TSpeedArray[i] = 150.0;
-    }
-
-    data->UIEnable = false;
-    os.time.delay(2.0,s);
-    Screen.Clear(Screen.Self,WHITE);
-    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Start Recording...");
-    data->StartRecord = true;
-    while(!data->RecordFin);
-
-    Motor.Break(Motor.Self);
-
-    //Screen.Clear(Screen.Self,WHITE);
-    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Record Finished...");
-
-    os.time.delay(1.0,s);
-    //Screen.Clear(Screen.Self,WHITE);
-    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Start Send Data...");
-
-    for(int i = 0 ; i < MPIDRecordLen;i++)
-    {
-        Console.WriteLine("MPID:%.3f,%.3f,%.3f",TSpeedArray[i],ASpeedArrayPID[i],ASpeedArrayFuzzyPID[i]);
-        os.time.delay(0.05,s);
-    }
-
-    Screen.SetFontColor(Screen.Self,RED);
-    Screen.WriteXLine(Screen.Self,Screen.Hight/(Screen.Font.Hight * 2),"Send Data Fin....");
-
-
-
-    while(1);
-
-}
 bool StartRecord = false;
 bool FinRecord = false;
 

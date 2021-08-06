@@ -78,19 +78,21 @@ void SpeedControl(void *argv)
 //                data->Speed = 2000;
 //                is_firstsetspeed = false;
 //            }
-            data->Speed = 2700.0;
+//            data->Speed = 2700.0;
+//
+//            float formatedSpeed = 0.0;
+//
+//            formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // target * 0.055
+//
+//            data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        // actual
+//
+//            data->x += data->ActualSpeed * 0.000028 * 100.0;
+//
+//            Motor.SetSpeed(Motor.Self,formatedSpeed);
+//
+//            Motor.Update(Motor.Self);
 
-            float formatedSpeed = 0.0;
-
-            formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // target * 0.055
-
-            data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        // actual
-
-            data->x += data->ActualSpeed * 0.000028 * 100.0;
-
-            Motor.SetSpeed(Motor.Self,formatedSpeed);
-
-            Motor.Update(Motor.Self);
+            Motor.SetPwmValue(Motor.Self,data->Speed);
 
 
             break;
@@ -240,12 +242,6 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 
     float tspeed,aspeed = 0.0;
 
-//    static sint32_t i = 0;
-//
-//    static bool is_recordpid = false;
-//
-//    static bool is_recordfuzzypid = false;
-
     /*
      *
      * target * 0.055 * 100.0 /550.0
@@ -253,78 +249,13 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
      * actual * 100.0/ 550.0
      *
      * */
+    data->SpeedLoopCtrlType = PID;
 
     tspeed = 100.0 * NormalizeFloat(target_speed,0.0,self->MaxSpeed);
 
     aspeed = 100.0 * NormalizeFloat(actual_speed,0.0,self->MaxSpeed);
 
-    if(data->CarMode == DebugMode)
-    {
-//        if(data->StartRecord)
-//        {
-//            if(!is_recordpid)
-//            {
-//                i++;
-//
-//                if(i > MPIDRecordLen)
-//                {
-//                    i = 0;
-//                    is_recordpid = true;
-//
-//                    self->PwmValue = 0;
-//
-//                    return self->PwmValue;
-//                }
-//
-//                if(i < MPIDRecordLen/10 + 1)
-//                {
-//                    self->PwmValue = 0;
-//
-//                    return self->PwmValue;
-//                }
-//
-//                ASpeedArrayPID[i - 1] = self->SpeedCache;
-//
-//                tspeed = 100.0 * NormalizeFloat(TSpeedArray[i - 1],0.0,self->MaxSpeed);
-//
-//            }
-//            if(is_recordpid && !is_recordfuzzypid)
-//            {
-//                i++;
-//
-//                if(i > MPIDRecordLen)
-//                {
-//                    i = 0;
-//                    is_recordfuzzypid = true;
-//                }
-//
-//                if(i < MPIDRecordLen/10  + 1)
-//                {
-//                    self->PwmValue = 0;
-//
-//                    return self->PwmValue;
-//                }
-//
-//                tspeed = 100.0 * NormalizeFloat(TSpeedArray[i - 1],0.0,self->MaxSpeed);
-//
-//                FuzzyPID(&data->M_FuzzyKp,&data->M_FuzzyKi,tspeed,aspeed);
-//
-//                data->M_PID.Kp = 3.3 + data->M_FuzzyKp.U * 10.0;
-//                data->M_PID.Ki = 0.5 + data->M_FuzzyKi.U * 0.5;
-//
-//                ASpeedArrayFuzzyPID[i - 1] = self->SpeedCache;
-//
-//            }
-//
-//            if(is_recordpid && is_recordfuzzypid)
-//            {
-//                data->RecordFin = true;
-//            }
-//        }
-    }
-
-//    data->M_PID.Kp = ConstrainFloat(data->M_PID.Kp,1.0,20.0);
-//    data->M_PID.Ki = ConstrainFloat(data->M_PID.Ki,0.0,2.0);
+    //aspeed = 100.0 * random(0.0,1.0);
 
     if(0)
     {
@@ -332,22 +263,53 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
     }
     else
     {
+        switch(data->SpeedLoopCtrlType)
+        {
+            case PID:
+
+                PID_Ctrl(&data->M_PID,tspeed,aspeed);
+
+                PwmValue = (sint16_t)ConstrainFloat(data->M_PID.Result,-10000.0,10000.0);
+
+                break;
+
+            case FuzzyPID:
+
+                FuzzyPIDCtrl(&data->M_FuzzyKp,&data->M_FuzzyKi,tspeed,aspeed);
+
+                data->M_PID.Kp = 3.2 + data->M_FuzzyKp.U;
+                data->M_PID.Ki = 0.5 + data->M_FuzzyKi.U;
+
+                PID_Ctrl(&data->M_PID,tspeed,aspeed);
+
+                PwmValue = (sint16_t)ConstrainFloat(data->M_PID.Result,-10000.0,10000.0);
+
+                break;
+
+            case ADRC:
+
+                ADRC_Control(&data->M_ADRC,target_speed,actual_speed);
+
+                PwmValue = (sint16_t)ConstrainFloat(data->M_ADRC.u,0,10000.0);
+
+                break;
+
+            case OpeningLoop:
+
+                PwmValue = target_speed;
+
+                PwmValue = (sint16_t)ConstrainFloat(data->M_ADRC.u,-10000.0,10000.0);
+
+                break;
+
+        }
+
         //Console.WriteLine("MPID:%.3f,%.3f",data->ActualSpeed,data->Speed * 550.0 /10000.0);
 
-        //PID_Ctrl(&data->M_PID,tspeed,aspeed);
 
-        //ADRC_Control(&data->M_ADRC,tspeed,aspeed);
-
-        //ADRC_Control(&data->M_ADRC,target_speed,actual_speed);
-
-        //PwmValue = 2000;
-
-        //PwmValue = (sint16_t)ConstrainFloat(data->M_ADRC.u,-10000.0,10000.0);
-
-
-
-        //PwmValue = (sint16_t)ConstrainFloat(data->M_PID.Result,-10000.0,10000.0);
     }
+
+    //PwmValue = 3000;
 
     return PwmValue;
 }
