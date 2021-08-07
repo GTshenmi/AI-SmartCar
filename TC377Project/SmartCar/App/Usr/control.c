@@ -1,7 +1,7 @@
 /*
  * control.c
  *
- *  Created on: 2020Äê12ÔÂ6ÈÕ
+ *  Created on: 2020å¹´12æœˆ6æ—¥
  *      Author: 936305695
  *  @Brief:
  *      This file is for motor and servo close-loop control.
@@ -188,7 +188,7 @@ void AngleControl(void *argv)
 
     if(data->CarMode != DebugMode)
     {
-        /*¶æ»úÉèÖÃ½Ç¶È*/
+        /*èˆµæœºè®¾ç½®è§’åº¦*/
         Servo.SetAngle(Servo.Self,data->Angle);
 
         Servo.Update(Servo.Self);
@@ -231,8 +231,8 @@ void RightAngleSpeedCtrl(data_t *data)
 
 
 /*
- * @Brief:  µç»ú±Õ»·¿ØÖÆº¯Êı(ËÙ¶È»·/µçÁ÷»·)
- * @output: PwmValue£º[0:10000]
+ * @Brief:  ç”µæœºé—­ç¯æ§åˆ¶å‡½æ•°(é€Ÿåº¦ç¯/ç”µæµç¯)
+ * @output: PwmValueï¼š[0:10000]
  * */
 sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actual_speed,void *argv,uint16_t argc)
 {
@@ -296,9 +296,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 
             case OpeningLoop:
 
-                PwmValue = target_speed;
-
-                PwmValue = (sint16_t)ConstrainFloat(data->M_ADRC.u,-10000.0,10000.0);
+                PwmValue = (sint16_t)ConstrainFloat(target_speed,-10000.0,10000.0);
 
                 break;
 
@@ -314,8 +312,8 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
     return PwmValue;
 }
 /*
- * @Brief:  ¶æ»ú±Õ»·¿ØÖÆº¯Êı(½Ç¶È»·)
- * @output: Angle£º[-90(×ó):90(ÓÒ)]
+ * @Brief:  èˆµæœºé—­ç¯æ§åˆ¶å‡½æ•°(è§’åº¦ç¯)
+ * @output: Angleï¼š[-90(å·¦):90(å³)]
  *
  * */
 uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc)
