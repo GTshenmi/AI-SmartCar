@@ -50,6 +50,10 @@ typedef struct
 
 extern console_t Console;
 
+int  Screen_IO(const char *ch,int io);
+int  File_IO(const char *ch,int io);
+int  Console_IO(const char *ch,int io);
+
 //void ErrorMsg(const char *fmt,...);
 
 #endif /* OS_DEBUG_CONSOLE_H_ */
