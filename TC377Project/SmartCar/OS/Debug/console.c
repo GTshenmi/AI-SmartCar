@@ -272,4 +272,13 @@ console_t Console =
         .ReadLine = Console_ReadLine,
         .Update = Console_Update,
         .ReadKey = Console_ReadKey,
+        .Info = Console_Info,
+        .Warn = Console_Warn,
+        .Error = Console_Error,
+        .Log = Console_Log,
+        .Time = Console_Time,
+        .IO = Console_IO,
+        .SetIO = Console_SetIO,
+    
+    
 };
