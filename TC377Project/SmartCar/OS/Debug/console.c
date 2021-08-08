@@ -251,15 +251,15 @@ uint32_t Console_Info(const char *fmt,...)
     return 0;
 }
 
-uint32_t Console_Time(const char *name)
+float Console_Time(const char *name)
 {
-    float time = 0.0;
+    float time = os.time.getTime(s);
     
     printf("%s:%f",name,time);
 
     printf("\n");
 
-    return 0;
+    return time;
 }
 
 int  Console_IO(const char *ch,int io);
