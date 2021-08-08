@@ -306,7 +306,7 @@ int  Screen_IO(const char *ch,int io);
            
        case ConsoleOut:
            
-           Screen.ShowChar(Screen.Self,x,y,*ch);
+           Screen.ShowChar(Screen.Self,x,y,*ch,BLACK);
            
            x += Screen.Font.Weight;
            
