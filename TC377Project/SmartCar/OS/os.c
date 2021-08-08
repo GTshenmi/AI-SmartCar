@@ -1,7 +1,7 @@
 /*
  * os.c
  *
- *  Created on: 2020Äê12ÔÂ12ÈÕ
+ *  Created on: 2020Ã„Ãª12Ã”Ã‚12ÃˆÃ•
  *      Author: 936305695
  */
 #include "os.h"
@@ -14,6 +14,7 @@ void OS_Init(uint core)
             os.time.init();
             os.softtimer.init();
             os.file.init();
+            os.file = SD;
             break;
         case 1:
             break;
