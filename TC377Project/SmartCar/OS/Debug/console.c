@@ -6,6 +6,7 @@
  */
 #include "console.h"
 #include "device.h"
+#include "os.h"
 
 void Console_Init(void)
 {
@@ -276,6 +277,52 @@ int  Console_IO(const char *ch,int io);
     
    return *ch;
 }
+
+int  File_IO(const char *ch,int io);
+{
+   switch(io)
+   {
+       case ConsoleIn:
+           os.file.fastRead(".log/log.txt",ch,1);
+           break;
+           
+       case ConsoleOut:
+           os.file.fastWrite(".log/log.txt",ch);
+           break;
+   }
+    
+   return *ch;
+}
+
+int  Screen_IO(const char *ch,int io);
+{
+   static uint16_t x = 0,y = 0;
+    
+   switch(io)
+   {
+       case ConsoleIn:
+           
+           break;
+           
+       case ConsoleOut:
+           
+           Screen.ShowChar(Screen.Self,x,y,*ch);
+           
+           x += Screen.Font.Weight;
+           
+           if( x > Screen.Weight)
+           {
+               x = 0;
+               y += Screen.Font.Hight;
+           }
+           
+           break;
+   }
+    
+   return *ch;
+} 
+
+
 void Console_SetIO(int (*io)(const char *,int))
 {
     Console.IO = io;
