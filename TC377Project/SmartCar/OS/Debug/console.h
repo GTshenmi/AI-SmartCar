@@ -37,7 +37,7 @@ typedef struct
     
     uint32_t (*Error)(const char *fmt,...);
     
-    uint32_t (*Time)(const char *name);
+    float (*Time)(const char *name);
     
     uint32_t (*Info)(const char *fmt,...);
     
