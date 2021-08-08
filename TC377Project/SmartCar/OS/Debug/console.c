@@ -1,23 +1,11 @@
 /*
  * console.c
  *
- *  Created on: 2021Äê1ÔÂ16ÈÕ
+ *  Created on: 2021Ã„Ãª1Ã”Ã‚16ÃˆÃ•
  *      Author: 936305695
  */
 #include "console.h"
 #include "device.h"
-
-//void ErrorMsg(const char *fmt,...)
-//{
-//    va_list arg;
-//    va_start(arg,fmt);
-//
-//    vprintf(fmt,arg);
-//
-//    printf("\n");
-//
-//    va_end(arg);
-//}
 
 void Console_Init(void)
 {
@@ -196,6 +184,81 @@ int fgetc(FILE *f)
     DebugCom.Receive(DebugCom.Self,&ch,1,0);
 
     return ch;
+}
+
+uint32_t Console_Log(const char *fmt,...)
+{
+    va_list arg;
+    va_start(arg,fmt);
+    
+    printf("[log]:");
+
+    vprintf(fmt,arg);
+
+    printf("\n");
+
+    va_end(arg);
+
+    return 0;
+}
+
+uint32_t Console_Warn(const char *fmt,...)
+{
+    va_list arg;
+    va_start(arg,fmt);
+    
+    printf("[warn]:");
+
+    vprintf(fmt,arg);
+
+    printf("\n");
+
+    va_end(arg);
+
+    return 0;
+}
+
+uint32_t Console_Error(const char *fmt,...)
+{
+    va_list arg;
+    va_start(arg,fmt);
+    
+    printf("[Error]:");
+
+    vprintf(fmt,arg);
+
+    printf("\n");
+
+    va_end(arg);
+
+    return 0;
+}
+
+uint32_t Console_Info(const char *fmt,...)
+{
+    va_list arg;
+    va_start(arg,fmt);
+    
+    printf("[Info]:");
+
+    vprintf(fmt,arg);
+
+    printf("\n");
+
+    va_end(arg);
+
+    return 0;
+}
+
+uint32_t Console_Time(const char *name)
+{
+    float time = 0.0;
+    
+    printf("%s:%f",name,time);
+
+    printf("\n");
+
+    return 0;
 }
 
 console_t Console =
