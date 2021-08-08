@@ -173,7 +173,7 @@ int32_t Console_ReadKey(void)
 
 int fputc(int ch, FILE *f)
 {
-    DebugCom.Transmit(DebugCom.Self,(uint8_t *)&ch,1,0);
+    Console.IO(&ch,ConsoleOut);
     return ch;
 }
 
@@ -181,7 +181,7 @@ int fgetc(FILE *f)
 {
     uint8_t ch = 0;
 
-    DebugCom.Receive(DebugCom.Self,&ch,1,0);
+    Console.IO(&ch,ConsoleIn);
 
     return ch;
 }
@@ -259,6 +259,26 @@ uint32_t Console_Time(const char *name)
     printf("\n");
 
     return 0;
+}
+
+int  Console_IO(const char *ch,int io);
+{
+   switch(io)
+   {
+       case ConsoleIn:
+           DebugCom.Receive(DebugCom.Self,ch,1,0);
+           break;
+           
+       case ConsoleOut:
+           DebugCom.Transmit(DebugCom.Self,(uint8_t *)ch,1,0);
+           break;
+   }
+    
+   return *ch;
+}
+void Console_SetIO(int (*io)(const char *,int))
+{
+    Console.IO = io;
 }
 
 console_t Console =
