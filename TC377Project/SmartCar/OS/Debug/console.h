@@ -41,7 +41,7 @@ typedef struct
     
     uint32_t (*Info)(const char *fmt,...);
     
-    int      (*IO)(const char ch,int io);
+    int      (*IO)(const char *ch,int io);
     
     void     (*SetIO)(int (*io)(const char *,int));  
 
