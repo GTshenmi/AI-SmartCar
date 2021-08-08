@@ -1,7 +1,7 @@
 /*
  * datacollection.c
  *
- *  Created on: 2021Äê7ÔÂ21ÈÕ
+ *  Created on: 2021Ã„Ãª7Ã”Ã‚21ÃˆÃ•
  *      Author: 936305695
  */
 #include "datacollection.h"
@@ -22,7 +22,9 @@ uint SaveMotorSystemInfo(float *input,float *output,uint32_t len)
 
         bufferPointer += sprintf(bufferPointer,"%f %f %f\n",time,input[i],output[i]);
 
-        SD.fastWrite("MotorSystem.txt",buffer);
+        //SD.fastWrite("MotorSystem.txt",buffer);
+        
+        os.file.fastWrite("MotorSystem.txt",buffer);
     }
 
     return 0;
@@ -73,7 +75,9 @@ uint SaveSensorDataAndAngleAI(void *argv,char *path){
 
     float dt = os.time.getTime(s);
 
-    res = SD.fastWrite(path,buffer);
+    //res = SD.fastWrite(path,buffer);
+    
+    res = os.file.fastWrite(path,buffer);
 
     dt = os.time.getTime(s) - dt;
 
@@ -110,7 +114,9 @@ uint SaveSensorDataAndAngle(void *argv,char *path){
 
     uint res = 0;
 
-    res = SD.fastWrite(path,buffer);
+    //res = SD.fastWrite(path,buffer);
+    
+    res = os.file.fastWrite(path,buffer);
 
     return res;
 
@@ -137,7 +143,9 @@ uint SaveParameterSD(void *argv,float *LADC_Value,float *SADC_Value,float *Angle
 
     line++;
 
-    return SD.fastWrite("Parameter.txt",buffer);
+    //return SD.fastWrite("Parameter.txt",buffer);
+    
+    return os.file.fastWrite(path,buffer);
 
 }
 
