@@ -308,9 +308,9 @@ int  Screen_IO(const char *ch,int io);
            
            Screen.ShowChar(Screen.Self,x,y,*ch,BLACK);
            
-           x += Screen.Font.Weight;
+           x += Screen.Font.Width;
            
-           if( x > Screen.Weight)
+           if( x > Screen.Width)
            {
                x = 0;
                y += Screen.Font.Hight;
