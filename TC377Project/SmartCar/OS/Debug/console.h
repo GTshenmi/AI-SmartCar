@@ -1,7 +1,7 @@
 /*
  * console.h
  *
- *  Created on: 2021Äê1ÔÂ16ÈÕ
+ *  Created on: 2021å¹´1æœˆ16æ—¥
  *      Author: 936305695
  */
 
@@ -23,7 +23,21 @@ typedef struct
     uint32_t (*Read)(const char *fmt,...);
     uint32_t (*ReadLine)(const char *fmt,...);
 
-    int32_t  (*ReadKey)(void);/*²»ÒªÔÚOSÎÄ¼şÄÚÊ¹ÓÃ*/
+    int32_t  (*ReadKey)(void);/*ä¸è¦åœ¨OSæ–‡ä»¶å†…ä½¿ç”¨*/
+    
+    uint32_t (*Log)(const char *fmt,...);
+    
+    uint32_t (*Warn)(const char *fmt,...);
+    
+    uint32_t (*Error)(const char *fmt,...);
+    
+    uint32_t (*Time)(const char *name);
+    
+    uint32_t (*Info)(const char *fmt,...);
+    
+    int      (*IO)(const char ch,int io);
+    
+    void     (*SetIO)(int (*io)(const char *,int));  
 
     void     (*Update)(void *argv,uint16_t argc);
 }console_t;
