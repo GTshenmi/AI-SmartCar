@@ -12,6 +12,12 @@
 
 #define CONSOLE_MAX_FMT_LEN 128
 
+enum
+{
+    ConsoleIn,
+    ConsoleOut,
+};
+
 typedef struct
 {
     void     (*Init)(void);
