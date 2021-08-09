@@ -1,7 +1,7 @@
 /*
  * control.c
  *
- *  Created on: 2020年12月6日
+ *  Created on: 2020年12月06日
  *      Author: 936305695
  *  @Brief:
  *      This file is for motor and servo close-loop control.
@@ -14,14 +14,6 @@ void RightAngleSpeedCtrl(data_t *data);
 void SpeedControl(void *argv)
 {
     data_t *data = (data_t *)argv;
-
-    //static uint32_t i = 0;
-
-    //static bool is_firstsetspeed = true;
-
-    extern bool StartRecord;
-
-    extern bool FinRecord;
 
     switch(data->CarMode)
     {
@@ -54,46 +46,7 @@ void SpeedControl(void *argv)
 
         case DebugMode:
 
-//            if(StartRecord)
-//            {
-//                i++;
-//
-//                if(i > SystemIdeLen)
-//                {
-//                    StartRecord = false;
-//                    FinRecord = true;
-//                }
-//
-//                extern float InputPwm[SystemIdeLen];
-//                extern float OutputSpeed[SystemIdeLen];
-//
-//                OutputSpeed[i] = Motor.GetSpeed(Motor.Self);
-//
-//                Motor.SetPwmValue(Motor.Self,(sint16_t)InputPwm[i]);
-//
-//            }
-
-//            if(is_firstsetspeed)
-//            {
-//                data->Speed = 2000;
-//                is_firstsetspeed = false;
-//            }
-//            data->Speed = 2700.0;
-//
-//            float formatedSpeed = 0.0;
-//
-//            formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // target * 0.055
-//
-//            data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        // actual
-//
-//            data->x += data->ActualSpeed * 0.000028 * 100.0;
-//
-//            Motor.SetSpeed(Motor.Self,formatedSpeed);
-//
-//            Motor.Update(Motor.Self);
-
             Motor.SetPwmValue(Motor.Self,data->Speed);
-
 
             break;
 
@@ -188,7 +141,6 @@ void AngleControl(void *argv)
 
     if(data->CarMode != DebugMode)
     {
-        /*舵机设置角度*/
         Servo.SetAngle(Servo.Self,data->Angle);
 
         Servo.Update(Servo.Self);
@@ -229,11 +181,6 @@ void RightAngleSpeedCtrl(data_t *data)
     }
 }
 
-
-/*
- * @Brief:  电机闭环控制函数(速度环/电流环)
- * @output: PwmValue：[0:10000]
- * */
 sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actual_speed,void *argv,uint16_t argc)
 {
     sint16_t PwmValue = 0;
@@ -311,11 +258,7 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 
     return PwmValue;
 }
-/*
- * @Brief:  舵机闭环控制函数(角度环)
- * @output: Angle：[-90(左):90(右)]
- *
- * */
+
 uint16_t ServoCtrlStrategy(struct servo_ctrl *self,float target_angle,float actual_angle,void *argv,uint16_t argc)
 {
     float angle = 0.0;

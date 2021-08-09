@@ -145,7 +145,7 @@ uint SaveParameterSD(void *argv,float *LADC_Value,float *SADC_Value,float *Angle
 
     //return SD.fastWrite("Parameter.txt",buffer);
     
-    return os.file.fastWrite(path,buffer);
+    return os.file.fastWrite("Parameter.txt",buffer);
 
 }
 

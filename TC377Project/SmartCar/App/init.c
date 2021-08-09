@@ -29,7 +29,8 @@ void Core0_HardWareInit()
     /*Init Debug Console.*/
 
     Console.Init();
-
+    Console.SetIO(Console_IO);
+    //Console.SetIO(Screen_IO);
     /*Init User Interface.*/
 
     Screen.Init(Screen.Self);

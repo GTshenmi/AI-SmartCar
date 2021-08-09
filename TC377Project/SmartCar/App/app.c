@@ -17,7 +17,7 @@ void SmartCarSysDataReport(void *data);
 void SmartCarSysDataSave(data_t *data);
 void ErrorMsg(void *argv,uint error);
 void MotorSystemIdentification(void);
-void MotorPIDRecording(data_t *data);
+//void MotorPIDRecording(data_t *data);
 void Core0_CheckStatus(void);
 void Core1_CheckStatus(void);
 void Core2_CheckStatus(void);
@@ -37,9 +37,12 @@ void Core0_Main()
 
     //Motor.SetPwmValue(Motor.Self,3500);
 
+//    data->UIEnable = false;
+//    Console.Info("Core0 Begin While");
+//    Console.Warn("Dead Loop");
+
     while(1)
     {
-
         //SmartCarSysDataSave(data);
 
         ErrorMsg(data,data->Error);

@@ -174,7 +174,7 @@ int32_t Console_ReadKey(void)
 
 int fputc(int ch, FILE *f)
 {
-    Console.IO(&ch,ConsoleOut);
+    Console.IO((sint8_t *)&ch,ConsoleOut);
     return ch;
 }
 
@@ -182,7 +182,7 @@ int fgetc(FILE *f)
 {
     uint8_t ch = 0;
 
-    Console.IO(&ch,ConsoleIn);
+    Console.IO((sint8_t *)&ch,ConsoleIn);
 
     return ch;
 }
@@ -262,12 +262,12 @@ float Console_Time(const char *name)
     return time;
 }
 
-int  Console_IO(const char *ch,int io);
+int  Console_IO(char *ch,int io)
 {
    switch(io)
    {
        case ConsoleIn:
-           DebugCom.Receive(DebugCom.Self,ch,1,0);
+           DebugCom.Receive(DebugCom.Self,(uint8_t *)ch,1,0);
            break;
            
        case ConsoleOut:
@@ -278,23 +278,23 @@ int  Console_IO(const char *ch,int io);
    return *ch;
 }
 
-int  File_IO(const char *ch,int io);
+int  File_IO(char *ch,int io)
 {
    switch(io)
    {
        case ConsoleIn:
-           os.file.fastRead(".log/log.txt",ch,1);
+           os.file.fastRead((const sint8_t *)".log/log.txt",ch,1);
            break;
            
        case ConsoleOut:
-           os.file.fastWrite(".log/log.txt",ch);
+           os.file.fastWrite((const sint8_t *)".log/log.txt",ch);
            break;
    }
     
    return *ch;
 }
 
-int  Screen_IO(const char *ch,int io);
+int  Screen_IO(char *ch,int io)
 {
    static uint16_t x = 0,y = 0;
     
@@ -310,12 +310,14 @@ int  Screen_IO(const char *ch,int io);
            
            x += Screen.Font.Width;
            
-           if( x > Screen.Width)
+           if( x > Screen.Width || (*ch == '\n'))
            {
                x = 0;
                y += Screen.Font.Hight;
            }
            
+
+
            break;
    }
     
@@ -323,7 +325,7 @@ int  Screen_IO(const char *ch,int io);
 } 
 
 
-void Console_SetIO(int (*io)(const char *,int))
+void Console_SetIO(int (*io)(char *,int))
 {
     Console.IO = io;
 }

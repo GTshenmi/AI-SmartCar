@@ -1,7 +1,7 @@
 /*
  * console.h
  *
- *  Created on: 2021年1月16日
+ *  Created on: 2021骞�1鏈�16鏃�
  *      Author: 936305695
  */
 
@@ -29,7 +29,7 @@ typedef struct
     uint32_t (*Read)(const char *fmt,...);
     uint32_t (*ReadLine)(const char *fmt,...);
 
-    int32_t  (*ReadKey)(void);/*不要在OS文件内使用*/
+    int32_t  (*ReadKey)(void);/*涓嶈鍦∣S鏂囦欢鍐呬娇鐢�*/
     
     uint32_t (*Log)(const char *fmt,...);
     
@@ -41,19 +41,17 @@ typedef struct
     
     uint32_t (*Info)(const char *fmt,...);
     
-    int      (*IO)(const char *ch,int io);
+    int      (*IO)(char *ch,int io);
     
-    void     (*SetIO)(int (*io)(const char *,int));  
+    void     (*SetIO)(int (*io)(char *,int));
 
     void     (*Update)(void *argv,uint16_t argc);
 }console_t;
 
 extern console_t Console;
 
-int  Screen_IO(const char *ch,int io);
-int  File_IO(const char *ch,int io);
-int  Console_IO(const char *ch,int io);
-
-//void ErrorMsg(const char *fmt,...);
+int  Screen_IO(char *ch,int io);
+int  File_IO(char *ch,int io);
+int  Console_IO(char *ch,int io);
 
 #endif /* OS_DEBUG_CONSOLE_H_ */

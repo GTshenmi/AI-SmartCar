@@ -239,7 +239,7 @@ uint FileSys_FastWrite(const sint8_t * path, sint8_t *str) {
 //    return result;
 //}
 
-uint FileSys_FastRead(sint8_t *path,sint8_t *buf,uint n)
+uint FileSys_FastRead(const sint8_t *path,sint8_t *buf,uint n)
 {
     FIL fp;
 
