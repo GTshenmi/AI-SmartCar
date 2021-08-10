@@ -41,11 +41,14 @@ void ESensorDataAnalysis(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    GetESensorData(data);               //get raw data
+    /*get raw data*/
+    GetESensorData(data);               
 
-    ESensorNormailze(data);             //normalize.
+    /*normalize.*/
+    ESensorNormailze(data);           
 
-    switch(data->CarMode)               //calculate bias and change rate of all inductance.
+    /*calculate bias and change rate of all inductance.*/
+    switch(data->CarMode)            
     {
         case AI_Mode:
 
@@ -83,15 +86,16 @@ void ESensorDataAnalysis(void *argv)
 
     }
 
- 
-    if(data->CarMode != DebugMode)//For special elements, correct the bias.
+    /*For special elements, correct the bias.*/
+    if(data->CarMode != DebugMode)
     {
         ElementDetermine(data);
 
         SpecialElementHandler(data);
     }
 
-    for(int i = 0 ; i < 9 ; i++)//record historical bias.
+    /*record historical bias.*/
+    for(int i = 0 ; i < 9 ; i++)
     {
         data->B[i] = data->B[i + 1];
     }
