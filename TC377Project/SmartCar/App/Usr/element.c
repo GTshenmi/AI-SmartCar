@@ -397,7 +397,7 @@ void RightAngle_Handler(data_t *data)
 
             RA_TRACKING:
 
-            if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))           //for continus right angle.
+            if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))           //for continuous right angle.
                 rightAngleConfig.bias = fsign(data->v_difference) * 100.0;
 
             data->Bias = rightAngleConfig.bias;
