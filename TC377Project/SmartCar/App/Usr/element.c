@@ -289,7 +289,7 @@ void Cycle_Handler(data_t *data)
 
             data->Bias = ConstrainFloat(data->Bias,-100.0,100.0);
 
-            if(Is_CycleOut(data,&cycleCnt,&cycleConfig) || cycleCnt.Tracking >= 6000 || (data->x - cycleConfig.isCyclePos) >= 2000.0)
+            if(Is_CycleOut(data,&cycleCnt,&cycleConfig)/*Normal*/ || cycleCnt.Tracking >= 6000 || (data->x - cycleConfig.isCyclePos) >= 2000.0/*Abnormal,force out*/)
             {
                 cycleState = CC_Out;
             }
@@ -300,7 +300,7 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.Out++;
 
-            if(Is_CycleBackToStraight(data) || cycleCnt.Tracking >=  6000 || cycleCnt.Out >= 500 || (data->x - cycleConfig.isCyclePos) >= 2000.0)
+            if(Is_CycleBackToStraight(data)/*Normal*/ || cycleCnt.Tracking >=  6000 || cycleCnt.Out >= 500 || (data->x - cycleConfig.isCyclePos) >= 2000.0/*Abnormal,force out*/)
             {
                 cycleState = CC_Wait;
                 data->Element.Type = None;
@@ -310,7 +310,7 @@ void Cycle_Handler(data_t *data)
                 BLED.OFF(BLED.Self);
             }
 
-            if(cycleCnt.Out >= 500 || cycleCnt.Tracking >= 6000)//Force out of the  cycle.
+            if(cycleCnt.Out >= 500 || cycleCnt.Tracking >= 6000)//Force out of the cycle.
             {
                 cycleState = CC_Undefined;
             }
@@ -400,11 +400,11 @@ void RightAngle_Handler(data_t *data)
             if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))           //for continuous right angle.
                 rightAngleConfig.bias = fsign(data->v_difference) * 100.0;
 
-            data->Bias = rightAngleConfig.bias;
+            data->Bias = rightAngleConfig.bias;//give the servo max angle by force.
 
             rightAngleCnt.Tracking--;
 
-            if(Is_RightAngleOut(data,&rightAngleCnt))
+            if(Is_RightAngleOut(data,&rightAngleCnt))//if find line,hand over to the control algorithm to patrol the line.
             {
                 rightAngleState = RA_Out;
             }
