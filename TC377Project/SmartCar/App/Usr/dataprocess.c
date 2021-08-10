@@ -1,11 +1,10 @@
 /*
  * dataprocess.c
  *
- *  Created on: 2020Äê12ÔÂ6ÈÕ
+ *  Created on: 2020å¹´12æœˆ6æ—¥
  *      Author: 936305695
  *  @Brief:
  *      This file is for data process(read/process).
- *      Êý¾Ý¶ÁÈ¡/´¦Àí Ïà¹Ø×Ó³ÌÐò
  */
 #include <dataprocess.h>
 #include "include.h"
@@ -30,7 +29,6 @@ void GetESensorData(data_t *data)
 
 void ESensorNormailze(data_t *data)
 {
-    /*¹éÒ»»¯*/
     for(int i = 0 ; i < CData.MaxLADCDeviceNum ; i++)
         data->LESensor_NormalizedValue[i] = 100.0 * NormalizeFloat(data->LESensor_SampleValue[i] * 1.0,ADCx.MinValue * 1.0,ADCx.MaxValue * 1.0);
     for(int i = 0 ; i < CData.MaxSADCDeviceNum ; i++)
@@ -43,11 +41,11 @@ void ESensorDataAnalysis(void *argv)
 {
     data_t *data = (data_t *)argv;
 
-    GetESensorData(data);               //»ñÈ¡µç¸ÐÔ­Êý¾Ý
+    GetESensorData(data);               //get raw data
 
-    ESensorNormailze(data);             //»ñÈ¡µç¸Ð¹éÒ»»¯Êý¾Ý
+    ESensorNormailze(data);             //normalize.
 
-    switch(data->CarMode)
+    switch(data->CarMode)               //calculate bias and change rate of all inductance.
     {
         case AI_Mode:
 
@@ -85,14 +83,15 @@ void ESensorDataAnalysis(void *argv)
 
     }
 
-    if(data->CarMode != DebugMode)
+ 
+    if(data->CarMode != DebugMode)//For special elements, correct the bias.
     {
         ElementDetermine(data);
 
         SpecialElementHandler(data);
     }
 
-    for(int i = 0 ; i < 9 ; i++)
+    for(int i = 0 ; i < 9 ; i++)//record historical bias.
     {
         data->B[i] = data->B[i + 1];
     }
@@ -102,7 +101,7 @@ void ESensorDataAnalysis(void *argv)
     RecordFlags = true;
 }
 
-void LinearFit(float *data,float *k,uint16_t num)
+void LinearFit(float *data,float *k,uint16_t num)/*Use Least Squares*/
 {
     uint16_t sensorNum = num;
 
@@ -159,7 +158,7 @@ void LinearFit(float *data,float *k,uint16_t num)
 }
 
 
-float CalculateBiasLABM(data_t *data)     /*Calculate Bias And Element Type.*/
+float CalculateBiasLABM(data_t *data)     /*Calculate Bias.*/
 {
     /*
      * LESensor [0] [1] [2] [3] [4] [5] [6]
@@ -238,7 +237,7 @@ float CalculateBiasLABM(data_t *data)     /*Calculate Bias And Element Type.*/
     return bias;
 }
 
-float CalculateBiasSABM(data_t *data)     /*Calculate Bias And Element Type.*/
+float CalculateBiasSABM(data_t *data)     /*Calculate Bias.*/
 {
     /*
      * SESensor [0] [1] [2] [3] [4] [5] [6] [7]
