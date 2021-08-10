@@ -470,20 +470,21 @@ float FuzzySpeedControl(Fuzzy_TypeDef *fuzzy,float target,float actual)
     }
 
     if (E > 0) {
-
-        En = (int)(e / ke + 0.5);
+        //En = (int)(e / ke + 0.5);
+        En = (int)(E + 0.5);
     }
     else {
-
-        En = (int)(e / ke - 0.5);
+        //En = (int)(e / ke - 0.5);
+        En = (int)(E - 0.5);
     }
 
     if (D > 0) {
-
-        Dn = (int)(ec / kec + 0.5);
+        //Dn = (int)(ec / kec + 0.5);
+        Dn = (int)(D + 0.5);
     }
     else {
-        Dn = (int)(ec / kec - 0.5);
+        //Dn = (int)(ec / kec - 0.5);
+        Dn = (int)(D - 0.5);
     }
 
     //En = 0,Dn = 0;
