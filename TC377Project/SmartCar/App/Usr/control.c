@@ -56,6 +56,7 @@ void SpeedControl(void *argv)
 
     }
 
+    /*set speed*/
     if(data->CarMode != DebugMode)
     {
         float formatedSpeed = 0.0;
@@ -75,7 +76,8 @@ void SpeedControl(void *argv)
 void AngleControl(void *argv)
 {
     data_t *data = (data_t *)argv;
-
+    
+    /*calculate angle according to bias or use nn.*/
     switch(data->CarMode)
     {
         case AI_Mode:
@@ -132,6 +134,7 @@ void AngleControl(void *argv)
 
     }
 
+    /*record historical angle*/
     for(int i = 0 ; i < 9 ;i++)
     {
          data->A[i] = data->A[i + 1];
@@ -139,6 +142,7 @@ void AngleControl(void *argv)
 
     data->A[9] = data->Angle;
 
+    /*set angle*/
     if(data->CarMode != DebugMode)
     {
         Servo.SetAngle(Servo.Self,data->Angle);
@@ -181,6 +185,7 @@ void RightAngleSpeedCtrl(data_t *data)
     }
 }
 
+/*speed close loop control.*/
 sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actual_speed,void *argv,uint16_t argc)
 {
     sint16_t PwmValue = 0;
@@ -189,13 +194,6 @@ sint16_t MotorCtrlStrategy(struct motor_ctrl *self,float target_speed,float actu
 
     float tspeed,aspeed = 0.0;
 
-    /*
-     *
-     * target * 0.055 * 100.0 /550.0
-     *
-     * actual * 100.0/ 550.0
-     *
-     * */
     data->SpeedLoopCtrlType = PID;
 
     tspeed = 100.0 * NormalizeFloat(target_speed,0.0,self->MaxSpeed);
