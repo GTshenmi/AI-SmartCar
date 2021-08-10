@@ -263,16 +263,16 @@ void Cycle_Handler(data_t *data)
 
             cycleConfig.dYaw = data->attitude.yaw - cycleConfig.inCyclePointYaw;
 
-            data->Bias = cycleConfig.bias;   
+            data->Bias = cycleConfig.bias;   //Give the servo a fixed angle within a certain distance,to enter cycle.
 
-            if(Is_CycleIn(data,&cycleConfig))//Give the servo a fixed angle within a certain distance,to enter cycle.
+            if(Is_CycleIn(data,&cycleConfig))
             {
-                cycleState = CC_Tracking;
+                cycleState = CC_Tracking;//in cycle success.
             }
 
-            if(cycleCnt.In <= -2000)//Misjudge.
+            if(cycleCnt.In <= -2000)
             {
-                cycleState = CC_Undefined;
+                cycleState = CC_Undefined;//in cycle fail.
             }
 
             break;
@@ -291,7 +291,7 @@ void Cycle_Handler(data_t *data)
 
             if(Is_CycleOut(data,&cycleCnt,&cycleConfig)/*Normal*/ || cycleCnt.Tracking >= 6000 || (data->x - cycleConfig.isCyclePos) >= 2000.0/*Abnormal,force out*/)
             {
-                cycleState = CC_Out;
+                cycleState = CC_Out;//out cycle.
             }
 
             break;
@@ -302,7 +302,8 @@ void Cycle_Handler(data_t *data)
 
             if(Is_CycleBackToStraight(data)/*Normal*/ || cycleCnt.Tracking >=  6000 || cycleCnt.Out >= 500 || (data->x - cycleConfig.isCyclePos) >= 2000.0/*Abnormal,force out*/)
             {
-                cycleState = CC_Wait;
+                //back to straight.
+                cycleState = CC_Wait;    
                 data->Element.Type = None;
 
                 cycleCnt.Wait = 500;
