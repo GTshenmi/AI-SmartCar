@@ -208,6 +208,7 @@ inline bool Is_CycleIn(data_t *data,cycle_config *config)
 inline bool Is_CycleOut(data_t *data,cycle_cnt *cnt,cycle_config *config)
 {
     return (data->h_sum3 >= 180.0/*arrive in cycle point again.*/ && cnt->Tracking >= 1000/*ensure tracking for a period of time.*/);
+    //return ((data->h_sum3 >= 180.0/*arrive in cycle point again.*/ && cnt->Tracking >= 1000)/*ensure tracking for a period of time.*/||(config->dYaw >= 300.0)/*The yaw angle offset exceeds 300 degrees*/);  
 }
 
 inline bool Is_CycleBackToStraight(data_t *data)
