@@ -198,7 +198,7 @@ void Cycle_Handler(data_t *data)
 
             cycleConfig.sum_r = data->HESensor[3].Value + data->VESensor[1].Value;
 
-            if(cycleConfig.sum_l > cycleConfig.sum_r)
+            if(cycleConfig.sum_l > cycleConfig.sum_r)//Judge the direction of cycle.
             {
                 cycleDir = CC_DirLeft;
             }
@@ -207,7 +207,7 @@ void Cycle_Handler(data_t *data)
                 cycleDir = CC_DirRight;
             }
 
-            if(cycleDir == CC_DirLeft)
+            if(cycleDir == CC_DirLeft) 
             {
                 cycleConfig.bias = 100.0;
             }
@@ -226,7 +226,7 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.Confirm--;
 
-            if(Is_CycleConfirmed(data,&cycleCnt,&cycleFlag))
+            if(Is_CycleConfirmed(data,&cycleCnt,&cycleFlag))//Confirm.
             {
                 cycleConfig.inCyclePointYaw = data->attitude.yaw;
 
@@ -235,7 +235,7 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_WaitIn;
             }
 
-            if(cycleCnt.Confirm <= -2000.0)
+            if(cycleCnt.Confirm <= -2000.0)//Misjudge.
                 cycleState = CC_Undefined;
 
             break;
@@ -244,12 +244,12 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.WaitIn--;
 
-            if(Is_ArriveCycleInPoint(data,&cycleConfig))
+            if(Is_ArriveCycleInPoint(data,&cycleConfig))//Wait for in cycle point.
             {
                 cycleState = CC_In;
             }
 
-            if(cycleCnt.WaitIn <= -2000.0)
+            if(cycleCnt.WaitIn <= -2000.0)//Misjudge.
             {
                 cycleState = CC_Undefined;
             }
@@ -263,14 +263,14 @@ void Cycle_Handler(data_t *data)
 
             cycleConfig.dYaw = data->attitude.yaw - cycleConfig.inCyclePointYaw;
 
-            data->Bias = cycleConfig.bias;
+            data->Bias = cycleConfig.bias;   
 
-            if(Is_CycleIn(data,&cycleConfig))
+            if(Is_CycleIn(data,&cycleConfig))//Give the servo a fixed angle within a certain distance,to enter cycle.
             {
                 cycleState = CC_Tracking;
             }
 
-            if(cycleCnt.In <= -2000)
+            if(cycleCnt.In <= -2000)//Misjudge.
             {
                 cycleState = CC_Undefined;
             }
@@ -310,7 +310,7 @@ void Cycle_Handler(data_t *data)
                 BLED.OFF(BLED.Self);
             }
 
-            if(cycleCnt.Out >= 500 || cycleCnt.Tracking >= 6000)
+            if(cycleCnt.Out >= 500 || cycleCnt.Tracking >= 6000)//Force out of the  cycle.
             {
                 cycleState = CC_Undefined;
             }
