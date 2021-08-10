@@ -196,3 +196,99 @@ attitude.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
 attitude.o :	../App/Sys/sysmath.h
 ../App/Sys/sysmath.h :
+attitude.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+attitude.o :	../OS/os.h
+../OS/os.h :
+attitude.o :	../App/include.h
+../App/include.h :
+attitude.o :	../OS/os.h
+../OS/os.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../OS/os.h
+../OS/os.h :
+attitude.o :	../App/Sys/filter.h
+../App/Sys/filter.h :
+attitude.o :	../App/Sys/kalman_filter.h
+../App/Sys/kalman_filter.h :
+attitude.o :	../App/Sys/pid_ctrl.h
+../App/Sys/pid_ctrl.h :
+attitude.o :	../App/Sys/sort.h
+../App/Sys/sort.h :
+attitude.o :	../App/Sys/matrix.h
+../App/Sys/matrix.h :
+attitude.o :	../App/Sys/fuzzy_ctrl.h
+../App/Sys/fuzzy_ctrl.h :
+attitude.o :	../OS/os.h
+../OS/os.h :
+attitude.o :	../App/Sys/queue.h
+../App/Sys/queue.h :
+attitude.o :	../App/Sys/adrc.h
+../App/Sys/adrc.h :
+attitude.o :	../OS/os.h
+../OS/os.h :
+attitude.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+attitude.o :	../App/Usr/usr.h
+../App/Usr/usr.h :
+attitude.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/fuzzycontrol.h
+../App/Usr/fuzzycontrol.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/control.h
+../App/Usr/control.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/dataprocess.h
+../App/Usr/dataprocess.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/element.h
+../App/Usr/element.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
+attitude.o :	../App/Usr/NeuralNetwork/neuralnetwork.h
+../App/Usr/NeuralNetwork/neuralnetwork.h :
+attitude.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/NeuralNetwork/nn_parameter.h
+../App/Usr/NeuralNetwork/nn_parameter.h :
+attitude.o :	../App/Usr/NeuralNetwork/tricore_nn.h
+../App/Usr/NeuralNetwork/tricore_nn.h :
+attitude.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
+../App/Usr/NeuralNetwork/tricore_nn_common.h :
+attitude.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
+../App/Usr/NeuralNetwork/tricore_nn_table.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/attitude.h
+../App/Usr/attitude.h :
+attitude.o :	../App/Usr/datacollection.h
+../App/Usr/datacollection.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/Usr/calibration.h
+../App/Usr/calibration.h :
+attitude.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
+attitude.o :	../App/foo.h
+../App/foo.h :
+attitude.o :	../OS/os.h
+../OS/os.h :
+attitude.o :	../App/Usr/parameter.h
+../App/Usr/parameter.h :
+attitude.o :	../App/init.h
+../App/init.h :
+attitude.o :	../App/app.h
+../App/app.h :
+attitude.o :	../App/test.h
+../App/test.h :

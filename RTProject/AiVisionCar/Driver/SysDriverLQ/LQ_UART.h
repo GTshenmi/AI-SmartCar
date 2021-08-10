@@ -48,8 +48,8 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #define LP_UART6_RX        G11             //B3  G11             B3接SDRAM
 #define LP_UART6_TX        M11             //D2  M11             D2接SDRAM
 
-#define LP_UART7_RX        N4              //D5  N4              D5接SDRAM  N4接QSPI FLASH 
-#define LP_UART7_TX        P3              //C5  P3              C5接SDRAM  P3接QSPI FLASH
+#define LP_UART7_RX        D5             //D5  N4               D5接SDRAM  N4接QSPI FLASH 
+#define LP_UART7_TX        C5              //C5  P3              C5接SDRAM  P3接QSPI FLASH
 
 #define LP_UART8_RX        J2              //B7  J2  J13         B7接SDRAM 
 #define LP_UART8_TX        H2              //D6  H2  L13         D6接SDRAM

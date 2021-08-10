@@ -9,3 +9,4 @@
  */
 #include <parameter.h>
 #include "include.h"
+bool ImageProcessFinished = 0;

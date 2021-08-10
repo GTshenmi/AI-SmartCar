@@ -52,7 +52,7 @@ void ParameterInit(void *argv)
 
     data->M_PID.MaxIntegralValue = 1.2;
 
-    data->Speed = 3200.0;
+    data->Speed = 2000.0;
 
     PID_SetValue(&data->S_PID,PIDValue(2.227,0.0,0.0));
 
@@ -108,6 +108,23 @@ void ParameterInit(void *argv)
 
 
     }
+
+    switch((bits >> 7) & 0x00000001)
+    {
+        case 0:
+
+            data->GameMode = OneLopMode;
+
+            break;
+
+        case 1:
+
+            data->GameMode = ScoringMode;
+
+            break;
+    }
+
+    data->GameMode = OneLopMode;
 
     SelfCalibration(data,CalibrationIMU);
 }

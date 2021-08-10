@@ -218,6 +218,10 @@ dataprocess.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 dataprocess.o :	../OS/os.h
 ../OS/os.h :
+dataprocess.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+dataprocess.o :	../OS/os.h
+../OS/os.h :
 dataprocess.o :	../App/include.h
 ../App/include.h :
 dataprocess.o :	../OS/os.h

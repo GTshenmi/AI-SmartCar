@@ -1,230 +1,434 @@
 /*
  * attitude.c
  *
- *  Created on: 2021Äê4ÔÂ18ÈÕ
+ *  Created on: 2021éªï¿½4éˆï¿½18éƒï¿½
  *      Author: 936305695
  */
 #include "attitude.h"
 #include "math.h"
 #include "sysmath.h"
+#include "arm_math.h"
+#include "include.h"
 
-#define sampleFreq  512.0f          // sample frequency in Hz
-#define twoKpDef    (2.0f * 0.5f)   // 2 * proportional gain
-#define twoKiDef    (2.0f * 0.0f)   // 2 * integral gain
+/*å®¸ãƒ§â–¼éã„¥çœ¬é™æ©€å™º*/
 
+//æ¿®æŒï¿½ä½¹æ´¿é‚ç‰ˆçˆ£è¹‡æ¤•æ¤•å¬…å±„îƒè¯¥æµæƒ·å®æ³µî€¢æŸ­ï¿½
+unsigned char IMU_Flag;
 
-// Variable definitions
-volatile float twoKp = twoKpDef;                                            // 2 * proportional gain (Kp)
-volatile float twoKi = twoKiDef;                                            // 2 * integral gain (Ki)
-volatile float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;                  // quaternion of sensor frame relative to auxiliary frame
-volatile float integralFBx = 0.0f,  integralFBy = 0.0f, integralFBz = 0.0f; // integral error terms scaled by Ki
+//æ¿®æŒï¿½ä½½î—
+float Roll  , Pitch  , Yaw  ;
+float Roll_0, Pitch_0, Yaw_0;
 
-void MahonyAHRSupdate(axis_t *acc/*input*/,axis_t *gyro/*input*/,axis_t *mag/*not use*/,attitude_t *attitude/*output*/)
+//çº¾ä½¸æº€éšæˆ¦å™º
+static float M[3],  M_cx[3] ,M_cxy[3];
+static arm_matrix_instance_f32 M_matrix,M_cx_matrix,M_cxy_matrix;
+
+//ç¼æ›¡î”‘xæå¯¸æ®‘éƒå¬­æµ†é­â•…æ¨€
+arm_matrix_instance_f32 Rx_matrix;
+float               Rx[9];
+
+//ç¼æ™Šæå¯¸æ®‘éƒå¬­æµ†é­â•…æ¨€
+arm_matrix_instance_f32 Ry_matrix;
+float               Ry[9];
+
+/*é‚å›¦æ¬¢éã„¥çœ¬é™æ©€å™º*/
+
+//é–²å›¨ç‰±é›ã„¦æ¹¡
+static float dt=0.02;
+
+//
+#define Qs   0.000001
+static arm_matrix_instance_f32 Q_matrix;
+static float               Q[16]={Qs ,0  ,0  ,0  ,
+                                      0  ,Qs ,0  ,0  ,
+                                      0  ,0  ,Qs ,0  ,
+                                      0  ,0  ,0  ,Qs };
+
+//é¹¿è„¹è™èŠ’è„¨é¢…è·¯é™†è™å¯æˆ®è„´è„®è´¸
+#define Rs_a 5000
+static arm_matrix_instance_f32 R_matrix;
+static float               R[9]= {Rs_a ,0    ,0    ,
+                                                            0    ,Rs_a ,0    ,
+                                                            0    ,0    ,Rs_a ,};
+
+//è„£è„›é™†è„³ç¢Œæ¥¼è„¦ç¦„æˆ®è„´è„®è´¸
+static arm_matrix_instance_f32 I_matrix;
+static float                I[16]={1  ,0  ,0  ,0  ,
+                                        0  ,1  ,0  ,0  ,
+                                        0  ,0  ,1  ,0  ,
+                                        0  ,0  ,0  ,1  };
+
+//è„³éº“è„¤å¢è·¯é™†é²è„¤è„©è„œé©´è„£å¤è„ æˆ®è„´è„®è´¸å½•æ³è„ç›²è„³é™‹è„°è„™
+static float               F[16],   F_t[16];
+static arm_matrix_instance_f32 F_matrix,F_t_matrix;
+
+//é¹¿è„¹è™èŠ’è·¯é™†é²è„¤è„©è„œé©´è„£å¤è„ æˆ®è„´è„®è´¸å½•æ³è„ç›²è„³é™‹è„°è„™
+static float               H[12],   H_t[12];
+static arm_matrix_instance_f32 H_matrix, H_t_matrix;
+
+//è„³éº“è„¤å¢è„¨é¢…è·¯é™†è™å¯è„§è„¿é¹¿è„´æˆ®è„´è„®è´¸
+static float               P[16],   P_p[16],   P_temp1[16],   P_temp2[16];
+static arm_matrix_instance_f32 P_matrix,P_p_matrix,P_temp1_matrix,P_temp2_matrix;
+
+//è„Œæ¼è„®é¹¿é©´ç¯“éœ²æ²¡è„—çœ‰è„­æšè„ªå¿™è„§è„¿é¹¿è„´æˆ®è„´è„®è´¸
+static float               K[12]   ,K_temp1[12]   ,K_temp2[12]   ,K_temp3[9],               K_temp4[9];
+static arm_matrix_instance_f32 K_matrix,K_temp1_matrix,K_temp2_matrix,K_temp3_matrix,       K_temp4_matrix;
+
+//è„£è„›è„­é™‹è„¢åª’è„§è„¿é¹¿è„´è„§è²Œè„•é©´
+static float               q[4]={1,0,0,0},q_p[4]={1,0,0,0},q_e[4]={0,0,0,0};
+static arm_matrix_instance_f32 q_matrix,      q_p_matrix,      q_e_matrix;
+
+//è„°è„´è„•å¨„è„§è„¿é¹¿è„´è„§è²Œè„•é©´
+static float               Z[3],    Z_p[3],    Z_e[3];
+static arm_matrix_instance_f32 Z_matrix,Z_p_matrix,Z_e_matrix;
+
+/**/
+float ax=1,ay=1,az=1;
+/**/
+
+//é—â€³çšµé‡è‰°ç€ºéšï¿½
+//static float Hignt_Kalman(float X_P,float X_V)
+//{
+//    static float  P0_0=0,Kg=0.0,P1_0=0;
+//    float X;
+//    //ç»¯è¤ç²ºé—å¿”æŸŸå®¸ï¿½
+//    P1_0=P0_0+0.0001f;
+//    //ç‘™å‚›ç¥´é—å¿”æŸŸå®¸ï¿½
+//    Kg=P1_0/(P1_0+200.0f);
+//    X=X_P+(X_V-X_P)*Kg;
+//    P0_0=(1-Kg)*P1_0;
+//    return X;
+//}
+
+//static float Hignt_Speed_Kalman(float X_P,float X_V)//é™ï¹€î˜»æ¶“ï¿½æ¶“î„å´±çæ—€æµ–é“»å¶…æ‚
+//{
+//    static float  P0_0=0,Kg=0.0,P1_0=0;
+//    float X;
+//    //ç»¯è¤ç²ºé—å¿”æŸŸå®¸ï¿½
+//    P1_0=P0_0+0.0002f;
+//    //ç‘™å‚›ç¥´é—å¿”æŸŸå®¸ï¿½
+//    Kg=P1_0/(P1_0+100.0f);
+//    X=X_P+(X_V-X_P)*Kg;
+//    P0_0=(1-Kg)*P1_0;
+//    return X;
+//}
+
+void IMU_Update_Init(void)
 {
-    float gx,gy,gz,ax,ay,az,mx,my,mz;
+    //float norm;
+    //æ©å›©â–¼é—å¿”æŸŸå®¸î†¾ç…©é—ƒï¿½
+    Q_matrix.numRows=4;
+    Q_matrix.numCols=4;
+    Q_matrix.pData  =Q;
 
-    ax = acc->x;
-    ay = acc->y;
-    az = acc->z;
+    //ç‘™å‚›ç¥´é—å¿”æŸŸå®¸î†¾ç…©é—ƒï¿½
+    R_matrix.numRows=3;
+    R_matrix.numCols=3;
+    R_matrix.pData  =R;
 
-    gx = gyro->x;
-    gy = gyro->y;
-    gz = gyro->z;
+    //é¥æ¶¢æ¨é—æ›šç¶…é­â•…æ¨€
+    I_matrix.numRows=4;
+    I_matrix.numCols=4;
+    I_matrix.pData  =I;
 
-    mx = mag->x;
-    my = mag->y;
-    mz = mag->z;
+    //Xè„¨åª’è„³é™‹æˆ®è„´è„®è´¸
+    Rx_matrix.numRows=3;
+    Rx_matrix.numCols=3;
+    Rx_matrix.pData  =Rx;
 
-    float recipNorm;
-    float q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
-    float hx, hy, hz, bx, bz;
-    float halfvx, halfvy, halfvz, halfwx, halfwy, halfwz;
-    float halfex, halfey, halfez;
-    float qa, qb, qc;
+    //Yè„¨åª’è„³é™‹æˆ®è„´è„®è´¸
+    Ry_matrix.numRows=3;
+    Ry_matrix.numCols=3;
+    Ry_matrix.pData  =Ry;
 
-    // Ö»ÔÚ¼ÓËÙ¶È¼ÆÊı¾İÓĞĞ§Ê±²Å½øĞĞÔËËã
-    if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
+    //è„³éº“è„¤å¢è·¯é™†é²è„¤è„©è„œé©´è„£å¤è„ æˆ®è„´è„®è´¸å½•æ³è„ç›²è„³é™‹è„°è„™
+    F_matrix.numRows=4;        F_t_matrix.numRows=4;
+    F_matrix.numCols=4;        F_t_matrix.numCols=4;
+    F_matrix.pData  =F;        F_t_matrix.pData  =F_t;
 
-        // Normalise accelerometer measurement
-        // ½«¼ÓËÙ¶È¼ÆµÃµ½µÄÊµ¼ÊÖØÁ¦¼ÓËÙ¶ÈÏòÁ¿vµ¥Î»»¯
-        recipNorm = invSqrt(ax * ax + ay * ay + az * az);
-        ax *= recipNorm;
-        ay *= recipNorm;
-        az *= recipNorm;
+    //é¹¿è„¹è™èŠ’è·¯é™†é²è„¤è„©è„œé©´è„£å¤è„ æˆ®è„´è„®è´¸å½•æ³è„ç›²è„³é™‹è„°è„™
+    H_matrix.numRows=3;        H_t_matrix.numRows=4;
+    H_matrix.numCols=4;        H_t_matrix.numCols=3;
+    H_matrix.pData  =H;        H_t_matrix.pData  =H_t;
 
-        // Normalise magnetometer measurement
-        // ½«´ÅÁ¦¼ÆµÃµ½µÄÊµ¼Ê´Å³¡ÏòÁ¿mµ¥Î»»¯
-        recipNorm = invSqrt(mx * mx + my * my + mz * mz);
-        mx *= recipNorm;
-        my *= recipNorm;
-        mz *= recipNorm;
+    //ç»¯è¤ç²ºé—å¿”æŸŸå®¸î†¾ç…©é—ƒé›å¼·ç»¯è¤ç²ºé—å¿”æŸŸå®¸î‡€î•©å¨´å¬¬ç…©é—ƒï¿½
+    P_matrix.numRows=4;         P_p_matrix.numRows=4;          P_temp1_matrix.numRows=4;        P_temp2_matrix.numRows=4;
+    P_matrix.numCols=4;         P_p_matrix.numCols=4;          P_temp1_matrix.numCols=4;        P_temp2_matrix.numCols=4;
+    P_matrix.pData  =P;         P_p_matrix.pData  =P_p;        P_temp1_matrix.pData  =P_temp1;  P_temp2_matrix.pData  =P_temp2;
 
-        // Auxiliary variables to avoid repeated arithmetic
-        // ¸¨Öú±äÁ¿£¬ÒÔ±ÜÃâÖØ¸´ÔËËã
-        q0q0 = q0 * q0;
-        q0q1 = q0 * q1;
-        q0q2 = q0 * q2;
-        q0q3 = q0 * q3;
-        q1q1 = q1 * q1;
-        q1q2 = q1 * q2;
-        q1q3 = q1 * q3;
-        q2q2 = q2 * q2;
-        q2q3 = q2 * q3;
-        q3q3 = q3 * q3;
+    //è„Œæ¼è„®é¹¿é©´ç¯“éœ²æ²¡è„—çœ‰è„­æšè„ªå¿™
+    K_matrix.numRows=4;         K_temp1_matrix.numRows=4;      K_temp2_matrix.numRows=3;        K_temp3_matrix.numRows=3;       K_temp4_matrix.numRows=3;
+    K_matrix.numCols=3;         K_temp1_matrix.numCols=3;      K_temp2_matrix.numCols=4;        K_temp3_matrix.numCols=3;       K_temp4_matrix.numCols=3;
+    K_matrix.pData  =K;         K_temp1_matrix.pData  =K_temp1;K_temp2_matrix.pData  =K_temp2;  K_temp3_matrix.pData  =K_temp3; K_temp4_matrix.pData  =K_temp4;
 
-        // Reference direction of Earth's magnetic field
-        // Í¨¹ı´ÅÁ¦¼Æ²âÁ¿ÖµÓë×ø±ê×ª»»¾ØÕóµÃµ½´óµØ×ø±êÏµÏÂµÄÀíÂÛµØ´ÅÏòÁ¿
-        hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
-        hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
-        hz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
-        bx = sqrt(hx * hx + hy * hy);
-        bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+    //é¥æ¶˜å“éæ‰®å§¸é¬ä½¸æ‚œé–²å¿“å¼·éå •î•©å¨´å¬ªæ‚œé–²ï¿½
+    q_matrix.numRows=4;       q_p_matrix.numRows=4;            q_e_matrix.numRows=4;
+    q_matrix.numCols=1;       q_p_matrix.numCols=1;            q_e_matrix.numCols=1;
+    q_matrix.pData  =q;       q_p_matrix.pData  =q_p;          q_e_matrix.pData  =q_e;
 
-        // Estimated direction of gravity and magnetic field
-        // ½«ÀíÂÛÖØÁ¦¼ÓËÙ¶ÈÏòÁ¿ÓëÀíÂÛµØ´ÅÏòÁ¿±ä»»ÖÁ»úÌå×ø±êÏµ
-        halfvx = q1q3 - q0q2;
-        halfvy = q0q1 + q2q3;
-        halfvz = q0q0 - 0.5f + q3q3;
-        halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
-        halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
-        halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);
+    //é–²å¶…å§ç‘™å‚›ç¥´éšæˆ¦å™ºé™å©…î‡å¨´å¬®å™ºé¨å‹¯î•©å¨´å¬ªæ‚œé–²ï¿½
+    Z_matrix.numRows=3;        Z_p_matrix.numRows=3;           Z_e_matrix.numRows=3;
+    Z_matrix.numCols=1;        Z_p_matrix.numCols=1;           Z_e_matrix.numCols=1;
+    Z_matrix.pData  =Z;        Z_p_matrix.pData  =Z_p;         Z_e_matrix.pData  =Z_e;
 
-        // Error is sum of cross product between estimated direction and measured direction of field vectors
-        // Í¨¹ıÏòÁ¿Íâ»ıµÃµ½ÖØÁ¦¼ÓËÙ¶ÈÏòÁ¿ºÍµØ´ÅÏòÁ¿µÄÊµ¼ÊÖµÓë²âÁ¿ÖµÖ®¼äÎó²î
-        halfex = (ay * halfvz - az * halfvy) + (my * halfwz - mz * halfwy);
-        halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
-        halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+    //é¦æ‰®î—†ç‘™å‚›ç¥´éšæˆ¦å™ºé™å©…î‡å¨´å¬®å™ºé¨å‹¯î•©å¨´å¬ªæ‚œé–²ï¿½
+    M_matrix.numRows=3;        M_cx_matrix.numRows=3;       M_cxy_matrix.numRows=3;
+    M_matrix.numCols=1;        M_cx_matrix.numCols=1;       M_cxy_matrix.numCols=1;
+    M_matrix.pData  =M;        M_cx_matrix.pData  =M_cx;    M_cxy_matrix.pData  =M_cxy;
 
-        // Compute and apply integral feedback if enabled
-        // ÔÚPI²¹³¥Æ÷ÖĞ»ı·ÖÏîÊ¹ÄÜÇé¿öÏÂ¼ÆËã²¢Ó¦ÓÃ»ı·ÖÏî
-        if(twoKi > 0.0f) {
-            // integral error scaled by Ki
-            // »ı·Ö¹ı³Ì
-            integralFBx += twoKi * halfex * (1.0f / sampleFreq);
-            integralFBy += twoKi * halfey * (1.0f / sampleFreq);
-            integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+    //é¦æ‰®î—†ç‘™å‚›ç¥´éšæˆ¦å™ºé™å©…î‡å¨´å¬®å™ºé¨å‹¯î•©å¨´å¬ªæ‚œé–²ï¿½
+    Rx_matrix.numRows=3;
+    Rx_matrix.numCols=3;
+    Rx_matrix.pData  =Rx;
 
-            // apply integral feedback
-            // Ó¦ÓÃÎó²î²¹³¥ÖĞµÄ»ı·ÖÏî
-            gx += integralFBx;
-            gy += integralFBy;
-            gz += integralFBz;
-        }
-        else {
-            // prevent integral windup
-            // ±ÜÃâÎª¸ºÖµµÄKiÊ±»ı·ÖÒì³£±¥ºÍ
-            integralFBx = 0.0f;
-            integralFBy = 0.0f;
-            integralFBz = 0.0f;
-        }
+    //é¦æ‰®î—†ç‘™å‚›ç¥´éšæˆ¦å™ºé™å©…î‡å¨´å¬®å™ºé¨å‹¯î•©å¨´å¬ªæ‚œé–²ï¿½
+    Ry_matrix.numRows=3;
+    Ry_matrix.numCols=3;
+    Ry_matrix.pData  =Ry;
 
-        // Apply proportional feedback
-        // Ó¦ÓÃÎó²î²¹³¥ÖĞµÄ±ÈÀıÏî
-        gx += twoKp * halfex;
-        gy += twoKp * halfey;
-        gz += twoKp * halfez;
+//    //éˆè½°ç¶‹é”çŠ»ï¿½ç†·å®³éšæˆ¦å™º
+//    a_b_matrix.numRows=3;        a_b_temp_matrix.numRows=3;
+//    a_b_matrix.numCols=1;        a_b_temp_matrix.numCols=1;
+//    a_b_matrix.pData  =a_b;      a_b_temp_matrix.pData  =a_b_temp;
+
+    //ç‘™å‚›ç¥´é–²å¿šî‡°é™æ §å¼·é—æ›šç¶…é–ï¿½****************************************************************************
+//    norm = sqrt(ax*ax+ay*ay+az*az);
+//    //é”çŠ»ï¿½ç†·å®³ç’‡è¯²å½‡é™å©‚å´Ÿæµ£å¶…å¯²
+//    Z[0]=ax/norm;
+//    Z[1]=ay/norm;
+//    Z[2]=az/norm;
+//
+//    //é’æ¿†îæ·‡îˆ™è¯ç¼ˆç»˜ç²´ç‘™æ‘å®³ç’ï¼„ç•»***************************************************************************
+//    Roll_0 =atanf(Z[1]/Z[2]);
+//    Pitch_0=asinf(Z[0]);
+//    Yaw_0 =0;
+//
+//    q[0]=cosf(Pitch_0/2)*cosf(Roll_0/2)*cosf(Yaw_0/2)  +sinf(Pitch_0/2)*sinf(Roll_0/2) *sinf(Yaw_0/2);
+//    q[1]=cosf(Pitch_0/2)*cosf(Yaw_0/2) *sinf(Roll_0/2) -cosf(Roll_0/2) *sinf(Pitch_0/2)*sinf(Yaw_0/2);
+//    q[2]=cosf(Roll_0/2) *cosf(Yaw_0/2) *sinf(Pitch_0/2)+cosf(Pitch_0/2)*sinf(Roll_0/2) *sinf(Yaw_0/2);
+//    q[3]=cosf(Pitch_0/2)*cosf(Roll_0/2)*sinf(Yaw_0/2)  -cosf(Yaw_0/2)  *sinf(Pitch_0/2)*sinf(Roll_0/2);
+
+    //Console.WriteLine("Roll_0:%f,Pitch_0:%f,Yaw_0:%f",Roll_0,Pitch_0,Yaw_0);
+
+    //Console.WriteLine("q[0]:%f,q[1]%f,q[2]%f,q[3]",q[0],q[1],q[2],q[3]);
+
+}
+//
+
+void IMU_Update0(float gx, float gy, float gz, float ax, float ay, float az,float mx,float my,float mz,float *rollout,float *pitchout,float *yawout)
+{
+    float norm;
+
+    norm=sqrt(mx*mx+my*my+mz*mz);
+    M[0]=mx/norm;
+    M[1]=my/norm;
+    M[2]=mz/norm;
+//    Console.WriteLine("M[0]:%f,M[1]%f,M[2]%f",M[0],M[1],M[2]);
+    norm=sqrt(ax*ax+ay*ay+az*az);
+    Z[0]=ax/norm;
+    Z[1]=ay/norm;
+    Z[2]=az/norm;
+//    Console.WriteLine("Z[0]:%f,Z[1]%f,Z[2]%f",Z[0],Z[1],Z[2]);
+    F[0] = 1        ;F[1] =-gx*dt*0.5f;F[2] =-gy*dt*0.5f;F[3] =-gz*dt*0.5f;
+    F[4] =gx*dt*0.5f;F[5] =  1        ;F[6] = gz*dt*0.5f;F[7] =-gy*dt*0.5f;
+    F[8] =gy*dt*0.5f;F[9] =-gz*dt*0.5f;F[10]= 1         ;F[11]= gx*dt*0.5f;
+    F[12]=gz*dt*0.5f;F[13]= gy*dt*0.5f;F[14]=-gx*dt*0.5f;F[15]= 1         ;
+
+//    Console.WriteLine("------------------1---------------------");
+//    Console.WriteArray("float",F,4);
+//    Console.WriteArray("float",F_matrix.pData,4);
+//    Console.WriteLine(" ");
+
+
+
+    arm_mat_trans_f32(&F_matrix,&F_t_matrix);
+//    Console.WriteLine("------------------2---------------------");
+//    Console.WriteArray("float",F_t_matrix.pData,4);
+//    Console.WriteLine(" ");
+
+
+    arm_mat_mult_f32(&F_matrix,&q_matrix,&q_p_matrix);
+//    Console.WriteLine("------------------3---------------------");
+//    Console.WriteArray("float",F_matrix.pData,4);
+//    Console.WriteArray("float",q_matrix.pData,4);
+//    Console.WriteArray("float",q_p_matrix.pData,4);
+//    Console.WriteLine(" ");
+
+
+
+    norm=sqrt(q_p[0]*q_p[0]+q_p[1]*q_p[1]+q_p[2]*q_p[2]+q_p[3]*q_p[3]);
+    q_p[0]/=norm;
+    q_p[1]/=norm;
+    q_p[2]/=norm;
+    q_p[3]/=norm;
+
+    for(int i = 0 ; i <= 3; i++)
+    {
+        q[i] = q_p[i];
     }
 
-    // Integrate rate of change of quaternion
-    // Î¢·Ö·½³Ìµü´úÇó½â
-    gx *= (0.5f * (1.0f / sampleFreq));     // pre-multiply common factors
-    gy *= (0.5f * (1.0f / sampleFreq));
-    gz *= (0.5f * (1.0f / sampleFreq));
-    qa = q0;
-    qb = q1;
-    qc = q2;
-    q0 += (-qb * gx - qc * gy - q3 * gz);
-    q1 += (qa * gx + qc * gz - q3 * gy);
-    q2 += (qa * gy - qb * gz + q3 * gx);
-    q3 += (qa * gz + qb * gy - qc * gx);
+//    Console.WriteLine("------------------4---------------------");
+//    Console.WriteLine("q_p[0]:%f,q_p[1]%f,q_p[2]%f,q_p[3]%f",q_p[0],q_p[1],q_p[2],q_p[3]);
+//    Console.WriteLine(" ");
 
-    // Normalise quaternion
-    // µ¥Î»»¯ËÄÔªÊı ±£Ö¤ËÄÔªÊıÔÚµü´ú¹ı³ÌÖĞ±£³Öµ¥Î»ĞÔÖÊ
-    recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
-    q0 *= recipNorm;
-    q1 *= recipNorm;
-    q2 *= recipNorm;
-    q3 *= recipNorm;
+//    //ç’ï¼„ç•»æ£°å‹¬ç¥´é–²å¿“å¼·éå •æ³¤éå¬«ç˜®é­â•…æ¨€***********************************************************************
+//    Z_p[0]= 2*(q_p[0]*q_p[2] -q_p[1]*q_p[3]);                            //é–²å¶…å§é”çŠ»ï¿½ç†·å®³æ£°å‹¬ç¥´è„°è„´è„•å¨„å½•è„«è„£è„µéœ²è„ è„­é™‡è™èŠ’
+//    Z_p[1]=-2*(q_p[0]*q_p[1] +q_p[2]*q_p[3]);
+//    Z_p[2]=    q_p[1]*q_p[1] +q_p[2]*q_p[2] -(q_p[0]*q_p[0]) -(q_p[3]*q_p[3]);
+//    norm=sqrt(Z_p[0]*Z_p[0]+Z_p[1]*Z_p[1]+Z_p[2]*Z_p[2]);      //ç¢Œæ¥¼è„¦ç¦„ç¦„ç‚‰
+//    Z_p[0]/=norm;
+//    Z_p[1]/=norm;
+//    Z_p[2]/=norm;
+//
+//    Console.WriteLine("------------------5---------------------");
+//    Console.WriteLine("Z_p[0]:%f,Z_p[1]%f,Z_p[2]%f",Z_p[0],Z_p[1],Z_p[2]);
+//    Console.WriteLine(" ");
+//
+//
+//    H[0 ]= 2*q_p[2];   H[ 1]=-2*q_p[3];   H[ 2]= 2*q_p[0];   H[ 3]=-2*q_p[1];//è„Ÿè´¸H
+//    H[4 ]=-2*q_p[1];   H[ 5]=-2*q_p[0];   H[ 6]=-2*q_p[3];   H[ 7]=-2*q_p[2];
+//    H[8 ]=-2*q_p[0];   H[ 9]= 2*q_p[1];   H[10]= 2*q_p[2];   H[11]=-2*q_p[3];
+//
+//
+//    arm_mat_trans_f32(&H_matrix,&H_t_matrix);//è„Ÿè´¸Hç¢Œè„›è„³é™‹è„°è„™H_t
+//
+////
+//    Console.WriteLine("------------------6---------------------");
+//    Console.WriteArray("float",H_matrix.pData,12);
+//    Console.WriteLine("------------------6T---------------------");
+//    Console.WriteArray("float",H_t_matrix.pData,12);
+//    Console.WriteLine(" ");
+//
+//
+////    //éµâ•çé—â€³çšµé‡å…¼æŠ¤å¨‰ãˆ æ«’é™å‚›æšŸé‡å­˜æŸŠ***********************************************************************
+//    arm_mat_mult_f32(&F_matrix,&P_matrix,&P_temp1_matrix);        //è„­é™‡è™èŠ’P_p
+//
+//    Console.WriteLine("------------------7mult11---------------------");
+//    Console.WriteArray("float",F_matrix.pData,4);
+//    Console.WriteLine(" ");
+//    Console.WriteLine("------------------7mult12---------------------");
+//    Console.WriteArray("float",P_matrix.pData,4);
+//    Console.WriteLine(" ");
+//    Console.WriteLine("------------------7mult13---------------------");
+//    Console.WriteArray("float",P_temp1_matrix.pData,4);
+//    Console.WriteLine(" ");
+//
+//    arm_mat_mult_f32(&P_temp1_matrix,&F_t_matrix,&P_temp2_matrix);
+//
+//    Console.WriteLine("------------------7mult2---------------------");
+//    Console.WriteArray("float",P_temp2_matrix.pData,4);
+//    Console.WriteLine(" ");
+//
+//    arm_mat_add_f32(&P_temp2_matrix,&Q_matrix,&P_p_matrix);
+//
+//    Console.WriteLine("------------------7add1---------------------");
+//    Console.WriteArray("float",P_p_matrix.pData,4);
+//    Console.WriteLine(" ");
+//
+//    arm_mat_mult_f32(&P_p_matrix,&H_t_matrix,&K_temp1_matrix);    //è„Ÿè´¸K
+//    Console.WriteLine("------------------7mult3---------------------");
+//    Console.WriteArray("float",K_temp1_matrix.pData,4);
+//    Console.WriteLine(" ");
+//    arm_mat_mult_f32(&H_matrix,&P_p_matrix,&K_temp2_matrix);
+//    Console.WriteLine("------------------7mult4---------------------");
+//    Console.WriteArray("float",K_temp2_matrix.pData,4);
+//    Console.WriteLine(" ");
+//    arm_mat_mult_f32(&K_temp2_matrix,&H_t_matrix,&K_temp3_matrix);
+//    Console.WriteLine("------------------7mult5---------------------");
+//    Console.WriteArray("float",K_temp3_matrix.pData,4);
+//    Console.WriteLine(" ");
+//    arm_mat_add_f32(&K_temp3_matrix,&R_matrix,&K_temp3_matrix);
+//    Console.WriteLine("------------------7add2---------------------");
+//    Console.WriteArray("float",K_temp3_matrix.pData,4);
+//    Console.WriteLine(" ");
+//
+//
+//    Console.WriteLine("Value: %d",arm_mat_inverse_f32(&K_temp3_matrix,&K_temp4_matrix));
+//
+//    Console.WriteLine("------------------8inverse---------------------");
+//    Console.WriteArray("float",K_temp3_matrix.pData,16);
+//    Console.WriteArray("float",K_temp4_matrix.pData,16);
+//    Console.WriteLine(" ");
+//
+//    arm_mat_mult_f32(&K_temp1_matrix,&K_temp3_matrix,&K_matrix);
+//    arm_mat_mult_f32(&K_matrix,&H_matrix,&P_temp1_matrix);       //è„¨é¢…è·¯é™†è™å¯èµ‚çœ‰è„¨è„—
+//    arm_mat_sub_f32(&I_matrix,&P_temp1_matrix,&P_temp2_matrix);
+//    arm_mat_mult_f32(&P_temp2_matrix,&P_p_matrix,&P_matrix);
+//    Console.WriteLine("------------------9---------------------");
+//    Console.WriteArray("float",P_matrix.pData,4);
+//    Console.WriteLine(" ");
+//
+//
+//
+////    //è„³å¯è„«è„œè„£è„›è„­é™‹è„¢åª’é¹¿è„Œå½•è„å½•æ³è„ç›²ç¢Œæ¥¼è„¦ç¦„ç¦„ç‚‰***********************************************************************
+//    arm_mat_sub_f32(&Z_matrix,&Z_p_matrix,&Z_e_matrix); //é¹¿è„¹è™èŠ’è„•é©´è„³æ¢…è™å¯
+//    arm_mat_mult_f32(&K_matrix,&Z_e_matrix,&q_e_matrix);//å½•è„è„£èŒ«è„¦è´¸è™å¯
+//    arm_mat_add_f32(&q_p_matrix,&q_e_matrix,&q_matrix); //è„³å¯è„«è„œé¹¿è„Œå½•è„
+//
+//    Console.WriteLine("------------------10--------------------");
+//    Console.WriteArray("float",q_matrix.pData,4);
+//    Console.WriteLine(" ");
 
-    attitude->yaw = atan2(2.0*(q1q2+q0q3),q0q0+q1q1-q2q2-q3q3)*57.3f;//ÕâÖÖ·½·¨¿Ï¶¨ÓĞÆ¯ÒÆ
-    attitude->roll = asin(2.0*(q0*q1+q2*q3))*57.3f; //ºá¹ö½Ç
-    attitude->pitch = asin(2.0*(q0*q2-q1*q3))*57.3f;//¸©Ñö½Ç57.2957795f
+    norm=sqrt(q[0]*q[0]+q[1]*q[1]+q[2]*q[2]+q[3]*q[3]);//ç¢Œæ¥¼è„¦ç¦„ç¦„ç‚‰è„£è„›è„­é™‹è„¢åª’
+    q[0]/=norm;
+    q[1]/=norm;
+    q[2]/=norm;
+    q[3]/=norm;
+//    Console.WriteLine("------------------11---------------------");
+//    Console.WriteLine("q[0]:%f,q[1]%f,q[2]%f,q[3]%f",q[0],q[1],q[2],q[3]);
+//    Console.WriteLine(" ");
+//
+    Roll=atan2f(2.0f*(q[2]*q[3]+q[0]*q[1]),q[0]*q[0]-q[1]*q[1]-q[2]*q[2]+q[3]*q[3]);
+    Pitch=asinf(2.0f*(q[0]*q[2]-q[1]*q[3]))                                        ;
+
+
+//    Console.WriteLine("------------------12---------------------");
+//    Console.WriteLine("Roll:%f,Pitch:%f",Roll,Pitch);
+//    Console.WriteLine(" ");
+
+    //Console.WriteLine("q[0]:%f,q[1]%f,q[2]%f,q[3]",q[0],q[1],q[2],q[3]);
+    //*********************************************************
+    Rx[0]=1;              Rx[1]=0                ;  Rx[2]=0                  ;
+    Rx[3]=0;              Rx[4]= cosf(-Roll);  Rx[5]= sinf(-Roll)  ;
+    Rx[6]=0;              Rx[7]=-sinf(-Roll);  Rx[8]= cosf(-Roll)  ;
+    Ry[0]=cosf(-Pitch);   Ry[1]=0;             Ry[2]=-sinf(-Pitch) ;//
+    Ry[3]=0           ;        Ry[4]=1;                  Ry[5]= 0            ;
+    Ry[6]=sinf(-Pitch);   Ry[7]=0;             Ry[8]= cosf(-Pitch) ;
+
+//    Console.WriteLine("------------------13x--------------------");
+//    Console.WriteArray("float",Rx,3);
+//    Console.WriteLine("------------------13y--------------------");
+//    Console.WriteArray("float",Ry,3);
+//    Console.WriteLine(" ");
+//
+    arm_mat_mult_f32(&Rx_matrix,&M_matrix,&M_cx_matrix);
+    arm_mat_mult_f32(&Ry_matrix,&M_cx_matrix,&M_cxy_matrix);
+
+//    Console.WriteLine("------------------14--------------------");
+//    Console.WriteArray("float",M_cx_matrix.pData,3);
+//    Console.WriteLine(" ");
+//
+//
+//    Console.WriteLine("------------------15--------------------");
+//    Console.WriteArray("float",M_cxy_matrix.pData,3);
+//    Console.WriteLine(" ");
+//
+//
+    Yaw=atan2f(M_cxy[0],M_cxy[1]);
+    //**********************************************************************
+    Pitch=Pitch*57.3f;
+    Roll =Roll*57.3f;
+    Yaw  =Yaw*57.3f;
+
+//    Console.WriteLine("------------------16--------------------");
+//    Console.WriteLine("Pitch:%f,Roll:%f,Yaw:%f",Pitch,Roll,Yaw);
+//    Console.WriteLine(" ");
+
+    *pitchout=Pitch;
+    *rollout=Roll;
+    *yawout=Yaw;
+
+
 }
 
-void AttitudeUpdate(axis_t *acc/*input*/,axis_t *gyro/*input*/,axis_t *mag/*not use*/,attitude_t *attitude/*output*/)
-{
-    //float matrix[9]={1.f,0.0f,0.0f,0.0f,1.f,0.0f,0.0f,0.0f,1.f};//³õÊ¼»¯¾ØÕó ¶¨¸ß¶¨µã
-
-    static float q0=1.0,q1=0.0,q2=0.0,q3=0.0;
-    static float exInt=0.0,eyInt=0.0,ezInt=0.0;
-
-    //×ËÌ¬½âËãPI¿ØÖÆÆ÷
-    static float halfT = 0.001f;
-
-    static float Kp = 2.0f;
-    static float Ki = 0.0001f;
-
-
-    float norm;
-    float vx,vy,vz;
-    float ex,ey,ez;
-
-    float q0q0=q0*q0;
-    float q0q1=q0*q1;
-    float q0q2=q0*q2;
-    float q0q3=q0*q3;
-    float q1q1=q1*q1;
-    float q1q2=q1*q2;
-    float q1q3=q1*q3;
-    float q2q2=q2*q2;
-    float q2q3=q2*q3;
-    float q3q3=q3*q3;
-
-    if(acc->x*acc->y*acc->z==0)
-        return;
-
-    norm = sqrt( acc->x * acc->x+ acc->y * acc->y + acc->z * acc->z );
-
-    acc->x=acc->x/norm;
-    acc->y=acc->y/norm;
-    acc->z=acc->z/norm;
-
-    vx = 2*(q1q3 - q0q2);
-    vy = 2*(q0q1 + q2q3);
-    vz = q0q0 - q1q1 - q2q2 + q3q3;
-    
-    ex = (acc->y*vz - acc->z*vy);
-    ey = (acc->z*vx - acc->x*vz);
-    ez = (acc->x*vy - acc->y*vx);
-
-    exInt = exInt + ex*Ki;
-    eyInt = eyInt + ey*Ki;
-    ezInt = ezInt + ez*Ki;
-
-    gyro->x = gyro->x+Kp*ex +exInt;
-    gyro->y = gyro->y+Kp*ey +eyInt;
-    gyro->z = gyro->z+Kp*ez +ezInt;
-
-    //ËÄÔªÊıÎ¢·Ö·½³Ì
-    q0 = q0 + (-q1*gyro->x -q2*gyro->y -q3*gyro->z)*halfT;
-    q1 = q1 + (q0*gyro->x +q2*gyro->z -q3*gyro->y)*halfT;
-    q2 = q2 + (q0*gyro->y -q1*gyro->z +q3*gyro->x)*halfT;
-    q3 = q3 + (q0*gyro->z +q1*gyro->y -q2*gyro->x)*halfT;
-
-    norm = sqrt(q0*q0+q1*q1+q2*q2+q3*q3);
-
-    q0=q0/norm;
-    q1=q1/norm;
-    q2=q2/norm;
-    q3=q3/norm;
-
-    //ËÄÔªÊı×ª»»³ÉÅ·À­½Ç
-    //attitude->yaw += gyro->z * RadtoDeg*0.01f;//¶ÔÍÓÂİÒÇ×ö»ı·ÖµÃÆ«º½½Ç
-
-    attitude->yaw = atan2(2.f*(q1q2+q0q3),q0q0+q1q1-q2q2-q3q3)*57.3f;//ÕâÖÖ·½·¨¿Ï¶¨ÓĞÆ¯ÒÆ
-    attitude->roll = asin(2*(q0*q1+q2*q3))*57.3f; //ºá¹ö½Ç
-    attitude->pitch = asin(2*(q0*q2-q1*q3))*57.3f;//¸©Ñö½Ç57.2957795f
-
-    //´Ë´¦Ò²¿ÉÌí¼ÓĞŞÕıÎ¢µ÷Öµ roll+=(float)OFFSET_ROLL
-}
 

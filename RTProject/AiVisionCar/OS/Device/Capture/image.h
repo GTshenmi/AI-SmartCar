@@ -38,11 +38,21 @@ typedef struct
     int ye;
 }image_range_t;
 
+typedef struct
+{
+    int LeftCol[120];
+    int RightCol[120];
+    int MidCol[120];
+}image_Col_t;
+
 extern image_t ImageUsed;
 extern image_t ImageBinary;
+extern image_t ImageBinary2;
 
+int Image_GetOSTU(image_t *imagein);/*大律法阈值*/
 void Image_Binarization(image_t *imagein,image_t *imageout,int Threshold);
 void Image_Sobel(image_t *imagein,image_t *imageout, unsigned char Threshold);
 void GetUsedImage(image_t *imagein,image_t *imageout);
+void Image_SobelAutoThreshold(image_t *imagein,image_t *imageout);
 
 #endif /* OS_DEVICE_CAPTURE_IMAGE_H_ */

@@ -222,6 +222,10 @@ adrc.o :	../App/Sys/queue.h
 ../App/Sys/queue.h :
 adrc.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
+adrc.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+adrc.o :	../OS/os.h
+../OS/os.h :
 adrc.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 adrc.o :	../App/Usr/parameter.h

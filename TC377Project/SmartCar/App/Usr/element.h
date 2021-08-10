@@ -142,7 +142,7 @@ inline bool Is_Cycle(data_t *data)
 
 inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag)
 {
-    if(data->OESensor[0].K >= 5.0 || data->OESensor[1].K >= 5.0)
+    if(data->OESensor[0].K >= 5.0 || data->OESensor[1].K >= 5.0)    //Find The
     {
         flag->isOESensorMaxValue = true;
     }
@@ -174,7 +174,6 @@ inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag)
             flag->isLeftHSensorFall = true;
 
             cnt->Flags++;
-
         }
 
         if(data->HESensor[3].K <= 0.0 && !flag->isLeftHSensorFall)

@@ -10,6 +10,7 @@
 
 #include "device.h"
 
+extern esensor_t ESensor[4];
 extern capture_t Capture;
 extern communicate_t CUART;
 extern communicate_t DebugCom;

@@ -218,6 +218,10 @@ control.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 control.o :	../OS/os.h
 ../OS/os.h :
+control.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+control.o :	../OS/os.h
+../OS/os.h :
 control.o :	../App/include.h
 ../App/include.h :
 control.o :	../OS/os.h

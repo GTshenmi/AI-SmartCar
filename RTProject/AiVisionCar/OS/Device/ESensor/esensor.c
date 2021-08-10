@@ -27,7 +27,7 @@ uint16_t ESensorRead(struct esensor *self)
     return self->Cache;
 }
 
-static unsigned ESensorMidFilter(struct esensor *self)
+unsigned ESensorMidFilter(struct esensor *self)
 {
     uint16_t i,j,k,tmp;
 
@@ -74,7 +74,7 @@ static uint16_t ESensorSlidingMedianFilter(struct esensor *self,uint16_t *Filter
 
 uint16_t ESensorFilter(struct esensor *self,void *argv,uint16_t argc)
 {
-    return ESensorSlidingMedianFilter(self,self->FilterBuf,self->FilterBufLen,ESensorMidFilter(self));
+    return ESensorSlidingMedianFilter(self,self->FilterBuf,self->FilterBufLen,self->ReadADC(self));
 }
 
 void ESensorEnableFilter(struct esensor *self,bool enable)
@@ -142,7 +142,7 @@ uint16_t ESensorInit(struct esensor *self)
 #endif
 
     self->SetGain(self,1.0);
-    self->EnableFilter(self,true);
+    self->EnableFilter(self,false);
     self->EnableGain(self,false);
 
     return 0;

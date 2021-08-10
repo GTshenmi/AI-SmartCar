@@ -222,6 +222,10 @@ foo.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 foo.o :	../OS/os.h
 ../OS/os.h :
+foo.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+foo.o :	../OS/os.h
+../OS/os.h :
 foo.o :	../App/Usr/fuzzycontrol.h
 ../App/Usr/fuzzycontrol.h :
 foo.o :	../App/Sys/sys.h

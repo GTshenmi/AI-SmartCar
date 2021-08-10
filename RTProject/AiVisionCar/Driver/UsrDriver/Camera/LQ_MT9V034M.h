@@ -30,12 +30,12 @@
 //#define LQOV7725   //两者选其一
 
 #ifdef LQMT9V034 //LQMT9V034模块
-#define CAMERA_FPS  100   /* 帧率 */
+#define CAMERA_FPS  50   /* 帧率 */
 #define APP_CAMERA_WIDTH  (IMAGEW)
 #define APP_CAMERA_HEIGHT (IMAGEH/2)  //一个uint16_t里面装了两个像素， 一行IMAGEW 里面其实装了两行的像素点，所以高度/2
 #define APP_BPP 2 //像素格式，
-#define  Use_ROWS  120    //使用图像高度
-#define  Use_Line  160    //使用图像宽度
+#define  Use_ROWS  90    //使用图像高度
+#define  Use_Line  120    //使用图像宽度
 #else            //LQOV7725模块
 //#define LQOV7725RGB   //使用7725RGB   
 #define LQOV7725YUV     //使用7725灰度
@@ -63,8 +63,8 @@
 #endif  /* FLEXIO CAMERA 接口 */
 
 
-#define IMAGEH  480/4 //行 HEIGHT 待采集摄像头图像高度行数  不损失视野情况下，最大分辨率 480 * 752  最小分辨率 120*188 
-#define IMAGEW  752/4  //列 WIDTH  待采集摄像头图像宽度列数  
+#define IMAGEH  120 //行 HEIGHT 待采集摄像头图像高度行数  不损失视野情况下，最大分辨率 480 * 752  最小分辨率 120*188 
+#define IMAGEW  188  //列 WIDTH  待采集摄像头图像宽度列数  
 
 typedef struct _LQMT9V034_resource
 {

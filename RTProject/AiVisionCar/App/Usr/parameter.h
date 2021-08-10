@@ -10,6 +10,6 @@
 
 #include "sys.h"
 
-
+extern bool ImageProcessFinished;
 
 #endif /* APP_USR_PARAMETER_H_ */

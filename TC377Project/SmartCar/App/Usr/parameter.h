@@ -21,6 +21,12 @@ enum
     OpeningLoop,
 };
 
+typedef enum
+{
+    ScoringMode,
+    OneLopMode,
+};
+
 enum{
     PrepareCalibration,
     CalibrationLHOESensor,
@@ -376,6 +382,8 @@ typedef struct
 
       const uint CarMode;
 
+      uint GameMode;
+
       /*Physical Parameter.*/
 
       attitude_t attitude;
@@ -392,6 +400,9 @@ typedef struct
       uint SpeedLoopCtrlType;
 
       uint32_t VESensorCalConfirmState;
+
+      float GameStartTime;
+      float GameOverTime;
 
       bool  StartRecord;
       bool  RecordFin;

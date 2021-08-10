@@ -35,7 +35,7 @@ uint32_t Console_WriteLine(const char *fmt,...)
 
     vprintf(fmt,arg);
 
-    printf("\n");
+//    printf("\n");
 
     va_end(arg);
 

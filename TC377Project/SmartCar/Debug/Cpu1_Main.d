@@ -220,6 +220,10 @@ Cpu1_Main.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 Cpu1_Main.o :	../OS/os.h
 ../OS/os.h :
+Cpu1_Main.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+Cpu1_Main.o :	../OS/os.h
+../OS/os.h :
 Cpu1_Main.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 Cpu1_Main.o :	../App/Usr/parameter.h

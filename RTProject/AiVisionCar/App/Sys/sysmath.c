@@ -45,7 +45,7 @@ float frand()
 {
     float result = 0.0;
 
-    uint seed = (uint) os.time.getTime(ms);;
+    uint seed = (uint) os.time.getTimems();;
 
     srand(seed);
 

@@ -202,12 +202,12 @@ void Motor_Driver(struct motor_ctrl *self,sint16_t value)
     if(value > 0)
     {
         PWMx.Write(self->Pwmn[0],value);
-        PWMx.Write(self->Pwmn[1],PWMx.MinPwmDuty);
+        PWMx.Write(self->Pwmn[1],PWMx.MaxPwmDuty);
     }
     else
     {
         PWMx.Write(self->Pwmn[0],-value);
-        PWMx.Write(self->Pwmn[1],PWMx.MaxPwmDuty);
+        PWMx.Write(self->Pwmn[1],PWMx.MinPwmDuty);
     }
     #elif (DriverChip == IR7843) || (DriverChip ==BTN7971)
     if(value > 0)

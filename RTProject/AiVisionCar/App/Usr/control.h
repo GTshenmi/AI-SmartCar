@@ -10,9 +10,19 @@
 
 #include "sys.h"
 
-sint16_t LeftMotorCtrlStrategy(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc);
-sint16_t RightMotorCtrlStrategy(struct motor_ctrl *self,sint16_t target_speed,sint16_t actual_speed,void *argv,uint16_t argc);
-uint16_t Servo1CtrlStrategy(struct servo_ctrl *self,signed short target_angle,float actual_angle,void *argv,uint16_t argc);
-uint16_t Servo2CtrlStrategy(struct servo_ctrl *self,signed short target_angle,float actual_angle,void *argv,uint16_t argc);
+void ServoControl(void);
+void MotorControl(int LSpeed,int RSpeed);
+void SpeedControl(void);
+
+
+extern long ServoError;
+extern float Servo_KpInc;
+extern int ServoAngle;
+extern float Servo_KpAll;
+extern bool Car_Go;
+extern int LCurrentSpeed;              //本次左电机速度
+extern int RCurrentSpeed;              //本次右电机速度
+
+
 
 #endif /* APP_USR_CONTROL_H_ */

@@ -86,6 +86,48 @@ uint SaveSensorDataAndAngleAI(void *argv,char *path){
     return res;
 }
 
+uint SaveSensorDataAndAngleAI2(void *argv,char *path){
+
+    data_t *data = (data_t *)argv;
+
+    char buffer[100];
+    char* bufferPointer = buffer;
+
+    static uint32_t line = 0;
+
+    bufferPointer += sprintf(bufferPointer,"S %lu S ",line);
+
+    for(uint8_t i = 0;i < MAX_SESENSOR_NUM;i++){
+        bufferPointer += sprintf(bufferPointer,"%f ",data->SESensor_NormalizedValue[i]);
+    }
+
+    for(int i = 0 ; i < 5 ; i++)
+    {
+        float angle = data->A[9 - i] / Servo.MaxAngle;
+        bufferPointer += sprintf(bufferPointer,"%f ",angle);
+    }
+
+    bufferPointer += sprintf(bufferPointer,"%f ",data->Speed);
+
+    bufferPointer += sprintf(bufferPointer,ElementDict[data->Element.Point]);
+
+    bufferPointer += sprintf(bufferPointer," AI E \n");
+
+    line++;
+
+    uint res = 0;
+
+    float dt = os.time.getTime(s);
+
+    res = os.file.fastWrite(path,buffer);
+
+    dt = os.time.getTime(s) - dt;
+
+    data->time = dt;
+
+    return res;
+}
+
 uint SaveSensorDataAndAngle(void *argv,char *path){
 
     data_t *data = (data_t *)argv;

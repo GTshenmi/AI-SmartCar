@@ -218,6 +218,10 @@ nn_library.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 nn_library.o :	../OS/os.h
 ../OS/os.h :
+nn_library.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+nn_library.o :	../OS/os.h
+../OS/os.h :
 nn_library.o :	../App/Usr/NeuralNetwork/nn_parameter.h
 ../App/Usr/NeuralNetwork/nn_parameter.h :
 nn_library.o :	../App/Usr/NeuralNetwork/tricore_nn.h

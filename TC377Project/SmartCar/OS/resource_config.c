@@ -319,14 +319,12 @@ tim_resource_t TIM_Resources[8] =
 {
         [0] = {
                .TIMN = {STM0,STM_Channel_0,1000,false,true,STM},
-               .Description = "System TIM---Managed By Core0."
+               .Description = "System TIM---Managed By Core2."
         },
         [1] = {
                .TIMN = {STM0,STM_Channel_1,2000,true,true,STM},
-               .Description = "Reversed.---Managed By Core0."
+               .Description = "Reversed.---Managed By Core2."
         },
-
-
 
         [2] = {
                .TIMN = {STM1,STM_Channel_0,2000,true,true,STM},
@@ -337,8 +335,6 @@ tim_resource_t TIM_Resources[8] =
                .Description = "Interrupt Timer For Servo Control.---Managed By Core0."
         },
 
-
-
         [4] = {
                .TIMN = {CCU60,CCU6_Channel0,2000,true,true,CCU6},
                .Description = "Interrupt Timer For Motor Control.---Managed By Core1."
@@ -346,7 +342,7 @@ tim_resource_t TIM_Resources[8] =
 
         [5] = {
                .TIMN = {CCU60,CCU6_Channel1,2000,true,true,CCU6},
-               .Description = "Interrupt Timer For IMU Update.---Managed By Core2."
+               .Description = "Interrupt Timer For IMU Update.---Managed By Core1."
         },
 
 };

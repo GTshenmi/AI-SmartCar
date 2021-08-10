@@ -7,6 +7,29 @@
 #include "devices_config.h"
 #include "driver.h"
 
+esensor_t ESensor[4] = {
+        [0] = {
+                .Init = ESensorInit,
+                .Self = &ESensor[0],
+                .ADCn = &ADC_Resources[0].ADCN,
+        },
+        [1] = {
+                .Init = ESensorInit,
+                .Self = &ESensor[1],
+                .ADCn = &ADC_Resources[1].ADCN,
+        },
+        [2] = {
+                .Init = ESensorInit,
+                .Self = &ESensor[2],
+                .ADCn = &ADC_Resources[2].ADCN,
+        },
+        [3] = {
+                .Init = ESensorInit,
+                .Self = &ESensor[3],
+                .ADCn = &ADC_Resources[3].ADCN,
+        },
+};
+
 capture_t Capture = /*unknow*/
 {
         .__Init__ = CameraInit,
@@ -49,7 +72,13 @@ capture_t Capture = /*unknow*/
 
 };
 
-communicate_t DebugCom;
+communicate_t DebugCom = 
+{
+        .Init = ComInit,
+        .Self = &DebugCom,
+        .CommunicationType = C_UART,
+        .Communicatorn = (void *)&UART_Resources[0].UARTN,  
+};
 
 communicate_t CUART = /*ok*/
 {
@@ -101,22 +130,22 @@ led_t RLED = /*ok*/
 {
         .Init = LED_Init,
         .Self = &RLED,
-        .GPIOn = &GPIO_Resources[0].GPION,
+        .GPIOn = &GPIO_Resources[5].GPION,
 };
 
 motor_ctrl_t LMotor =/*ok*/
 {
         .Init = MotorInit,
         .Self = &LMotor,
-        .Pwmn = {&PWM_Resources[3].PWMN,&PWM_Resources[2].PWMN},
-        .Encn = &ENC_Resources[0].ENCN,
+        .Pwmn = {&PWM_Resources[2].PWMN,&PWM_Resources[3].PWMN},
+        .Encn = &ENC_Resources[1].ENCN,
 };
 motor_ctrl_t RMotor =/*ok*/
 {
         .Init = MotorInit,
         .Self = &RMotor,
-        .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
-        .Encn = &ENC_Resources[1].ENCN,
+        .Pwmn = {&PWM_Resources[0].PWMN,&PWM_Resources[1].PWMN},
+        .Encn = &ENC_Resources[0].ENCN,
 };
 
 

@@ -222,6 +222,10 @@ init.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 init.o :	../OS/os.h
 ../OS/os.h :
+init.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+init.o :	../OS/os.h
+../OS/os.h :
 init.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 init.o :	../App/Usr/parameter.h

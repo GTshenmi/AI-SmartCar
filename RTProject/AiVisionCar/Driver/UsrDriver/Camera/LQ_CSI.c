@@ -86,8 +86,8 @@ void CSI_PinsInit(void)
     IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_10_CSI_DATA07,0U);                                   
     IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_11_CSI_DATA06,0U);                                   
     IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_12_CSI_DATA05,0U);                                     
-    IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_09_CSI_DATA04,0U);                                   
-    IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_10_CSI_DATA03,0U);                                   
+    IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_13_CSI_DATA04,0U);                                   
+    IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_14_CSI_DATA03,0U);                                   
     IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_11_CSI_DATA02,0U);    
                                   
     /* CSI MCLK select 120M. */

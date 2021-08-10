@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../App/Sys/adrc.c \
+../App/Sys/arm_math.c \
 ../App/Sys/filter.c \
 ../App/Sys/fuzzy_ctrl.c \
 ../App/Sys/kalman_filter.c \
@@ -16,6 +17,7 @@ C_SRCS += \
 
 OBJS += \
 ./App/Sys/adrc.o \
+./App/Sys/arm_math.o \
 ./App/Sys/filter.o \
 ./App/Sys/fuzzy_ctrl.o \
 ./App/Sys/kalman_filter.o \
@@ -27,6 +29,7 @@ OBJS += \
 
 COMPILED_SRCS += \
 ./App/Sys/adrc.src \
+./App/Sys/arm_math.src \
 ./App/Sys/filter.src \
 ./App/Sys/fuzzy_ctrl.src \
 ./App/Sys/kalman_filter.src \
@@ -38,6 +41,7 @@ COMPILED_SRCS += \
 
 C_DEPS += \
 ./App/Sys/adrc.d \
+./App/Sys/arm_math.d \
 ./App/Sys/filter.d \
 ./App/Sys/fuzzy_ctrl.d \
 ./App/Sys/kalman_filter.d \

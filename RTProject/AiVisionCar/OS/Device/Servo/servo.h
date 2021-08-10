@@ -110,6 +110,8 @@ typedef struct servo_ctrl
 }servo_ctrl_t;
 
 uint8_t ServoInit(struct servo_ctrl *self);
+//uint16_t ServoSetAngle(struct servo_ctrl *self,sint16_t angle);
+
 
 
 #endif /* OS_DEVICE_SERVO_SERVO_H_ */

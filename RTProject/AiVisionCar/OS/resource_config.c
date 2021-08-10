@@ -6,7 +6,25 @@
  */
 #include "resource_config.h"
 
-adc_resource_t ADC_Resources[12];
+adc_resource_t ADC_Resources[12] = 
+{
+  [0]={
+    .ADCN={ADC1,ADC1_CH8_M12},
+    .Description = "AD0",
+  },  
+  [1]={
+    .ADCN={ADC1,ADC1_CH1_K14},
+    .Description = "AD1",
+  },  
+  [2]={
+    .ADCN={ADC1,ADC1_CH2_L14},
+    .Description = "AD2",
+  },  
+  [3]={
+    .ADCN={ADC1,ADC1_CH3_H14},
+    .Description = "AD3",
+  },
+};
 
 gpio_resource_t GPIO_Resources[20]=
 { 
@@ -106,16 +124,36 @@ pwm_resource_t PWM_Resources[6] =
 enc_resource_t ENC_Resources[2] = 
 {
   [0] = {
-    .ENCN = {ENC4,true},
+    .ENCN = {ENC3,true},
     .Description = "L ENC LSB-M11 DIR-G11",
   }, 
   [1] = {
-    .ENCN = {ENC3,true},
+    .ENCN = {ENC4,true},
     .Description = "R ENC LSB-H1 DIR-E4",
   },
 };
 
-tim_resource_t TIM_Resources[2];
-uart_resource_t UART_Resources[2];
+tim_resource_t TIM_Resources[3] = 
+{
+  [0] = {
+    .TIMN = {PIT,kPIT_Chnl_0,20000,true,true,PITx},
+    .Description = "PIT CH0 For Camera.",
+  },
+  [1] = {
+    .TIMN = {PIT,kPIT_Chnl_1,1000,true,true,PITx},
+    .Description = "PIT CH1 ",
+  },
+  [2] = {
+    .TIMN = {PIT,kPIT_Chnl_2,10000,true,true,PITx},
+    .Description = "PIT CH2",
+  },
+};
+uart_resource_t UART_Resources[2] = 
+{
+  [0] = {
+    .UARTN = {LPUART7,115200},
+    .Description = "Debug Com.",//GPIO_EMC_30/C6 116
+  },  
+};
 spi_resource_t SPI_Resources[2];
 

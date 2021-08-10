@@ -35,12 +35,6 @@ void Core0_Main()
 
     data_t *data = &Data[data_pointer];
 
-    //Motor.SetPwmValue(Motor.Self,3500);
-
-//    data->UIEnable = false;
-//    Console.Info("Core0 Begin While");
-//    Console.Warn("Dead Loop");
-
     while(1)
     {
         //SmartCarSysDataSave(data);
@@ -62,8 +56,6 @@ void Core1_Main()
     TIMx.Init(&TIM_Resources[4].TIMN);
 
     data_t *data = &Data[data_pointer];
-
-
 
     while(1)
     {
@@ -120,6 +112,7 @@ void SmartCarSysDataReport(void *data)
 {
 
 }
+
 inline bool AICor(data_t *data)
 {
     return fabs(data->NNOutput - data->CorAngle) >= 10.0;
@@ -198,14 +191,6 @@ void SmartCarSysDataSave(data_t *data)
     else
     {
 
-        //data->Element.Type = Cycle;
-        //data->Element.Type = RightAngle;
-
-        data->Element.Type = Straight;
-
-
-
-        //data->Is_AdjustAngle = true;
 
         if(RecordFlags && data->CarState)
         {
@@ -213,47 +198,50 @@ void SmartCarSysDataSave(data_t *data)
             {
                 if(SD.isInit)
                 {
+                    //SaveSensorDataAI2();
+
+#if 0
+
                     if(data->CarMode == LAutoBoot_Mode)
                     {
-                        //SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngleM.txt");
-                        //if(data->CycleState != CC_Wait)
-//                        {
-//                            data->Element.Point = Cycle;
-//                            //SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle!.txt");
-//
-//                            if(data->CycleState == CC_WaitIn || data->CycleState == CC_Confirm)
-//                            {
-//                                //SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleWaitIn.txt");
-//                            }
-//                            else if(data->CycleState == CC_In)
-//                            {
-//                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleIn.txt");
-//                            }
-////                            else if(data->CycleState == CC_Tracking)
-////                            {
-////                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleTracking.txt");
-////                            }
-//                            else
-//                            {
-//                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
-//                            }
+                        if(data->CycleState != CC_Wait)
+                        {
+                            data->Element.Point = Cycle;
+                            //SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle!.txt");
 
-//                        }
-//                        else if(data->Element.Type == RightAngle)
+                            if(data->CycleState == CC_WaitIn || data->CycleState == CC_Confirm)
+                            {
+                                //SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleWaitIn.txt");
+                            }
+                            else if(data->CycleState == CC_In)
+                            {
+                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleIn.txt");
+                            }
+//                            else if(data->CycleState == CC_Tracking)
+//                            {
+//                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/CycleTracking.txt");
+//                            }
+                            else
+                            {
+                                SaveSensorDataAndAngle(data,"LAutoBoot/Cycle/Cycle.txt");
+                            }
+
+                        }
+                        else if(data->Element.Type == RightAngle)
+                        {
+                            data->Element.Point = RightAngle;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngle.txt");
+                        }
+                        else if(data->Element.Type == Cross)
+                        {
+                            data->Element.Point = Cross;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
+                        }
+//                        else if(Is_LoseLine(data))
 //                        {
-//                            data->Element.Point = RightAngle;
-//                            SaveSensorDataAndAngle(data,"LAutoBoot/RightAngle/RightAngle.txt");
+//                            data->Element.Point = Lost;
+//                            SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
 //                        }
-//                        else if(data->Element.Type == Cross)
-//                        {
-//                            data->Element.Point = Cross;
-//                            SaveSensorDataAndAngle(data,"LAutoBoot/Cross/Cross.txt");
-//                        }
-////                        else if(Is_LoseLine(data))
-////                        {
-////                            data->Element.Point = Lost;
-////                            SaveSensorDataAndAngle(data,"LAutoBoot/LoseLine/LoseLine.txt");
-////                        }
 
                         if(Is_Straight(data) || data->Element.Type == Straight)
                         {
@@ -261,21 +249,22 @@ void SmartCarSysDataSave(data_t *data)
                             SaveSensorDataAndAngle(data,"LAutoBoot/Straight/Straight.txt");
                         }
 
-//                        else if(Is_Corner(data) || data->Element.Type == Corner)
-//                        {
-//                            data->Element.Point = Corner;
-//                            SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
-//                        }
-//                        else
-//                        {
-//                            data->Element.Point = Other;
-//                            SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
-//                        }
+                        else if(Is_Corner(data) || data->Element.Type == Corner)
+                        {
+                            data->Element.Point = Corner;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Corner/Corner.txt");
+                        }
+                        else
+                        {
+                            data->Element.Point = Other;
+                            SaveSensorDataAndAngle(data,"LAutoBoot/Other/Other.txt");
+                        }
                     }
                     else
                     {
                         SaveSensorDataAndAngleAI(data,"AI/Data.txt");
                     }
+#endif
                 }
                 else
                 {

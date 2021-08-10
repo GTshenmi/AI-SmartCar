@@ -39,35 +39,38 @@ void Core0_Init()
     os.init(0);/*这个要保留,是一些延时函数的初始化*/
     
     RLED.Init(RLED.Self);
-    
-    
+    Screen.Init(Screen.Self); 
+    //Screen.Test(Screen.Self);
     
     LMotor.Init(LMotor.Self);
     RMotor.Init(RMotor.Self);
     
-    LMotor.SetSpeedLimit(LMotor.Self,10000,-10000);
-    RMotor.SetSpeedLimit(RMotor.Self,10000,-10000);
+    LMotor.SetSpeedLimit(LMotor.Self,13000,-13000);
+    RMotor.SetSpeedLimit(RMotor.Self,13000,-13000);
            
-    LMotor.CtrlStrategy = LeftMotorCtrlStrategy;
-    RMotor.CtrlStrategy = RightMotorCtrlStrategy;
     
     LMotor.Start(LMotor.Self);
     RMotor.Start(RMotor.Self);
     
     Servo1.Init(Servo1.Self);
     Servo2.Init(Servo2.Self);
-    
-    Servo1.SetAngleLimit(Servo1.Self,90,-90);
-    Servo2.SetAngleLimit(Servo2.Self,90,-90);
-    
-    Servo1.CtrlStrategy = Servo1CtrlStrategy;
-    Servo2.CtrlStrategy = Servo2CtrlStrategy;    
-    
-    Servo1.SetPwmCentValue(Servo1.Self,1000);
-    Servo2.SetPwmCentValue(Servo2.Self,1000);    
+       
     
     Servo1.Start(Servo1.Self);
-    Servo2.Start(Servo2.Self);  
+    Servo2.Start(Servo2.Self);
+    Console.Init();
+    
+    PIN_InitConfig(B11,PIN_MODE_INPUT_PULLUP,1);
+    ADC_InitConfig(ADC2,ADC2_CH4_J14);
+    
+    Capture.Init(Capture.Self,50);
+    Capture.Start(Capture.Self);
+    Capture.Read(Capture.Self,1);
+    
+    
+    
+    for(int i = 0 ; i < 3 ; i++)      
+      TIMx.Init(&TIM_Resources[i].TIMN);
     
 }
 

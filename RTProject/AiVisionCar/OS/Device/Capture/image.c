@@ -9,15 +9,15 @@
 
 image_t ImageUsed = 
 {
-    .Hight = 120,
-    .Width = 160,
+    .Hight = 90,
+    .Width = 120,
     .Array = Image_Use,
 };
 
 image_t ImageBinary = 
 {
-    .Hight = 120,
-    .Width = 160,
+    .Hight = 90,
+    .Width = 120,
     .Array = Pixle,  
 };
 /*!
@@ -249,9 +249,9 @@ void Image_Binarization(image_t *imagein,image_t *imageout,int Threshold)/*¶þÖµ»
           for(j = 0 ; j < imagein->Width ; j++)
           {
               if(imagein->Array[i][j].gray[0] >Threshold) //ÊýÖµÔ½´ó£¬ÏÔÊ¾µÄÄÚÈÝÔ½¶à£¬½ÏÇ³µÄÍ¼ÏñÒ²ÄÜÏÔÊ¾³öÀ´
-                imageout->Array[i][j].binary = 1;
-              else
                 imageout->Array[i][j].binary = 0;
+              else
+                imageout->Array[i][j].binary = 1;
           }
       }
 
@@ -405,7 +405,7 @@ void Image_SobelAutoThreshold(image_t *imagein,image_t *imageout)
                      +(int)imagein->Array[i  ][j-1].gray[0]   + (int)imagein->Array[i  ][j].gray[0] +  (int)imagein->Array[i  ][j+1].gray[0]
                      +(int)imagein->Array[i+1][j-1].gray[0]   + (int)imagein->Array[i+1][j].gray[0] +  (int)imagein->Array[i+1][j+1].gray[0];
 
-            if(temp[0] > temp[3]/12.0f)
+            if(temp[0] > temp[3]/6.0f)
             {
                 imageout->Array[i][j].binary = 1;
             }

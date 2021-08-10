@@ -33,7 +33,7 @@ image_t Capture_Read(struct capture *self,uint16_t flags)
                 break;
             case 1:/*查询*/
                 self->State = Capture_Busy;
-                while(CameraGetState());
+//                while(CameraGetState());
                 CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, fullCameraBufferAddr);
                 break;
             default:
@@ -41,7 +41,7 @@ image_t Capture_Read(struct capture *self,uint16_t flags)
         }
     }
 
-    return self->ImageCache[3];
+    return self->ImageCache[0];
 }
 
 void Capture_ClearReadFinFlag(struct capture *self)
@@ -76,8 +76,8 @@ uint8_t Capture_Start(struct capture *self)
 {
     if(self->State == Capture_Stopped)
     {
-        SCB_DisableDCache();
-        SCB_EnableDCache();  //刷新D-Cache	
+       SCB_DisableDCache();
+       SCB_EnableDCache();  //刷新D-Cache	
         self->__Start__();
         self->State = Capture_Started;
     }
@@ -124,26 +124,26 @@ void Capture_Show(struct capture *self,image_t *image,uint8_t flags)
     
     pixel_t pixel;
     
-    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR)) {
-        SCB_DisableDCache();
-    }
-    SCB_EnableDCache();
+//    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR)) {
+//        SCB_DisableDCache();
+//    }
+//    SCB_EnableDCache();
     
-    Screen.__SetArea__(0,0,image->Hight - 1,image->Width - 1);
+    Screen.__SetArea__(0,0,image->Width - 1,image->Hight - 1);
     
     switch(flags)
     {
       case 0:/*原图像*/
           /* 显示图像 */
         
-        for(int j = 0; j < image->Width; j++)
+        for(int j = 0; j < image->Hight; j++)
         {
-           for(int i = image->Hight; i > 0; i--) 
+           for(int i = 0; i < image->Width; i++) 
            {
               /* 将灰度转化为 RGB565 */
               color = 0;
               
-              pixel = image->Array[i][j]; 
+              pixel = image->Array[j][i]; 
               
               color = (pixel.gray[0] >> 3) << 11;
               color |= (pixel.gray[0] >> 2) << 5;
@@ -156,11 +156,11 @@ void Capture_Show(struct capture *self,image_t *image,uint8_t flags)
         break;
         case 1:/*二值化*/
           
-         for(int j = 0; j < image->Width; j++)
+         for(int j = 0; j < image->Hight; j++)
          {
-            for(int i = image->Hight; i > 0; i--) 
+            for(int i = 0; i < image->Width; i++) 
             {          
-                if(image->Array[i][j].binary == 1)
+                if(image->Array[j][i].binary == 1)
                   Screen.__FastSetPixel__(BLACK);  
                 else
                   Screen.__FastSetPixel__(WHITE);          

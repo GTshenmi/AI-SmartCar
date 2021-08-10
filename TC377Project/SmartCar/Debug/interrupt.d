@@ -220,6 +220,10 @@ interrupt.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 interrupt.o :	../OS/os.h
 ../OS/os.h :
+interrupt.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+interrupt.o :	../OS/os.h
+../OS/os.h :
 interrupt.o :	../App/Usr/usr.h
 ../App/Usr/usr.h :
 interrupt.o :	../App/Usr/parameter.h

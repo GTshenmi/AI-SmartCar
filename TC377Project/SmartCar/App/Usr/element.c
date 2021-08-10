@@ -94,14 +94,33 @@ void SpecialElementHandler(void *argv)
 
 void StopSituationDetect(data_t *data) {
     //GPIO Resources[27]
-    static _Bool firstExecute = 1;
-    if (firstExecute) {
-        GPIOx.Init(&GPIO_Resources[27].GPION);
-        firstExecute = 0;
-    }
 
-    if ((!GPIOx.Read(&GPIO_Resources[27].GPION)) && (os.time.getTimes() >= 10 && (data->x >= 100.0))) {
-        Motor.Break(Motor.Self);
+    static _Bool firstExecute = 1;
+
+    switch(data->GameMode)
+    {
+        case OneLopMode:
+
+            if (firstExecute) {
+                GPIOx.Init(&GPIO_Resources[27].GPION);
+                firstExecute = 0;
+            }
+
+            if ((!GPIOx.Read(&GPIO_Resources[27].GPION)) && (os.time.getTimes() >= 10 && (data->x >= 100.0))) {
+                Motor.Break(Motor.Self);
+            }
+
+            break;
+
+        case ScoringMode:
+
+            if((os.time.getTime(s) - data->GameStartTime) >= 60.0 * 3)
+            {
+                Motor.Break(Motor.Self);
+                data->GameOverTime = os.time.getTime(s);
+            }
+
+            break;
     }
 }
 
@@ -378,7 +397,7 @@ void RightAngle_Handler(data_t *data)
 
             RA_TRACKING:
 
-            if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))
+            if((data->v_difference >= 15.0) && (data->v_sum >= 15.0))           //for continus right angle.
                 rightAngleConfig.bias = fsign(data->v_difference) * 100.0;
 
             data->Bias = rightAngleConfig.bias;

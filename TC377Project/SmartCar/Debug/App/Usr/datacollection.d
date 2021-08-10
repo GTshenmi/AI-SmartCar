@@ -218,6 +218,10 @@ datacollection.o :	../App/Sys/adrc.h
 ../App/Sys/adrc.h :
 datacollection.o :	../OS/os.h
 ../OS/os.h :
+datacollection.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+datacollection.o :	../OS/os.h
+../OS/os.h :
 datacollection.o :	../App/include.h
 ../App/include.h :
 datacollection.o :	../OS/os.h
