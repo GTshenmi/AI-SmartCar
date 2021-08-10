@@ -62,7 +62,7 @@ void SpeedControl(void *argv)
 
         formatedSpeed = (data->Speed * Motor.GetMaxSpeed(Motor.Self))/10000.0; // target * 0.055
 
-        data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        // actual
+        data->ActualSpeed = Motor.GetSpeed(Motor.Self);                        
 
         data->x += data->ActualSpeed * 0.000028 * 100.0;
 
