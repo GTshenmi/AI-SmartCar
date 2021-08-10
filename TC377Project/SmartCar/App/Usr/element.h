@@ -57,7 +57,7 @@ inline bool Is_RightAngle(data_t *data)
 inline bool Is_RightAngleOut(data_t *data,rightangle_cnt *cnt)
 {    
     //Find Line.
-    return ((((cnt->Tracking <= 0)/*Ensure normal tracking for a period of time*/) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0))) /*find line*/ || (cnt->Tracking <= -1000)/*force out*/);
+    return ((((cnt->Tracking <= 0)/*Ensure tracking for a period of time*/) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0))) /*find line*/ || (cnt->Tracking <= -1000)/*force out*/);
 }
 
 inline bool Is_RightAngleBackToStraight(data_t *data)
@@ -202,12 +202,12 @@ inline bool Is_CycleIn(data_t *data,cycle_config *config)
 {
     return (data->h_sum <= 100.0 && data->h_bias <= 35.0/*in cycle*/ && ((data->x - config->isCyclePos) >= config->inDistance/*The encoder integrates a distance.*/));
 
-    //return (data->h_sum <= 100.0 && data->h_bias <= 35.0 && ((data->x - config->isCyclePos) >= config->inDistance) && (config->dYaw >= 30.0));
+    //return ((data->h_sum <= 100.0 && data->h_bias <= 35.0) && (((data->x - config->isCyclePos) >= config->inDistance)/*The encoder integrates a distance.*/ || (config->dYaw >= 30.0))/*The yaw angle offset exceeds 30 degrees*/);
 }
 
 inline bool Is_CycleOut(data_t *data,cycle_cnt *cnt,cycle_config *config)
 {
-    return (data->h_sum3 >= 180.0 && cnt->Tracking >= 1000);
+    return (data->h_sum3 >= 180.0/*arrive in cycle point again.*/ && cnt->Tracking >= 1000/*ensure tracking for a period of time.*/);
 }
 
 inline bool Is_CycleBackToStraight(data_t *data)
@@ -230,13 +230,13 @@ inline void CrossClearConfig(cross_config *config)
 
 inline bool Is_Cross(data_t *data)
 {
-    return ((fabs(data->o_difference) >= 40.0) && (fabs((data->v_sum >= 60.0))) && (fabs(data->o_sum >= 90.0) && fabs(data->h_sum >= 70) && (fabs(data->h_bias) <= 40.0) && (fabs(data->v_difference <= 20.0))));
+    return ((fabs(data->o_difference) >= 40.0) && ((fabs(data->o_sum) >= 90.0) && fabs(data->h_sum) >= 70 && (fabs(data->h_bias) <= 40.0)/*judge cross*/ && fabs((data->v_sum) >= 60.0)/*Distinguish cycle*/ && (fabs(data->v_difference) <= 20.0)/*Distinguish right angle*/));
 }
 
 inline bool Is_CrossOut(data_t *data)
 {
-    return ((fabs(data->o_difference >= 65.0) &&\
-             fabs(data->v_sum >= 80.0)));
+    return ((fabs(data->o_difference) >= 65.0 &&\
+             fabs(data->v_sum) >= 80.0));
 }
 /*Cross*/
 
