@@ -51,11 +51,12 @@ inline void RightAngleClearCnt(rightangle_cnt *cnt)
 
 inline bool Is_RightAngle(data_t *data)
 {
-    return ((fabs(data->v_difference) >= 30.0) and (fabs(data->o_difference) <= 40.0) and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0));
+    return ((fabs(data->v_difference) >= 30.0/*Judge  Right Angle*/) and (fabs(data->o_difference) <= 40.0)/*Distinguish Cross*/ and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0)/*Distinguish Cycle*/);
 }
 
 inline bool Is_RightAngleOut(data_t *data,rightangle_cnt *cnt)
-{
+{    
+    //Find Line.
     return ((((cnt->Tracking <= 0)) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0)))  || (cnt->Tracking <= -1000));
 }
 
@@ -142,14 +143,14 @@ inline bool Is_Cycle(data_t *data)
 
 inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag)
 {
-    if(data->OESensor[0].K >= 5.0 || data->OESensor[1].K >= 5.0)    //Find The
+    if(data->OESensor[0].K >= 5.0 || data->OESensor[1].K >= 5.0)    //Find the inflection point of the oblique inductance change rate.
     {
         flag->isOESensorMaxValue = true;
     }
 
-    if(flag->isOESensorMaxValue)
+    if(flag->isOESensorMaxValue)  //if arrive inflection point of oblique inductance change rate，find the inflection point of other inductance change rate.
     {
-        if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall)
+        if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall)//count inflection point of other inductance change rate.
         {
             flag->isLeftOSensorFall = true;
 
@@ -183,7 +184,7 @@ inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag)
             cnt->Flags++;
         }
 
-        if(cnt->Flags >= 2)
+        if(cnt->Flags >= 2) //if inflection point > 2 , confirm it is cycle.
         {
             return true;
         }
