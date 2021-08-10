@@ -21,15 +21,15 @@ uint8_t CalEndRow=60;
 uint8_t Error;
 uint8_t Car_Stop;
 
-/*                 ²ÎÊıĞŞ¸Ä                */
+/*                 å‚æ•°ä¿®æ”¹                */
 
-uint8_t DiffState=2;//·Ö²íÂ·×ªÏò£º      1:×ó×ª£»2£ºÓÒ×ª; 0:Í£³µÊ¶±ğ
+uint8_t DiffState=2;//åˆ†å²”è·¯è½¬å‘ï¼š      1:å·¦è½¬ï¼›2ï¼šå³è½¬; 0:åœè½¦è¯†åˆ«
 
-uint8_t OutDiffway=1;//³ö¿â·½Ïò         1£º×ó³ö£»2£ºÓÒ³ö
+uint8_t OutDiffway=1;//å‡ºåº“æ–¹å‘         1ï¼šå·¦å‡ºï¼›2ï¼šå³å‡º
 
-uint8_t InParktype=1;//Èë¿â·½Ïò         1£º×ó¿â£»2£ºÓÒ¿â
+uint8_t InParktype=1;//å…¥åº“æ–¹å‘         1ï¼šå·¦åº“ï¼›2ï¼šå³åº“
 
-uint8_t AprilTagJudge=0;//ÊÇ·ñÊ¶±ğAprilTagÂë·½Ïò    0£ºÊ¶±ğ£»1£º²»Ê¶±ğ
+uint8_t AprilTagJudge=0;//æ˜¯å¦è¯†åˆ«AprilTagç æ–¹å‘    0ï¼šè¯†åˆ«ï¼›1ï¼šä¸è¯†åˆ«
 
 uint8_t InParkcount=0;
 
@@ -48,27 +48,27 @@ uint8_t InParkcount=0;
 
 
 
-//³µÁ¾×´Ì¬
-uint8_t Carstate=0;//0£ºÕı³£ĞĞÊ»×´Ì¬  ;  1:·Ö²íÂ·Í£³µ½×¶Î
+//è½¦è¾†çŠ¶æ€
+uint8_t Carstate=0;//0ï¼šæ­£å¸¸è¡Œé©¶çŠ¶æ€  ;  1:åˆ†å²”è·¯åœè½¦é˜¶æ®µ
 track_t TrackState=Track_OK;
 
 
 
-//µç¸ĞĞÅÏ¢
-uint16_t temp_ldata;//µç¸ĞÔ­Ê¼Êı¾İ
-uint16_t temp_rdata;//µç¸ĞÔ­Ê¼Êı¾İ
+//ç”µæ„Ÿä¿¡æ¯
+uint16_t temp_ldata;//ç”µæ„ŸåŸå§‹æ•°æ®
+uint16_t temp_rdata;//ç”µæ„ŸåŸå§‹æ•°æ®
 uint8_t Ecount;
 
 
-//ËÑÏßĞÅÏ¢
-int PreLeftCol[90];//×ó±ß½ç
-int PreRightCol[90];//ÓÒ±ß½ç
-uint8_t PreMidCol[90];//ÖĞÏß
+//æœçº¿ä¿¡æ¯
+int PreLeftCol[90];//å·¦è¾¹ç•Œ
+int PreRightCol[90];//å³è¾¹ç•Œ
+uint8_t PreMidCol[90];//ä¸­çº¿
 int MidError[90];
-uint8_t SerachPoint[90];//ËÑÏßÆğÊ¼µã
-uint8_t TrackWidth[90];//ÈüµÀ¿í¶È
-uint8_t ScanRow;//ËÑÏßÆğµã
-uint8_t ScanEndRow;//ËÑÏßÖÕµã
+uint8_t SerachPoint[90];//æœçº¿èµ·å§‹ç‚¹
+uint8_t TrackWidth[90];//èµ›é“å®½åº¦
+uint8_t ScanRow;//æœçº¿èµ·ç‚¹
+uint8_t ScanEndRow;//æœçº¿ç»ˆç‚¹
 uint8_t LastEndCol;
 uint8_t FirstGetBod_Left;
 uint8_t FirstGetBod_Right;
@@ -76,33 +76,33 @@ bool FindLeftCol[90];
 bool FindRightCol[90];
 
 
-//±ß½ç×´Ì¬ĞÅÏ¢
-uint8_t WrongTarckWidth;//ÈüµÀÒì³£¿í¶È
-uint8_t WrongTarckWidthCount;//Â·¿íÒì³£¼ÆÊı
-bool TarckWidthWrong=false;//ÈüµÀ¿í¶ÈÒì³£
-bool LeftColState[90];//Éú³¤·½ÏòÕı³£Îªtrue
-bool RightColState[90];//Éú³¤·½ÏòÒì³£Îªfalse
+//è¾¹ç•ŒçŠ¶æ€ä¿¡æ¯
+uint8_t WrongTarckWidth;//èµ›é“å¼‚å¸¸å®½åº¦
+uint8_t WrongTarckWidthCount;//è·¯å®½å¼‚å¸¸è®¡æ•°
+bool TarckWidthWrong=false;//èµ›é“å®½åº¦å¼‚å¸¸
+bool LeftColState[90];//ç”Ÿé•¿æ–¹å‘æ­£å¸¸ä¸ºtrue
+bool RightColState[90];//ç”Ÿé•¿æ–¹å‘å¼‚å¸¸ä¸ºfalse
 
 
-//»·µºĞÅÏ¢
-circle_t LCircleState=NoneCircle;//»·µº×´Ì¬£¬³õÊ¼»¯ÎªÎŞ»·µº
-circle_t RCircleState=NoneCircle;//»·µº×´Ì¬£¬³õÊ¼»¯ÎªÎŞ»·µº
-uint8_t CircleType;//»·µºÀàĞÍ£º0£¬ÎŞ»·µº£»1£¬×ó»·µº£»2£¬ÓÒ»·µº
-uint8_t CircleDectFlag_Left;//»·µº¼ì²â¿ªÊ¼_×ó±ß½ç£º0£¬ÎŞ£»1£¬¿ªÊ¼£»2£¬ÖĞ¼ä£»3.½áÊø
-uint8_t CircleDectFlag_Right;//»·µº¼ì²â¿ªÊ¼_ÓÒ±ß½ç£º0£¬ÎŞ£»1£¬¿ªÊ¼£»2£¬ÖĞ¼ä£»3.½áÊø
-uint8_t CircleDectStart_Left;//ËÑ»·µº¿ªÊ¼µã
-uint8_t CircleDectStart_Right;//ËÑ»·µº¿ªÊ¼µã
-uint8_t CircleDectMid_Left;//ËÑ»·µºÖĞ¼äµã
-uint8_t CircleDectMid_Right;//ËÑ»·µºÖĞ¼äµã
-uint8_t CircleDectEnd_Left;//ËÑ»·µº½áÊøµã
-uint8_t CircleDectEnd_Right;//ËÑ»·µº½áÊøµã
-uint8_t CircleLeftCount;//¼ÆÊı
-float CircleLeftSlope;//Ğ±ÂÊ
-uint8_t CircleRightCount;//¼ÆÊı
+//ç¯å²›ä¿¡æ¯
+circle_t LCircleState=NoneCircle;//ç¯å²›çŠ¶æ€ï¼Œåˆå§‹åŒ–ä¸ºæ— ç¯å²›
+circle_t RCircleState=NoneCircle;//ç¯å²›çŠ¶æ€ï¼Œåˆå§‹åŒ–ä¸ºæ— ç¯å²›
+uint8_t CircleType;//ç¯å²›ç±»å‹ï¼š0ï¼Œæ— ç¯å²›ï¼›1ï¼Œå·¦ç¯å²›ï¼›2ï¼Œå³ç¯å²›
+uint8_t CircleDectFlag_Left;//ç¯å²›æ£€æµ‹å¼€å§‹_å·¦è¾¹ç•Œï¼š0ï¼Œæ— ï¼›1ï¼Œå¼€å§‹ï¼›2ï¼Œä¸­é—´ï¼›3.ç»“æŸ
+uint8_t CircleDectFlag_Right;//ç¯å²›æ£€æµ‹å¼€å§‹_å³è¾¹ç•Œï¼š0ï¼Œæ— ï¼›1ï¼Œå¼€å§‹ï¼›2ï¼Œä¸­é—´ï¼›3.ç»“æŸ
+uint8_t CircleDectStart_Left;//æœç¯å²›å¼€å§‹ç‚¹
+uint8_t CircleDectStart_Right;//æœç¯å²›å¼€å§‹ç‚¹
+uint8_t CircleDectMid_Left;//æœç¯å²›ä¸­é—´ç‚¹
+uint8_t CircleDectMid_Right;//æœç¯å²›ä¸­é—´ç‚¹
+uint8_t CircleDectEnd_Left;//æœç¯å²›ç»“æŸç‚¹
+uint8_t CircleDectEnd_Right;//æœç¯å²›ç»“æŸç‚¹
+uint8_t CircleLeftCount;//è®¡æ•°
+float CircleLeftSlope;//æ–œç‡
+uint8_t CircleRightCount;//è®¡æ•°
 uint8_t Circletmpnum;
 float lslope;
 float rslope;
-float CircleRightSlope;//Ğ±ÂÊ
+float CircleRightSlope;//æ–œç‡
 float cirtpslope1;
 float cirtpslope2;
 float temp_slope1;
@@ -114,60 +114,60 @@ uint8_t temp_count1;
 int temp1;
 int temp2;
 int temp3;
-uint8_t CircleInCount;//»·ÄÚ¼ÆÊı
-uint8_t CirclePatchStart;//»·ÄÚ²¹Ïß¿ªÊ¼µã
-uint8_t CirclePatchEnd;//»·ÄÚ²¹Ïß½áÊøµã
-float CircleSlope;//»·µº²¹ÏßĞ±ÂÊ
-uint16_t CircleIncount=0;//Èë»·¼ÆÊı
+uint8_t CircleInCount;//ç¯å†…è®¡æ•°
+uint8_t CirclePatchStart;//ç¯å†…è¡¥çº¿å¼€å§‹ç‚¹
+uint8_t CirclePatchEnd;//ç¯å†…è¡¥çº¿ç»“æŸç‚¹
+float CircleSlope;//ç¯å²›è¡¥çº¿æ–œç‡
+uint16_t CircleIncount=0;//å…¥ç¯è®¡æ•°
 uint8_t temp_circle[90];
-uint8_t CircleOutRow;//³ö»·µº²¹Ïßµã
-uint8_t outcircletype;//0£º²»³ö£»1£ºÓĞÏß¿É²¹£»2£ºÎŞÏß¿É²¹
+uint8_t CircleOutRow;//å‡ºç¯å²›è¡¥çº¿ç‚¹
+uint8_t outcircletype;//0ï¼šä¸å‡ºï¼›1ï¼šæœ‰çº¿å¯è¡¥ï¼›2ï¼šæ— çº¿å¯è¡¥
 uint8_t circlestate;
 uint8_t RightCircle_OK;
 uint8_t RightCircle_OKcount;
 uint8_t LeftCircle_OK;
-uint8_t CricleE;//»·µºÖÕµã
+uint8_t CricleE;//ç¯å²›ç»ˆç‚¹
 uint8_t CircleOut;
 float CircleOutSlope;
 bool circlejudge2;
 
-//·Ö²íÂ·ĞÅÏ¢
+//åˆ†å²”è·¯ä¿¡æ¯
 bool NumberGet=false;
-diff_t Diffstate=NoneDiff;//³õÊ¼»¯ÎªÎŞ·Ö²íÂ·
-uint8_t DiffRoadCount;//·Ö²íÂ·ÅĞ¶¨¼ÆÊı
-uint8_t DiffEndRow;//·Ö²íÂ·½áÊøµã
+diff_t Diffstate=NoneDiff;//åˆå§‹åŒ–ä¸ºæ— åˆ†å²”è·¯
+uint8_t DiffRoadCount;//åˆ†å²”è·¯åˆ¤å®šè®¡æ•°
+uint8_t DiffEndRow;//åˆ†å²”è·¯ç»“æŸç‚¹
 uint8_t DiffEnd_L;
 uint8_t DiffEnd_R;
 uint8_t DiffSRow;
-uint8_t DiffSCol_L;//·Ö²íÂ·¼ì²âÆğµã×İ×ø±ê
-uint8_t DiffSCol_R;//·Ö²íÂ·¼ì²âÆğµã×İ×ø±ê
-uint8_t DiffECol_L;//·Ö²íÂ·¼ì²â×óÖÕµã×İ×ø±ê
-uint8_t DiffECol_R;//·Ö²íÂ·¼ì²âÓÒÖÕµã×İ×ø±ê
+uint8_t DiffSCol_L;//åˆ†å²”è·¯æ£€æµ‹èµ·ç‚¹çºµåæ ‡
+uint8_t DiffSCol_R;//åˆ†å²”è·¯æ£€æµ‹èµ·ç‚¹çºµåæ ‡
+uint8_t DiffECol_L;//åˆ†å²”è·¯æ£€æµ‹å·¦ç»ˆç‚¹çºµåæ ‡
+uint8_t DiffECol_R;//åˆ†å²”è·¯æ£€æµ‹å³ç»ˆç‚¹çºµåæ ‡
 float DiffLslope;
 float DiffRslope;
-uint8_t DiffCount=0;//·Ö²íÂ·¼ÆÊı
+uint8_t DiffCount=0;//åˆ†å²”è·¯è®¡æ•°
 uint8_t Diftempcount;
-bool DiffRoadJudge;//·Ö²íÂ·ÅĞ¶Ï±êÖ¾Î»
-bool DiffFlag;//·Ö²íÂ·±êÖ¾Î»
-bool DIffF;//·Ö²íÂ·×Ü±êÖ¾
+bool DiffRoadJudge;//åˆ†å²”è·¯åˆ¤æ–­æ ‡å¿—ä½
+bool DiffFlag;//åˆ†å²”è·¯æ ‡å¿—ä½
+bool DIffF;//åˆ†å²”è·¯æ€»æ ‡å¿—
 bool GetDiff=false;
 uint8_t diff;
 
-//ApriTagÂëĞÅÏ¢
-uint8_t ApriTagState;//ApriTag¼ì²â×´Ì¬
-uint8_t Blackrate;//ºÚ¿é¼ÆÊı
-uint8_t BlackPoint;//ºÚµã¼ÆÊı
-uint8_t LeftColPos;//×ó±ß½çÎ»ÖÃ
-uint8_t RightColPos;//ÓÒ±ß½çÎ»ÖÃ
-uint8_t AprilStart;//ºÚÉ«ÆğÊ¼µã
-uint8_t AprilEnd;//ºÚÉ«ÆğÊ¼µã
-uint8_t BlackWidth;//ÖĞ¼äºÚ¿é¿í¶È
-uint8_t AprilWidth;//Ê¶±ğÈüµÀ¿í¶È
+//ApriTagç ä¿¡æ¯
+uint8_t ApriTagState;//ApriTagæ£€æµ‹çŠ¶æ€
+uint8_t Blackrate;//é»‘å—è®¡æ•°
+uint8_t BlackPoint;//é»‘ç‚¹è®¡æ•°
+uint8_t LeftColPos;//å·¦è¾¹ç•Œä½ç½®
+uint8_t RightColPos;//å³è¾¹ç•Œä½ç½®
+uint8_t AprilStart;//é»‘è‰²èµ·å§‹ç‚¹
+uint8_t AprilEnd;//é»‘è‰²èµ·å§‹ç‚¹
+uint8_t BlackWidth;//ä¸­é—´é»‘å—å®½åº¦
+uint8_t AprilWidth;//è¯†åˆ«èµ›é“å®½åº¦
 uint8_t StartLeftCol;
 uint8_t StartRightCol;
 uint8_t Aprilget=1;
 bool AprilTagflag;
-bool ApriTagGet=false;//¼ì²âµ½ApriTag
+bool ApriTagGet=false;//æ£€æµ‹åˆ°ApriTag
 uint8_t NumJudge;
 uint8_t ApriTagNum;
 uint8_t AprilDir;
@@ -184,74 +184,74 @@ uint8_t InParkstate;
 
 
 
-//ÈüµÀÄÚÒì³£ĞÅÏ¢
-uint8_t TrackWrongStart;//ÈüµÀÒì³£¿ªÊ¼ĞĞ
-uint8_t TrackWrongEnd;//ÈüµÀÒì³£½áÊøĞĞ
-uint8_t TrackEnd;//¼ì²éÖÕÖ¹ĞĞ
+//èµ›é“å†…å¼‚å¸¸ä¿¡æ¯
+uint8_t TrackWrongStart;//èµ›é“å¼‚å¸¸å¼€å§‹è¡Œ
+uint8_t TrackWrongEnd;//èµ›é“å¼‚å¸¸ç»“æŸè¡Œ
+uint8_t TrackEnd;//æ£€æŸ¥ç»ˆæ­¢è¡Œ
 uint8_t TrackLCol[90];
 uint8_t TrackRCol[90];
 uint8_t LStart;
 uint8_t RStart;
 
-//²¹ÏßĞÅÏ¢
-int Left_Add[90];//×ó²¹Ïß
-int Right_Add[90];//ÓÒ²¹Ïß
-uint8_t LeftAdd_State;//²¹Ïß×´Ì¬
+//è¡¥çº¿ä¿¡æ¯
+int Left_Add[90];//å·¦è¡¥çº¿
+int Right_Add[90];//å³è¡¥çº¿
+uint8_t LeftAdd_State;//è¡¥çº¿çŠ¶æ€
 uint8_t RightAdd_State;
-/*²¹Ïß×´Ì¬
-0£ºÎŞ²¹Ïß
-1£ºÓĞ--ÎŞ
-2£ºÎŞ--ÓĞ
+/*è¡¥çº¿çŠ¶æ€
+0ï¼šæ— è¡¥çº¿
+1ï¼šæœ‰--æ— 
+2ï¼šæ— --æœ‰
 */
-uint8_t LeftAddFlag_count;//²¹Ïß±êÖ¾¼ÆÊı
-uint8_t RightAddFlag_count;//²¹Ïß±êÖ¾¼ÆÊı
-uint8_t Left_Add_StartRow;//×ó±ß½ç²¹Ïß¿ªÊ¼ĞĞ
-uint8_t Right_Add_StartRow;//ÓÒ±ß½ç²¹Ïß¿ªÊ¼ĞĞ
-uint8_t Left_Add_EndRow;//×ó±ß½ç²¹Ïß½áÊøĞĞ
-uint8_t Right_Add_EndRow;//ÓÒ±ß½ç²¹Ïß½áÊøĞĞ
-float LeftRepairSlope;//×ó±ß½ç²¹ÏßĞ±ÂÊ
-float RightRepairSlope;//ÓÒ±ß½ç²¹ÏßĞ±ÂÊ
-bool IF_LeftRequire_Add;//Ô¤ÅĞ¶Ï×ó±ß½çĞèÒªĞŞ²¹
-bool IF_RightRequire_Add;//Ô¤ÅĞ¶ÏÓÒ±ß½çĞèÒªĞŞ²¹
-bool LeftFirstRepairFin;//×ó±ß½ç³õ²½²¹ÏßÍê³É
-bool RightFirstRepairFin;//×ó±ß½ç³õ²½²¹ÏßÍê³É
-bool LeftSecRepairFin;//×ó±ß½ç³õ²½²¹ÏßÍê³É
-bool RightSecRepairFin;//×ó±ß½ç³õ²½²¹ÏßÍê³É
-bool LeftRequire_Add;//×ó±ß½çĞèÒªĞŞ²¹
-bool RightRequire_Add;//ÓÒ±ß½çĞèÒªĞŞ²¹
+uint8_t LeftAddFlag_count;//è¡¥çº¿æ ‡å¿—è®¡æ•°
+uint8_t RightAddFlag_count;//è¡¥çº¿æ ‡å¿—è®¡æ•°
+uint8_t Left_Add_StartRow;//å·¦è¾¹ç•Œè¡¥çº¿å¼€å§‹è¡Œ
+uint8_t Right_Add_StartRow;//å³è¾¹ç•Œè¡¥çº¿å¼€å§‹è¡Œ
+uint8_t Left_Add_EndRow;//å·¦è¾¹ç•Œè¡¥çº¿ç»“æŸè¡Œ
+uint8_t Right_Add_EndRow;//å³è¾¹ç•Œè¡¥çº¿ç»“æŸè¡Œ
+float LeftRepairSlope;//å·¦è¾¹ç•Œè¡¥çº¿æ–œç‡
+float RightRepairSlope;//å³è¾¹ç•Œè¡¥çº¿æ–œç‡
+bool IF_LeftRequire_Add;//é¢„åˆ¤æ–­å·¦è¾¹ç•Œéœ€è¦ä¿®è¡¥
+bool IF_RightRequire_Add;//é¢„åˆ¤æ–­å³è¾¹ç•Œéœ€è¦ä¿®è¡¥
+bool LeftFirstRepairFin;//å·¦è¾¹ç•Œåˆæ­¥è¡¥çº¿å®Œæˆ
+bool RightFirstRepairFin;//å·¦è¾¹ç•Œåˆæ­¥è¡¥çº¿å®Œæˆ
+bool LeftSecRepairFin;//å·¦è¾¹ç•Œåˆæ­¥è¡¥çº¿å®Œæˆ
+bool RightSecRepairFin;//å·¦è¾¹ç•Œåˆæ­¥è¡¥çº¿å®Œæˆ
+bool LeftRequire_Add;//å·¦è¾¹ç•Œéœ€è¦ä¿®è¡¥
+bool RightRequire_Add;//å³è¾¹ç•Œéœ€è¦ä¿®è¡¥
 
 
 
-/*         ÕûĞĞËÑË÷ĞÅÏ¢         */
-uint8_t DectLeftCol;//ËÑË÷±¾ĞĞµÄ×ó±ß½ç
-uint8_t DectRightCol;//ËÑË÷±¾ĞĞµÄÓÒ±ß½ç
-uint8_t DectLSP;//ËÑË÷±¾ĞĞµÄÒì³£¿ªÊ¼×ó±ß½ç
-uint8_t DectRSP;//ËÑË÷±¾ĞĞµÄÒì³£¿ªÊ¼ÓÒ±ß½ç
-uint8_t DectUSP;//ËÑË÷±¾ĞĞµÄÒì³£¿ªÊ¼ÉÏ±ß½ç
-uint8_t DectDSP;//ËÑË÷±¾ĞĞµÄÒì³£¿ªÊ¼ÏÂ±ß½ç
-uint8_t DectBlackPoint;//ËÑË÷±¾ĞĞÈüµÀÄÚºÚµãÊı
-uint8_t DectJumpRow;//ËÑË÷Ìø±äµã
-uint8_t DectTrackWidth;//±¾ĞĞÈüµÀ¿í¶È
-uint8_t DectShapeWidth;//±¾ĞĞÒì³£¿í¶È
-uint8_t DectTrackMid;//¼ÆËãÒì³£ÖĞµã
-uint8_t UPPatchRow;//ÉÏ²¹ÏßĞĞ
-uint8_t DownPathRow;//ÏÂ²¹ÏßĞĞ
+/*         æ•´è¡Œæœç´¢ä¿¡æ¯         */
+uint8_t DectLeftCol;//æœç´¢æœ¬è¡Œçš„å·¦è¾¹ç•Œ
+uint8_t DectRightCol;//æœç´¢æœ¬è¡Œçš„å³è¾¹ç•Œ
+uint8_t DectLSP;//æœç´¢æœ¬è¡Œçš„å¼‚å¸¸å¼€å§‹å·¦è¾¹ç•Œ
+uint8_t DectRSP;//æœç´¢æœ¬è¡Œçš„å¼‚å¸¸å¼€å§‹å³è¾¹ç•Œ
+uint8_t DectUSP;//æœç´¢æœ¬è¡Œçš„å¼‚å¸¸å¼€å§‹ä¸Šè¾¹ç•Œ
+uint8_t DectDSP;//æœç´¢æœ¬è¡Œçš„å¼‚å¸¸å¼€å§‹ä¸‹è¾¹ç•Œ
+uint8_t DectBlackPoint;//æœç´¢æœ¬è¡Œèµ›é“å†…é»‘ç‚¹æ•°
+uint8_t DectJumpRow;//æœç´¢è·³å˜ç‚¹
+uint8_t DectTrackWidth;//æœ¬è¡Œèµ›é“å®½åº¦
+uint8_t DectShapeWidth;//æœ¬è¡Œå¼‚å¸¸å®½åº¦
+uint8_t DectTrackMid;//è®¡ç®—å¼‚å¸¸ä¸­ç‚¹
+uint8_t UPPatchRow;//ä¸Šè¡¥çº¿è¡Œ
+uint8_t DownPathRow;//ä¸‹è¡¥çº¿è¡Œ
 uint8_t TrackEndCount=1;
 float DectTrackRate;
 float DectShapeRate;
 uint8_t UDnum;
 uint16_t ttcount;
-uint8_t SBthing;//ËÑË÷ĞĞµÄÌø±äÑØÊı
+uint8_t SBthing;//æœç´¢è¡Œçš„è·³å˜æ²¿æ•°
 //uint8_t Numcount;
-uint8_t LeftCol;//×ó±ß½ç
-uint8_t RightCol;//ÓÒ±ß½ç
-int JumpRow;//Ìø±äÑØ
+uint8_t LeftCol;//å·¦è¾¹ç•Œ
+uint8_t RightCol;//å³è¾¹ç•Œ
+int JumpRow;//è·³å˜æ²¿
 bool ApriTag=false;
 uint16_t tttcount;
 
-uint8_t leftCol;//×ó±ß½ç
-uint8_t rightCol;//ÓÒ±ß½ç
-int jumpRow;//Ìø±äÑØ
+uint8_t leftCol;//å·¦è¾¹ç•Œ
+uint8_t rightCol;//å³è¾¹ç•Œ
+int jumpRow;//è·³å˜æ²¿
 int GetOne=0;
 
 uint8_t EndPatchRow;
@@ -264,13 +264,13 @@ float EndPatchrslope;
 
 
 /*
-º¯Êı£ºMy_ImageProcess
-¹¦ÄÜ£ºÍ¼Ïñ´¦Àí
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.5.30
-²ÎÊı£º
-imagein:Sobel¶şÖµ»¯Í¼Ïñ
-imagein2:´ó½ò·¨¶şÖµ»¯Í¼Ïñ
+å‡½æ•°ï¼šMy_ImageProcess
+åŠŸèƒ½ï¼šå›¾åƒå¤„ç†
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.5.30
+å‚æ•°ï¼š
+imagein:SobeläºŒå€¼åŒ–å›¾åƒ
+imagein2:å¤§æ´¥æ³•äºŒå€¼åŒ–å›¾åƒ
 */
 void My_ImageProcess(image_t *imagein)
 {
@@ -292,7 +292,7 @@ void My_ImageProcess(image_t *imagein)
   rightCol=0;
   jumpRow=0;
   SBthing=0;
-  //³õÊ¼»¯²¹ÏßĞÅÏ¢
+  //åˆå§‹åŒ–è¡¥çº¿ä¿¡æ¯
   ScanRow=89;
   ScanEndRow=0;
   LeftAdd_State=0;
@@ -317,7 +317,7 @@ void My_ImageProcess(image_t *imagein)
   LeftSecRepairFin=false;
   RightSecRepairFin=false;
   
-  //»·µºĞÅÏ¢³õÊ¼»¯
+  //ç¯å²›ä¿¡æ¯åˆå§‹åŒ–
   CircleType=0;
   CricleE=90;
   CircleDectFlag_Left=0;
@@ -353,7 +353,7 @@ void My_ImageProcess(image_t *imagein)
   cirtpslope1=0.0;
   cirtpslope2=0.0;
   
-  //·Ö²íÂ·ĞÅÏ¢³õÊ¼»¯
+  //åˆ†å²”è·¯ä¿¡æ¯åˆå§‹åŒ–
   DiffRoadCount=0;
   DiffEndRow=0;
   DiffEnd_L=0;
@@ -368,7 +368,7 @@ void My_ImageProcess(image_t *imagein)
   DiffFlag=false;
   DiffRoadJudge=false;
   
-  //AprilTag²ÎÊı³õÊ¼»¯
+  //AprilTagå‚æ•°åˆå§‹åŒ–
   Blackrate=0;
   BlackPoint=0;
   AprilStart=0;
@@ -378,23 +378,23 @@ void My_ImageProcess(image_t *imagein)
   StartLeftCol=0;
   StartRightCol=120;
   
-  //ÈüµÀÄÚÒì³£ĞÅÏ¢
+  //èµ›é“å†…å¼‚å¸¸ä¿¡æ¯
   TrackWrongStart=0;
   TrackWrongEnd=0;
   TrackEnd=0;
   
   
-  //ÕûĞĞËÑË÷ĞÅÏ¢³õÊ¼»¯
-  DectLeftCol=0;//ËÑË÷±¾ĞĞµÄ×ó±ß½ç
-  DectRightCol=120;//ËÑË÷±¾ĞĞµÄÓÒ±ß½ç
-  DectLSP=0;//ËÑË÷±¾ĞĞµÄÒì³£¿ªÊ¼×ó±ß½ç
-  DectRSP=120;//ËÑË÷±¾ĞĞµÄÒì³£¿ªÊ¼ÓÒ±ß½ç
+  //æ•´è¡Œæœç´¢ä¿¡æ¯åˆå§‹åŒ–
+  DectLeftCol=0;//æœç´¢æœ¬è¡Œçš„å·¦è¾¹ç•Œ
+  DectRightCol=120;//æœç´¢æœ¬è¡Œçš„å³è¾¹ç•Œ
+  DectLSP=0;//æœç´¢æœ¬è¡Œçš„å¼‚å¸¸å¼€å§‹å·¦è¾¹ç•Œ
+  DectRSP=120;//æœç´¢æœ¬è¡Œçš„å¼‚å¸¸å¼€å§‹å³è¾¹ç•Œ
   DectUSP=0;
   DectDSP=0;
   UPPatchRow=0;
   DownPathRow=0;
-  DectBlackPoint=0;//ËÑË÷±¾ĞĞÈüµÀÄÚºÚµãÊı
-  DectJumpRow=0;//ËÑË÷Ìø±äµã
+  DectBlackPoint=0;//æœç´¢æœ¬è¡Œèµ›é“å†…é»‘ç‚¹æ•°
+  DectJumpRow=0;//æœç´¢è·³å˜ç‚¹
   SBthing=0;
   DectTrackWidth=0;
   DectShapeWidth=0;
@@ -404,7 +404,7 @@ void My_ImageProcess(image_t *imagein)
 //  Numcount2=0;
   
   
-  //³õÊ¼»¯Í¼Ïñ
+  //åˆå§‹åŒ–å›¾åƒ
   for(int i=0 ;i<90 ;i++)
   {
     PreLeftCol[i]=0;
@@ -419,10 +419,10 @@ void My_ImageProcess(image_t *imagein)
     FindRightCol[i]=false;
   }
   
-  //ÌØÊâ´¦ÀíµÚÒ»ĞĞÊı¾İ£¬È·¶¨ËÑÏßÖĞµã
+  //ç‰¹æ®Šå¤„ç†ç¬¬ä¸€è¡Œæ•°æ®ï¼Œç¡®å®šæœçº¿ä¸­ç‚¹
   SerachPoint[89]=FirstRowHandle(&ImageBinary);
  
-  //´¦ÀíÆÂµÀ
+  //å¤„ç†å¡é“
   
   if(Rampflag==true && GetDiff==false)
   {
@@ -440,7 +440,7 @@ void My_ImageProcess(image_t *imagein)
   }
 
   
-  //»ñÈ¡»·µºÖÕµãĞÅÏ¢
+  //è·å–ç¯å²›ç»ˆç‚¹ä¿¡æ¯
   for(int i=89;i>=0;i--)
   {
     if(CricleE==90 && imagein->Array[i][60].binary==1)
@@ -449,10 +449,10 @@ void My_ImageProcess(image_t *imagein)
       break;
     }
   }
-  //ÁĞÉ¨Ãè
+  //åˆ—æ‰«æ
   for(int i=ScanRow;i>=ScanEndRow;i--)
   {
-    //ĞĞÉ¨Ãè
+    //è¡Œæ‰«æ
     for(int j=SerachPoint[i];j>=0;j--)
     {
       if(imagein->Array[i][j].binary==1)
@@ -472,7 +472,7 @@ void My_ImageProcess(image_t *imagein)
       }
     }
     PreMidCol[i]=(int)((PreLeftCol[i]+PreRightCol[i])/2);
-    TrackWidth[i]=PreRightCol[i]-PreLeftCol[i];//¼ÆËãÈüµÀ¿í¶È
+    TrackWidth[i]=PreRightCol[i]-PreLeftCol[i];//è®¡ç®—èµ›é“å®½åº¦
     if(TrackWidth[i]>=TrackWidth[i+1] && TarckWidthWrong==false && i<70)
     {
       TarckWidthWrong=true;
@@ -484,14 +484,14 @@ void My_ImageProcess(image_t *imagein)
       WrongTarckWidthCount++;
     }
     
-    /* »·µºÅĞ¶¨Ìõ¼ş¼ÇÂ¼ */
+    /* ç¯å²›åˆ¤å®šæ¡ä»¶è®°å½• */
     if(CircleType==0)
     {
-      if(CircleDectFlag_Left==0)//ÉĞÎ´¿ªÊ¼¼ì²â»·µº×ó±ß½ç
+      if(CircleDectFlag_Left==0)//å°šæœªå¼€å§‹æ£€æµ‹ç¯å²›å·¦è¾¹ç•Œ
       {
-        if(FindLeftCol[i]==true)//Èç¹ûÑ°ÕÒµ½×ó±ß½ç
+        if(FindLeftCol[i]==true)//å¦‚æœå¯»æ‰¾åˆ°å·¦è¾¹ç•Œ
         {
-          CircleDectFlag_Left=1;//¿ªÊ¼ËÑË÷
+          CircleDectFlag_Left=1;//å¼€å§‹æœç´¢
           CircleDectStart_Left=i;
         }
       }
@@ -548,7 +548,7 @@ void My_ImageProcess(image_t *imagein)
           }
         }
       }
-      if(CircleDectFlag_Right==0)//ÉĞÎ´¿ªÊ¼¼ì²â»·µºÓÒ±ß½ç
+      if(CircleDectFlag_Right==0)//å°šæœªå¼€å§‹æ£€æµ‹ç¯å²›å³è¾¹ç•Œ
       {
         if(FindRightCol[i]==true)
         {
@@ -615,27 +615,27 @@ void My_ImageProcess(image_t *imagein)
 /*         END         */
     
     
-    /* »·µºÅĞ¶¨ */
-    switch(LCircleState)//×ó»·
+    /* ç¯å²›åˆ¤å®š */
+    switch(LCircleState)//å·¦ç¯
     {
-      //Ã»ÓĞ»·
+      //æ²¡æœ‰ç¯
       case NoneCircle:
       {
         ;
       }break;
-      //»·³öÏÖ£¬ÓĞºÚ»·
+      //ç¯å‡ºç°ï¼Œæœ‰é»‘ç¯
       case Circle_State_1:
       {
         circlestate=1;
         
         if(CircleDectStart_Left<=50 && CircleDectStart_Left>=10)
         {
-          //ÅĞ¶Ï¶ªÏßÇé¿ö
+          //åˆ¤æ–­ä¸¢çº¿æƒ…å†µ
           
           LCircleState=Circle_State_2;
         }
       }break;
-      case Circle_State_2://ºÚ»·ÏûÊ§£¬¿ªÊ¼²¹Ïß
+      case Circle_State_2://é»‘ç¯æ¶ˆå¤±ï¼Œå¼€å§‹è¡¥çº¿
       {
         circlestate=2;
         CircleIncount=0;
@@ -724,14 +724,14 @@ void My_ImageProcess(image_t *imagein)
       }break;
     }
     
-    switch(RCircleState)//ÓÒ»·
+    switch(RCircleState)//å³ç¯
     {
-      //Ã»ÓĞ»·
+      //æ²¡æœ‰ç¯
       case NoneCircle:
       {
         ;
       }break;
-      //»·³öÏÖ£¬ÓĞºÚ»·
+      //ç¯å‡ºç°ï¼Œæœ‰é»‘ç¯
       case Circle_State_1:
       {
         circlestate=1;
@@ -740,7 +740,7 @@ void My_ImageProcess(image_t *imagein)
           RCircleState=Circle_State_2;
         }
       }break;
-      case Circle_State_2://ºÚ»·ÏûÊ§£¬¿ªÊ¼²¹Ïß
+      case Circle_State_2://é»‘ç¯æ¶ˆå¤±ï¼Œå¼€å§‹è¡¥çº¿
       {
         circlestate=2;
         CircleIncount=0;
@@ -832,7 +832,7 @@ void My_ImageProcess(image_t *imagein)
     /*          END            */
     
     
-    /*          ·Ö²æÅĞ¶ÏÌõ¼ş¼ÇÂ¼           */
+    /*          åˆ†å‰åˆ¤æ–­æ¡ä»¶è®°å½•           */
     if(i<=70)
     {
       if(FindLeftCol[i]==false && FindRightCol[i]==false)
@@ -846,7 +846,7 @@ void My_ImageProcess(image_t *imagein)
     }
     
     
-    /* ÈüµÀ×´Ì¬¼ÇÂ¼ */
+    /* èµ›é“çŠ¶æ€è®°å½• */
     if(FindLeftCol[i]==true && FirstGetBod_Left==0)
     {
       FirstGetBod_Left=i;
@@ -868,17 +868,17 @@ void My_ImageProcess(image_t *imagein)
       }
     }
     
-    //×ó±ß½ç×´Ì¬¼ÇÂ¼
-    if(i<70)//Ç°Ê®ĞĞ¿ªÍâ²Å»á¿ªÊ¼ÅĞ¶Ï
+    //å·¦è¾¹ç•ŒçŠ¶æ€è®°å½•
+    if(i<70)//å‰åè¡Œå¼€å¤–æ‰ä¼šå¼€å§‹åˆ¤æ–­
     {
       if(FindLeftCol[69]==true)
       {
-        if(PreLeftCol[i]>=PreLeftCol[i+1])//×ó±ßÏßÕı³£ÊÇÏòÓÒÉÏÉú³¤
+        if(PreLeftCol[i]>=PreLeftCol[i+1])//å·¦è¾¹çº¿æ­£å¸¸æ˜¯å‘å³ä¸Šç”Ÿé•¿
         {
           LeftColState[i]=true;
         }
-        //µ±×ó±ß½çÍ»È»¿ªÊ¼Ïò×óÉú³¤£¬³öÏÖµÄÒì³£¿ÉÄÜÊÇÍäµÀ¡¢Ê®×Ö¡¢»·µº¡¢·Ö²æÂ·
-        //³öÏÖÒì³£¾Í½«¸Ãµã¼ÇÂ¼Îª²¹Ïß¿ªÊ¼µã,ÊÇ·ñĞèÒª²¹ÏßºóÃæÔÙÅĞ¶Ï
+        //å½“å·¦è¾¹ç•Œçªç„¶å¼€å§‹å‘å·¦ç”Ÿé•¿ï¼Œå‡ºç°çš„å¼‚å¸¸å¯èƒ½æ˜¯å¼¯é“ã€åå­—ã€ç¯å²›ã€åˆ†å‰è·¯
+        //å‡ºç°å¼‚å¸¸å°±å°†è¯¥ç‚¹è®°å½•ä¸ºè¡¥çº¿å¼€å§‹ç‚¹,æ˜¯å¦éœ€è¦è¡¥çº¿åé¢å†åˆ¤æ–­
         else
         {
           if(IF_LeftRequire_Add==false)
@@ -895,7 +895,7 @@ void My_ImageProcess(image_t *imagein)
         if(FindLeftCol[i]==false)
         {
           LeftAddFlag_count++;
-          if(IF_LeftRequire_Add==false && LeftAddFlag_count>=10)//Ã»ÓĞ½øÈë²¹Ïß×´Ì¬²¢ÇÒ¿Õ°×ĞĞ´óÓÚãĞÖµ
+          if(IF_LeftRequire_Add==false && LeftAddFlag_count>=10)//æ²¡æœ‰è¿›å…¥è¡¥çº¿çŠ¶æ€å¹¶ä¸”ç©ºç™½è¡Œå¤§äºé˜ˆå€¼
           {
             IF_LeftRequire_Add=true;
             LeftAdd_State=2;
@@ -904,7 +904,7 @@ void My_ImageProcess(image_t *imagein)
         }
       }
     }
-    //ÓÒ±ß½ç×´Ì¬¼ÇÂ¼
+    //å³è¾¹ç•ŒçŠ¶æ€è®°å½•
     if(i<70)
     {
       if(FindRightCol[69]==true)
@@ -940,10 +940,10 @@ void My_ImageProcess(image_t *imagein)
     }
     
     
-/*               ²¹Ïß×´Ì¬1                */    
+/*               è¡¥çº¿çŠ¶æ€1                */    
     
-    //²¹Ïß×´Ì¬1£ºÁ½µã·¨³õ²½²¹Ïß
-    //²¹ÏßĞÅÏ¢Ïß´æÈëÊı×é
+    //è¡¥çº¿çŠ¶æ€1ï¼šä¸¤ç‚¹æ³•åˆæ­¥è¡¥çº¿
+    //è¡¥çº¿ä¿¡æ¯çº¿å­˜å…¥æ•°ç»„
     if((LeftAdd_State==1 || RightAdd_State==1))
     {
       if(LeftAdd_State==1)
@@ -972,7 +972,7 @@ void My_ImageProcess(image_t *imagein)
       }
     }
     
-    //²¹Ïß×´Ì¬1£º½áÊø³õ²½²¹Ïß£¬ËÑË÷²¹ÏßÖÕÖ¹ĞĞ
+    //è¡¥çº¿çŠ¶æ€1ï¼šç»“æŸåˆæ­¥è¡¥çº¿ï¼Œæœç´¢è¡¥çº¿ç»ˆæ­¢è¡Œ
     if((LeftAdd_State==1 || RightAdd_State==1))
     {
       if((IF_LeftRequire_Add==true || IF_RightRequire_Add==true) && WrongTarckWidthCount>=10)
@@ -1022,7 +1022,7 @@ void My_ImageProcess(image_t *imagein)
     
     
     
-/*               ²¹Ïß×´Ì¬2                */   
+/*               è¡¥çº¿çŠ¶æ€2                */   
     if((LeftAdd_State==2 || RightAdd_State==2))
     {
       if(LeftAdd_State==2 && RightAdd_State==2)
@@ -1076,7 +1076,7 @@ void My_ImageProcess(image_t *imagein)
     
     
     
-/*               ÖØÖÃËÑÏßÆğµã         */
+/*               é‡ç½®æœçº¿èµ·ç‚¹         */
     
     SerachPoint[i-1]=(int)((PreLeftCol[i]+PreRightCol[i])/2);
     if(LCircleState==Circle_State_2 && CirclePatchEnd<=70)
@@ -1102,7 +1102,7 @@ void My_ImageProcess(image_t *imagein)
     {
         SerachPoint[i-1]=SerachPoint[89];
     }
-    //¼ì²âÖÕµãĞĞ
+    //æ£€æµ‹ç»ˆç‚¹è¡Œ
     if(imagein->Array[i-1][SerachPoint[i-1]].binary==1)
     {
       if(InParkstate==1 || TrackState==Track_ApriTag)
@@ -1118,7 +1118,7 @@ void My_ImageProcess(image_t *imagein)
   
   
   
-  /*        »·µºÅĞ¶¨       */
+  /*        ç¯å²›åˆ¤å®š       */
 //  if(CircleType==1 && LCircleState==NoneCircle && RCircleState==NoneCircle && GetDiff==false)
 //  {
 //    temp_slope1=(float)((float)(PreRightCol[FirstGetBod_Right]-PreRightCol[CircleDectEnd_Left])/(float)(FirstGetBod_Right-CircleDectEnd_Left));
@@ -1143,7 +1143,7 @@ void My_ImageProcess(image_t *imagein)
 //      RCircleState=Circle_State_1;
 //    }
 //  }
-  //³ö»·µº
+  //å‡ºç¯å²›
   if(LCircleState==Circle_State_5 && FindLeftCol[70]==false)
   {
     for(int i=70;i>0;i--)
@@ -1169,7 +1169,7 @@ void My_ImageProcess(image_t *imagein)
   
   
   
-  /*       ·Ö²æÂ·ÅĞ¶¨      */
+  /*       åˆ†å‰è·¯åˆ¤å®š      */
   if(DiffRoadJudge==true && LCircleState==NoneCircle && RCircleState==NoneCircle)
   {
     DiffRoadJudge=false;
@@ -1181,16 +1181,16 @@ void My_ImageProcess(image_t *imagein)
         break;
       }
     }
-    //ÖÕµãĞĞ½ÏµÍÇÒÔø´æÔÚ´óÁ¿¿Õ°×ĞĞ£¬¿ªÊ¼ÅĞ¶¨ÊÇ·ñÎªÈı²íÂ·
+    //ç»ˆç‚¹è¡Œè¾ƒä½ä¸”æ›¾å­˜åœ¨å¤§é‡ç©ºç™½è¡Œï¼Œå¼€å§‹åˆ¤å®šæ˜¯å¦ä¸ºä¸‰å²”è·¯
     if(DiffEndRow>=35)
     {
-      //ËÑË÷Èı²íÂ·Æğµã
+      //æœç´¢ä¸‰å²”è·¯èµ·ç‚¹
       for(int i=DiffEndRow;i<90;i++)
       {
         for(int j=0;j<120;j++)
         {
-          //×óÆğËÑË÷ÕûĞĞ£¬É¨Ãèµ½¿ÕĞĞÎªÖ¹
-          if(imagein->Array[i][j].binary==1)//ËÑË÷µ½ºÚµã¾ÍÌø³ö´ÎÑ­»·
+          //å·¦èµ·æœç´¢æ•´è¡Œï¼Œæ‰«æåˆ°ç©ºè¡Œä¸ºæ­¢
+          if(imagein->Array[i][j].binary==1)//æœç´¢åˆ°é»‘ç‚¹å°±è·³å‡ºæ¬¡å¾ªç¯
           {
             break;
           }
@@ -1203,7 +1203,7 @@ void My_ImageProcess(image_t *imagein)
       }
       if(DiffSRow!=0)
       {
-        //ËÑË÷Æğµã×İ×ø±ê
+        //æœç´¢èµ·ç‚¹çºµåæ ‡
         for(int j=0;j<119;j++)
         {
           if(imagein->Array[DiffSRow][j].binary==1)
@@ -1220,7 +1220,7 @@ void My_ImageProcess(image_t *imagein)
             break;
           }
         }
-        //ËÑË÷ÖÕµã×İ×ø±ê
+        //æœç´¢ç»ˆç‚¹çºµåæ ‡
         for(int j=0;j<119;j++)
         {
           if(imagein->Array[DiffSRow-4][j].binary==1)
@@ -1237,7 +1237,7 @@ void My_ImageProcess(image_t *imagein)
             break;
           }
         }
-        //¼ÆËãĞ±ÂÊ
+        //è®¡ç®—æ–œç‡
         DiffLslope=(float)((float)(DiffECol_L-DiffSCol_L)/5.0);
         DiffRslope=(float)((float)(DiffECol_R-DiffSCol_R)/5.0);
         if(DiffCount==0)
@@ -1277,7 +1277,7 @@ void My_ImageProcess(image_t *imagein)
   
   
   
-  //·Ö²íÂ·×´Ì¬»ú
+  //åˆ†å²”è·¯çŠ¶æ€æœº
 
     switch(Diffstate)
     {
@@ -1308,14 +1308,14 @@ void My_ImageProcess(image_t *imagein)
       case InDiff_patch:
       {
         diff=2;
-        if(DiffState==1)//×ó×ª
+        if(DiffState==1)//å·¦è½¬
         {
           if(FindRightCol[70]==true)
           {
             Diffstate=NoneDiff;
           }
         }
-        if(DiffState==2)//ÓÒ×ª
+        if(DiffState==2)//å³è½¬
         {
           if(FindLeftCol[70]==true)
           {
@@ -1329,7 +1329,7 @@ void My_ImageProcess(image_t *imagein)
         Console.WriteLine("%d",1);
         ttttcount++;
         NumJudge=UART_GetChar(LPUART7);
-        if(ttttcount<=200)//Ê¶±ğÊ±¼äĞ¡ÓÚ6ÃëÅĞ¶¨£¬·ñÔòÖ±½Ó×ß
+        if(ttttcount<=200)//è¯†åˆ«æ—¶é—´å°äº6ç§’åˆ¤å®šï¼Œå¦åˆ™ç›´æ¥èµ°
         {
           if(NumJudge==65)
           {
@@ -1396,10 +1396,10 @@ void My_ImageProcess(image_t *imagein)
       DiffState=1;
     }
   
-  //´¦ÀíÖÕµãÏß
+  //å¤„ç†ç»ˆç‚¹çº¿
     if(InParkstate==0)
     {
-      ApriTagDect(&ImageBinary,52);//ËÑË÷µÚ52ĞĞ£¬¼ì²âÌø±äÑØ
+      ApriTagDect(&ImageBinary,52);//æœç´¢ç¬¬52è¡Œï¼Œæ£€æµ‹è·³å˜æ²¿
       if(InParkflag==true)
       {
         InParkstate=1;
@@ -1413,7 +1413,7 @@ void My_ImageProcess(image_t *imagein)
     }
     else if(InParkstate==1)
     {
-      //ËÑË÷¶¥
+      //æœç´¢é¡¶
       for(int i=30;i<=89;i++)
       {
         if(DectWrong2(&ImageBinary,i)==1)
@@ -1431,7 +1431,7 @@ void My_ImageProcess(image_t *imagein)
         }
 //        EndSearchRow=(int)((leftCol+rightCol)/2);
       }
-      //ËÑ½ü´¦×óÓÒ±ßµã
+      //æœè¿‘å¤„å·¦å³è¾¹ç‚¹
       for(int i=0;i<119;i++)
       {
         if((imagein->Array[EndPatchRow][i].binary==1) && (imagein->Array[EndPatchRow][i+1].binary==0))
@@ -1491,10 +1491,10 @@ void My_ImageProcess(image_t *imagein)
   {
     switch(TrackState)
     {
-      //Õı³£Ñ°¼£Ä£Ê½ÏÂ¼ì²âÒì³£
+      //æ­£å¸¸å¯»è¿¹æ¨¡å¼ä¸‹æ£€æµ‹å¼‚å¸¸
       case Track_OK:
       {
-        //ËÑË÷µÚ48ĞĞ£¬Ô¤ÅĞÈüµÀÊÇ·ñÓĞÒì³£
+        //æœç´¢ç¬¬48è¡Œï¼Œé¢„åˆ¤èµ›é“æ˜¯å¦æœ‰å¼‚å¸¸
         DectRow(&ImageBinary,48);
         if(DectTrackRate<=0.5 && DectJumpRow>=6 && DectShapeRate>=0.4)
         {
@@ -1587,12 +1587,12 @@ void My_ImageProcess(image_t *imagein)
   
   /*         END         */
   
-  //µÚ¶ş´Î²¹Ïß£¬ÅĞ¶ÏÔªËØĞŞ²¹±ß½ç
+  //ç¬¬äºŒæ¬¡è¡¥çº¿ï¼Œåˆ¤æ–­å…ƒç´ ä¿®è¡¥è¾¹ç•Œ
   
   
   
   
-  /*           ²¹Ïß×´Ì¬1                 */
+  /*           è¡¥çº¿çŠ¶æ€1                 */
   if(LeftAdd_State==1 || RightAdd_State==1)
   {
     if(LeftAdd_State==1 && RightAdd_State==1 && LeftFirstRepairFin==false && RightFirstRepairFin==false)
@@ -1660,10 +1660,10 @@ void My_ImageProcess(image_t *imagein)
   }
   
   
-/*           ²¹Ïß×´Ì¬2              */
+/*           è¡¥çº¿çŠ¶æ€2              */
   if((LeftAdd_State==2 || RightAdd_State==2)&&DIffF==false)
   {
-    if(LeftAdd_State==2 && RightAdd_State==2 && LeftFirstRepairFin==true && RightFirstRepairFin==true && Left_Add_EndRow>30 && Right_Add_EndRow>30)//²¹Á½±ß
+    if(LeftAdd_State==2 && RightAdd_State==2 && LeftFirstRepairFin==true && RightFirstRepairFin==true && Left_Add_EndRow>30 && Right_Add_EndRow>30)//è¡¥ä¸¤è¾¹
     {
       LeftRepairSlope=(float)((float)(PreLeftCol[Left_Add_EndRow-9]-PreLeftCol[Left_Add_EndRow])/10.0);
       RightRepairSlope=(float)((float)(PreRightCol[Right_Add_EndRow-9]-PreRightCol[Right_Add_EndRow])/10.0);
@@ -1684,7 +1684,7 @@ void My_ImageProcess(image_t *imagein)
         }
       }
     }
-    if(LeftAdd_State==2 && RightAdd_State!=2 && LeftFirstRepairFin==true && Left_Add_EndRow>30)//²¹×ó
+    if(LeftAdd_State==2 && RightAdd_State!=2 && LeftFirstRepairFin==true && Left_Add_EndRow>30)//è¡¥å·¦
     {
       LeftRepairSlope=(float)((float)(PreLeftCol[Left_Add_EndRow-5]-PreLeftCol[Left_Add_EndRow])/6.0);
       for(int i=Left_Add_EndRow;i<90;i++)
@@ -1696,7 +1696,7 @@ void My_ImageProcess(image_t *imagein)
         }
       }
     }
-    if(LeftAdd_State!=2 && RightAdd_State==2 && RightFirstRepairFin==true && Right_Add_EndRow>30)//²¹ÓÒ
+    if(LeftAdd_State!=2 && RightAdd_State==2 && RightFirstRepairFin==true && Right_Add_EndRow>30)//è¡¥å³
     {
       RightRepairSlope=(float)((float)(PreRightCol[Right_Add_EndRow-5]-PreRightCol[Right_Add_EndRow])/6.0);
       for(int i=Right_Add_EndRow;i<90;i++)
@@ -1710,8 +1710,8 @@ void My_ImageProcess(image_t *imagein)
     }
   }
   
-/*            »·µº²¹Ïß          */
-  if(LCircleState != NoneCircle && RCircleState == NoneCircle)//²¹×ó»·
+/*            ç¯å²›è¡¥çº¿          */
+  if(LCircleState != NoneCircle && RCircleState == NoneCircle)//è¡¥å·¦ç¯
   {
     if(LCircleState==Circle_State_2)
     {
@@ -1793,7 +1793,7 @@ void My_ImageProcess(image_t *imagein)
   }
   
   
-  if(RCircleState != NoneCircle && LCircleState == NoneCircle)//²¹ÓÒ»·
+  if(RCircleState != NoneCircle && LCircleState == NoneCircle)//è¡¥å³ç¯
   {
     if(RCircleState==Circle_State_2)
     {
@@ -1870,7 +1870,7 @@ void My_ImageProcess(image_t *imagein)
   }
   
   
-  //·Ö²íÂ·²¹Ïß
+  //åˆ†å²”è·¯è¡¥çº¿
   if(Diffstate==InDiff_patch)
   {
       if(DiffState==1)
@@ -1901,7 +1901,7 @@ void My_ImageProcess(image_t *imagein)
       }
   }
   
-  //ÖÕµãºÍApriTag²¹Ïß
+  //ç»ˆç‚¹å’ŒApriTagè¡¥çº¿
   if(InParkstate==1 || TrackState==Track_ApriTag)
   {
       EndPatchlslope=(float)((float)(PreLeftCol[EndPatchRow-9]-PreLeftCol[EndPatchRow])/10.0);
@@ -1934,7 +1934,7 @@ void My_ImageProcess(image_t *imagein)
   
   
   
-//  //ÅĞ¶¨ApriTag
+//  //åˆ¤å®šApriTag
 //  if(AprilTagflag==true && Aprilget==0)
 //  {
 //    ApriTagGet=true;
@@ -1944,7 +1944,7 @@ void My_ImageProcess(image_t *imagein)
 
   
   
-/*            ÄâºÏÖĞÏß          */
+/*            æ‹Ÿåˆä¸­çº¿          */
   for(int i=0;i<90;i++)
   {
     if(ScanEndRow>=89)
@@ -1981,17 +1981,17 @@ void My_ImageProcess(image_t *imagein)
 
 
 /*
-¹¦ÄÜ£ºÍ¼ÏñµÚÒ»ĞĞÌØÊâ´¦Àí
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.6.3
-²ÎÊı£º
-imagein:´ó½ò·¨¶şÖµ»¯Í¼Ïñ
-·µ»ØÖµ£ºËÑÏßÖĞµã
+åŠŸèƒ½ï¼šå›¾åƒç¬¬ä¸€è¡Œç‰¹æ®Šå¤„ç†
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.6.3
+å‚æ•°ï¼š
+imagein:å¤§æ´¥æ³•äºŒå€¼åŒ–å›¾åƒ
+è¿”å›å€¼ï¼šæœçº¿ä¸­ç‚¹
 */
 uint8_t FirstRowHandle(image_t *imagein)
 {
-  uint8_t LeftCol=0;//×ó±ß½ç
-  uint8_t RightCol=120;//ÓÒ±ß½ç
+  uint8_t LeftCol=0;//å·¦è¾¹ç•Œ
+  uint8_t RightCol=120;//å³è¾¹ç•Œ
   uint8_t res;
   bool FindLeft=false;
   bool FindRight=false;
@@ -2031,13 +2031,13 @@ uint8_t FirstRowHandle(image_t *imagein)
 }
 
 /*
-¹¦ÄÜ£ºÁ½µã·¨ÄâºÏ²¹Ïß(´ÓÏÂÍùÉÏ²¹)
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.6.3
-²ÎÊı£º
-Slope:²¹ÏßĞ±ÂÊ
-i:²¹Ïßµã
-StartRow:²¹Ïß»ùµã
+åŠŸèƒ½ï¼šä¸¤ç‚¹æ³•æ‹Ÿåˆè¡¥çº¿(ä»ä¸‹å¾€ä¸Šè¡¥)
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.6.3
+å‚æ•°ï¼š
+Slope:è¡¥çº¿æ–œç‡
+i:è¡¥çº¿ç‚¹
+StartRow:è¡¥çº¿åŸºç‚¹
 */
 
 int TrackRepair_TP1(float Slope,int i,int StartRow)
@@ -2048,13 +2048,13 @@ int TrackRepair_TP1(float Slope,int i,int StartRow)
 }
 
 /*
-¹¦ÄÜ£ºÁ½µã·¨ÄâºÏ²¹Ïß(´ÓÉÏÍùÏÂ²¹)
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.6.3
-²ÎÊı£º
-Slope:²¹ÏßĞ±ÂÊ
-i:²¹Ïßµã
-StartRow:²¹Ïß»ùµã
+åŠŸèƒ½ï¼šä¸¤ç‚¹æ³•æ‹Ÿåˆè¡¥çº¿(ä»ä¸Šå¾€ä¸‹è¡¥)
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.6.3
+å‚æ•°ï¼š
+Slope:è¡¥çº¿æ–œç‡
+i:è¡¥çº¿ç‚¹
+StartRow:è¡¥çº¿åŸºç‚¹
 */
 int TrackRepair_TP2(float Slope,int i,int StartRow)
 {
@@ -2065,17 +2065,17 @@ int TrackRepair_TP2(float Slope,int i,int StartRow)
 
 
 /*
-¹¦ÄÜ£º¼ÆËãÖĞÏßÎó²î
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.6.4
+åŠŸèƒ½ï¼šè®¡ç®—ä¸­çº¿è¯¯å·®
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.6.4
 */
 int ImageError()
 {
   long Error1=0;
   long Error2=0;
   long RealError;
-  //ËÑÏßËÑË÷µ½µÄÖÕµãĞĞµÍÓÚ¼ÆËãÎó²îµÄÖÕµãĞĞ£¬¼´´æÔÚ²¿·ÖÎó²î¿Õ°×
-  //Ê¹ÓÃËÑÏßÖÕµãĞĞµÄÎó²îÌæ´ú
+  //æœçº¿æœç´¢åˆ°çš„ç»ˆç‚¹è¡Œä½äºè®¡ç®—è¯¯å·®çš„ç»ˆç‚¹è¡Œï¼Œå³å­˜åœ¨éƒ¨åˆ†è¯¯å·®ç©ºç™½
+  //ä½¿ç”¨æœçº¿ç»ˆç‚¹è¡Œçš„è¯¯å·®æ›¿ä»£
   for(int i=CalEndRow;i<CalEndRow+11;i++)
   {
     Error1 +=  MidError[i]*3 ;
@@ -2094,9 +2094,9 @@ int ImageError()
 
 
 /*
-¹¦ÄÜ£ºµç¸ĞÊı¾İ´¦Àí
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.6.5
+åŠŸèƒ½ï¼šç”µæ„Ÿæ•°æ®å¤„ç†
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.6.5
 */
 //void EsenerProcess()
 //{
@@ -2123,21 +2123,21 @@ int ImageError()
 
 
 /*
-¹¦ÄÜ£ºÊ¶±ğApriTagÂë
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.7.4
+åŠŸèƒ½ï¼šè¯†åˆ«ApriTagç 
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.7.4
 */
 
 void ApriTagDect(image_t *imagein,uint8_t JudgeRow)
 {
-  int flag=0;//0:ËÑË÷ÉÏÉıÑØ£»1£ºËÑË÷ÏÂ½µÑØ
+  int flag=0;//0:æœç´¢ä¸Šå‡æ²¿ï¼›1ï¼šæœç´¢ä¸‹é™æ²¿
   bool GetLeft=false;
   bool GetRight=false;
   bool JudgeL=false;
   bool JudgeR=false;
   BlackPoint=0;
   Blackrate=0;
-  //È·¶¨ÈüµÀ·¶Î§
+  //ç¡®å®šèµ›é“èŒƒå›´
   for(int i=0;i<120;i++)
   {
     if(imagein->Array[89][i].binary==0)
@@ -2154,7 +2154,7 @@ void ApriTagDect(image_t *imagein,uint8_t JudgeRow)
       break;
     }
   }
-  //ËÑË÷×óÓÒ±ß½ç
+  //æœç´¢å·¦å³è¾¹ç•Œ
   if(imagein->Array[JudgeRow][0].binary==0)
   {
     LeftColPos=0;
@@ -2192,7 +2192,7 @@ void ApriTagDect(image_t *imagein,uint8_t JudgeRow)
     }
   }
   AprilWidth=RightColPos-LeftColPos;
-  //ËÑË÷×óÓÒ¿ªÊ¼³öÏÖºÚµãµÄÆğÊ¼µãÒì³£µã
+  //æœç´¢å·¦å³å¼€å§‹å‡ºç°é»‘ç‚¹çš„èµ·å§‹ç‚¹å¼‚å¸¸ç‚¹
   for(int i=LeftColPos+1;i<RightColPos;i++)
   {
     if(imagein->Array[JudgeRow][i].binary==1)
@@ -2214,21 +2214,21 @@ void ApriTagDect(image_t *imagein,uint8_t JudgeRow)
     BlackWidth=AprilEnd-AprilStart;
   }
   
-  //ÔÚ×óÓÒ±ß½çÖĞËÑË÷Ìø±äÑØ
+  //åœ¨å·¦å³è¾¹ç•Œä¸­æœç´¢è·³å˜æ²¿
   for(int i=LeftColPos;i<RightColPos;i++)
   {
     if(imagein->Array[JudgeRow][i].binary==1)
     {
       BlackPoint++;
     }
-    if(flag==0)//ËÑË÷ÉÏÉıÑØ
+    if(flag==0)//æœç´¢ä¸Šå‡æ²¿
     {
       if(imagein->Array[JudgeRow][i].binary==0 && imagein->Array[JudgeRow][i+1].binary==1)
       {
         flag=1;
       }
     }
-    else //ËÑË÷ÏÂ½µÑØ£¬ËÑËØµ½Ò»ÉÏÉıÑØÒ»ÏÂ½µÑØºóÅĞ¶¨ÎªÒ»¸öÍêÕûµÄºÚ¿é
+    else //æœç´¢ä¸‹é™æ²¿ï¼Œæœç´ åˆ°ä¸€ä¸Šå‡æ²¿ä¸€ä¸‹é™æ²¿ååˆ¤å®šä¸ºä¸€ä¸ªå®Œæ•´çš„é»‘å—
     {
       if(imagein->Array[JudgeRow][i].binary==1 && imagein->Array[JudgeRow][i+1].binary==0)
       {
@@ -2249,16 +2249,16 @@ void ApriTagDect(image_t *imagein,uint8_t JudgeRow)
 }
 
 /*
-¹¦ÄÜ£ºËÑË÷ÕûĞĞ£¬¼ÇÂ¼Êı¾İ
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.7.12
-£¡£¡£¡£¡£¡£¡£¡£¡£¡±¬¸Î£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡
+åŠŸèƒ½ï¼šæœç´¢æ•´è¡Œï¼Œè®°å½•æ•°æ®
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.7.12
+ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼çˆ†è‚ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 */
 void DectRow(image_t *imagein,uint8_t SearchRow)
 {
   
-/*          ËÑÈüµÀ             */
-  //Ñ°ÕÒ×ó±ß½ç£ºDectLeftCol
+/*          æœèµ›é“             */
+  //å¯»æ‰¾å·¦è¾¹ç•Œï¼šDectLeftCol
   for(int i=0;i<120;i++)
   {
     if(imagein->Array[SearchRow][i].binary==0)
@@ -2267,7 +2267,7 @@ void DectRow(image_t *imagein,uint8_t SearchRow)
       break;
     }
   }
-  //ËÑË÷ÓÒ±ß½ç£ºDectRightCol
+  //æœç´¢å³è¾¹ç•Œï¼šDectRightCol
   for(int i=119;i>=0;i--)
   {
     if(imagein->Array[SearchRow][i].binary==0)
@@ -2276,15 +2276,15 @@ void DectRow(image_t *imagein,uint8_t SearchRow)
       break;
     }
   }
-  //¼ÆËãÈüµÀ¿í¶È
+  //è®¡ç®—èµ›é“å®½åº¦
   DectTrackWidth=DectRightCol-DectLeftCol;
 /*          END         */
   
   
     
-/*          ËÑÒì³£¿í¶È       */
+/*          æœå¼‚å¸¸å®½åº¦       */
   
-  //ËÑ×óÒì³£ÆğÊ¼µã:DectLSP
+  //æœå·¦å¼‚å¸¸èµ·å§‹ç‚¹:DectLSP
   for(int i=DectLeftCol;i<=DectRightCol;i++)
   {
     if(imagein->Array[SearchRow][i].binary==1)
@@ -2293,7 +2293,7 @@ void DectRow(image_t *imagein,uint8_t SearchRow)
       break;
     }
   }
-  //ËÑ×óÒì³£ÆğÊ¼µã:DectRSP
+  //æœå·¦å¼‚å¸¸èµ·å§‹ç‚¹:DectRSP
   for(int i=DectRightCol;i>=DectLeftCol;i--)
   {
     if(imagein->Array[SearchRow][i].binary==1)
@@ -2302,11 +2302,11 @@ void DectRow(image_t *imagein,uint8_t SearchRow)
       break;
     }
   }
-  //¼ÆËãÒì³£¿í¶È
+  //è®¡ç®—å¼‚å¸¸å®½åº¦
   DectShapeWidth=DectRSP-DectLSP;
-  //¼ÆËãÒì³£ÖĞµã
+  //è®¡ç®—å¼‚å¸¸ä¸­ç‚¹
   DectTrackMid=(int)((DectRSP+DectLSP)/2);
-  //ËÑË÷Òì³£ÉÏ±ß½ç
+  //æœç´¢å¼‚å¸¸ä¸Šè¾¹ç•Œ
   for(int i=SearchRow-15;i<=SearchRow+15;i++)
   {
     if(imagein->Array[i][DectTrackMid].binary==1)
@@ -2315,7 +2315,7 @@ void DectRow(image_t *imagein,uint8_t SearchRow)
       break;
     }
   }
-  //ËÑË÷ÏÂ±ß½ç
+  //æœç´¢ä¸‹è¾¹ç•Œ
   for(int i=SearchRow+15;i>=SearchRow-15;i--)
   {
     if(imagein->Array[i][DectTrackMid].binary==1)
@@ -2324,14 +2324,14 @@ void DectRow(image_t *imagein,uint8_t SearchRow)
       break;
     }
   }
-  //¼ÆËã³¤¿í±È
+  //è®¡ç®—é•¿å®½æ¯”
   DectShapeRate=((float)(float)(DectDSP-DectUSP)/(float)DectShapeWidth);
   
-  //¼ÆËãÒì³£¿íºÍÈüµÀ¿í±ÈÀı
+  //è®¡ç®—å¼‚å¸¸å®½å’Œèµ›é“å®½æ¯”ä¾‹
   DectTrackRate=(float)((float)DectShapeWidth/(float)DectTrackWidth);
   
   
-  //ËÑË÷Ìø±äÑØºÍºÚµã£ºDectJumpRoDectBlackPointw£¬DectBlackPoint
+  //æœç´¢è·³å˜æ²¿å’Œé»‘ç‚¹ï¼šDectJumpRoDectBlackPointwï¼ŒDectBlackPoint
   for(int i=DectLeftCol;i<DectRightCol;i++)
   {
     if(imagein->Array[SearchRow][i].binary==1)
@@ -2355,18 +2355,18 @@ void DectRow(image_t *imagein,uint8_t SearchRow)
 
 
 /*
-¹¦ÄÜ£ºËÑË÷ÕûĞĞ£¬·µ»ØÌø±äÑØÊıÁ¿
-×÷Õß£º´÷½ø
-ÈÕÆÚ£º2021.7.13
-£¡£¡£¡£¡£¡£¡£¡£¡£¡±¬¸Î£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡
+åŠŸèƒ½ï¼šæœç´¢æ•´è¡Œï¼Œè¿”å›è·³å˜æ²¿æ•°é‡
+ä½œè€…ï¼šæˆ´è¿›
+æ—¥æœŸï¼š2021.7.13
+ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼çˆ†è‚ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 */
 int DectWrong1(image_t *imagein,uint8_t SearchRow)
 {
-//  uint8_t LeftCol;//×ó±ß½ç
-//  uint8_t RightCol;//ÓÒ±ß½ç
-//  int JumpRow;//Ìø±äÑØ
+//  uint8_t LeftCol;//å·¦è¾¹ç•Œ
+//  uint8_t RightCol;//å³è¾¹ç•Œ
+//  int JumpRow;//è·³å˜æ²¿
   
-  //ËÑË÷×óÓÒ±ß½ç
+  //æœç´¢å·¦å³è¾¹ç•Œ
   for(int i=0;i<120;i++)
   {
     if(imagein->Array[SearchRow][i].binary==0)
@@ -2384,7 +2384,7 @@ int DectWrong1(image_t *imagein,uint8_t SearchRow)
     }
   }
   
-  //ËÑË÷ÈüµÀÖĞµÄÌø±äÑØ
+  //æœç´¢èµ›é“ä¸­çš„è·³å˜æ²¿
   for(int i=LeftCol;i<RightCol;i++)
   {
     if((imagein->Array[SearchRow][i].binary==1)&&(imagein->Array[SearchRow][i+1].binary==0))
@@ -2408,11 +2408,11 @@ int DectWrong1(image_t *imagein,uint8_t SearchRow)
 
 int DectWrong2(image_t *imagein,uint8_t SearchRow)
 {
-//  uint8_t LeftCol;//×ó±ß½ç
-//  uint8_t RightCol;//ÓÒ±ß½ç
-//  int JumpRow;//Ìø±äÑØ
+//  uint8_t LeftCol;//å·¦è¾¹ç•Œ
+//  uint8_t RightCol;//å³è¾¹ç•Œ
+//  int JumpRow;//è·³å˜æ²¿
   
-  //ËÑË÷×óÓÒ±ß½ç
+  //æœç´¢å·¦å³è¾¹ç•Œ
   for(int i=0;i<120;i++)
   {
     if(imagein->Array[SearchRow][i].binary==0)
@@ -2430,7 +2430,7 @@ int DectWrong2(image_t *imagein,uint8_t SearchRow)
     }
   }
   
-  //ËÑË÷ÈüµÀÖĞµÄÌø±äÑØ
+  //æœç´¢èµ›é“ä¸­çš„è·³å˜æ²¿
   for(int i=leftCol;i<rightCol;i++)
   {
     if((imagein->Array[SearchRow][i].binary==1)&&(imagein->Array[SearchRow][i+1].binary==0))
