@@ -1,7 +1,7 @@
 /*
  * attitude.c
  *
- *  Created on: 2021骞�4鏈�18鏃�
+ *  Created on: 2021年4月18日
  *      Author: 936305695
  */
 #include "attitude.h"
