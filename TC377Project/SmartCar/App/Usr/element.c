@@ -405,7 +405,7 @@ void RightAngle_Handler(data_t *data)
 
             rightAngleCnt.Tracking--;
 
-            if(Is_RightAngleOut(data,&rightAngleCnt))//if find line,hand over to the control algorithm to patrol the line.
+            if(Is_RightAngleOut(data,&rightAngleCnt,&rightAngleConfig))//if find line,hand over to the control algorithm to patrol the line.
             {
                 rightAngleState = RA_Out;
             }

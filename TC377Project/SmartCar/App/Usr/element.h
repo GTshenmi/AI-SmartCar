@@ -54,10 +54,20 @@ inline bool Is_RightAngle(data_t *data)
     return ((fabs(data->v_difference) >= 30.0/*Judge  Right Angle*/) and (fabs(data->o_difference) <= 40.0)/*Distinguish Cross*/ and (fabs(data->v_difference/data->h_difference) >= 5.0) and (fabs(data->h_sum) <= 100.0)/*Distinguish Cycle*/);
 }
 
-inline bool Is_RightAngleOut(data_t *data,rightangle_cnt *cnt)
+inline bool Is_RightAngleOut(data_t *data,rightangle_cnt *cnt,rightangle_config *config)
 {    
-    //Find Line.
-    return ((((cnt->Tracking <= 0)/*Ensure tracking for a period of time*/) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0))) /*find line*/ || (cnt->Tracking <= -1000)/*force out*/);
+//    //Find Line.
+//    return ((((cnt->Tracking <= 0)/*Ensure tracking for a period of time*/) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0))) /*find line*/ || (cnt->Tracking <= -1000)/*force out*/);
+
+    if(config->bias > 0)  //Left
+    {
+        return ((((cnt->Tracking <= 0)) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0)))  || (cnt->Tracking <= -1000));
+    }
+    else                  //Right
+    {
+        return ((((cnt->Tracking <= 0)) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0)))  || (cnt->Tracking <= -1000));
+    }
+
 }
 
 inline bool Is_RightAngleBackToStraight(data_t *data)
