@@ -226,7 +226,7 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.Confirm--;
 
-            if(Is_CycleConfirmed(data,&cycleCnt,&cycleFlag))//Confirm.
+            if(Is_CycleConfirmed(data,&cycleCnt,&cycleFlag,cycleDir))//Confirm.
             {
                 cycleConfig.inCyclePointYaw = data->attitude.yaw;
 
@@ -235,8 +235,13 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_WaitIn;
             }
 
-            if(cycleCnt.Confirm <= -2000.0)//Misjudge.
+            //if(cycleCnt.Confirm <= -2000.0)//Misjudge.
+            //    cycleState = CC_Undefined;
+
+            if((data->x - cycleConfig.isCyclePos) >= 6 * cycleConfig.waitInDistance)//Misjudge.
+            {
                 cycleState = CC_Undefined;
+            }
 
             break;
 
@@ -249,10 +254,15 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_In;
             }
 
-            if(cycleCnt.WaitIn <= -2000.0)//Misjudge.
+            if((data->x - cycleConfig.isCyclePos) >= 3 * cycleConfig.waitInDistance)//Misjudge.
             {
                 cycleState = CC_Undefined;
             }
+
+//            if(cycleCnt.WaitIn <= -2000.0)//Misjudge.
+//            {
+//                cycleState = CC_Undefined;
+//            }
 
             break;
 
@@ -270,10 +280,15 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_Tracking;//in cycle success.
             }
 
-            if(cycleCnt.In <= -2000)
+            if((data->x - cycleConfig.isCyclePos) >= 3 * cycleConfig.inDistance)//Misjudge.
             {
-                cycleState = CC_Undefined;//in cycle fail.
+                cycleState = CC_Undefined;
             }
+
+//            if(cycleCnt.In <= -2000)
+//            {
+//                cycleState = CC_Undefined;//in cycle fail.
+//            }
 
             break;
 
@@ -300,7 +315,7 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.Out++;
 
-            if(Is_CycleBackToStraight(data)/*Normal*/ || cycleCnt.Tracking >=  6000 || cycleCnt.Out >= 500 || (data->x - cycleConfig.isCyclePos) >= 2000.0/*Abnormal,force out*/)
+            if(Is_CycleBackToStraight(data))/*Normal Out.*/
             {
                 //back to straight.
                 cycleState = CC_Wait;    
@@ -311,7 +326,7 @@ void Cycle_Handler(data_t *data)
                 BLED.OFF(BLED.Self);
             }
 
-            if(cycleCnt.Out >= 500 || cycleCnt.Tracking >= 6000)//Force out of the cycle.
+            if(cycleCnt.Out >= 500 || cycleCnt.Tracking >= 6000 || (data->x - cycleConfig.isCyclePos) >= 2000.0)//Force out of the cycle.
             {
                 cycleState = CC_Undefined;
             }
@@ -406,6 +421,11 @@ void RightAngle_Handler(data_t *data)
             rightAngleCnt.Tracking--;
 
             if(Is_RightAngleOut(data,&rightAngleCnt,&rightAngleConfig))//if find line,hand over to the control algorithm to patrol the line.
+            {
+                rightAngleState = RA_Out;
+            }
+
+            if(rightAngleCnt.Tracking <= -1000) //force out of rightangle.
             {
                 rightAngleState = RA_Out;
             }

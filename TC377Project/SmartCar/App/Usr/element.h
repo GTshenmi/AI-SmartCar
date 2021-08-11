@@ -56,18 +56,15 @@ inline bool Is_RightAngle(data_t *data)
 
 inline bool Is_RightAngleOut(data_t *data,rightangle_cnt *cnt,rightangle_config *config)
 {    
-//    //Find Line.
-//    return ((((cnt->Tracking <= 0)/*Ensure tracking for a period of time*/) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0))) /*find line*/ || (cnt->Tracking <= -1000)/*force out*/);
-
+    //Find Line.
     if(config->bias > 0)  //Left
     {
-        return ((((cnt->Tracking <= 0)) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0)))  || (cnt->Tracking <= -1000));
+        return ((((cnt->Tracking <= 0)) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[1].Value >= 30.0) || (data->h_suml2 >= 60.0))));
     }
     else                  //Right
     {
-        return ((((cnt->Tracking <= 0)) && ((data->HESensor[0].Value >= 30.0) || (data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value) || (data->HESensor[1].Value >= 30.0) || (data->h_sum >= 60.0)))  || (cnt->Tracking <= -1000));
+        return ((((cnt->Tracking <= 0)) && ((data->HESensor[2].Value >= 30.0) || (data->HESensor[3].Value >= 30.0) || (data->h_sumr2 >= 60.0))));
     }
-
 }
 
 inline bool Is_RightAngleBackToStraight(data_t *data)
@@ -151,23 +148,27 @@ inline bool Is_Cycle(data_t *data)
     }
 }
 
-inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag)
+inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag,cycle_dir_t dir)
 {
-    if(data->OESensor[0].K >= 5.0 || data->OESensor[1].K >= 5.0)    //Find the inflection point of the oblique inductance change rate.
+    if(dir == CC_DirLeft && data->OESensor[0].K >= 5.0)
+    {
+        flag->isOESensorMaxValue = true;
+    }
+    if(dir == CC_DirRight && data->OESensor[1].K >= 5.0)
     {
         flag->isOESensorMaxValue = true;
     }
 
-    if(flag->isOESensorMaxValue)  //if arrive inflection point of oblique inductance change rate，find the inflection point of other inductance change rate.
+    if(flag->isOESensorMaxValue)  //if arrive inflection point of oblique inductance change rate,find the inflection point of other inductance change rate.
     {
-        if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall)//count inflection point of other inductance change rate.
+        if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall && dir == CC_DirLeft)//count inflection point of other inductance change rate.
         {
             flag->isLeftOSensorFall = true;
 
             cnt->Flags++;
         }
 
-        if(data->OESensor[1].K  < 0.0 && !flag->isRightOSensorFall)
+        if(data->OESensor[1].K  < 0.0 && !flag->isRightOSensorFall && dir == CC_DirRight)
         {
             flag->isRightOSensorFall = true;
             cnt->Flags++;
