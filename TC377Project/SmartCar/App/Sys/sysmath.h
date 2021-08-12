@@ -1,7 +1,7 @@
 /*
  * sysmath.h
  *
- *  Created on: 2021Äê1ÔÂ26ÈÕ
+ *  Created on: 2021Ã„Ãª1Ã”Ã‚26ÃˆÃ•
  *      Author: 936305695
  */
 
@@ -73,6 +73,8 @@ inline float fdiv(float x,float y)
 }
 
 float invSqrt(float x);
+float Q_RSqrt( float number );
+float Q_Sqrt( float number );
 float NormalizeFloat(float value,float min,float max);
 float CalculateDistanceDifDivSum(float L1,float L2);
 uint16_t FindMaxIndex(float *array,uint16_t len);
