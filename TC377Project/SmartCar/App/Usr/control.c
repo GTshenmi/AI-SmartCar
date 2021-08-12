@@ -110,6 +110,10 @@ void AngleControl(void *argv)
             {
                 data->Angle = fsign(data->A[9] * 0.6 + data->A[8] * 0.4) * Servo.MaxAngle;//LowPass Filter.
             }
+            else if(fabs(data->AIAngle) <= 20.0)
+            {
+                data->Angle = data->CorAngle;
+            }
             else
             {
                 data->Angle = data->AIAngle;

@@ -83,7 +83,7 @@ void SpecialElementHandler(void *argv)
 
     Cycle_Handler(data);
 
-    //LoseLine_Handler(data);
+    LoseLine_Handler(data);
 
     Ramp_Handler(data);
 
@@ -216,6 +216,8 @@ void Cycle_Handler(data_t *data)
                 cycleConfig.bias = -100.0;
             }
 
+            cycleConfig.isCyclePos = data->x;
+
             BLED.ON(BLED.Self);
 
             cycleState = CC_Confirm;
@@ -230,7 +232,7 @@ void Cycle_Handler(data_t *data)
             {
                 cycleConfig.inCyclePointYaw = data->attitude.yaw;
 
-                cycleConfig.isCyclePos = data->x;
+                //cycleConfig.isCyclePos = data->x;
 
                 cycleState = CC_WaitIn;
             }
@@ -238,7 +240,7 @@ void Cycle_Handler(data_t *data)
             //if(cycleCnt.Confirm <= -2000.0)//Misjudge.
             //    cycleState = CC_Undefined;
 
-            if((data->x - cycleConfig.isCyclePos) >= 6 * cycleConfig.waitInDistance)//Misjudge.
+            if((data->x - cycleConfig.isCyclePos) >= 3 * cycleConfig.waitInDistance)//Misjudge.
             {
                 cycleState = CC_Undefined;
             }
@@ -254,7 +256,7 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_In;
             }
 
-            if((data->x - cycleConfig.isCyclePos) >= 3 * cycleConfig.waitInDistance)//Misjudge.
+            if((data->x - cycleConfig.isCyclePos) >= 5 * cycleConfig.waitInDistance)//Misjudge.
             {
                 cycleState = CC_Undefined;
             }
@@ -280,7 +282,7 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_Tracking;//in cycle success.
             }
 
-            if((data->x - cycleConfig.isCyclePos) >= 3 * cycleConfig.inDistance)//Misjudge.
+            if((data->x - cycleConfig.isCyclePos) >= 5 * (cycleConfig.waitInDistance + cycleConfig.inDistance))//Misjudge.
             {
                 cycleState = CC_Undefined;
             }
@@ -321,7 +323,7 @@ void Cycle_Handler(data_t *data)
                 cycleState = CC_Wait;    
                 data->Element.Type = None;
 
-                cycleCnt.Wait = 500;
+                cycleCnt.Wait = 800;
 
                 BLED.OFF(BLED.Self);
             }

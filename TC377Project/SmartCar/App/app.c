@@ -1,4 +1,5 @@
 /*
+ *
  * app.c
  *
  *  Created on: 2020年12月6日
@@ -6,13 +7,25 @@
  *  @Brief:
  *      This file is the top file of the whole project.
  *      function in this file is to be executed in the main function or the interrupt function.
+ *  @TODO:
+ *      1.8月15日之前提交线上赛道.            在画了.
+ *      2.8月15日之前提交线上比赛申请表.      *.赛点申请表格? 没填完.
+ *      3.8月15日之前提交参赛报名表.          DJ Submit(Maybe?).
+ *      4.8月15日之前提交防疫与诚信承诺书.    Fin.UnSubmit.
+ *
+ *      5.比赛前两天提交文档(比赛流程/场地展示/比赛直播网站/高校组合信息).
+ *      6.比赛当天提交车模检查表/合影/成绩表/录像等.
+ *
+ *      n.8月25日之前提交技术报告.
+ *
+ *
  */
 
 #include <app.h>
 #include "include.h"
 #include "fuzzycontrol.h"
 
-void SmartCarSysStateUpdate(void *data);
+void SmartCarSysStateUpdate(void *argv);
 void SmartCarSysDataReport(void *data);
 void SmartCarSysDataSave(data_t *data);
 void ErrorMsg(void *argv,uint error);
@@ -61,6 +74,8 @@ void Core1_Main()
     {
         if(data->UIEnable)
             os.task.UiUpdate(&UIData,sizeof(UIData));
+
+        SmartCarSysStateUpdate(data);
 
         ErrorMsg(data,data->Error);
 
@@ -279,27 +294,40 @@ void SmartCarSysDataSave(data_t *data)
     }
 }
 
-void SmartCarSysStateUpdate(void *data)
+char *CycleStateDict[] =
 {
-    //data_t *pdata = (data_t *)data;
+        "Undef",
+        "Exc",
+
+        "Wait",
+        "Config",
+        "Confirm",
+        "WaitIn",
+
+        "In",
+        "Tracking",
+        "Out",
+};
+
+void SmartCarSysStateUpdate(void *argv)
+{
+    data_t *data = (data_t *)argv;
 
     uint32_t bits = DIPSwitch.Read(DIPSwitch.Self);
 
-    // if(pdata->CarState == true)
-    // {
-    //     Motor.Start(Motor.Self);
-    //     Servo.Start(Servo.Self);
-    // }
-    // else
-    // {
-    //     Motor.Stop(Motor.Self);
-    //     Servo.Stop(Servo.Self);
-    // }
 
-    if(bits & 0x04)
-        Screen.SetEnable(Screen.Self,true);
+    if(bits & 0x80)
+    {
+        data->UIEnable = false;
+        Screen.Clear(Screen.Self,WHITE);
+        Screen.WriteXLine(Screen.Self,5,"CC:%s",CycleStateDict[data->CycleState]);
+        os.time.delay(0.5,s);
+    }
     else
-        Screen.SetEnable(Screen.Self,false);
+    {
+        //Screen.Clear(Screen.Self,WHITE);
+        data->UIEnable = true;
+    }
 }
 
 void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc)

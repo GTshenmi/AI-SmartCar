@@ -140,7 +140,7 @@ inline bool Is_Cycle(data_t *data)
 
         float sum = sum_l + sum_r + data->HESensor[1].Value;
 
-        return (((fabs(sum_l - sum_r) >= 60.0) or (sum >= 340)) and ((sum_l >= 150) || (sum_r >= 150)));
+        return (((fabs(sum_l - sum_r) >= 60.0) or (sum >= 340)) and (data->h_sum >= 130.0) and ((sum_l >= 150) or (sum_r >= 150)) and (fabs(data->o_difference) <= 60.0) and ((data->v_sum + fabs(data->v_difference)) >= 30.0));
     }
     else
     {
@@ -150,27 +150,34 @@ inline bool Is_Cycle(data_t *data)
 
 inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag,cycle_dir_t dir)
 {
-    if(dir == CC_DirLeft && data->OESensor[0].K >= 5.0)
-    {
-        flag->isOESensorMaxValue = true;
-    }
-    if(dir == CC_DirRight && data->OESensor[1].K >= 5.0)
+//    if(dir == CC_DirLeft && data->OESensor[0].K >= 5.0)
+//    {
+//        flag->isOESensorMaxValue = true;
+//    }
+//    if(dir == CC_DirRight && data->OESensor[1].K >= 5.0)
+//    {
+//        flag->isOESensorMaxValue = true;
+//    }
+    if(data->OESensor[0].K >= 5.0 || data->OESensor[1].K >= 5.0)
     {
         flag->isOESensorMaxValue = true;
     }
 
     if(flag->isOESensorMaxValue)  //if arrive inflection point of oblique inductance change rate,find the inflection point of other inductance change rate.
     {
-        if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall && dir == CC_DirLeft)//count inflection point of other inductance change rate.
+        //if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall && dir == CC_DirLeft)//count inflection point of other inductance change rate.
+        if(data->OESensor[0].K < 0.0 && !flag->isLeftOSensorFall)
         {
             flag->isLeftOSensorFall = true;
 
             cnt->Flags++;
         }
 
-        if(data->OESensor[1].K  < 0.0 && !flag->isRightOSensorFall && dir == CC_DirRight)
+        //if(data->OESensor[1].K  < 0.0 && !flag->isRightOSensorFall && dir == CC_DirRight)
+        if(data->OESensor[1].K  < 0.0 && !flag->isRightOSensorFall)
         {
-            flag->isRightOSensorFall = true;
+            flag->isRightOSensorFall =  true;
+
             cnt->Flags++;
         }
 
@@ -204,21 +211,26 @@ inline bool Is_CycleConfirmed(data_t *data,cycle_cnt *cnt,cycle_flag_t *flag,cyc
     return false;
 }
 
-inline bool Is_ArriveCycleInPoint(data_t *data,cycle_config *config)
+volatile inline bool Is_ArriveCycleInPoint(data_t *data,cycle_config *config)
 {
     return ((data->x - config->isCyclePos) >= config->waitInDistance);//The encoder integrates a distance to reach the  cycle-in point
 }
 
 inline bool Is_CycleIn(data_t *data,cycle_config *config)
 {
-    return (data->h_sum <= 100.0 && data->h_bias <= 35.0/*in cycle*/ && ((data->x - config->isCyclePos) >= config->inDistance/*The encoder integrates a distance.*/));
+    return ((data->x - config->isCyclePos) >= (config->inDistance + config->waitInDistance));
+    //return (data->h_sum <= 100.0 && data->h_bias <= 35.0/*in cycle*/ && ((data->x - config->isCyclePos) >= (config->inDistance + config->waitInDistance)/*The encoder integrates a distance.*/));
 
     //return ((data->h_sum <= 100.0 && data->h_bias <= 35.0) && (((data->x - config->isCyclePos) >= config->inDistance)/*The encoder integrates a distance.*/ || (config->dYaw >= 30.0))/*The yaw angle offset exceeds 30 degrees*/);
 }
 
 inline bool Is_CycleOut(data_t *data,cycle_cnt *cnt,cycle_config *config)
 {
-    return (data->h_sum3 >= 180.0/*arrive in cycle point again.*/ && cnt->Tracking >= 1000/*ensure tracking for a period of time.*/);
+    //return (data->h_sum3 >= 180.0/*arrive in cycle point again.*/ && cnt->Tracking >= 1000/*ensure tracking for a period of time.*/);
+    //return ((data->h_sum3 >= 180.0) and ((data->x - config->inDistance) >= 1200.0));
+
+    return (data->h_sum3 >= 200.0 and (((data->x - config->isCyclePos) >= 800.0) or (0)));
+
     //return ((data->h_sum3 >= 180.0/*arrive in cycle point again.*/ && cnt->Tracking >= 1000)/*ensure tracking for a period of time.*/||(config->dYaw >= 300.0)/*The yaw angle offset exceeds 300 degrees*/);  
 }
 

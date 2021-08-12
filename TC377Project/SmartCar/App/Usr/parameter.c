@@ -40,8 +40,8 @@ void ParameterInit(void *argv)
 
     data->TrackingState = Normal_Tracking;
 
-    data->CycleInDistance = 20.0;
-    data->CycleWaitInDistance = 80.0;
+    data->CycleInDistance = 28.0;
+    data->CycleWaitInDistance = 45.0;
     data->Err = 0.0;
 
     data->Is_AdjustAngle = false;
