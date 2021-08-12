@@ -12,36 +12,36 @@
 float Q_RSqrt( float number )
 {
     sint32_t i;
-	float x2, y;
-	const float threehalfs = 1.5F;
+    float x2, y;
+    const float threehalfs = 1.5F;
  
-	x2 = number * 0.5F;
-	y  = number;
-	i  = * ( sint32_t * ) &y;                       // evil floating point bit level hacking
-	i  = 0x5f3759df - ( i >> 1 );                   // what the fuck?
-	y  = * ( float * ) &i;
-	y  = y * ( threehalfs - ( x2 * y * y ) );       // 1st iteration
-//      y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+    x2 = number * 0.5F;
+    y  = number;
+    i  = * ( sint32_t * ) &y;                       // evil floating point bit level hacking
+    i  = 0x5f3759df - ( i >> 1 );                   // what the fuck?
+    y  = * ( float * ) &i;
+    y  = y * ( threehalfs - ( x2 * y * y ) );       // 1st iteration
+//    y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
  
-	return y;
+    return y;
 }
 
 float Q_Sqrt( float number )
 {
     sint32_t i;
-	float x2, y;
-	const float threehalfs = 1.5F;
+    float x2, y;
+    const float threehalfs = 1.5F;
  
-	x2 = number * 0.5F;
-	y  = number;
+    x2 = number * 0.5F;
+    y  = number;
     
-	i  = * ( sint32_t * ) &y;                      
+    i  = * ( sint32_t * ) &y;                      
     i = (i + 0x3f76cf62) >> 1;  
     y = *(float *)&i; 
     
     y = (y +  number/ y) * 0.5;  
  
-	return y;
+    return y;
 }
 
 float NormalizeFloat(float value,float min,float max)
@@ -130,13 +130,18 @@ float random(float lower,float upper)
 }
 
 float invSqrt(float x) {
+	
     float halfx = 0.5f * x;
     float y = x;
+	
     long i = *(long*)&y;
     i = 0x5f3759df - (i>>1);
     y = *(float*)&i;
+	
     y = y * (1.5f - (halfx * y * y));
+	
     return y;
+	
 }
 
 float ConstrainFloat(float value,float min,float max)
