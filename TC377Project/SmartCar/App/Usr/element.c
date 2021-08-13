@@ -96,6 +96,10 @@ void StopSituationDetect(data_t *data) {
     //GPIO Resources[27]
 
     static _Bool firstExecute = 1;
+    static float startTime = 0.0;
+    static float startPos = 0.0;
+
+    static int times = 2;
 
     switch(data->GameMode)
     {
@@ -104,9 +108,20 @@ void StopSituationDetect(data_t *data) {
             if (firstExecute) {
                 GPIOx.Init(&GPIO_Resources[27].GPION);
                 firstExecute = 0;
+                startTime =os.time.getTime(s);
+                startPos = data->x;
             }
 
-            if ((!GPIOx.Read(&GPIO_Resources[27].GPION)) && (os.time.getTimes() >= 10 && (data->x >= 100.0))) {
+            if ((!GPIOx.Read(&GPIO_Resources[27].GPION)) && ((os.time.getTimes() - startTime) >= 10 && ((data->x - startPos) >= 100.0))) {
+
+                startTime =os.time.getTime(s);
+                startPos = data->x;
+
+                times--;
+            }
+
+            if(times <= 0)
+            {
                 Motor.Break(Motor.Self);
             }
 
@@ -162,6 +177,10 @@ void Cycle_Handler(data_t *data)
             CycleClearFlag(&cycleFlag);
 
             BLED.OFF(BLED.Self);
+
+            data->Element.Type = None;
+
+            cycleCnt.Wait = 2000;
 
             cycleState = CC_Wait;
 
@@ -317,13 +336,13 @@ void Cycle_Handler(data_t *data)
 
             cycleCnt.Out++;
 
+            cycleCnt.Wait = 2000;
+
             if(Is_CycleBackToStraight(data))/*Normal Out.*/
             {
                 //back to straight.
                 cycleState = CC_Wait;    
                 data->Element.Type = None;
-
-                cycleCnt.Wait = 800;
 
                 BLED.OFF(BLED.Self);
             }

@@ -8,15 +8,19 @@
  *      This file is the top file of the whole project.
  *      function in this file is to be executed in the main function or the interrupt function.
  *  @TODO:
- *      1.8月15日之前提交线上赛道.            在画了.
- *      2.8月15日之前提交线上比赛申请表.      *.赛点申请表格? 没填完.
- *      3.8月15日之前提交参赛报名表.          DJ Submit(Maybe?).
- *      4.8月15日之前提交防疫与诚信承诺书.    Fin.UnSubmit.
+ *      1.8月15日之前提交参赛报名表.                DJ Submit(Maybe?).
+ *      2.8月15日之前提交防疫与诚信承诺书.          Fin.UnSubmit.
+ *      3.8月15日之前提交赛点申请表格.              未完成.
+ *      4.8月15日之前提交车模技术检查表与技术文件.  Fin.UnSubmit.
+ *      5.8月15日之前提交赛道审核文档.              未完成.
+ *      6.8月25日之前提交技术报告.                  未完成.
  *
- *      5.比赛前两天提交文档(比赛流程/场地展示/比赛直播网站/高校组合信息).
- *      6.比赛当天提交车模检查表/合影/成绩表/录像等.
+ *  @Problem:
+ *      1.颠簸路段怎么算一个?
  *
- *      n.8月25日之前提交技术报告.
+ *
+ *      7.比赛前两天提交文档(比赛流程/场地展示/比赛直播网站/高校组合信息).
+ *      8.比赛当天提交车模检查表/合影/成绩表/录像等.
  *
  *
  */
@@ -43,14 +47,20 @@ void KeyPressedCallBack(struct key *self,void *argv,uint16_t argc);
  * */
 void Core0_Main()
 {
-    TIMx.Init(&TIM_Resources[2].TIMN);
-    TIMx.Init(&TIM_Resources[3].TIMN);
-
     data_t *data = &Data[data_pointer];
+
+    TIMx.Init(&TIM_Resources[2].TIMN);
+
+//    if(data->CarMode == AI_Mode)
+//    {
+//        TIM_Resources[3].TIMN.interrupt_interval = 5000;
+//    }
+
+    TIMx.Init(&TIM_Resources[3].TIMN);
 
     while(1)
     {
-        //SmartCarSysDataSave(data);
+        SmartCarSysDataSave(data);
 
         ErrorMsg(data,data->Error);
 
@@ -209,11 +219,49 @@ void SmartCarSysDataSave(data_t *data)
 
         if(RecordFlags && data->CarState)
         {
-            //if(!data->IsAddNoise)
+            if(!data->IsAddNoise)
             {
                 if(SD.isInit)
                 {
                     //SaveSensorDataAI2();
+
+                    if(data->Element.Type == Cycle || (data->CycleState != CC_Wait))
+                    {
+                        data->Element.Point = Cycle;
+                    }
+                    else if(data->Element.Type == RightAngle)
+                    {
+                        data->Element.Point = RightAngle;
+                    }
+                    else if(data->Element.Type == Cross)
+                    {
+                        data->Element.Point = Cross;
+                    }
+                    else if(Is_LoseLine(data))
+                    {
+                        data->Element.Point = Lost;
+                    }
+
+                    else if(Is_Straight(data) || data->Element.Type == Straight)
+                    {
+                        data->Element.Point = Straight;
+                    }
+
+                    else if(Is_Corner(data) || data->Element.Type == Corner)
+                    {
+                        data->Element.Point = Corner;
+                    }
+                    else
+                    {
+                        data->Element.Point = Other;
+                    }
+
+                    if((data->Element.Type == Cycle) || (data->CycleState != CC_Wait) || (data->Element.Point == Cycle) )
+                        SaveSensorDataAndAngle(data,"LAutoBoot/AllCycle.txt");
+                    else
+                        SaveSensorDataAndAngle(data,"LAutoBoot/AllNoCycle.txt");
+
+
 
 #if 0
 

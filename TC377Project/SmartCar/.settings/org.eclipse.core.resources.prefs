@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//App/Usr/attitude.c=UTF-8
 encoding//App/Usr/control.c=UTF-8
+encoding//App/Usr/dataprocess.c=UTF-8
 encoding//App/Usr/element.c=UTF-8
 encoding//App/Usr/fuzzycontrol.c=UTF-8
 encoding//OS/Debug/console.h=UTF-8

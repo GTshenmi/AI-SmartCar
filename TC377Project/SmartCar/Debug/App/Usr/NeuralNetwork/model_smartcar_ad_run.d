@@ -1,7 +1,9 @@
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/model_smartcar_ad_run.c
 ../App/Usr/NeuralNetwork/model_smartcar_ad_run.c :
-model_smartcar_ad_run.o :	../App/Sys/arm_math.h
-../App/Sys/arm_math.h :
+model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
+model_smartcar_ad_run.o :	../App/Sys/sys.h
+../App/Sys/sys.h :
 model_smartcar_ad_run.o :	../OS/os.h
 ../OS/os.h :
 model_smartcar_ad_run.o :	../Driver/driver.h
@@ -194,14 +196,6 @@ model_smartcar_ad_run.o :	../OS/UI/template_page.h
 ../OS/UI/template_page.h :
 model_smartcar_ad_run.o :	../OS/UI/ui.h
 ../OS/UI/ui.h :
-model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/unused/arm_nnfunctions.h
-../App/Usr/NeuralNetwork/unused/arm_nnfunctions.h :
-model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/nn_library.h
-../App/Usr/NeuralNetwork/nn_library.h :
-model_smartcar_ad_run.o :	../App/Sys/sys.h
-../App/Sys/sys.h :
-model_smartcar_ad_run.o :	../OS/os.h
-../OS/os.h :
 model_smartcar_ad_run.o :	../App/Sys/filter.h
 ../App/Sys/filter.h :
 model_smartcar_ad_run.o :	../App/Sys/kalman_filter.h
@@ -226,6 +220,8 @@ model_smartcar_ad_run.o :	../OS/os.h
 ../OS/os.h :
 model_smartcar_ad_run.o :	../App/Sys/arm_math.h
 ../App/Sys/arm_math.h :
+model_smartcar_ad_run.o :	../OS/os.h
+../OS/os.h :
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/nn_parameter.h
 ../App/Usr/NeuralNetwork/nn_parameter.h :
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/tricore_nn.h
@@ -234,5 +230,11 @@ model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/tricore_nn_common.h
 ../App/Usr/NeuralNetwork/tricore_nn_common.h :
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/tricore_nn_table.h
 ../App/Usr/NeuralNetwork/tricore_nn_table.h :
+model_smartcar_ad_run.o :	../App/Sys/arm_math.h
+../App/Sys/arm_math.h :
+model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/unused/arm_nnfunctions.h
+../App/Usr/NeuralNetwork/unused/arm_nnfunctions.h :
+model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/nn_library.h
+../App/Usr/NeuralNetwork/nn_library.h :
 model_smartcar_ad_run.o :	../App/Usr/NeuralNetwork/unused/aia_cmsisnn_ext.h
 ../App/Usr/NeuralNetwork/unused/aia_cmsisnn_ext.h :

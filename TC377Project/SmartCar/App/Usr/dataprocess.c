@@ -1,7 +1,7 @@
 /*
  * dataprocess.c
  *
- *  Created on: 2020年12月6日
+ *  Created on: 2020骞�12鏈�6鏃�
  *      Author: 936305695
  *  @Brief:
  *      This file is for data process(read/process).
@@ -77,6 +77,17 @@ void ESensorDataAnalysis(void *argv)
             LinearFit(data->LESensor_NormalizedValue,data->Ke,CData.MaxLADCDeviceNum);
 
             data->Bias = CalculateBiasLABM(data);
+
+            HowToNameThisFunc2(data);
+
+//            if(data->Element.Type == Cycle)
+//            {
+//                data->Bias = CalculateBiasLABM(data);
+//            }
+//            else
+//            {
+//                data->Bias = CalculateBiasLABM(data) + random(-35.0,35.0);
+//            }
 
             break;
 
