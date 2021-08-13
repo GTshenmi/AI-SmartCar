@@ -214,7 +214,7 @@ float FuzzyCtrl(Fuzzy_TypeDef *fuzzy, float target, float actual)
         sum1 += fuzzy->UBuf[i];
     }
 
-    fuzzy->U = fdiv(sum0,sum1);
+    fuzzy->U = sum0/sum1;
 
     return fuzzy->U;
 }
