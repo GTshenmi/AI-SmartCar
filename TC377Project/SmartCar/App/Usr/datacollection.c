@@ -142,7 +142,7 @@ uint SaveSensorDataAndAngle(void *argv,char *path){
         bufferPointer += sprintf(bufferPointer,"%f ",data->SESensor_NormalizedValue[i]);
     }
 
-    float angle =   ((data->Angle  * 100.0)/ Servo.MaxAngle);
+    float angle =   ((data->Angle)/ Servo.MaxAngle);
 
     bufferPointer += sprintf(bufferPointer,"%f ",angle);
 

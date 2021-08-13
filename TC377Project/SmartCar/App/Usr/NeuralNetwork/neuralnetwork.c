@@ -24,7 +24,7 @@ float NeuralNetworkCalAngle(void *argv)
 
     float res = ((*angle) >> (14 - 10 - 1) ) * 1.0;
 
-    data->NNOutput = res;
+    data->NNOutput = (res);
 
     return 1.25 * exp(0.0012 * fabs(res)) * res;
 
