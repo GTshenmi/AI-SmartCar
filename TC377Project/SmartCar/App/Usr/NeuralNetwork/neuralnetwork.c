@@ -10,9 +10,30 @@
 #include "include.h"
 
 
+
 void NeuralNetworkInit(void *argv)
 {
     //NNInit(TestModel);
+}
+
+//char *ElementClassDict[] =
+//{
+//
+//};
+
+
+NN_Class_Output NeuralNetworkElementClass(void *argv)
+{
+    data_t *data = (data_t *)argv;
+
+    NN_Class_Output NN_Class;
+
+    NN_Class.Output = NNForWardReasoning(NULL,data->SESensor_SampleValue,0);
+
+    //NN_Class.ElementType =
+
+
+    return NN_Class;
 }
 
 

@@ -93,6 +93,8 @@ void AngleControl(void *argv)
 
             data->Angle = data->AIAngle;
 
+            //data->Angle = data->AIAngle + data->CorAngle;
+
             break;
 
         case SAutoBoot_Mode:

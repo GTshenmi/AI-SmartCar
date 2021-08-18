@@ -19,7 +19,6 @@ ________________________________________________________________
 程序配套视频地址：https://space.bilibili.com/95313236
 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 中断服务函数优先级   范围：1-255   数字越大 优先级越高  注意优先级不要重复
-
 中断归哪个内核管理  范围：0：CPU0 1：DMA 2：CPU1  3：CPU2...
 中断服务函数放哪个核执行，CPU就选用对应的那个！
 比如CCU61CH0中断服务函数默认放在放在CPU0中执行，
@@ -88,7 +87,7 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #define  STM0_CH1_PRIORITY    111
 
 // STM定时器中断 STM0  中断归哪个内核管理？ 范围：0：CPU0 1：DMA 2：CPU1  3：CPU2...
-#define  STM0_VECTABNUM       3
+#define  STM0_VECTABNUM       0
 
 // STM定时器中断 STM1  channel0 中断服务函数优先级   范围：1-255   数字越大 优先级越高  注意优先级不要重复
 #define  STM1_CH0_PRIORITY    112
@@ -295,4 +294,3 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #define  DMA_VECTABNUM    0
 
 #endif
-

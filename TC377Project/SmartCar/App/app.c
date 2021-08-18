@@ -85,7 +85,7 @@ void Core1_Main()
         if(data->UIEnable)
             os.task.UiUpdate(&UIData,sizeof(UIData));
 
-        SmartCarSysStateUpdate(data);
+        //SmartCarSysStateUpdate(data);
 
         ErrorMsg(data,data->Error);
 
@@ -219,7 +219,7 @@ void SmartCarSysDataSave(data_t *data)
 
         if(RecordFlags && data->CarState)
         {
-            if(!data->IsAddNoise)
+            //if(!data->IsAddNoise)
             {
                 if(SD.isInit)
                 {

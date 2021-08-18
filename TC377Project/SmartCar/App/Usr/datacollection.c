@@ -327,7 +327,7 @@ void HowToNameThisFunc2(void *argv)
                 //DebugBeepOn;
                 BEEP.ON(BEEP.Self);
 
-                float sign = (random(0.0,20.0) - 10) * 100.0;
+                //float sign = (random(0.0,20.0) - 10) * 100.0;
 
                 deviateTime = random(2.0,3.0) * 500.0;//time/100.0f*0.7f;//random(0.1,0.7) * 50.0;
 

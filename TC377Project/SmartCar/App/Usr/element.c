@@ -17,6 +17,28 @@ void Ramp_Handler(data_t *data);
 void RustAngle_Handler(data_t *data);
 void StopSituationDetect(data_t *data);
 
+uint GameElement[5] = {RightAngle,Cycle,Cross,Cycle,RightAngle};
+
+typedef enum
+{
+    ElementIn,
+    ElementSwitch,
+    ElementOut,
+}element_switch_t;
+
+float ElementDetermineAI(void *argv)
+{
+//    data_t *data = (data_t *)argv;
+//
+//    static uint elementPointer = 0;
+
+//    switch()
+//    {
+//
+//    }
+
+    return 0.0;
+}
 
 float ElementDetermine(void *argv)
 {
@@ -65,6 +87,8 @@ float ElementDetermine(void *argv)
 //        Motor.Break(Motor.Self);
 //        Servo.Break(Servo.Self);
 //    }
+
+    ElementDetermineAI(data);
 
     return data->Element.Type * 1.0;
 

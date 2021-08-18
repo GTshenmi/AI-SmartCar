@@ -194,11 +194,26 @@ void aia_nn_activations_direct_q15(q15_t* data, int size, int int_width, tricore
 #endif
         in <<= (16 - quantBits);
         in >>= (3 - int_width);
+
         uint32_t ndx0 = (in >> 8) & 0xFF;
         uint32_t ndx1 = (ndx0 + 1) & 0xFF;
+
+
         uint32_t frac = in & 0xFF;
+
+
+
         if (ndx1 == 0x80)
             ndx1 = ndx0;
+
+//        if(ndx0 >= 255)
+//            ndx0 = 255;
+//        if(ndx1 >= 255)
+//            ndx1 = 255;
+
+
+
+
         out1 = lookup_table[ndx0];
         out2 = lookup_table[ndx1];
         // interpolation, assume each of 256 slices is linear

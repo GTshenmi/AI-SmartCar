@@ -24,7 +24,9 @@ void GetESensorData(data_t *data)
     for(int i = 0; i < CData.MaxLADCDeviceNum ; i++)
         data->LESensor_SampleValue[i] = LESensor[i].Read(LESensor[i].Self);
     for(int i = 0; i < CData.MaxSADCDeviceNum ; i++)
+    {
         data->SESensor_SampleValue[i] = SESensor[i].Read(SESensor[i].Self);
+    }
 }
 
 void ESensorNormailze(data_t *data)
@@ -48,7 +50,7 @@ void ESensorDataAnalysis(void *argv)
     ESensorNormailze(data);           
 
     /*calculate bias and change rate of all inductance.*/
-    switch(data->CarMode)            
+    switch(data->CarMode)
     {
         case AI_Mode:
 
@@ -78,7 +80,7 @@ void ESensorDataAnalysis(void *argv)
 
             data->Bias = CalculateBiasLABM(data);
 
-            HowToNameThisFunc2(data);
+            //HowToNameThisFunc2(data);
 
 //            if(data->Element.Type == Cycle)
 //            {
@@ -98,7 +100,7 @@ void ESensorDataAnalysis(void *argv)
     }
 
     /*For special elements, correct the bias.*/
-    if(data->CarMode != DebugMode)
+    if(data->CarMode != DebugMode && data->CarMode != AI_Mode)
     {
         ElementDetermine(data);
 

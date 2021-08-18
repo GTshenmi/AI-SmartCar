@@ -30,7 +30,7 @@ float Q_Sqrt( float number )
 {
     sint32_t i;
     float x2, y;
-    const float threehalfs = 1.5F;
+    //const float threehalfs = 1.5F;
  
     x2 = number * 0.5F;
     y  = number;

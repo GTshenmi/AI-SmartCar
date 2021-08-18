@@ -19,6 +19,10 @@ void BeepOffTimerCallBack(void *argc,unsigned short argv)
 
 }
 
+uint16_t SESensor34Read(struct esensor *self)
+{
+    return 0;
+}
 
 uint16_t line = 0;
 
@@ -174,6 +178,9 @@ void Core0_HardWareInit()
         SESensor[i].SetGain(SESensor[i].Self,1.0);
         SESensor[i].EnableGain(SESensor[i].Self,true);
     }
+
+//    SESensor[3].Read = SESensor34Read;
+//    SESensor[4].Read = SESensor34Read;
 
     //DSensor.Init(DSensor.Self);
 

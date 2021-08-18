@@ -450,6 +450,8 @@
             </storageModule>
             			
             <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+            			
+            <storageModule moduleId="com.tasking.flash.settings"/>
             		
         </cconfiguration>
         		

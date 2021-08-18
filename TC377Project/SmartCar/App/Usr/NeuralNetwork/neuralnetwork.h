@@ -11,6 +11,16 @@
 #include "nn_library.h"
 #include "sys.h"
 
+typedef struct
+{
+    int16_t *Output;
+
+    uint ElementType;
+
+    float P;
+
+}NN_Class_Output;
+
 void NeuralNetworkInit(void *argv);
 float NeuralNetworkReasoning(void *argv);
 
