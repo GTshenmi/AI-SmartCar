@@ -17,13 +17,24 @@ void Ramp_Handler(data_t *data);
 void RustAngle_Handler(data_t *data);
 void StopSituationDetect(data_t *data);
 
+//typedef bool (*Element_HandlerAI_F)(data_t *data);
+
+bool RightAngle_HandlerAI(data_t *data);
+bool Cycle_HandlerAI(data_t *data);
+bool Cross_HandlerAI(data_t *data);
+
+//bool (*Element_HandlerAI)(data_t *data)[5] = {RightAngle_HandlerAI,Cycle_HandlerAI,Cross_HandlerAI,Cycle_HandlerAI,RightAngle_HandlerAI};
+
+//Element_HandlerAI_F Element_HandlerAI[5] = {RightAngle_HandlerAI,Cycle_HandlerAI,Cross_HandlerAI,Cycle_HandlerAI,RightAngle_HandlerAI};
+
 uint GameElement[5] = {RightAngle,Cycle,Cross,Cycle,RightAngle};
 
 typedef enum
 {
-    ElementIn,
+    WaitElement,
     ElementSwitch,
-    ElementOut,
+    HandlerElement,
+
 }element_switch_t;
 
 float ElementDetermineAI(void *argv)
@@ -32,12 +43,93 @@ float ElementDetermineAI(void *argv)
 //
 //    static uint elementPointer = 0;
 
-//    switch()
-//    {
-//
-//    }
+    static element_switch_t elementState;
+
+    //static uint elementId = 0;
+
+    switch(elementState)
+    {
+        case WaitElement:
+
+            break;
+
+        case ElementSwitch:
+
+            break;
+
+        case HandlerElement:
+
+          //  if(Element_HandlerAI[elementId](argv))
+            {
+                elementState = WaitElement;
+            }
+
+            break;
+    }
 
     return 0.0;
+}
+
+bool Cross_HandlerAI(data_t *data)
+{
+
+    return false;
+}
+
+bool Cycle_HandlerAI(data_t *data)
+{
+
+    return false;
+}
+
+bool RightAngle_HandlerAI(data_t *data)
+{
+    static rightangle_state_t rightAngleState = RA_Wait;
+
+    switch(rightAngleState)
+    {
+        case RA_Wait:
+
+            break;
+
+        case RA_Config:
+
+            goto RA_CONFIRM;
+
+            break;
+
+        case RA_Confirm:    //confirm and config some parameter.
+
+            RA_CONFIRM:
+
+            if(1)
+            {
+                GLED.ON(GLED.Self);
+
+                rightAngleState = RA_Tracking;
+
+            }
+
+            break;
+
+        case RA_Tracking:
+
+
+            break;
+
+        case RA_Out:
+
+            break;
+
+        default:
+
+            break;
+    }
+
+    if(rightAngleState == RA_Out)
+        return true;
+    else
+        return false;
 }
 
 float ElementDetermine(void *argv)
