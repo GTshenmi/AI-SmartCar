@@ -1,7 +1,7 @@
 /*
  * eeprom.c
  *
- *  Created on: 2021Äê4ÔÂ2ÈÕ
+ *  Created on: 2021å¹´4æœˆ2æ—¥
  *      Author: 936305695
  */
 #include "eeprom.h"
@@ -10,46 +10,51 @@
 #define MAX_PAGE_LENGTH 12
 
 /*************************************************************************
-*  º¯ÊıÃû³Æ£ºvoid EEPROM_EraseSector(unsigned char sector)
-*  ¹¦ÄÜËµÃ÷£ºeeprom²Á³öÉÈÇø
-*  ²ÎÊıËµÃ÷£ºsector   £º  ÉÈÇø·¶Î§  0-11
-*  º¯Êı·µ»Ø£ºÎŞ
-*  ĞŞ¸ÄÊ±¼ä£º2020Äê3ÔÂ10ÈÕ
-*  ±¸    ×¢£ºEEPROM_EraseSector(0);   //²Á³öÉÈÇø0
+*  å‡½æ•°åç§°ï¼švoid EEPROM_EraseSector(unsigned char sector)
+*  åŠŸèƒ½è¯´æ˜ï¼šeepromæ“¦å‡ºæ‰‡åŒº
+*  å‚æ•°è¯´æ˜ï¼šsector   ï¼š  æ‰‡åŒºèŒƒå›´  0-11
+*  å‡½æ•°è¿”å›ï¼šæ— 
+*  ä¿®æ”¹æ—¶é—´ï¼š2020å¹´3æœˆ10æ—¥
+*  å¤‡    æ³¨ï¼šEEPROM_EraseSector(0);   //æ“¦å‡ºæ‰‡åŒº0
 *************************************************************************/
 void EEPROM_EraseSector(unsigned char sector)
 {
-    /* ¼ÆËãÉÈÇøÆğÊ¼µØÖ· */
+#if defined(Chip) && (Chip == TC377 || Chip == TC264)
+
+    /* è®¡ç®—æ‰‡åŒºèµ·å§‹åœ°å€ */
     unsigned long sector_addr = IfxFlash_dFlashTableEepLog[sector].start;
 
     unsigned short endinitSfty_pw;
 
     endinitSfty_pw = IfxScuWdt_getSafetyWatchdogPassword();
 
-    /* ²Á³öÉÈÇø */
+    /* æ“¦å‡ºæ‰‡åŒº */
     IfxScuWdt_clearSafetyEndinit(endinitSfty_pw);
     IfxFlash_eraseSector(sector_addr);
     IfxScuWdt_setSafetyEndinit(endinitSfty_pw);
 
     IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
+	
+#endif
 }
 
 /*************************************************************************
-*  º¯ÊıÃû³Æ£ºvoid EEPROM_EraseSector(unsigned char sector)
-*  ¹¦ÄÜËµÃ÷£ºeepromĞ´ÈëÊı¾İ
-*  ²ÎÊıËµÃ÷£º
-  * @param    sector   £º  ÉÈÇø   ·¶Î§  0-11
-  * @param    page     £º  Ò³     ·¶Î§  0-1023
-  * @param    buff     £º  ´æ·ÅĞ´ÈëÊı¾İ
-  * @param    len      £º  Ğ´ÈëÊı¾İ¸öÊı
-*  º¯Êı·µ»Ø£ºÎŞ
-*  ĞŞ¸ÄÊ±¼ä£º2020Äê3ÔÂ10ÈÕ
-*  ±¸    ×¢£ºEEPROM_Write(0, 0, u32wBuff, 24);   //ÏòÉÈÇø0  µÚ0Ò³  Ğ´Èë24¸öunsigned longÊı¾İ
+*  å‡½æ•°åç§°ï¼švoid EEPROM_EraseSector(unsigned char sector)
+*  åŠŸèƒ½è¯´æ˜ï¼šeepromå†™å…¥æ•°æ®
+*  å‚æ•°è¯´æ˜ï¼š
+  * @param    sector   ï¼š  æ‰‡åŒº   èŒƒå›´  0-11
+  * @param    page     ï¼š  é¡µ     èŒƒå›´  0-1023
+  * @param    buff     ï¼š  å­˜æ”¾å†™å…¥æ•°æ®
+  * @param    len      ï¼š  å†™å…¥æ•°æ®ä¸ªæ•°
+*  å‡½æ•°è¿”å›ï¼šæ— 
+*  ä¿®æ”¹æ—¶é—´ï¼š2020å¹´3æœˆ10æ—¥
+*  å¤‡    æ³¨ï¼šEEPROM_Write(0, 0, u32wBuff, 24);   //å‘æ‰‡åŒº0  ç¬¬0é¡µ  å†™å…¥24ä¸ªunsigned longæ•°æ®
 *************************************************************************/
 void EEPROM_Write(unsigned char sector, unsigned short page, unsigned long * buff, unsigned short len)
 {
+#if defined(Chip) && (Chip == TC377 || Chip == TC264)
     int i;
-    /* ¼ÆËãÉÈÇøÆğÊ¼µØÖ· */
+    /* è®¡ç®—æ‰‡åŒºèµ·å§‹åœ°å€ */
     unsigned long sector_addr = IfxFlash_dFlashTableEepLog[sector].start;
 
     unsigned short endinitSfty_pw;
@@ -58,18 +63,18 @@ void EEPROM_Write(unsigned char sector, unsigned short page, unsigned long * buf
 
     for(i = 0; i < len/2; i++)
     {
-        /* ÒªĞ´ÈëÒ³µØÖ· */
+        /* è¦å†™å…¥é¡µåœ°å€ */
         unsigned long pageAddr = sector_addr + (page + i)* IFXFLASH_DFLASH_PAGE_LENGTH;
 
         IfxFlash_enterPageMode(pageAddr);
 
-        /* ²ìÃ¦ */
+        /* å¯Ÿå¿™ */
         IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
 
-        /* Ğ´Èë»º³åÇø  */
+        /* å†™å…¥ç¼“å†²åŒº  */
         IfxFlash_loadPage2X32(pageAddr, buff[2*i], buff[2*i + 1]);
 
-        /* Ğ´Èëeeprom  */
+        /* å†™å…¥eeprom  */
         IfxScuWdt_clearSafetyEndinit(endinitSfty_pw);
         IfxFlash_writePage(pageAddr);
         IfxScuWdt_setSafetyEndinit(endinitSfty_pw);
@@ -79,18 +84,18 @@ void EEPROM_Write(unsigned char sector, unsigned short page, unsigned long * buf
 
     if(len%2)
     {
-        /* ÒªĞ´ÈëÒ³µØÖ· */
+        /* è¦å†™å…¥é¡µåœ°å€ */
         unsigned long pageAddr = sector_addr + (page + len/2)* IFXFLASH_DFLASH_PAGE_LENGTH;
 
         IfxFlash_enterPageMode(pageAddr);
 
-        /* ²ìÃ¦ */
+        /* å¯Ÿå¿™ */
         IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
 
-        /* Ğ´Èë»º³åÇø  */
+        /* å†™å…¥ç¼“å†²åŒº  */
         IfxFlash_loadPage2X32(pageAddr, buff[len], 0);
 
-        /* Ğ´Èëeeprom  */
+        /* å†™å…¥eeprom  */
         IfxScuWdt_clearSafetyEndinit(endinitSfty_pw);
         IfxFlash_writePage(pageAddr);
         IfxScuWdt_setSafetyEndinit(endinitSfty_pw);
@@ -98,34 +103,37 @@ void EEPROM_Write(unsigned char sector, unsigned short page, unsigned long * buf
         IfxFlash_waitUnbusy(0, IfxFlash_FlashType_D0);
 
     }
+#endif	
 }
 
 
 /*************************************************************************
- *  º¯ÊıÃû³Æ£ºvoid EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuff, unsigned short len)
- *  ¹¦ÄÜËµÃ÷£ºeeprom¶ÁÈ¡
- *  ²ÎÊıËµÃ÷£º
- * @param    sector   £º  ÉÈÇø   ·¶Î§  0-11
- * @param    page     £º  Ò³     ·¶Î§  0-1023
- * @param    buff     £º  ´æ·ÅĞ´ÈëÊı¾İ
- * @param    len      £º  Ğ´ÈëÊı¾İ¸öÊı
- *  º¯Êı·µ»Ø£ºÎŞ
- *  ĞŞ¸ÄÊ±¼ä£º2020Äê3ÔÂ10ÈÕ
- *  ±¸    ×¢£ºEEPROM_Read(0, 0, u32rBuff, 24);   //¶ÁÈ¡ÉÈÇø0  µÚ0Ò³  ¿ªÊ¼µÄ24¸öunsigned longÊı¾İ
+ *  å‡½æ•°åç§°ï¼švoid EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuff, unsigned short len)
+ *  åŠŸèƒ½è¯´æ˜ï¼šeepromè¯»å–
+ *  å‚æ•°è¯´æ˜ï¼š
+ * @param    sector   ï¼š  æ‰‡åŒº   èŒƒå›´  0-11
+ * @param    page     ï¼š  é¡µ     èŒƒå›´  0-1023
+ * @param    buff     ï¼š  å­˜æ”¾å†™å…¥æ•°æ®
+ * @param    len      ï¼š  å†™å…¥æ•°æ®ä¸ªæ•°
+ *  å‡½æ•°è¿”å›ï¼šæ— 
+ *  ä¿®æ”¹æ—¶é—´ï¼š2020å¹´3æœˆ10æ—¥
+ *  å¤‡    æ³¨ï¼šEEPROM_Read(0, 0, u32rBuff, 24);   //è¯»å–æ‰‡åŒº0  ç¬¬0é¡µ  å¼€å§‹çš„24ä¸ªunsigned longæ•°æ®
 *************************************************************************/
 void EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuff, unsigned short len)
 {
+#if defined(Chip) && (Chip == TC377 || Chip == TC264)
     int i;
-    /* ¼ÆËãÉÈÇøÆğÊ¼µØÖ· */
+    /* è®¡ç®—æ‰‡åŒºèµ·å§‹åœ°å€ */
     unsigned long sector_addr = IfxFlash_dFlashTableEepLog[sector].start;
 
-    /* Òª¶ÁÒ³µØÖ· */
+    /* è¦è¯»é¡µåœ°å€ */
     volatile unsigned long * pageAddr = (unsigned long*)(sector_addr + page * IFXFLASH_DFLASH_PAGE_LENGTH);
 
     for(i = 0; i < len; i++)
     {
         rbuff[i] = *(pageAddr++);
     }
+#endif
 }
 
 
@@ -137,6 +145,7 @@ void EEPROM_Read(unsigned char sector, unsigned short page, unsigned long * rbuf
  * */
 uint8_t EEPROM_WriteSector(uint32_t sector, uint32_t page, uint8_t * buff, uint32_t len)
 {
+#if defined(Chip) && (Chip == TC377 || Chip == TC264)
     uint32_t writebuf[MAX_PAGE_LENGTH];
     uint32_t writelen = len / 4 + 1;
 
@@ -149,6 +158,7 @@ uint8_t EEPROM_WriteSector(uint32_t sector, uint32_t page, uint8_t * buff, uint3
     EEPROM_Write(1,0,writebuf,(uint16_t)writelen);
 
     return 0;
+#endif
 }
 
 /* D  J     I  s     D  o  g  .
@@ -157,6 +167,7 @@ uint8_t EEPROM_WriteSector(uint32_t sector, uint32_t page, uint8_t * buff, uint3
  * */
 uint8_t EEPROM_ReadSector(uint32_t sector, uint32_t page, uint8_t * buff, uint32_t len)
 {
+#if defined(Chip) && (Chip == TC377 || Chip == TC264)
     uint32_t readbuf[MAX_PAGE_LENGTH];
     uint32_t readlen = len / 4 + 1;
 
@@ -168,6 +179,7 @@ uint8_t EEPROM_ReadSector(uint32_t sector, uint32_t page, uint8_t * buff, uint32
 
 
     return 0;
+#endif
 }
 
 uint32_t EEPROM_GetSectorNum(void)
@@ -176,6 +188,7 @@ uint32_t EEPROM_GetSectorNum(void)
 }
 
 void* EEPROMGetData(uint32_t dataLocation,void * dataPointer) {
+	
 	uint32_t readBuffer[MAX_SECTION_LENGTH];
 	EEPROM_Read(0, 0, readBuffer, MAX_SECTION_LENGTH);
 	*(uint32_t *)dataPointer = readBuffer[dataLocation];
