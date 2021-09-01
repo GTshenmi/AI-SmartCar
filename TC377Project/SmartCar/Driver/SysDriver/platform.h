@@ -1,7 +1,7 @@
 /*
- * chipdatatype.h
+ *  platform.h
  *
- *  Created on: 2020Äê12ÔÂ26ÈÕ
+ *  Created on: 2020Ã„Ãª12Ã”Ã‚26ÃˆÃ•
  *      Author: 936305695
  */
 
