@@ -156,9 +156,9 @@ uint SaveSensorDataAndAngle(void *argv,char *path){
 
     uint res = 0;
 
-    res = SD.fastWrite(path,buffer);
+    //res = SD.fastWrite(path,buffer);
     
-    //res = os.file.fastWrite(path,buffer);
+    res = os.file.fastWrite(path,buffer);
 
     return res;
 
