@@ -1,0 +1,62 @@
+[System]
+Name='fuzzy2'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=0
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='E'
+Range=[-100 100]
+NumMFs=9
+MF1='-4':'trimf',[-125 -100 -75]
+MF2='-3':'trimf',[-100 -75 -50]
+MF3='-2':'trimf',[-74.6915959907479 -49.6915959907479 -24.6915959907479]
+MF4='-1':'trimf',[-50 -25 0]
+MF5='0':'trimf',[-25 -2.22e-16 25]
+MF6='1':'trimf',[0 25 50]
+MF7='2':'trimf',[25 50 75]
+MF8='3':'trimf',[50 75 100]
+MF9='4':'trimf',[75 100 125]
+
+[Input2]
+Name='EC'
+Range=[-20 20]
+NumMFs=9
+MF1='-4':'trimf',[-25 -20 -15]
+MF2='-3':'trimf',[-20 -15 -10]
+MF3='-2':'trimf',[-15 -10 -5]
+MF4='-1':'trimf',[-10 -5 0]
+MF5='0':'trimf',[-5 -5.551e-17 5]
+MF6='1':'trimf',[0 5 10]
+MF7='2':'trimf',[5 10 15]
+MF8='3':'trimf',[10 15 20]
+MF9='4':'trimf',[15 20 25]
+
+[Output1]
+Name='Angle'
+Range=[-1 1]
+NumMFs=15
+MF1='-7':'trimf',[-1.2 -1 -0.8]
+MF2='-6':'trimf',[-1 -0.8 -0.6]
+MF3='-5':'trimf',[-0.8 -0.6 -0.4]
+MF4='-4':'trimf',[-0.6 -0.4 -0.3]
+MF5='-3':'trimf',[-0.4 -0.3 -0.2]
+MF6='-2':'trimf',[-0.3 -0.2 -0.1]
+MF7='-1':'trimf',[-0.2 -0.1 0]
+MF8='0':'trimf',[-0.1 0 0.1]
+MF9='1':'trimf',[-0.00154202004626058 0.0984579799537394 0.198457979953739]
+MF10='2':'trimf',[0.1 0.2 0.3]
+MF11='3':'trimf',[0.2 0.3 0.4]
+MF12='4':'trimf',[0.3 0.4 0.6]
+MF13='5':'trimf',[0.4 0.6 0.8]
+MF14='6':'trimf',[0.6 0.8 1]
+MF15='7':'trimf',[0.8 1 1.2]
+
+[Rules]
