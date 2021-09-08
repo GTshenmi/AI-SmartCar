@@ -3,8 +3,20 @@
  
  
  移植注意事项
- 1.
- 1.更改OS/resource_config.c 里的资源配置，参考Driver/SysDriver/里的结构体定义。
+ 1.删除或更改Driver/SysDriver/common.c 以及 Driver/SysDriver/common.h里的内容。
+   •在common.h添加相应平台底层所需的所有头文件，如#include "ifx_hal.h"。
+   •在commom.c里定义和相应平台底层有关的变量，如IfxEvadc_Adc_Group g_AdcGroup[ADC_GROUPS_NUM]。
+   •未用到的可删除。
+ 2.更改Driver/SysDriver/platform.h里的芯片类型以及数据类型定义
+   •更改 Chip 定义，例如，将芯片移植到MK66平台，需要添加两条宏定义：
+     #define MK66 3//(该数字不能重复)
+     #define Chip MK66
+   •更改数据类型定义，如uint32_t为32位无符号整形，在TC377平台为unsigned long型。
+ 3.重定义Driver/SysDriver/xxx.h里的xxx_t结构体定义，并重写Driver/SysDriver/xxx.c里的相应方法。
+   •重定义结构体
+    以adc为例，将adc.h里的
+   •重写方法
+ 4.更改OS/resource_config.c 里的资源配置，参考Driver/SysDriver/里的结构体定义。
    Example：
    如果配置ADC，需要将OS/resource_config.c里的ADC_Resources进行重新初始化，以ADC_ADC_Resources[0]为例，其他类似:
    adc_resource_t ADC_Resources[20] =
