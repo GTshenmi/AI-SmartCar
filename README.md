@@ -1,6 +1,8 @@
 # AI-SmartCar
  2021 National College Student SmartCar Competition Software Project.  
-   
+ 
+## 工程结构
+
      
 #### 移植注意事项
 1.删除或更改Driver/SysDriverLQ里的文件。<br>
@@ -51,7 +53,7 @@ adc_resource_t ADC_Resources[20] =
            .ADCN = {ADC27,10000},  
            .Description = "AD1"  
      },       
-} 
+};
 ```
     
       其中，ADCN的初始化顺序与Driver/SysDriver/adc.h里定义的结构体adcx_t内的成员顺序相同。ADC27对应Channel，10000对应Freq。  
