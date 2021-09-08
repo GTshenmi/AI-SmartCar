@@ -37,8 +37,7 @@
     •重写函数  
       以adc为例，需要更改adc.c里的函数内容，以完成相应的功能。  
       如uint8_t ADCx_Init(adcx_t *adc)函数，该函数完成adc的初始化，移植时需要更改该函数完成初始化adc。  
-      也可以只更改需要用到的函数，不用的函数可以改成空函数。  
-    •注意:函数定义不可更改。  
+      也可以只更改需要用到的函数，不用的函数可以留空。  
     
 5.更改OS/resource_config.c or OS/resource_config.h里的资源配置，参考Driver/SysDriver/里的结构体定义。  
 
@@ -46,13 +45,13 @@
       如果配置ADC，需要将OS/resource_config.c里的ADC_Resources进行重新初始化，以ADC_ADC_Resources[0]为例，其他类似:  
    
 ```c
-      adc_resource_t ADC_Resources[20] =  
-      {  
-           [0] = {  
-                  .ADCN = {ADC27,10000},  
-                  .Description = "AD1"  
-           },  
-      } 
+adc_resource_t ADC_Resources[20] =  
+{  
+     [0] = {  
+           .ADCN = {ADC27,10000},  
+           .Description = "AD1"  
+     },       
+} 
 ```
     
       其中，ADCN的初始化顺序与Driver/SysDriver/adc.h里定义的结构体adcx_t内的成员顺序相同。ADC27对应Channel，10000对应Freq。  
@@ -64,14 +63,14 @@
     •Example：  
       如果配置电机，需要更改OS/devices_config.c里的Motor:
 ```c    
-      motor_ctrl_t Motor =/*ok*/
-      {
-          .Init = Motor_Init,
-          .Self = &Motor,
-          //.Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
-          .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
-          .Encn = &ENC_Resources[0].ENCN,  
-      };
+motor_ctrl_t Motor =/*ok*/
+{
+    .Init = Motor_Init,
+    .Self = &Motor,
+    //.Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
+    .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
+    .Encn = &ENC_Resources[0].ENCN,  
+};
  ```
       其中，Pwmn为驱动电机所使用的2路pwm资源，从OS/resource_config.c 里的 PWM_Resources中选取。
       Encn为电机测速需要的enc资源，从OS/resource_config.c 里的 ENC_Resources中选取。
@@ -84,11 +83,14 @@
 
 ```c
     •void STM1_CH0_IRQHandler(void)    /*Calculate Bias：2ms*/
-
+```
+```c
     •void STM1_CH1_IRQHandler(void)    /*Direction Control：20ms*/
-
+```
+```c
     •void CCU60_CH0_IRQHandler (void)  /*Speed Control：2ms*/
-   
+```
+```c
     •void CCU60_CH1_IRQHandler (void)  /*Attitude Update：20ms*/
 ```
 
@@ -97,7 +99,6 @@
 
     •core0_main
         
- ```c
         os.init(0);
 
         os.time.delayms(100);
@@ -106,24 +107,19 @@
         Core0_SoftWareInit();
 
         Core0_Main();
- ```
         
     •core1_main
  
- ```c
         Core1_HardWareInit();
         Core1_SoftWareInit();
 
         Core1_Main();
- ```
         
     •core2_main
     
- ```c
         Core2_HardWareInit();
         Core2_SoftWareInit();
 
         Core2_Main();        
-  ```
         
     
