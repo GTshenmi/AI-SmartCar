@@ -4,7 +4,7 @@
      
  移植注意事项  
  1.删除或更改Driver/SysDriverLQ里的文件。  
-    •对于Infineon平台，可能只要更改即可  
+ \t•对于Infineon平台，可能只要更改即可  
     •对于其他平台，可以删掉。  
  2.删除或更改Driver/SysDriver/common.c 以及 Driver/SysDriver/common.h里的内容。 
     •在common.h添加相应平台底层所需的所有头文件，如#include "ifx_hal.h"。  
