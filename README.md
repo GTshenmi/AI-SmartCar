@@ -84,16 +84,16 @@ motor_ctrl_t Motor =/*ok*/
 7.移植interrupt.c里的中断服务函数。
 
 ```c
-    •void STM1_CH0_IRQHandler(void)    /*Calculate Bias：2ms*/
+•void STM1_CH0_IRQHandler(void)    /*Calculate Bias：2ms*/
 ```
 ```c
-    •void STM1_CH1_IRQHandler(void)    /*Direction Control：20ms*/
+•void STM1_CH1_IRQHandler(void)    /*Direction Control：20ms*/
 ```
 ```c
-    •void CCU60_CH0_IRQHandler (void)  /*Speed Control：2ms*/
+•void CCU60_CH0_IRQHandler (void)  /*Speed Control：2ms*/
 ```
 ```c
-    •void CCU60_CH1_IRQHandler (void)  /*Attitude Update：20ms*/
+•void CCU60_CH1_IRQHandler (void)  /*Attitude Update：20ms*/
 ```
 
     
