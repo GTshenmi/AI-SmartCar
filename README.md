@@ -1,7 +1,7 @@
 # AI-SmartCar
- 2021 National College Student SmartCar Competition Software Project.
- 
- 
+ 2021 National College Student SmartCar Competition Software Project.  
+   
+     
  移植注意事项
  1.删除或更改Driver/SysDriverLQ里的文件。
    •对于Infineon平台，可能只要更改即可
