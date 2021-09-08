@@ -52,5 +52,43 @@
     其中，ADCN的初始化顺序与Driver/SysDriver/adc.h里定义的结构体adcx_t内的成员顺序相同。ADC27对应Channel，10000对应Freq。  
     Description为描述信息，选填。  
    
-6.更改interrupt.c里的中断服务函数定义  
-7.根据需要移植Cpux_Main.c里的corex_main函数。。
+6.更改interrupt.c里的中断服务函数定义。
+
+   void STM1_CH0_IRQHandler(void)    /*Calculate Bias：2ms*/
+
+   void STM1_CH1_IRQHandler(void)    /*Direction Control：20ms*/
+
+   void CCU60_CH0_IRQHandler (void)  /*Speed Control：2ms*/
+   
+   void CCU60_CH1_IRQHandler (void)  /*Attitude Update：20ms*/
+
+    
+7.根据需要移植Cpux_Main.c里的corex_main函数。
+
+    •core0_main
+        
+        os.init(0);
+
+        os.time.delayms(100);
+
+        Core0_HardWareInit();
+        Core0_SoftWareInit();
+
+        Core0_Main();
+        
+    •core1_main
+        
+        Core1_HardWareInit();
+        Core1_SoftWareInit();
+
+        Core1_Main();
+        
+    •core2_main
+    
+        Core2_HardWareInit();
+        Core2_SoftWareInit();
+
+        Core2_Main();        
+        
+        
+    
