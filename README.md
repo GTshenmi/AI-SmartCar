@@ -2,16 +2,7 @@
  2021 National College Student SmartCar Competition Software Project.  
  
 #### 工程结构
-> AI Electomagnetic AI 电磁越野
->> 树
->>> 二叉树
->>>> 平衡二叉树
->>>>> 满二叉树
-> AI Visual
->> 树
->>> 二叉树
->>>> 平衡二叉树
->>>>> 满二叉树
+
      
 #### 移植注意事项
 1.删除或更改Driver/SysDriverLQ里的文件。<br>
