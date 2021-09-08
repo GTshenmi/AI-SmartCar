@@ -1,7 +1,7 @@
 /*
  * esensor.c
  *
- *  Created on: 2020Äê12ÔÂ6ÈÕ
+ *  Created on: 2020å¹´12æœˆ6æ—¥
  *      Author: 936305695
  */
 #include <esensor.h>
@@ -36,7 +36,7 @@ static unsigned ESensor_MidFilter(struct esensor *self)
 {
     uint16_t i,j,k,tmp;
 
-    //1.È¡3´ÎA/D×ª»»½á¹û
+    //1.å–3æ¬¡A/Dè½¬æ¢ç»“æžœ
 #if ESENSOR_FAST_READ_LEVEL == ESENSOR_FAST_READ_LEVEL_0
     i = self->ReadADC(self);
     j = self->ReadADC(self);
@@ -46,7 +46,7 @@ static unsigned ESensor_MidFilter(struct esensor *self)
     j = ESensor_ReadADC(self);
     k = ESensor_ReadADC(self);
 #endif
-    //2.È¡ÖÐÖµ
+    //2.å–ä¸­å€¼
     if (i > j)
     {
         tmp = i; i = j; j = tmp;
@@ -88,11 +88,14 @@ uint16_t ESensor_SelfCalibration(struct esensor *self,float ref)
     {
         ave += (self->Read(self) * 100.0) / 4096.0;
     }
+    
+    ave = 0.0;
 
     for(int i = 0 ; i < 500 ; i++)
     {
         ave += (self->Read(self) * 100.0) / 4096.0;
     }
+    
     ave /= 500.0;
 
     for(int i = 0 ; i < 500 ; i++)
