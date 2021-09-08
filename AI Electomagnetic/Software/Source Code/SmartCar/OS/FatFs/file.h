@@ -1,7 +1,7 @@
 /*
  * file.h
  *
- *  Created on: 2021Äê1ÔÂ19ÈÕ
+ *  Created on: 2021Ã„Ãª1Ã”Ã‚19ÃˆÃ•
  *      Author: 936305695
  */
 
@@ -21,7 +21,8 @@ typedef struct
 
 typedef struct
 {
-    uint8_t isInit;
+    uint8_t isInitFlag;
+    uint8_t (*isInit)(void);
     uint8_t (*init)(void);
     uint (*close)(FIL *fp);
     void (*getcwd)(void);
