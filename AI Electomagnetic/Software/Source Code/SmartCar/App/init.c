@@ -1,7 +1,7 @@
 /*
  * init.c
  *
- *  Created on: 2020Äê12ÔÂ6ÈÕ
+ *  Created on: 2020Ã„Ãª12Ã”Ã‚6ÃˆÃ•
  *      Author: 936305695
  *  @Brief:
  *          This file is for the initialization function.
@@ -190,7 +190,10 @@ void Core0_HardWareInit()
     Screen.WriteXLine(Screen.Self,line+=2,"Init File Sys....");
 
     if(bits & 0x01)
+    {
         res = (sint8_t)SD.init();
+        os.file = SD;
+    }
 
     if(res)
     {
