@@ -1,7 +1,7 @@
 /*
  * common.h
  *
- *  Created on: 2021Äê4ÔÂ1ÈÕ
+ *  Created on: 2021å¹´4æœˆ1æ—¥
  *      Author: 936305695
  */
 
@@ -9,7 +9,6 @@
 #define DRIVER_SYSDRIVER_COMMON_H_
 
 #include "ifx_hal.h"
-#include "interrupt.h"
 
 /*
  *
@@ -19,11 +18,11 @@
 #define ADC_GROUPS_NUM       12
 #define ADC_CHANNELS_NUM     48
 
-/* »ñÈ¡ADC¶ÔÓ¦×é */
+/* è·å–ADCå¯¹åº”ç»„ */
 #define ADC_GetGroup(ADC_Channel)   ((ADC_Channel & 0xF000)>>12)
-/* »ñÈ¡ADC¶ÔÓ¦Í¨µÀ */
+/* è·å–ADCå¯¹åº”é€šé“ */
 #define ADC_GetChannel(ADC_Channel) ((ADC_Channel & 0x0F00)>>8)
-/* »ñÈ¡ADC¶ÔÓ¦¹Ü½ÅĞòÁĞºÅ ºê¶¨Òå */
+/* è·å–ADCå¯¹åº”ç®¡è„šåºåˆ—å· å®å®šä¹‰ */
 #define ADC_GetIndex(ADC_Channel)   (unsigned char)(ADC_Channel & 0x00FF)
 
 typedef enum
@@ -39,7 +38,7 @@ typedef enum
     ADC32= 0x8020, ADC33= 0x8121, ADC34= 0x8222, ADC35= 0x8323, ADC36= 0x8424, ADC37= 0x8525, ADC38= 0x8626, ADC39= 0x8727,
 
     ADC40= 0x8828, ADC41= 0x8929, ADC42= 0x8A2A,ADC43= 0x8B2B,ADC44= 0x8C2C, ADC45= 0x8D2D, ADC46= 0x8E2E, ADC47= 0x8F2F,
-    //9--11ÓÃ²»µ½¾Í²»Ğ´ÁË£¬ĞèÒªµÄ×Ô¼º²é¿´ÊÖ²á
+    //9--11ç”¨ä¸åˆ°å°±ä¸å†™äº†ï¼Œéœ€è¦çš„è‡ªå·±æŸ¥çœ‹æ‰‹å†Œ
 }ADC_Channel_t;
 
 /*
@@ -49,25 +48,25 @@ typedef enum
  * */
 
 /**
-* @brief ENC Âö³å¹Ü½Å
+* @brief ENC è„‰å†²ç®¡è„š
 */
 typedef enum
 {
-  ENC2_InPut_P00_7 = 0x0200, ENC2_InPut_P33_7 = 0x0201,//00.7ÉãÏñÍ·ÏñËØÕ¼ÓÃ
-  ENC3_InPut_P02_6 = 0x0300, ENC3_InPut_P10_4 = 0x0301,//02.6ÉãÏñÍ·Êı¾İ¿ÚÕ¼ÓÃ
+  ENC2_InPut_P00_7 = 0x0200, ENC2_InPut_P33_7 = 0x0201,//00.7æ‘„åƒå¤´åƒç´ å ç”¨
+  ENC3_InPut_P02_6 = 0x0300, ENC3_InPut_P10_4 = 0x0301,//02.6æ‘„åƒå¤´æ•°æ®å£å ç”¨
   ENC4_InPut_P02_8 = 0x0400, ENC4_InPut_P10_8 = 0x0401,//
   ENC5_InPut_P10_3 = 0x0500, ENC5_InPut_P21_7 = 0x0501,//
   ENC6_InPut_P20_3 = 0x0600, ENC6_InPut_P10_2 = 0x0601 //
 }ENC_InputPin_t;
 
 /**
-* @brief ENC ·½Ïò¹Ü½Å
+* @brief ENC æ–¹å‘ç®¡è„š
 */
 typedef enum
 {
-  ENC2_Dir_P00_8 = 0x0200, ENC2_Dir_P33_6 = 0x0201,   //00.8ÉãÏñÍ·Õ¼ÓÃ
-  ENC3_Dir_P02_7 = 0x0300, ENC3_Dir_P10_7 = 0x0301,   //02.7ÉãÏñÍ·Êı¾İ¿ÚÕ¼ÓÃ
-  ENC4_Dir_P00_9 = 0x0400, ENC4_Dir_P33_5 = 0x0401,   //00.9ÉãÏñÍ·Õ¼ÓÃ
+  ENC2_Dir_P00_8 = 0x0200, ENC2_Dir_P33_6 = 0x0201,   //00.8æ‘„åƒå¤´å ç”¨
+  ENC3_Dir_P02_7 = 0x0300, ENC3_Dir_P10_7 = 0x0301,   //02.7æ‘„åƒå¤´æ•°æ®å£å ç”¨
+  ENC4_Dir_P00_9 = 0x0400, ENC4_Dir_P33_5 = 0x0401,   //00.9æ‘„åƒå¤´å ç”¨
   ENC5_Dir_P10_1 = 0x0500, ENC5_Dir_P21_6 = 0x0501,
   ENC6_Dir_P20_0 = 0x0600, ENC6_Dir_P10_0 = 0x0601,
 }ENC_DirPin_t;
@@ -82,7 +81,7 @@ typedef enum
  *
  * */
 
-// GPIO Ã¶¾Ù¶Ë¿Ú±àºÅ£¬²Î¿¼TC397datasheet¸üĞÂ£¬2020Äê11ÔÂ16ÈÕ 10:11:47
+// GPIO æšä¸¾ç«¯å£ç¼–å·ï¼Œå‚è€ƒTC397datasheetæ›´æ–°ï¼Œ2020å¹´11æœˆ16æ—¥ 10:11:47
 typedef enum //
 {
     P00_0 = 0xA000,
@@ -272,23 +271,23 @@ typedef enum //
 
 } GPIO_Name_t;
 
-/* »ñÈ¡GPIO¶ÔÓ¦ MODULE ºê¶¨ÒåL */
+/* è·å–GPIOå¯¹åº” MODULE å®å®šä¹‰L */
 #define PIN_GetModule(GPIO_NAME) (Ifx_P*)(0xF0030000u | (GPIO_NAME & 0xFF00))
 
-/* »ñÈ¡GPIO¶ÔÓ¦ ¹Ü½ÅĞòÁĞºÅ ºê¶¨ÒåQ */
+/* è·å–GPIOå¯¹åº” ç®¡è„šåºåˆ—å· å®å®šä¹‰Q */
 #define PIN_GetIndex(GPIO_NAME)   (uint8)(GPIO_NAME & 0x000F)
 
-/* GPIOÄ£Ê½ */
-#define PIN_MODE_OUTPUT          IfxPort_Mode_outputPushPullGeneral    /*!< ÍÆÍìÊä³ö  */
-#define PIN_MODE_OUTPUT_OD       IfxPort_Mode_outputOpenDrainGeneral   /*!< ¿ªÂ©Êä³ö  */
-#define PIN_MODE_INPUT           IfxPort_Mode_inputNoPullDevice        /*!< ¸¡¿ÕÊäÈë  */
-#define PIN_MODE_INPUT_PULLUP    IfxPort_Mode_inputPullUp              /*!< ÉÏÀ­ÊäÈë  */
-#define PIN_MODE_INPUT_PULLDOWN  IfxPort_Mode_inputPullDown            /*!< ÏÂÀ­ÊäÈë  */
+/* GPIOæ¨¡å¼ */
+#define PIN_MODE_OUTPUT          IfxPort_Mode_outputPushPullGeneral    /*!< æ¨æŒ½è¾“å‡º  */
+#define PIN_MODE_OUTPUT_OD       IfxPort_Mode_outputOpenDrainGeneral   /*!< å¼€æ¼è¾“å‡º  */
+#define PIN_MODE_INPUT           IfxPort_Mode_inputNoPullDevice        /*!< æµ®ç©ºè¾“å…¥  */
+#define PIN_MODE_INPUT_PULLUP    IfxPort_Mode_inputPullUp              /*!< ä¸Šæ‹‰è¾“å…¥  */
+#define PIN_MODE_INPUT_PULLDOWN  IfxPort_Mode_inputPullDown            /*!< ä¸‹æ‹‰è¾“å…¥  */
 
-/* GPIO ÖĞ¶Ï´¥·¢Ä£Ê½ */
-#define PIN_IRQ_MODE_RISING             IfxPort_InputMode_pullDown     /*!< ÉÏÉıÑØ£¨ÏÂÀ­£©´¥·¢ÖĞ¶Ï */
-#define PIN_IRQ_MODE_FALLING            IfxPort_InputMode_pullUp       /*!< ÏÂ½µÑØ£¨ÉÏÀ­£©´¥·¢ÖĞ¶Ï */
-#define PIN_IRQ_MODE_RISING_FALLING     IfxPort_InputMode_noPullDevice /*!< Ë«±ßÑØ£¨¿ªÂ©£©´¥·¢ÖĞ¶Ï */
+/* GPIO ä¸­æ–­è§¦å‘æ¨¡å¼ */
+#define PIN_IRQ_MODE_RISING             IfxPort_InputMode_pullDown     /*!< ä¸Šå‡æ²¿ï¼ˆä¸‹æ‹‰ï¼‰è§¦å‘ä¸­æ–­ */
+#define PIN_IRQ_MODE_FALLING            IfxPort_InputMode_pullUp       /*!< ä¸‹é™æ²¿ï¼ˆä¸Šæ‹‰ï¼‰è§¦å‘ä¸­æ–­ */
+#define PIN_IRQ_MODE_RISING_FALLING     IfxPort_InputMode_noPullDevice /*!< åŒè¾¹æ²¿ï¼ˆå¼€æ¼ï¼‰è§¦å‘ä¸­æ–­ */
 
 /*
  *
@@ -296,16 +295,16 @@ typedef enum //
  *
  * */
 
-// ATOM Ê±ÖÓ 100MHz
+// ATOM æ—¶é’Ÿ 100MHz
 #define ATOM_PWM_CLK  100000000
 
-// ATOM ×î´óÕ¼¿Õ±È ¿É×ÔĞĞĞŞ¸Ä
+// ATOM æœ€å¤§å ç©ºæ¯” å¯è‡ªè¡Œä¿®æ”¹
 #define ATOM_PWM_MAX  10000.0f
 
-// TOM Ê±ÖÓ 6.25MHz/2
+// TOM æ—¶é’Ÿ 6.25MHz/2
 #define TOM_PWM_CLK  6250000
 
-// TOM ×î´óÕ¼¿Õ±È ¿É×ÔĞĞĞŞ¸Ä
+// TOM æœ€å¤§å ç©ºæ¯” å¯è‡ªè¡Œä¿®æ”¹
 #define TOM_PWM_MAX  10000.0f
 
 
@@ -316,7 +315,7 @@ typedef enum //
  * */
 
 /**
- * QSPI CLK¹Ü½ÅÃ¶¾Ù
+ * QSPI CLKç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -328,7 +327,7 @@ typedef enum
 }QSPI_CLK_t;
 
 /**
- * QSPI MISO/MRST ¹Ü½ÅÃ¶¾Ù
+ * QSPI MISO/MRST ç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -340,7 +339,7 @@ typedef enum
 }QSPI_MISO_t;
 
 /**
- * QSPI MOSI/MTSR ¹Ü½ÅÃ¶¾Ù
+ * QSPI MOSI/MTSR ç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -352,7 +351,7 @@ typedef enum
 }QSPI_MOSI_t;
 
 /**
- * QSPI Æ¬Ñ¡¹Ü½ÅÃ¶¾Ù
+ * QSPI ç‰‡é€‰ç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -363,7 +362,7 @@ typedef enum
 }QSPI_CS_t;
 
 /**
- * QSPI Ã¶¾Ù
+ * QSPI æšä¸¾
  */
 typedef enum
 {
@@ -378,7 +377,7 @@ typedef enum
 
 
 /**
- * SPI CLK¹Ü½ÅÃ¶¾Ù
+ * SPI CLKç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -389,7 +388,7 @@ typedef enum
 }SPI_CLK_t;
 
 /**
- * SPI MISO/MRST ¹Ü½ÅÃ¶¾Ù
+ * SPI MISO/MRST ç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -401,7 +400,7 @@ typedef enum
 }SPI_MISO_t;
 
 /**
- * SPI MOSI/MTSR ¹Ü½ÅÃ¶¾Ù
+ * SPI MOSI/MTSR ç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -413,7 +412,7 @@ typedef enum
 }SPI_MOSI_t;
 
 /**
- * SPI Æ¬Ñ¡¹Ü½ÅÃ¶¾Ù
+ * SPI ç‰‡é€‰ç®¡è„šæšä¸¾
  */
 typedef enum
 {
@@ -424,7 +423,7 @@ typedef enum
 }SPI_CS_t;
 
 /**
- * SPI Ã¶¾Ù
+ * SPI æšä¸¾
  */
 typedef enum
 {
@@ -452,7 +451,7 @@ typedef enum
 }CCU6_t;
 
 /**
- *  CCU6Í¨µÀÃ¶¾Ù
+ *  CCU6é€šé“æšä¸¾
  */
 typedef enum
 {
@@ -461,7 +460,7 @@ typedef enum
 }CCU6_Channel_t;
 
 /**
- *  STMÄ£¿éÃ¶¾Ù
+ *  STMæ¨¡å—æšä¸¾
  */
 typedef enum
 {
@@ -470,7 +469,7 @@ typedef enum
 }STM_t;
 
 /**
- *  STMÍ¨µÀÃ¶¾Ù
+ *  STMé€šé“æšä¸¾
  */
 typedef enum
 {
@@ -485,12 +484,12 @@ typedef enum
  *
  * */
 
-#define ASC_TX_BUFFER_SIZE 64        //·¢ËÍ»º³åÇø³¤¶È
-#define ASC_RX_BUFFER_SIZE 64        //½ÓÊÕ»º³åÇø³¤¶È
+#define ASC_TX_BUFFER_SIZE 64        //å‘é€ç¼“å†²åŒºé•¿åº¦
+#define ASC_RX_BUFFER_SIZE 64        //æ¥æ”¶ç¼“å†²åŒºé•¿åº¦
 
 
 /**
-  * @brief UART Ã¶¾Ù
+  * @brief UART æšä¸¾
   */
 typedef enum
 {
@@ -500,7 +499,7 @@ typedef enum
     UART3
 }UART_t;
 
-//L.Q UART RX ¹Ü½ÅÃ¶¾Ù
+//L.Q UART RX ç®¡è„šæšä¸¾
 typedef enum
 {
     UART0_RX_P14_1 = 0xAE01, UART0_RX_P15_3 = 0xAF03,
@@ -514,7 +513,7 @@ typedef enum
 }UART_RX_t;
 
 
-//L.Q UART TX ¹Ü½ÅÃ¶¾Ù
+//L.Q UART TX ç®¡è„šæšä¸¾
 typedef enum
 {
     UART0_TX_P14_0 = 0xAE00, UART0_TX_P14_1 = 0xAE01, UART0_TX_P15_2 = 0xAF02, UART0_TX_P15_3 = 0xAF03,
@@ -537,13 +536,13 @@ extern IfxEvadc_Adc_Channel g_AdcChannel[ADC_CHANNELS_NUM];
 
 
 
-/** Íâ²¿ÖĞ¶ÏCPU±êºÅ */
+/** å¤–éƒ¨ä¸­æ–­CPUæ ‡å· */
 extern const unsigned char PinIrqVectabNum[4];
 
-/** Íâ²¿ÖĞ¶ÏÓÅÏÈ¼¶ */
+/** å¤–éƒ¨ä¸­æ–­ä¼˜å…ˆçº§ */
 extern const unsigned char PinIrqPriority[4];
 
-/** Íâ²¿ÖĞ¶Ï·şÎñº¯ÊıµØÖ· */
+/** å¤–éƒ¨ä¸­æ–­æœåŠ¡å‡½æ•°åœ°å€ */
 extern const void *PinIrqFuncPointer[4];
 
 
@@ -555,19 +554,19 @@ extern IfxGtm_Tom_Pwm_Driver tomDriverPWM[32];
 
 
 extern const unsigned char QSpiIrqVectabNum[4];
-/** QSPIÖĞ¶ÏÓÅÏÈ¼¶ */
+/** QSPIä¸­æ–­ä¼˜å…ˆçº§ */
 extern const unsigned char QSpiIrqPriority[12];
 
-/** QSPI ÅäÖÃ½á¹¹Ìå */
+/** QSPI é…ç½®ç»“æ„ä½“ */
 extern IfxQspi_SpiMaster         g_QSPIConfig[4];
 extern IfxQspi_SpiMaster_Channel g_QspiMasterChannel[4];
 extern const void *QSPIIrqFuncPointer[12];
 
 
-/** SPIÖĞ¶ÏCPU±êºÅ */
+/** SPIä¸­æ–­CPUæ ‡å· */
 extern const unsigned char SpiIrqVectabNum[4];
 
-/** SPIÖĞ¶ÏÓÅÏÈ¼¶ */
+/** SPIä¸­æ–­ä¼˜å…ˆçº§ */
 extern const unsigned char SpiIrqPriority[12];
 extern const void *SpiIrqFuncPointer[12];
 extern IfxAsclin_Spi g_SpiConfig[4];
@@ -575,10 +574,10 @@ extern IfxAsclin_Spi g_SpiConfig[4];
 
 extern const uint8 StmIrqVectabNum[2];
 
-/** Íâ²¿ÖĞ¶ÏÓÅÏÈ¼¶ */
+/** å¤–éƒ¨ä¸­æ–­ä¼˜å…ˆçº§ */
 extern const uint8 StmIrqPriority[4];
 
-/** Íâ²¿ÖĞ¶Ï·şÎñº¯ÊıµØÖ· */
+/** å¤–éƒ¨ä¸­æ–­æœåŠ¡å‡½æ•°åœ°å€ */
 extern const void *StmIrqFuncPointer[4];
 
 extern IfxStm_CompareConfig g_StmCompareConfig[4];
@@ -591,12 +590,12 @@ extern IfxAsclin_Asc g_UartConfig[4];
 extern uint8 s_AscTxBuffer[4][ASC_TX_BUFFER_SIZE + sizeof(Ifx_Fifo) + 8];
 extern uint8 s_AscRxBuffer[4][ASC_TX_BUFFER_SIZE + sizeof(Ifx_Fifo) + 8];
 
-/** UARTÖĞ¶ÏCPU±êºÅ */
+/** UARTä¸­æ–­CPUæ ‡å· */
 extern const uint8_t UartIrqVectabNum[4];
 
-/** UARTÖĞ¶ÏÓÅÏÈ¼¶ */
+/** UARTä¸­æ–­ä¼˜å…ˆçº§ */
 extern const uint8_t UartIrqPriority[12];
-/** UARTÖĞ¶Ï·şÎñº¯ÊıµØÖ· */
+/** UARTä¸­æ–­æœåŠ¡å‡½æ•°åœ°å€ */
 extern const void *UartIrqFuncPointer[12];
 
 
@@ -606,7 +605,7 @@ extern const void *UartIrqFuncPointer[12];
  *
  * */
 /**
- * Èí¼şÖĞµÄĞòºÅÃ¶¾Ù
+ * è½¯ä»¶ä¸­çš„åºå·æšä¸¾
  */
 typedef enum
 {
