@@ -52,7 +52,7 @@
       其中，ADCN的初始化顺序与Driver/SysDriver/adc.h里定义的结构体adcx_t内的成员顺序相同。ADC27对应Channel，10000对应Freq。  
       Description为描述信息，选填。  
    
-6.更改interrupt.c里的中断服务函数定义。
+6.移植interrupt.c里的中断服务函数。
 
     •void STM1_CH0_IRQHandler(void)    /*Calculate Bias：2ms*/
 
