@@ -36,7 +36,7 @@
       也可以只更改需要用到的函数，不用的函数可以改成空函数。  
     •注意:函数定义不可更改。  
     
-5.更改OS/resource_config.c 里的资源配置，参考Driver/SysDriver/里的结构体定义。  
+5.更改OS/resource_config.c or OS/resource_config.h里的资源配置，参考Driver/SysDriver/里的结构体定义。  
 
     •Example：  
       如果配置ADC，需要将OS/resource_config.c里的ADC_Resources进行重新初始化，以ADC_ADC_Resources[0]为例，其他类似:  
@@ -50,9 +50,31 @@
       }  
     
       其中，ADCN的初始化顺序与Driver/SysDriver/adc.h里定义的结构体adcx_t内的成员顺序相同。ADC27对应Channel，10000对应Freq。  
-      Description为描述信息，选填。  
-   
-6.移植interrupt.c里的中断服务函数。
+      Description为描述信息，选填。
+      20为需要用到的adc个数
+      
+6.根据需要更改OS/devices_config.c or OS/devices_config.h里的设备配置，参考OS/Device/里的设备定义。
+
+    •Example：  
+      如果配置电机，需要更改OS/devices_config.c里的Motor:
+    
+      motor_ctrl_t Motor =/*ok*/
+      {
+          .Init = Motor_Init,
+          .Self = &Motor,
+          //.Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
+          .Pwmn = {&PWM_Resources[1].PWMN,&PWM_Resources[0].PWMN},
+          .Encn = &ENC_Resources[0].ENCN,  
+      };
+    
+      其中，Pwmn为驱动电机所使用的2路pwm资源，从OS/resource_config.c 里的 PWM_Resources中选取。
+      Encn为电机测速需要的enc资源，从OS/resource_config.c 里的 ENC_Resources中选取。
+      Init为初始化函数，对于Motor，需要填Motor_Init。
+      Self为结构体指针，指向该结构体本身，即Motor。
+      
+      其他设备的配置类似，可参考OS/devices_config.c中对应的定义。
+      
+7.移植interrupt.c里的中断服务函数。
 
     •void STM1_CH0_IRQHandler(void)    /*Calculate Bias：2ms*/
 
@@ -63,7 +85,7 @@
     •void CCU60_CH1_IRQHandler (void)  /*Attitude Update：20ms*/
 
     
-7.根据需要移植Cpux_Main.c里的corex_main函数。
+8.根据需要移植Cpux_Main.c里的corex_main函数。
 
     •core0_main
         
