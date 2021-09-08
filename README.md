@@ -2,13 +2,13 @@
  2021 National College Student SmartCar Competition Software Project.  
    
      
-#### 语法1
+#### 移植注意事项
 在连续几行的文本开头加入1个Tab或者4个空格。
 
     欢迎到访
     很高兴见到您
     祝您，早上好，中午好，下午好，晚安
- 移植注意事项  
+   
  1.删除或更改Driver/SysDriverLQ里的文件。<br>
      •对于Infineon平台，可能只要更改即可  
      •对于其他平台，可以删掉。  
