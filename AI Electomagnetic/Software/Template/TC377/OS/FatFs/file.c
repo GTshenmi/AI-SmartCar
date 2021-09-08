@@ -1,7 +1,7 @@
 /*
  * file.c
  *
- *  Created on: 2021Äê1ÔÂ19ÈÕ
+ *  Created on: 2021Ã„Ãª1Ã”Ã‚19ÃˆÃ•
  *      Author: 936305695
  */
 #include "file.h"
@@ -33,7 +33,7 @@ uint8_t FileSys_Init()
 
     if(res == 0)
     {
-        SD.isInit = true;
+        SD.isInitFlag = true;
     }
 
     return res;
@@ -276,8 +276,14 @@ uint FileSys_CreateFile(sint8_t *path,sint8_t *file)
     return 0;
 }
 
+uint8_t FileSys_IsInit()
+{
+    return SD.isInitFlag;
+}
+
 file_t SD = {
-        .isInit = false,
+        .isInitFlag = false,
+        .isInit = FileSys_IsInit,
         .init = FileSys_Init,
         .open = FileSys_Open,
         .close = FileSys_Close,
