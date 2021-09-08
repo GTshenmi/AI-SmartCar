@@ -11,9 +11,9 @@
 2.删除或更改Driver/SysDriver/common.c 以及 Driver/SysDriver/common.h里的内容。 
 
     •在common.h添加相应平台底层所需的所有头文件，如
-        ``` C
+        
         #include "ifx_hal.h"。
-        ``` 
+       
     •在commom.c里定义和相应平台底层有关的变量，如IfxEvadc_Adc_Group g_AdcGroup[ADC_GROUPS_NUM]。  
     •未用到的可删除。 
     
