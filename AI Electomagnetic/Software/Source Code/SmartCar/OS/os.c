@@ -13,8 +13,6 @@ void OS_Init(uint core)
         case 0:
             os.time.init();
             os.softtimer.init();
-            os.file.init();
-            os.file = SD;
             break;
         case 1:
             break;
