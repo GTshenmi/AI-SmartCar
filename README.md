@@ -18,9 +18,9 @@
    •重写函数
     以adc为例，需要更改adc.c里的函数内容，以完成相应的功能。
     如uint8_t ADCx_Init(adcx_t *adc)函数，该函数完成adc的初始化，移植时需要更改该函数完成初始化adc。
+    也可以只更改需要用到的函数，不用的函数可以改成空函数。
    •注意:函数定义不可更改。
- 4.
- 5.更改OS/resource_config.c 里的资源配置，参考Driver/SysDriver/里的结构体定义。
+ 4.更改OS/resource_config.c 里的资源配置，参考Driver/SysDriver/里的结构体定义。
    Example：
    如果配置ADC，需要将OS/resource_config.c里的ADC_Resources进行重新初始化，以ADC_ADC_Resources[0]为例，其他类似:
    adc_resource_t ADC_Resources[20] =
