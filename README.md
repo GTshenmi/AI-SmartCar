@@ -20,10 +20,10 @@
 3.更改Driver/SysDriver/platform.h里的芯片类型以及数据类型定义  
 
     •更改 Chip 定义，例如，将芯片移植到MK66平台，需要添加两条宏定义：  
-    ``` C
+    
         #define MK66 3//(该数字不能重复)  
         #define Chip MK66  
-    ``` 
+    
     •更改数据类型定义，如uint32_t为32位无符号整形，在TC377平台为unsigned long型。  
     
 4.重定义Driver/SysDriver/xxx.h里的xxx_t结构体定义，并重写Driver/SysDriver/xxx.c里的相应函数。  
@@ -40,7 +40,7 @@
 
     Example：  
     如果配置ADC，需要将OS/resource_config.c里的ADC_Resources进行重新初始化，以ADC_ADC_Resources[0]为例，其他类似:  
-    ``` C
+    
     adc_resource_t ADC_Resources[20] =  
     {  
          [0] = {  
@@ -48,7 +48,7 @@
                 .Description = "AD1"  
          },  
     }  
-    ``` 
+    
     其中，ADCN的初始化顺序与Driver/SysDriver/adc.h里定义的结构体adcx_t内的成员顺序相同。ADC27对应Channel，10000对应Freq。  
     Description为描述信息，选填。  
    
