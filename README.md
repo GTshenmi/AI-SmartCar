@@ -12,7 +12,9 @@
 
     •在common.h添加相应平台底层所需的所有头文件，如
         
+        ```c
         #include "ifx_hal.h"。
+        ```
        
     •在commom.c里定义和相应平台底层有关的变量，如IfxEvadc_Adc_Group g_AdcGroup[ADC_GROUPS_NUM]。  
     •未用到的可删除。 
@@ -21,8 +23,10 @@
 
     •更改 Chip 定义，例如，将芯片移植到MK66平台，需要添加两条宏定义：  
     
+        ```c
         #define MK66 3//(该数字不能重复)  
         #define Chip MK66  
+        ```
     
     •更改数据类型定义，如uint32_t为32位无符号整形，在TC377平台为unsigned long型。  
     
