@@ -3,6 +3,9 @@
  
  
  移植注意事项
+ 1.删除或更改Driver/SysDriverLQ里的文件。
+   •对于Infineon平台，可能只要更改即可
+   •对于其他平台，可以删掉。
  1.删除或更改Driver/SysDriver/common.c 以及 Driver/SysDriver/common.h里的内容。
    •在common.h添加相应平台底层所需的所有头文件，如#include "ifx_hal.h"。
    •在commom.c里定义和相应平台底层有关的变量，如IfxEvadc_Adc_Group g_AdcGroup[ADC_GROUPS_NUM]。
@@ -32,3 +35,5 @@
    }
    其中，ADCN的初始化顺序与Driver/SysDriver/adc.h里定义的结构体adcx_t内的成员顺序相同。ADC27对应Channel，10000对应Freq。
    Description为描述信息，选填。
+ 5.更改interrupt.c里的中断服务函数定义
+ 6.根据需要移植Cpux_Main.c里的corex_main函数。
