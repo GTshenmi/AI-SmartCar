@@ -85,15 +85,19 @@ motor_ctrl_t Motor =/*ok*/
 
 ```c
 •void STM1_CH0_IRQHandler(void)    /*Analysis Data And Calculate Bias：2ms*/
+ ESensorDataAnalysis(&Data[data_pointer]);
 ```
 ```c
 •void STM1_CH1_IRQHandler(void)    /*Direction Control：20ms*/
+ AngleControl(&Data[data_pointer]);
 ```
 ```c
 •void CCU60_CH0_IRQHandler (void)  /*Speed Control：2ms*/
+ SpeedControl(&Data[data_pointer]);  
 ```
 ```c
 •void CCU60_CH1_IRQHandler (void)  /*Attitude Update：20ms*/
+ 
 ```
 
     
