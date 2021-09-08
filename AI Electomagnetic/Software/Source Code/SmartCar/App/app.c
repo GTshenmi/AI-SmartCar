@@ -222,7 +222,7 @@ void SmartCarSysDataSave(data_t *data)
             //if(!data->IsAddNoise)
             {
                 //if(SD.isInit)
-                if(os.file.isInit)
+                if(os.file.isInit())
                 {
                     //SaveSensorDataAI2();
 
