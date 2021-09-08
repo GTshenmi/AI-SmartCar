@@ -9,9 +9,11 @@
     •对于其他平台，可以删掉。
     
 2.删除或更改Driver/SysDriver/common.c 以及 Driver/SysDriver/common.h里的内容。 
+
     •在common.h添加相应平台底层所需的所有头文件，如#include "ifx_hal.h"。  
     •在commom.c里定义和相应平台底层有关的变量，如IfxEvadc_Adc_Group g_AdcGroup[ADC_GROUPS_NUM]。  
-    •未用到的可删除。  
+    •未用到的可删除。 
+    
 3.更改Driver/SysDriver/platform.h里的芯片类型以及数据类型定义  
     •更改 Chip 定义，例如，将芯片移植到MK66平台，需要添加两条宏定义：  
        #define MK66 3//(该数字不能重复)  
