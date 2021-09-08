@@ -29,7 +29,7 @@
 4.重定义Driver/SysDriver/xxx.h里的xxx_t结构体定义，并重写Driver/SysDriver/xxx.c里的相应函数。  
 
     •重定义结构体  
-      以adc为例，需要更改adc.h里的adcx_t，将adc初始化，读取或者其他操作所需的变量全都定义在该结构体中。  
+      以adc为例，需要更改adc.h里的adcx_t，将adc初始化，读取或者其他操作所需的变量全部定义在该结构体中。  
     •重写函数  
       以adc为例，需要更改adc.c里的函数内容，以完成相应的功能。  
       如uint8_t ADCx_Init(adcx_t *adc)函数，该函数完成adc的初始化，移植时需要更改该函数完成初始化adc。  
