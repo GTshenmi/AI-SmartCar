@@ -12,11 +12,15 @@
      #define MK66 3//(该数字不能重复)
      #define Chip MK66
    •更改数据类型定义，如uint32_t为32位无符号整形，在TC377平台为unsigned long型。
- 3.重定义Driver/SysDriver/xxx.h里的xxx_t结构体定义，并重写Driver/SysDriver/xxx.c里的相应方法。
+ 3.重定义Driver/SysDriver/xxx.h里的xxx_t结构体定义，并重写Driver/SysDriver/xxx.c里的相应函数。
    •重定义结构体
-    以adc为例，将adc.h里的
-   •重写方法
- 4.更改OS/resource_config.c 里的资源配置，参考Driver/SysDriver/里的结构体定义。
+    以adc为例，需要更改adc.h里的adcx_t，将adc初始化，读取或者其他操作所需的变量全都定义在该结构体中。
+   •重写函数
+    以adc为例，需要更改adc.c里的函数内容，以完成相应的功能。
+    如uint8_t ADCx_Init(adcx_t *adc)函数，该函数完成adc的初始化，移植时需要更改该函数完成初始化adc。
+   •注意:函数定义不可更改。
+ 4.
+ 5.更改OS/resource_config.c 里的资源配置，参考Driver/SysDriver/里的结构体定义。
    Example：
    如果配置ADC，需要将OS/resource_config.c里的ADC_Resources进行重新初始化，以ADC_ADC_Resources[0]为例，其他类似:
    adc_resource_t ADC_Resources[20] =
