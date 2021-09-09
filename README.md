@@ -18,9 +18,9 @@
 
 |   AI电磁越野    |   AI电磁越野    |   AI电磁越野    |   
 |:---------------:|:---------------:|:---------------:|
-|![image4](https://github.com/GTshenmi/Electronic-Design-Competition/blob/main/Display%20Image/4.jpeg)|![image3](https://github.com/GTshenmi/Electronic-Design-Competition/blob/main/Display%20Image/3.jpeg)|![image5](https://github.com/GTshenmi/Electronic-Design-Competition/blob/main/Display%20Image/5.jpeg)|
+|![image4](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/2.jpeg)|![image3](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/1.JPG)|![image5](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/3.jpeg)|
 |   AI电磁越野    |    AI电磁越野         |      AI电磁越野        |   
-|![image7](https://github.com/GTshenmi/Electronic-Design-Competition/blob/main/Display%20Image/7.jpeg)|![image6](https://github.com/GTshenmi/Electronic-Design-Competition/blob/main/Display%20Image/6.jpeg)|![image8](https://github.com/GTshenmi/Electronic-Design-Competition/blob/main/Display%20Image/8.jpeg)|
+|![image7](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/4.jpeg)|![image6](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/5.jpeg)|![image8](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/6.jpeg)|
 
 #### 工程结构
 -----------------------------------------------------------------------------------------------
