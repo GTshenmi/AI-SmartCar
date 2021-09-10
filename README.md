@@ -21,10 +21,25 @@
 |![image4](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/2.jpeg)|![image3](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/1.JPG)|![image5](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/3.jpeg)|
 |   AI电磁越野    |    AI电磁越野         |      AI电磁越野        |   
 |![image7](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/4.jpeg)|![image6](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/5.jpeg)|![image8](https://github.com/GTshenmi/AI-SmartCar/blob/main/Display%20Image/6.jpeg)|
-
-#### `工程结构`
+    
+#### `项目文件说明`
 -----------------------------------------------------------------------------------------------
-     
+
+* **Data Process**：数据采集程序及数据集文件
+* **Hardware**：项目的硬件设计，包括原理图、PCB等文件
+* **Simulation And Analysis**：仿真及数据分析文件
+* **Software**：项目的源程序代码及程序模版
+* **Technical Report**：项目的技术报告。
+
+#### `使用说明`
+-----------------------------------------------------------------------------------------------
+
+    本项目采用32-bit TriCore™ AURIX™ – TC3xx 系列MCU，采用AURIX™ Development Studio IDE进行程序编写。
+    1. 安装AURIX™ Development Studio 及 Infineon DAS 驱动
+    2. 下载SoftWare/Source Code/SmartCar文件夹下的源程序代码。
+    3. 将代码导入AURIX™ Development Studio，并编译。
+    4. 下载运行
+
 #### `移植注意事项`
 -----------------------------------------------------------------------------------------------
 1.删除或更改Driver/SysDriverLQ里的文件。<br>
