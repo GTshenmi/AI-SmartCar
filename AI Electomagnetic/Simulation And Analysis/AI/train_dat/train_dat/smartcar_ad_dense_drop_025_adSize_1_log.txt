@@ -1,0 +1,3 @@
+times=0,loss=100000.0000,accu=0.0000,lr=0.010000,decay=0.000002
+Saved times=1,loss=0.0962,accu=0.0005,lr=0.010000,decay=0.000002overfit rate = 0%
+Saved times=2,loss=0.0897,accu=0.0005,lr=0.009970,decay=0.000002overfit rate = 0%
